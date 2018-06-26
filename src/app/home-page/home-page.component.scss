@@ -1,0 +1,62 @@
+.container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin: auto;
+    text-align: center;
+    // width: 300px;
+}
+
+// mat-toolbar {
+//     display: -webkit-box;
+//     display: -ms-flexbox;
+//     display: flex;
+//     -ms-flex-wrap: wrap;
+//     flex-wrap: wrap;
+//     -webkit-box-align: center;
+//     -ms-flex-align: center;
+//     align-items: center;
+//     -webkit-box-pack: justify;
+//     -ms-flex-pack: justify;
+//     justify-content: space-between;
+//     padding: 0.5rem 1rem;
+// }
+
+.example-tooltip-host {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+
+.white-icon {
+    color: #fa9f36;
+    font-size: 30px;
+}
+
+.gray {
+    background-color: rgba(28, 30, 58, 0.753);
+    :hover {
+        background-color: rgb(221, 83, 3)
+    }
+    :click {
+        background-color: rgb(221, 83, 3)
+    }
+}
+
+mat-grid-tile {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+     :hover {
+        opacity: 0.5;
+        background-color: rgb(221, 83, 3);
+    }
+    border-width: 200px;
+        border-color: white;
+       // border-style: solid;
+        border-radius: 4%;
+        border-bottom-width: 100px;
+        //border-bottom-style: solid;
+        border-bottom-color: white;
+        border-top-width: 100px;
+        ///border-top-style: solid;
+        border-top-color: white;
+}

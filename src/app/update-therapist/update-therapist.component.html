@@ -1,0 +1,82 @@
+<div *ngIf="this.db.isBusy" class="center">
+    <mat-card class="center">
+        <h4 class="center">loading...</h4>
+        <mat-spinner class="center"></mat-spinner>
+
+    </mat-card>
+</div>
+
+
+
+<div class="container white-text mt-3" *ngIf="!this.db.isBusy">
+    <form>
+        <div class="row d-flex justify-content-around">
+            <div class="col-12 mt-3 mb-3">
+                <h2 class="nice-text"> עדכון פרטי מטפל </h2>
+            </div>
+
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="Tid" placeholder="מספר זהות" [(ngModel)]="th.id" readonly>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="firstName" placeholder="שם פרטי" [(ngModel)]="th.firstName" required>
+                    <mat-error *ngIf="!firstName">חובה להכניס שם פרטי</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="lastName" placeholder="שם משפחה" [(ngModel)]="th.lastName" required>
+                    <mat-error *ngIf="!lastName">חובה להכניס שם משפחה</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="phone1" placeholder="מספר טלפון" [(ngModel)]="th.phone1">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="phone2" placeholder="עוד מספר" [(ngModel)]="th.phone2">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="address" placeholder=" כתובת" [(ngModel)]="th.address">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="mail" placeholder="מייל " [(ngModel)]="th.mail">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row d-flex mt-5 mb-4 justify-content-end ">
+            <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2 mr-auto mb-2">
+                <button class="my-button my-button-lg w-100" (click)="cleanForm()">אפס שדות<i class="fa fa-times mr-1 "></i></button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2 mb-2">
+                <button class="my-button my-button-lg w-100" (click)="updateTherapist() ">עדכן<i class="fa fa-save mr-1 "></i></button>
+            </div>
+
+        </div>
+    </form>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header class="my-primary my-button text-center btn-lg btn btn-secondary mb-1 waves-light" mdbRippleRadius>
+            עדכן התמחות
+        </mat-expansion-panel-header>
+        <app-methods-for-therapist></app-methods-for-therapist>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header class="my-primary my-button text-center btn-lg btn btn-secondary mb-1 waves-light" mdbRippleRadius>
+            עדכן מערכת שעות
+        </mat-expansion-panel-header>
+        <app-free-time [id]="Tid" [status]="'updateT'" [therapist]="th"></app-free-time>
+    </mat-expansion-panel>
+</div>

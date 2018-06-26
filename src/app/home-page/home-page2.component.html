@@ -1,0 +1,23 @@
+<div class="row mb-4 mt-3">
+
+    <div *ngFor="let feat of features1" routerLink="/{{feat.route}}" class="link-cosmo col-lg-3 col-md-3 col-sm-6 mb-4 pr-3 pt-1">
+        <div class="view overlay hm-blue-light pt-3 wow fadeInUp" style="border-radius:5%" data-wow-delay="0.5s">
+            <i [class]="feat.class"></i>
+            <h4 class="my-4 font-weight-bold">{{feat.text}}</h4>
+            <p>{{feat.sub}}</p>
+            <div class="mask flex-center"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mb-4 mt-3 d-flex justify-content-around ">
+
+    <div *ngFor="let feat of features2" routerLink="/{{feat.route}}" [class]="feat.class2" data-wow-delay="0.5s">
+        <div class="view overlay hm-blue-light pt-3 blue-border" style="border-radius:5%">
+            <i [class]="feat.class"></i>
+            <h6 class="my-4 font-weight-bold">{{feat.text}}</h6>
+            <div class="mask flex-center"></div>
+        </div>
+    </div>
+</div>

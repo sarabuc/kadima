@@ -1,0 +1,9 @@
+<div class="card"*ngIf="table">
+  <h5>שעות פנויות</h5>
+    <table class="table">
+
+    <tr *ngFor="let day of table">
+      <td *ngFor="let hour of day"><i class="fa fa-check text-center" *ngIf="hour"></i></td>
+    </tr>
+    </table>
+</div>

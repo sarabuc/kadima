@@ -1,0 +1,24 @@
+<div class="pb-4 my-4 card dark-card pt-3 mx-2">
+
+    <h3 class="white-text">בחר מטפל כדי לראות כרטיס מטפל</h3>
+    <div class="row mr-auto ml-auto pr-3">
+        <div class="col-sm-5 coll-md-4 px-3 mb-3 md-form">
+
+            <input type="text" class="form-item" id="myInput" ng-model="test" placeholder="לפי שם פרטי " name="fname" [(ngModel)]="fname">
+
+        </div>
+        <div class="col-sm-5 coll-md-4 px-3 mb-3">
+            <input type="text" class="form-item" id="myInput" ng-model="test" placeholder="לפי שם משפחה " name="lname" [(ngModel)]="lname">
+
+        </div>
+        <i class="fa fa-search fa-2x white-text mr-3"></i>
+
+    </div>
+
+
+    <div class="list-group mt-3 pt-2 ">
+        <div *ngFor="let t of  allT">
+            <a *ngIf="isFnPrefix(t.firstName)&&isLnPrefix(t.lastName)" class="list-group-item link-botton " style="text-align:right" [routerLink]="['/Tcard', t.id]"><i class="fa fa-user mx-5"></i>{{t.firstName}}  {{t.lastName}}</a>
+        </div>
+    </div>
+</div>

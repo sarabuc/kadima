@@ -1,0 +1,34 @@
+<div class="container" *ngIf="freeTime">
+    <div class="d-flex justify-content-center">
+
+        <p>
+            נא הקש לשינוי סטטוס
+        </p>
+        <button class="my-button ml-3  btn-sm " (click)="checkAll()">בחר הכל</button>
+        <button class="my-button ml-3 btn-sm " (click)="clearAll()">מחק הכל</button>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-2 d-flex align-content-center"></div>
+        <div class="col-10 row">
+            <div class="col-2" *ngFor="let day of days let j = index">
+                <span class="defult">{{day}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-1" *ngFor="let lesson of lessons let i= index">
+        <div class="col-2 d-flex align-content-center pt-2">{{lesson}}</div>
+        <div class="col-10 row">
+            <div class="col-2" *ngFor="let day of days let j = index">
+                <button class="my-button btn-lg w-100 " *ngIf="i<4||j<5" (click)="setFreeHour(j,i)" style="padding-top:0rem;"><i *ngIf="freeTime[j][i]" class="fa fa-check fa-2x orange-text"></i></button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="d-flex justify-content-end">
+        <button mat-raised-button class="my-primary my-button ml-3 btn btn-secondary mb-1 waves-light" mdbRippleRadius (click)="updateFreeTime()">שמור</button>
+    </div>
+
+</div>

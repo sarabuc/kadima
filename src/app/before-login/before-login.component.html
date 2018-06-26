@@ -1,0 +1,198 @@
+<!--Navbar-->
+<div class="container-fluid pb-5" style="background-color:black; height:100%; width:100%">
+    <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark  mb-5" [containerInside]="false">
+        <logo>
+
+            <!--a class="logo navbar-brand" routerLink="/"><strong>Say Cook Book</strong></a>
+            --></logo>
+        <links>
+
+            <ul class="navbar-nav mr-auto white-text">
+                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="!isLogin()" (click)="login()">
+                    <a class="nav-link ml-auto">כניסה לחשבונך <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="!isLogin()" routerLink="/about">
+                    <a class="nav-link ml-auto">אודות <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item waves-light " mdbRippleRadius *ngIf="!isLogin()" routerLink="/contact">
+                    <a class="nav-link ml-auto">צור קשר <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </links>
+
+    </mdb-navbar>
+
+
+    <!--/.Navbar-->
+    <!--Mask-->
+
+    <div class="full-bg-img flex-center mb-5">
+        <div class="animated fadeInUp black">
+            <div class="card view hm-zoom">
+
+                <!--Card image-->
+                <img class="img-fluid" src="..\\assets\\images\\logo.png" alt="image">
+            </div>
+        </div>
+    </div>
+
+    <!--/.Mask-->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<main>
+    <div class="container">
+        <router-outlet style="background: black"></router-outlet>
+    </div>
+</main>
+
+
+<jaspero-alerts class="alerts" [defaultSettings]="options"></jaspero-alerts>
+
+<!--                       login                            -->
+<!--button type="button" class="btn btn-primary waves-light" (click)="form.show()" mdbRippleRadius>Login with avatar form</button-->
+<!--Modal: Login with Avatar Form-->
+<div mdbModal #form="mdb-modal" class="modal fade ground" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- -->
+    <!-- -->
+
+    <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header">
+                <img src='assets\\homeImg\\logo1.png' class="rounded-circle img-responsive">
+            </div>
+            <!--Body-->
+            <div class="modal-body text-center mb-1">
+
+                <h5 class="mt-1 mb-2">Say Cook Book</h5>
+
+                <div class="ml-0 mr-0 mb-2 ">
+                    <mat-form-field>
+                        <input matInput name="oldid" [(ngModel)]="oldid" placeholder="Enter User Name" style="text-align:left" required>
+
+                        <mat-error *ngIf="!oldid">
+                            This field is required
+                        </mat-error>
+                        <mat-error *ngIf="!apears(oldid)">
+                            The User Name Is Not Exist!
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="options text-center text-md-right mt-1">
+                    <p>Not a member? <strong><a class="blue-text" (click)="form2.show(); form.hide()">Sign Up</a></strong></p>
+
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-cyan mt-1 waves-light" [disabled]="(!apears(oldid))||(!oldid)" mdbRippleRadius (click)="form.hide(); login()">Login <i class="fa fa-sign-in ml-1"></i></button>
+                </div>
+            </div>
+
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<!--Modal: Login with Avatar Form-->
+
+<!--                       register                           -->
+<!--button type="button" class="btn btn-primary waves-light" (click)="form2.show()" mdbRippleRadius>Login with avatar form</button-->
+<!--Modal: Login with Avatar Form-->
+<div mdbModal #form2="mdb-modal" class="modal fade ground" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- -->
+    <!-- -->
+
+    <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header">
+                <img src='assets\\homeImg\\logo1.png' class="rounded-circle img-responsive">
+            </div>
+            <!--Body-->
+            <div class="modal-body text-center mb-1">
+
+                <h5 class="mt-1 mb-3">Sign Up to:</h5>
+                <h5 class="mt-1 mb-3">Say Cook Book</h5>
+
+                <div class="ml-0 mr-0 mb-2 ">
+                    <mat-form-field>
+                        <input matInput name="newid" [(ngModel)]="newid" placeholder="Enter New User Name" style="text-align:left" required>
+
+                        <mat-error *ngIf="!newid">
+                            This field is required
+                        </mat-error>
+                        <mat-error *ngIf="apears(newid)">
+                            The User Name Is Exist!
+                        </mat-error>
+
+                    </mat-form-field>
+
+                    <div class="container center mt-4 pt-2 pb-2">
+                        <p>
+                            Uplode Profile Image
+                        </p>
+                        <input type="file" id="imageUser">
+                        <!--class=" custom-file-control"-->
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-cyan mt-1 waves-light" mdbRippleRadius [disabled]="(apears(newid))||(!newid)" (click)="form2.hide(); signUp()">Sign In <i class="fa fa-sign-in ml-1"></i></button>
+                    </div>
+                </div>
+
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+</div>
+<!--Modal: Login with Avatar Form-->
+
+
+<!-- mails-->
+<div mdbModal #mails="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-info ground modal-frame modal-top" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead">Hi!</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="mails.hide()">
+                      <span aria-hidden="true" class="white-text">×</span>
+                     </button>
+            </div>
+            <div class="modal-body" *ngIf="!db.isLogin">
+                <div class="text-center">
+                    <i class="fa fa-warning fa-4x mb-3 animated rotateIn"></i>
+                    <p>You are not Login, Click "login" to get your Say Cook Book</p>
+                </div>
+            </div>
+
+            <div class="modal-body" *ngIf="!db.isLogin">
+                <div class="text-center">
+
+                    <p>No Information</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+
+                <a type="button" class="btn btn-outline-secondary-modal" data-dismiss="modal" (click)="mails.hide()" mdbRippleRadius>close</a>
+            </div>
+        </div>
+    </div>
+</div>

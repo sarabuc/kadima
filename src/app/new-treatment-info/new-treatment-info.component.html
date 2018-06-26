@@ -1,0 +1,101 @@
+<div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100">
+
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 mt-3 mb-3">
+            <h2 class="nice-text"> דיווח על שיעור</h2>
+        </div>
+
+        <div class="col-md-3 col-sm-12 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-90">
+                <input matInput class="form-item" type="text" name="Pid" placeholder="מספר זהות תלמיד" [(ngModel)]="Pid" required>
+                <mat-error *ngIf="!Pid">חובה להכניס מספר זהות תלמיד</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3 col-sm-12 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-90">
+                <input matInput class="form-item" type="text" name="Pname" placeholder="שם תלמיד" [(ngModel)]="Pname" [matAutocomplete]="autoP">
+
+                <mat-autocomplete #autoP="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+        </div>
+
+
+
+        <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-90">
+                <input matInput class="form-item" type="text" name="Tid" placeholder="מספר זהות מטפל" [(ngModel)]="Tid" required>
+                <mat-error *ngIf="!Tid">חובה להכניס מספר זהות מטפל</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-90">
+                <input matInput class="form-item" type="text" name="Tname" placeholder="שם מטפל" [(ngModel)]="Tname" [matAutocomplete]="autoT">
+
+                <mat-autocomplete #autoT="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+        </div>
+
+
+
+        <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-90">
+
+                <input type="text" class="form-item form-item-date " matInput [matDatepicker]="date" placeholder="תאריך " name="tDate" [(ngModel)]="tDate">
+                <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                <mat-datepicker #date></mat-datepicker>
+
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-90">
+                <p-inputMask matInput class="form-item back-translate form-item-inputmask" type="text" name="startTime" [(ngModel)]="startTime" mask="99-99" slotChar="99-99" placeholder="שעת התחלה" required></p-inputMask>
+
+                <mat-error *ngIf="!startTime">חובה להכניס שעת התחלה </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
+
+        </div>
+
+        <div class="col-md-3 col-sm-12 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-90">
+                <input matInput class="form-item" type="number" name="hours" placeholder="מספר שעות " [(ngModel)]="hours" required>
+                <mat-error *ngIf="!hours">חובה להכניס מספר שעות  </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right"></div>
+        <mat-form-field class=" w-90">
+
+            <mat-select class="form-item form-item-select" name="kind" placeholder=" סוג שיעור" [(ngModel)]="kind">
+                <mat-option value="{{k}}" *ngFor="let k of sd.kupotCholim">{{k}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="col-md-8 col-sm-12 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-90">
+                <input matInput class="form-item" type="text" name="discrib" placeholder="נושא שיעור " [(ngModel)]="discrib" required>
+                <mat-error *ngIf="!discrib">חובה להכניס נושא שיעור</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12 col-sm-12 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-90">
+                <textarea matInput class="form-item" name="comment" placeholder="הערות " [(ngModel)]="comment"></textarea>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+
+</div>

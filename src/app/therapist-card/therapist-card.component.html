@@ -1,0 +1,26 @@
+<div *ngIf="readData" class="center">
+    <mat-card class="center">
+        <h4 class="center">loading...</h4>
+        <mat-spinner class="center"></mat-spinner>
+
+    </mat-card>
+</div>
+<div class="card  mx-2 my-2 px-3 py-3 " *ngIf="!readData">
+
+    <h3 class="white-text">{{thera.firstName}} {{thera.lastName}} | <small>{{thera.skill}}</small></h3>
+    <mat-tab-group class="demo-tab-group" mat-stretch-tabs dynamicHeight [(selectedIndex)]="sd.activeTabIndex">
+        <mat-tab label="פרטים אישיים">
+            <app-therapist-profile [thera]="thera"></app-therapist-profile>
+        </mat-tab>
+        <mat-tab label="ערוך  פרטי מטפל ">
+            <app-update-therapist [th]="thera"></app-update-therapist>
+        </mat-tab>
+
+        <mat-tab label="דיווח על טיפול שהתקים">
+            <app-new-treatment-info [Tid]="Tid"></app-new-treatment-info>
+        </mat-tab>
+        <mat-tab label="היסטורית טיפולים">
+            <app-show-treatment-by-therapist [Tid]="Tid"></app-show-treatment-by-therapist>
+        </mat-tab>
+    </mat-tab-group>
+</div>

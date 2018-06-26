@@ -1,0 +1,40 @@
+<div class="pr-3 pl-3 border-top pt-1">
+    <div class="" (mouseleave)="goHover = false" (mouseenter)="goHover = true">
+        <mat-checkbox #diffi [(ngModel)]="isChoozen" (change)="updateDiffiStatus(diffi.checked)">{{describtion}}</mat-checkbox>
+        <div class="" *ngIf="goHover">
+            <button class="btn my-button btn-sm" (click)="addDiff.show()"> הוסף קושי</button>
+            <button class="btn my-button btn-sm" (click)="addDiff.show()">עדכן טיפול</button>
+        </div>
+    </div>
+    <div class="mr-8" *ngIf="isChoozen">
+        <!-- children -->
+        <app-difficult *ngFor="let child of childDifficults" [code]="child.code" [describtion]="child.description"></app-difficult>
+    </div>
+</div>
+
+
+<div mdbModal #addDiff="mdb-modal" class="modal fade scrollable " style="overflow: auto; " id="basicExample " tabindex="-1 " role="dialog " aria-labelledby="myModalLabel " aria-hidden="true ">
+    <div class="modal-dialog modal-sm " role="document ">
+        <div class="modal-content ">
+            <div class="modal-header ">
+                <h4 class="modal-title w-100 " id="myModalLabel "> הוספת תת קושי</h4>
+                <button type="button " class="close " data-dismiss="modal" aria-label="Close " (click)="addDiff.hide() ">
+                    <span aria-hidden="true ">×</span>
+                </button>
+            </div>
+            <div class="modal-body white-text ">
+
+                <mat-form-field class="w-100">
+                    <input matInput type="text" name="newD" placeholder="תיאור קושי" [(ngModel)]="newD" required>
+                    <mat-error *ngIf="!newD">חובה להכניס תאור קושי </mat-error>
+                </mat-form-field>
+
+            </div>
+
+            <div class="modal-footer ">
+                <button class="my-primary my-button ml-2 w-35" (click)="addDiffi(); addDiff.hide()" [disabled]="!newD">הוסף  </button>
+                <button class="my-primary my-button w-35" (click)="newD=''; addDiff.hide() ">חזור  </button>
+            </div>
+        </div>
+    </div>
+</div>

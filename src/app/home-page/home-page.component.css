@@ -1,0 +1,45 @@
+.container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin: auto;
+  text-align: center;
+}
+
+.example-tooltip-host {
+  display: inline-flex;
+  align-items: center;
+}
+
+.white-icon {
+  color: #fa9f36;
+}
+
+.gray {
+  background-color: rgba(28, 30, 58, 0.753);
+}
+
+.gray :hover {
+  background-color: #dd5303;
+}
+
+.gray :click {
+  background-color: #dd5303;
+}
+
+mat-grid-tile {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border-width: 200px;
+  border-color: white;
+  border-radius: 4%;
+  border-bottom-width: 100px;
+  border-bottom-color: white;
+  border-top-width: 100px;
+  border-top-color: white;
+}
+
+mat-grid-tile :hover {
+  opacity: 0.5;
+  background-color: #dd5303;
+}
+/*# sourceMappingURL=home-page.component.css.map */

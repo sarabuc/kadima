@@ -1,20 +1,68 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div>
+    <button mat-button>hello</button>
 
+    <nav *ngIf="db.isLogin()" class="navbar fixed-top navbar-expand-lg scrolling-navbar  navbar-dark  color1">
+        <div class="container">
+
+            <a class="white-text" (click)="start.toggle(undefined, 'mouse')" mdbTooltip="תפריט" placement="bottom"><i class="fa fa-navicon fa-2x"></i></a>
+
+            <a class="navbar-brand" [routerLink]="'/home'">
+                <h2><strong>קדימה</strong></h2>
+            </a>
+
+
+
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-flex-icons mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank">
+                                 אברהם
+                                <i class="fa fa-user"></i>
+                                </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link border border-light rounded" (click)="logout()" target="_blank">
+                                יציאה
+                                </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank"></a>
+                    </li>
+                    <li class="nav-item" [routerLink]="'/contact'">
+                        <a class="nav-link" target="_blank">צור קשר</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <mat-sidenav-container fullscreen class="pb-1 pt-3" style="">
+
+        <mat-sidenav #start [mode]="mode " [fixedInViewport]="fixed " position="start ">
+            <button mat-button class="mt-1 mb-3 " (click)="start.close( 'mouse') ">הסתר תפריט</button>
+            <div class="list-group mt-3 pt-2 ">
+                <a *ngFor="let option of menuOptions " class="list-group-item link-botton " [routerLink]="option.router ">{{option.option}}</a>
+            </div>
+            <a [routerLink]="['/Tcard', code]" class=" btn btn-primary ">tryyyyyyyyyyyyyyyyy</a>
+
+        </mat-sidenav>
+        <mat-sidenav-content>
+
+
+
+
+            <div class="mt-4 pt-5 ">
+                <router-outlet> </router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+
+
+<!--
+<jaspero-alerts class="alerts " [defaultSettings]="options "></jaspero-alerts>
+-->
+<p>app worksS</p>

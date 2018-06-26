@@ -1,0 +1,1585 @@
+<!-- Main navigation -->
+<header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <strong>MDB</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7" aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                    </li>
+                </ul>
+                <form class="form-inline">
+                    <div class="md-form mt-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar -->
+    <!-- Full Page Intro -->
+    <div class="view" style="background-image: url('http://mdbootstrap.com/img/Photos/Others/images/91.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <!-- Mask & flexbox options-->
+        <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+            <!-- Content -->
+            <div class="container">
+                <!--Grid row-->
+                <div class="row mt-5">
+                    <!--Grid column-->
+                    <div class="col-md-6 mb-5 mt-md-0 mt-5 white-text text-center text-md-left">
+                        <h1 class="h1-responsive font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Sign up right now! </h1>
+                        <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s">
+                        <h6 class="mb-3 wow fadeInLeft" data-wow-delay="0.3s">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem repellendus quasi fuga nesciunt dolorum nulla magnam veniam sapiente, fugiat! Commodi sequi non animi ea dolor molestiae, quisquam iste, maiores. Nulla.</h6>
+                        <a class="btn btn-outline-white wow fadeInLeft" data-wow-delay="0.3s">Learn more</a>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-md-6 col-xl-5 mb-4">
+                        <!--Form-->
+                        <div class="card wow fadeInRight" data-wow-delay="0.3s">
+                            <div class="card-body">
+                                <!--Header-->
+                                <div class="text-center">
+                                    <h3 class="white-text">
+                                        <i class="fa fa-user white-text"></i> Register:</h3>
+                                    <hr class="hr-light">
+                                </div>
+                                <!--Body-->
+                                <div class="md-form">
+                                    <i class="fa fa-user prefix white-text active"></i>
+                                    <input type="text" id="form3" class="white-text form-control">
+                                    <label for="form3" class="active">Your name</label>
+                                </div>
+                                <div class="md-form">
+                                    <i class="fa fa-envelope prefix white-text active"></i>
+                                    <input type="email" id="form2" class="white-text form-control">
+                                    <label for="form2" class="active">Your email</label>
+                                </div>
+                                <div class="md-form">
+                                    <i class="fa fa-lock prefix white-text active"></i>
+                                    <input type="password" id="form4" class="white-text form-control">
+                                    <label for="form4">Your password</label>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="btn btn-indigo">Sign up</button>
+                                    <hr class="hr-light mb-3 mt-4">
+                                    <div class="inline-ul text-center d-flex justify-content-center">
+                                        <a class="p-2 m-2 tw-ic">
+                                            <i class="fa fa-twitter white-text"></i>
+                                        </a>
+                                        <a class="p-2 m-2 li-ic">
+                                            <i class="fa fa-linkedin white-text"> </i>
+                                        </a>
+                                        <a class="p-2 m-2 ins-ic">
+                                            <i class="fa fa-instagram white-text"> </i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.Form-->
+                    </div>
+                    <!--Grid column-->
+                </div>
+                <!--Grid row-->
+            </div>
+            <!-- Content -->
+        </div>
+        <!-- Mask & flexbox options-->
+    </div>
+    <!-- Full Page Intro -->
+</header>
+<!-- Main navigation -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- Section: Contact v.3 -->
+<section class="contact-section my-5">
+
+    <!-- Form with header -->
+    <div class="card">
+
+        <!-- Grid row -->
+        <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-lg-8">
+
+                <div class="card-body form">
+
+                    <!-- Header -->
+                    <h3 class="mt-4"><i class="fa fa-envelope pr-2"></i>Write to us:</h3>
+
+                    <!-- Grid row -->
+                    <div class="row">
+
+                        <!-- Grid column -->
+                        <div class="col-md-6">
+                            <div class="md-form mb-0">
+                                <input type="text" id="form-contact-name" class="form-control">
+                                <label for="form-contact-name" class="">Your name</label>
+                            </div>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-6">
+                            <div class="md-form mb-0">
+                                <input type="text" id="form-contact-email" class="form-control">
+                                <label for="form-contact-email" class="">Your email</label>
+                            </div>
+                        </div>
+                        <!-- Grid column -->
+
+                    </div>
+                    <!-- Grid row -->
+
+                    <!-- Grid row -->
+                    <div class="row">
+
+                        <!-- Grid column -->
+                        <div class="col-md-6">
+                            <div class="md-form mb-0">
+                                <input type="text" id="form-contact-phone" class="form-control">
+                                <label for="form-contact-phone" class="">Your phone</label>
+                            </div>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-6">
+                            <div class="md-form mb-0">
+                                <input type="text" id="form-contact-company" class="form-control">
+                                <label for="form-contact-company" class="">Your company</label>
+                            </div>
+                        </div>
+                        <!-- Grid column -->
+
+                    </div>
+                    <!-- Grid row -->
+
+                    <!-- Grid row -->
+                    <div class="row">
+
+                        <!-- Grid column -->
+                        <div class="col-md-12">
+                            <div class="md-form mb-0">
+                                <textarea type="text" id="form-contact-message" class="form-control md-textarea" rows="3"></textarea>
+                                <label for="form-contact-message">Your message</label>
+                                <a class="btn-floating btn-lg blue">
+                                    <i class="fa fa-send-o"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Grid column -->
+
+                    </div>
+                    <!-- Grid row -->
+
+                </div>
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-lg-4">
+
+                <div class="card-body contact text-center h-100 white-text">
+
+                    <h3 class="my-4 pb-2">Contact information</h3>
+                    <ul class="text-lg-left list-unstyled ml-4">
+                        <li>
+                            <p><i class="fa fa-map-marker pr-2"></i>New York, 94126, USA</p>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-phone pr-2"></i>+ 01 234 567 89</p>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-envelope pr-2"></i>contact@example.com</p>
+                        </li>
+                    </ul>
+                    <hr class="hr-light my-4">
+                    <ul class="list-inline text-center list-unstyled">
+                        <li class="list-inline-item">
+                            <a class="p-2 fa-lg tw-ic">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="p-2 fa-lg li-ic">
+                                <i class="fa fa-linkedin"> </i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="p-2 fa-lg ins-ic">
+                                <i class="fa fa-instagram"> </i>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+    </div>
+    <!-- Form with header -->
+
+</section>
+<!-- Section: Contact v.3 -->
+
+
+
+
+
+
+
+<!-- Section: Blog v.2 -->
+<section class="text-center my-5">
+
+    <!-- Section heading -->
+    <h2 class="h1-responsive font-weight-bold my-5">Recent posts</h2>
+    <!-- Section description -->
+    <p class="dark-grey-text w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+    <!-- Grid row -->
+    <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-lg-4 col-md-12 mb-lg-0 mb-4">
+
+            <!-- Featured image -->
+            <div class="view overlay rounded z-depth-2 mb-4">
+                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/81.jpg" alt="Sample image">
+                <a>
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+
+            <!-- Category -->
+            <a href="#!" class="pink-text">
+                <h6 class="font-weight-bold mb-3"><i class="fa fa-map pr-2"></i>Adventure</h6>
+            </a>
+            <!-- Post title -->
+            <h4 class="font-weight-bold mb-3"><strong>Title of the news</strong></h4>
+            <!-- Post data -->
+            <p>by <a class="font-weight-bold">Billy Forester</a>, 15/07/2018</p>
+            <!-- Excerpt -->
+            <p class="dark-grey-text">Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus voluptas.</p>
+            <!-- Read more button -->
+            <a class="btn btn-pink btn-rounded btn-md">Read more</a>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
+
+            <!-- Featured image -->
+            <div class="view overlay rounded z-depth-2 mb-4">
+                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Sample image">
+                <a>
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+
+            <!-- Category -->
+            <a href="#!" class="deep-orange-text">
+                <h6 class="font-weight-bold mb-3"><i class="fa fa-graduation-cap pr-2"></i>Education</h6>
+            </a>
+            <!-- Post title -->
+            <h4 class="font-weight-bold mb-3"><strong>Title of the news</strong></h4>
+            <!-- Post data -->
+            <p>by <a class="font-weight-bold">Billy Forester</a>, 13/07/2018</p>
+            <!-- Excerpt -->
+            <p class="dark-grey-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis voluptatum deleniti atque corrupti quos dolores.</p>
+            <!-- Read more button -->
+            <a class="btn btn-deep-orange btn-rounded btn-md">Read more</a>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-4 col-md-6 mb-0">
+
+            <!-- Featured image -->
+            <div class="view overlay rounded z-depth-2 mb-4">
+                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/13.jpg" alt="Sample image">
+                <a>
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+
+            <!-- Category -->
+            <a href="#!" class="blue-text">
+                <h6 class="font-weight-bold mb-3"><i class="fa fa-fire pr-2"></i>Culture</h6>
+            </a>
+            <!-- Post title -->
+            <h4 class="font-weight-bold mb-3"><strong>Title of the news</strong></h4>
+            <!-- Post data -->
+            <p>by <a class="font-weight-bold">Billy Forester</a>, 11/07/2018</p>
+            <!-- Excerpt -->
+            <p class="dark-grey-text">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione.</p>
+            <!-- Read more button -->
+            <a class="btn btn-info btn-rounded btn-md">Read more</a>
+
+        </div>
+        <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+</section>
+<!-- Section: Blog v.2 -->
+
+
+
+
+<!-- Section: Products v.4 -->
+<section class="text-center my-5">
+
+    <!-- Section heading -->
+    <h2 class="h1-responsive font-weight-bold text-center my-5">Our bestsellers</h2>
+    <!-- Section description -->
+    <p class="grey-text text-center w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur veniam.</p>
+
+    <!-- Grid row -->
+    <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+            <!-- Collection card -->
+            <div class="card collection-card z-depth-1-half">
+                <!-- Card image -->
+                <div class="view zoom">
+                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/5.jpg" class="img-fluid" alt="">
+                    <div class="stripe dark">
+                        <a>
+                            <p>Red trousers
+                                <i class="fa fa-angle-right"></i>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+                <!-- Card image -->
+            </div>
+            <!-- Collection card -->
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-3 col-md-6 mb-lg-0 mb-4">
+            <!-- Collection card -->
+            <div class="card collection-card z-depth-1-half">
+                <!-- Card image -->
+                <div class="view zoom">
+                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/8.jpg" class="img-fluid" alt="">
+                    <div class="stripe light">
+                        <a>
+                            <p>Sweatshirt
+                                <i class="fa fa-angle-right"></i>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+                <!-- Card image -->
+            </div>
+            <!-- Collection card -->
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-3 col-md-6 mb-md-0 mb-4">
+            <!-- Collection card -->
+            <div class="card collection-card z-depth-1-half">
+                <!-- Card image -->
+                <div class="view zoom">
+                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/9.jpg" class="img-fluid" alt="">
+                    <div class="stripe dark">
+                        <a>
+                            <p>Accessories
+                                <i class="fa fa-angle-right"></i>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+                <!-- Card image -->
+            </div>
+            <!-- Collection card -->
+        </div>
+        <!-- Grid column -->
+
+        <!-- Fourth column -->
+        <div class="col-lg-3 col-md-6">
+            <!-- Collection card -->
+            <div class="card collection-card z-depth-1-half">
+                <!-- Card image -->
+                <div class="view zoom">
+                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/7.jpg" class="img-fluid" alt="">
+                    <div class="stripe light">
+                        <a>
+                            <p>Sweatshirt
+                                <i class="fa fa-angle-right"></i>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+                <!-- Card image -->
+            </div>
+            <!-- Collection card -->
+        </div>
+        <!-- Fourth column -->
+
+    </div>
+    <!-- Grid row -->
+
+</section>
+<!-- Section: Products v.4 -->
+
+
+
+
+
+
+
+<!-- Section: Magazine v.1 -->
+<section class="magazine-section my-5">
+
+    <!-- Section heading -->
+    <h2 class="h1-responsive font-weight-bold text-center my-5">Section title</h2>
+    <!-- Section description -->
+    <p class="text-center dark-grey-text w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit id laborum.</p>
+
+    <!-- Grid row -->
+    <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-lg-6 col-md-12">
+
+            <!-- Featured news -->
+            <div class="single-news mb-4">
+
+                <!-- Image -->
+                <div class="view overlay rounded z-depth-1-half mb-4">
+                    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/82.jpg" alt="Sample image">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!-- Data -->
+                <div class="news-data d-flex justify-content-between">
+                    <a href="#!" class="light-blue-text">
+                        <h6 class="font-weight-bold"><i class="fa fa-plane pr-2"></i>Travels</h6>
+                    </a>
+                    <p class="font-weight-bold dark-grey-text"><i class="fa fa-clock-o pr-2"></i>20/08/2018</p>
+                </div>
+
+                <!-- Excerpt -->
+                <h3 class="font-weight-bold dark-grey-text mb-3"><a>Title of the news</a></h3>
+                <p class="dark-grey-text">Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+
+            </div>
+            <!-- Featured news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-4">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/photo8.jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">19/08/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0 mb-3">
+                                <a href="#!" class="dark-grey-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-4">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/54.jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">18/08/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0 mb-3">
+                                <a href="#!" class="dark-grey-text">Soluta nobis est eligendi optio cumque nihil impedit quo minus</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-lg-0 mb-4">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-lg-0 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">17/08/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0 mb-lg-0 mb-3">
+                                <a href="#!" class="dark-grey-text">Voluptatem accusantium doloremque</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-6 col-md-12">
+
+            <!-- Featured news -->
+            <div class="single-news mb-4">
+
+                <!-- Image -->
+                <div class="view overlay rounded z-depth-1-half mb-4">
+                    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/84.jpg" alt="Sample image">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!-- Data -->
+                <div class="news-data d-flex justify-content-between">
+                    <a href="#!" class="pink-text">
+                        <h6 class="font-weight-bold"><i class="fa fa-home pr-2"></i>Lifestyle</h6>
+                    </a>
+                    <p class="font-weight-bold dark-grey-text"><i class="fa fa-clock-o pr-2"></i>24/08/2018</p>
+                </div>
+
+                <!-- Excerpt -->
+                <h3 class="font-weight-bold dark-grey-text mb-3"><a>Title of the news</a></h3>
+                <p class="dark-grey-text">Sed ut perspiciatis unde voluptatem omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae.</p>
+
+            </div>
+            <!-- Featured news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-4">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/86.jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">23/08/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0 mb-3">
+                                <a href="#!" class="dark-grey-text">Itaque earum rerum hic tenetur a sapiente delectus</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-4">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/48.jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">22/08/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0 mb-3">
+                                <a href="#!" class="dark-grey-text">Soluta nobis est eligendi optio cumque nihil impedit quo minus</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-md-0 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/img%20(56).jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">21/08/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0">
+                                <a href="#!" class="dark-grey-text">Maiores alias consequatur aut perferendis</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+        </div>
+        <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+</section>
+<!-- Section: Magazine v.1 -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- Section: Magazine v.2 -->
+<section class="magazine-section my-5">
+
+    <!-- Section heading -->
+    <h2 class="h1-responsive font-weight-bold text-center my-5">Section title</h2>
+    <!-- Section description -->
+    <p class="text-center dark-grey-text w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit id laborum.</p>
+
+    <!-- Grid row -->
+    <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-lg-6 col-md-12">
+
+            <!-- Featured news -->
+            <div class="single-news mb-lg-0 mb-4">
+
+                <!-- Image -->
+                <div class="view overlay rounded z-depth-1-half mb-4">
+                    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Slides/1.jpg" alt="Sample image">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!-- Data -->
+                <div class="news-data d-flex justify-content-between">
+                    <a href="#!" class="deep-orange-text">
+                        <h6 class="font-weight-bold"><i class="fa fa-cutlery pr-2"></i>Culinary</h6>
+                    </a>
+                    <p class="font-weight-bold dark-grey-text"><i class="fa fa-clock-o pr-2"></i>27/02/2018</p>
+                </div>
+
+                <!-- Excerpt -->
+                <h3 class="font-weight-bold dark-grey-text mb-3"><a>Title of the news</a></h3>
+                <p class="dark-grey-text mb-lg-0 mb-md-5 mb-4">Sed ut perspiciatis unde voluptatem omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae explicabo. Duis aute irure dolor
+                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
+
+            </div>
+            <!-- Featured news -->
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-6 col-md-12">
+
+            <!-- Small news -->
+            <div class="single-news mb-4">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/img%20(29).jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">26/02/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0 mb-3">
+                                <a href="#!" class="dark-grey-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-4">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(45).jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">25/02/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0 mb-3">
+                                <a href="#!" class="dark-grey-text">Itaque earum rerum hic tenetur a sapiente delectus</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-4">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/87.jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">24/02/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0 mb-3">
+                                <a href="#!" class="dark-grey-text">Soluta nobis est eligendi optio cumque nihil impedit quo minus</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news">
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-3">
+
+                        <!--Image-->
+                        <div class="view overlay rounded z-depth-1 mb-md-0 mb-4">
+                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/img%20(27).jpg" alt="Sample image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-9">
+
+                        <!-- Excerpt -->
+                        <p class="font-weight-bold dark-grey-text">23/02/2018</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-11 text-truncate pl-0 mb-lg-3">
+                                <a href="#!" class="dark-grey-text">Duis aute irure dolor in reprehenderit in voluptate</a>
+                            </div>
+                            <a><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </div>
+            <!-- Small news -->
+
+        </div>
+        <!--Grid column-->
+
+    </div>
+    <!-- Grid row -->
+
+</section>
+<!-- Section: Magazine v.2 -->
+
+
+
+
+
+
+
+
+
+<!-- Section: Magazine v.3 -->
+<section class="magazine-section my-5">
+
+    <!-- Section heading -->
+    <h2 class="h1-responsive font-weight-bold text-center my-5">Section title</h2>
+    <!-- Section description -->
+    <p class="text-center w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit id laborum.</p>
+
+    <!-- Grid row -->
+    <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-lg-4 col-md-12 mb-lg-0 mb-5">
+
+            <!-- Featured news -->
+            <div class="single-news mb-3">
+
+                <!-- Image -->
+                <div class="view overlay rounded z-depth-2 mb-4">
+                    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/86.jpg" alt="Sample image">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!-- Grid row -->
+                <div class="row mb-3">
+
+                    <!-- Grid column -->
+                    <div class="col-12">
+
+                        <!-- Badge -->
+                        <a href="#!"><span class="badge pink"><i class="fa fa-camera pr-2" aria-hidden="true"></i>Adventure</span></a>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a class="font-weight-bold">This is title of the news</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Featured news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-3">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a>24 Food Swaps That Slash Calories.</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-3">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a>How to Make a Beet Cocktail?</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-3">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a>8 Sneaky Reasons You're Always Hungry.</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0">
+                        <a>5 Pressure Cooker Recipes You Need to Try.</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-4 col-md-6 mb-md-0 mb-5">
+
+            <!-- Featured news -->
+            <div class="single-news mb-3">
+
+                <!-- Image -->
+                <div class="view overlay rounded z-depth-2 mb-4">
+                    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/31.jpg" alt="Sample image">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!-- Grid row -->
+                <div class="row mb-3">
+
+                    <!-- Grid column -->
+                    <div class="col-12">
+
+                        <!-- Badge -->
+                        <a href="#!"><span class="badge deep-orange"><i class="fa fa-plane pr-2" aria-hidden="true"></i>Travel</span></a>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a class="font-weight-bold">This is title of the news</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Featured news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-3">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a>Trends in the blogosphere for 2016.</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-3">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a>Where you eat the best lunch in Warsaw?</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-3">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a>What camera take for holidays?</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0">
+                        <a>Why you should visit Lisbon?</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-lg-4 col-md-6 mb-0">
+
+            <!-- Featured news -->
+            <div class="single-news mb-3">
+
+                <!-- Image -->
+                <div class="view overlay rounded z-depth-2 mb-4">
+                    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/52.jpg" alt="Sample image">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!-- Grid row -->
+                <div class="row mb-3">
+
+                    <!-- Grid column -->
+                    <div class="col-12">
+
+                        <!-- Badge -->
+                        <a href="#!"><span class="badge success-color"><i class="fa fa-plane pr-2" aria-hidden="true"></i>Nature</span></a>
+
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a class="font-weight-bold">This is title of the news</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Featured news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-3">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a>How to recognize the footsteps of wild animals?</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-3">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a>National Parks in Poland.</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news mb-3">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0 mb-3">
+                        <a>Traveling without littering the planet.</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+            <!-- Small news -->
+            <div class="single-news">
+
+                <!-- Title -->
+                <div class="d-flex justify-content-between">
+                    <div class="col-11 text-truncate pl-0">
+                        <a>How to protect rainforests?</a>
+                    </div>
+                    <a><i class="fa fa-angle-double-right"></i></a>
+                </div>
+
+            </div>
+            <!-- Small news -->
+
+        </div>
+        <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+</section>
+<!-- Section: Magazine v.3 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Section: Social newsfeed v.1 -->
+<section class="my-5">
+
+    <!-- Grid row -->
+    <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-12">
+
+            <!-- Newsfeed -->
+            <div class="mdb-feed">
+
+                <!-- First news -->
+                <div class="news">
+
+                    <!-- Label -->
+                    <div class="label">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle z-depth-1-half">
+                    </div>
+
+                    <!-- Excerpt -->
+                    <div class="excerpt">
+
+                        <!-- Brief -->
+                        <div class="brief">
+                            <a class="name">John Doe</a> added you as a friend
+                            <div class="date">1 hour ago</div>
+                        </div>
+
+                        <!-- Feed footer -->
+                        <div class="feed-footer">
+                            <a class="like">
+                                <i class="fa fa-heart"></i>
+                                <span>5 likes</span>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Excerpt -->
+
+                </div>
+                <!-- First news -->
+
+                <!-- Second news -->
+                <div class="news">
+
+                    <!-- Label -->
+                    <div class="label">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(17)-mini.jpg" class="rounded-circle z-depth-1-half">
+                    </div>
+
+                    <!-- Excerpt -->
+                    <div class="excerpt">
+
+                        <!-- Brief -->
+                        <div class="brief">
+                            <a class="name">Anna Smith</a> added
+                            <a> 2 new illustrations</a>
+                            <div class="date">4 hours ago</div>
+                        </div>
+
+                        <!-- Added images -->
+                        <div class="added-images">
+                            <img src="https://mdbootstrap.com/img/Photos/Others/images/71.jpg" class="z-depth-1 rounded mb-md-0 mb-2">
+                            <img src="https://mdbootstrap.com/img/Photos/Others/images/74.jpg" class="z-depth-1 rounded">
+                        </div>
+
+                        <!-- Feed footer -->
+                        <div class="feed-footer">
+                            <a class="like">
+                                <i class="fa fa-heart"></i>
+                                <span>18 likes</span>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Excerpt -->
+
+                </div>
+                <!-- Second news -->
+
+                <!-- Third news -->
+                <div class="news">
+
+                    <!-- Label -->
+                    <div class="label">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9)-mini.jpg" class="rounded-circle z-depth-1-half">
+                    </div>
+
+                    <!-- Excerpt -->
+                    <div class="excerpt">
+
+                        <!-- Brief -->
+                        <div class="brief">
+                            <a class="name">Danny Moore</a> added you as a friend
+                            <div class="date">7 hours ago</div>
+                        </div>
+
+                        <!-- Feed footer -->
+                        <div class="feed-footer">
+                            <a class="like">
+                                <i class="fa fa-heart"></i>
+                                <span>11 likes</span>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Excerpt -->
+
+                </div>
+                <!-- Third news -->
+
+                <!-- Fourth news -->
+                <div class="news">
+
+                    <!-- Label -->
+                    <div class="label">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(18)-mini.jpg" class="rounded-circle z-depth-1-half">
+                    </div>
+
+                    <!-- Excerpt -->
+                    <div class="excerpt">
+
+                        <!-- Brief -->
+                        <div class="brief">
+                            <a class="name">Lili Rose</a> posted on his page
+                            <div class="date">2 days ago</div>
+                        </div>
+
+                        <!-- Added text -->
+                        <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore, iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat voluptate.</div>
+
+                        <!-- Feed footer -->
+                        <div class="feed-footer">
+                            <a class="like">
+                                <i class="fa fa-heart"></i>
+                                <span>7 likes</span>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Excerpt -->
+
+                </div>
+                <!-- Fourth news -->
+
+                <!-- Fifth news -->
+                <div class="news">
+
+                    <!-- Label -->
+                    <div class="label">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20)-mini.jpg" class="rounded-circle z-depth-1-half">
+                    </div>
+
+                    <!-- Excerpt -->
+                    <div class="excerpt mb-0">
+
+                        <!-- Brief -->
+                        <div class="brief">
+                            <a class="name">Kate Harrison</a> added
+                            <a> 2 new photos</a> of you
+                            <div class="date">3 days ago</div>
+                        </div>
+
+                        <!-- Added images -->
+                        <div class="added-images">
+                            <img src="https://mdbootstrap.com/img/Photos/Others/images/29.jpg" class="z-depth-1 rounded mb-md-0 mb-2">
+                            <img src="https://mdbootstrap.com/img/Photos/Others/images/31.jpg" class="z-depth-1 rounded">
+                        </div>
+
+                        <!-- Feed footer -->
+                        <div class="feed-footer">
+                            <a class="like">
+                                <i class="fa fa-heart"></i>
+                                <span>53 likes</span>
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- Excerpt -->
+
+                </div>
+                <!-- Fifth news -->
+
+            </div>
+            <!-- Newsfeed -->
+
+        </div>
+        <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+</section>
+<!-- Section: Social newsfeed v.1 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

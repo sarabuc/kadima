@@ -1,0 +1,127 @@
+<div class="card white-text mt-1 mr-3 ml-3 px-4 py-3 dark-card" style="">
+    <form>
+        <div class="row d-flex justify-content-end">
+            <button class=" my-button my-btn-lg" [routerLink]="'/addPPatientsFromExel'">הוסף תלמידים מקובץ<i class="fa fa-file mr-2"></i> </button>
+        </div>
+        <div class="row d-flex justify-content-around">
+            <div class="col-12 mt-3 mb-3">
+                <h2 class="nice-text">הוספת תלמיד חדש</h2>
+            </div>
+
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="Pid" placeholder="מספר זהות" [(ngModel)]="Pid" required>
+                    <mat-error *ngIf="!Pid">חובה להכניס מספר זהות</mat-error>
+                    <mat-error *ngIf="db.isPatientExist(Pid)">תלמיד עם מספר זהות זה מופיע כבר במערכת</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="firstName" placeholder="שם פרטי" [(ngModel)]="firstName" required>
+                    <mat-error *ngIf="!firstName">חובה להכניס שם פרטי</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="lastName" placeholder="שם משפחה" [(ngModel)]="lastName" required>
+                    <mat-error *ngIf="!lastName">חובה להכניס שם משפחה</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="fathersName" placeholder="שם האב" [(ngModel)]="fathersName">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="fathersPhone" placeholder="מספר טלפון של האב " [(ngModel)]="fathersPhone">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="mothrsPhone" placeholder=" מספר טלפון של האם" [(ngModel)]="mothersPhone">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+
+                    <input type="text" class="form-item form-item-date " matInput [matDatepicker]="birthdate" placeholder="תאריך לידה" name="birthDate" [(ngModel)]="birthDate">
+                    <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
+                    <mat-datepicker #birthdate></mat-datepicker>
+
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="grade" placeholder=" כתה " [(ngModel)]="grade">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+
+                    <mat-select class="form-item form-item-select" name="kupatCholim" placeholder="קופת חולים" [(ngModel)]="kupatCholim">
+                        <mat-option value="{{k}}" *ngFor="let k of sd.kupotCholim">{{k}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="comment" placeholder="הערות " [(ngModel)]="comment">
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row d-flex mt-5 mb-4 justify-content-around ">
+            <!-- <div class="col-md-3 col-sm-6 col-xs-6 col-lg-2 mb-2">
+                <button class="my-button my-btn-lg w-100" (click)="showMoreOptions=! showMoreOptions; updateTPid() ">פרטים נוספים<i class="fa fa-chevron-down mr-1 "></i></button>
+            </div>-->
+
+
+            <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2 mr-auto mb-2">
+                <button class="my-primary my-button my-btn-lg w-100" (click)="cleanForm()">אפס שדות<i class="fa fa-times mr-1 "></i></button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2 mb-2">
+                <button class="my-primary my-button my-btn-lg w-100" (click)="saveNewTherapist() ">שמור<i class="fa fa-save mr-1 " [disabled]="Pid||firstName||lastName"></i></button>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="row d-flex justify-content-around ">
+            <div class="col-md-6 col-sm-12 mb-2 justify-content-center " *ngIf="showMoreOptions ">
+                <button class="w-100 my-primary my-button my-btn-lg" (click)="model.show()">עדכן התמחות </button>
+            </div>
+            <div class="col-md-6 col-sm-12 mb-2 justify-content-center " *ngIf="showMoreOptions ">
+                <button class="w-100 my-primary my-button my-btn-lg" (click)="freeTimeTable.show() ">עדכן מערכת שעות</button>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+
+
+
+<!--
+
+<div mdbModal #freeTimeTable="mdb-modal" class="modal fade scrollable " style="overflow: auto; " id="basicExample " tabindex="-1 " role="dialog " aria-labelledby="myModalLabel " aria-hidden="true ">
+    <div class="modal-dialog modal-lg " role="document ">
+        <div class="modal-content ">
+            <div class="modal-header ">
+                <h4 class="modal-title w-100 " id="myModalLabel ">מערכת שעות למטפל</h4>
+                <button type="button " class="close " data-dismiss="modal" aria-label="Close " (click)="freeTimeTable.hide() ">
+                    <span aria-hidden="true ">×</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <app-free-time></app-free-time>
+            </div>
+
+        </div>
+    </div>
+</div>-->

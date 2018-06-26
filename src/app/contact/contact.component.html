@@ -1,0 +1,43 @@
+<!--Navbar-->
+<div class="container-fluid ">
+    <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar" [containerInside]="false">
+        <!--logo>
+
+            <a class="logo navbar-brand" routerLink="/"><strong>...קדימה</strong></a>
+        </logo-->
+        <links>
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="!isLogin()" (click)="login()">
+                    <a class="nav-link ml-auto">כניסה לחשבונך <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="isLogin()" (click)="logout()">
+                    <a class="nav-link ml-auto">התנתק</a>
+                </li>
+                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="!isLogin()" routerLink="/about">
+                    <a class="nav-link ml-auto">אודות <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="!isLogin()" routerLink="/about">
+                    <li class="nav-item waves-light " mdbRippleRadius *ngIf="!isLogin()" routerLink="/contact">
+                        <a class="nav-link ml-auto">צור קשר <span class="sr-only">(current)</span></a>
+                    </li>
+            </ul>
+        </links>
+
+    </mdb-navbar>
+</div>
+
+<!--/.Navbar-->
+<!--Mask-->
+<div class="view hm-black-strong">
+    <div class="full-bg-img flex-center">
+        <div class="animated fadeInUp black">
+            <div class="card view hm-zoom">
+
+                <!--Card image-->
+                <img class="img-fluid" src="assets\\images\\logo.png" alt="image">
+            </div>
+        </div>
+    </div>
+</div>
+<!--/.Mask-->

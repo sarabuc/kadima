@@ -1,0 +1,198 @@
+<main>
+    <!--class="white-text"style="background-color:#000000de">-->
+    <!--     before login     -->
+    <!--  <app-before-login *ngIf="!isLogin()"></app-before-login>-->
+
+    <!--       after login    -->
+    <!-- <div class="demo-sidenav-area" *ngIf="isLogin()">
+        <mat-sidenav-container   class="pb-1" style="background-color:#353535">
+            <mat-sidenav #start [mode]="mode" [fixedInViewport]="fixed" [fixedTopGap]="fixedTop" [fixedBottomGap]="fixedBottom" position="end">
+                <button mat-button class="mt-1 mb-3" (click)="start.close('mouse')">הסתר תפריט</button>
+                <div class="list-group mt-3 pt-2">
+                    <a *ngFor="let option of menuOptions" class="list-group-item link-botton">{{option.option}}</a>
+                </div>
+            </mat-sidenav>
+
+            <mat-sidenav-content>
+                <div class="container-fluid ">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-9 mt-2 mb-2 ">
+                            <img class="img-fluid" src="..\\assets\\images\\logo2.png" alt="image">
+                        </div>
+                        <div class="col-md-3 col-sm-3 mb-2"> </div>
+                        <div class="col-md-3 col-sm-7 mt-4 mb-2">
+                            <h3 class="logo white-text mb-2">שלום אברהם <i class="fa fa-user fa-2x white-text mt-1"></i></h3>
+                            <div class="nav-item waves-light" mdbRippleRadius *ngIf="isLogin()" (click)="logout()">
+                                <a class="nav-link ml-auto white-text">יציאה</a>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-2 mt-5 mb-2 d-flex judtify-content-start">
+
+                        </div>
+
+                        <div class="col-md-1 col-sm-1 mb-2"> </div>
+
+                        <div class="col-md-1 col-sm-3 mt-4 mb-2">
+                            <a class="white-text" (click)="start.toggle(undefined, 'mouse')" mdbTooltip="תפריט" placement="bottom"><i class="fa fa-navicon fa-2x"></i></a>
+                        </div>
+                    </div>
+                    <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark" [containerInside]="false">
+
+                        <links>
+
+                            <ul class="navbar-nav mr-auto ml-5">
+
+                                <li class="nav-item waves-light" mdbRippleRadius *ngIf="isLogin()" (click)="logout()">
+                                    <a class="nav-link ml-auto">התנתק</a>
+                                </li>
+
+                                <li class="nav-item waves-light" mdbRippleRadius routerLink="/about" mdbTooltip="אודות" placement="bottom">
+                                    <a class="nav-link"><i class="fa fa-home 2x"></i></a>
+                                </li>
+                                <li class="nav-item waves-light" mdbRippleRadius routerLink="/" mdbTooltip="הנפקת דוחות" placement="bottom">
+                                    <a class="nav-link"><i class="fa fa-list 2x"></i></a>
+                                </li>
+                                <li class="nav-item waves-light" mdbRippleRadius routerLink="/" mdbTooltip="שיעור חדש" placement="bottom">
+                                    <a class="nav-link"><i class="fa fa-plus 2x"></i></a>
+                                </li>
+                                <li class="nav-item waves-light" mdbRippleRadius routerLink="/" mdbTooltip="שלח לאישור מנהל" placement="bottom">
+                                    <a class="nav-link"><i class="fa fa-share 2x"></i></a>
+                                </li>
+
+                                <li class="nav-item waves-light" mdbRippleRadius routerLink="/" mdbTooltip="הגדרות" placement="bottom">
+                                    <a class="nav-link"><i class="fa fa-gears 2x"></i></a>
+                                </li>
+                                <li class="nav-item waves-light" mdbRippleRadius routerLink="/" mdbTooltip="צור קשר" placement="bottom">
+                                    <a class="nav-link"><i class="fa fa-phone fa-x "></i></a>
+                                </li>
+                                <li class="nav-item waves-light" mdbRippleRadius [matMenuTriggerFor]="search" mdbTooltip="חפש" placement="bottom">
+
+                                    <a class="nav-link dropdown-toggle" id="navbarSearcMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-search 2x"></i></a>
+                                    <mat-menu #search="matMenu">
+                                        <button mat-menu-item routerLink="/">לפי תלמיד</button>
+                                        <button mat-menu-item routerLink="/">לפי מורה</button>
+
+                                    </mat-menu>
+                                </li>
+                            </ul>
+                        </links>
+
+                </div>
+
+                <router-outlet *ngIf="isLogin()"> </router-outlet>
+
+
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
+
+
+  -->
+    <router-outlet> </router-outlet>
+
+</main>
+
+
+<jaspero-alerts class="alerts" [defaultSettings]="options"></jaspero-alerts>
+
+<!--
+<div mdbModal #form="mdb-modal" class="modal fade ground" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+
+    <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <img src='assets\\homeImg\\logo1.png' class="rounded-circle img-responsive">
+            </div>
+
+            <div class="modal-body text-center mb-1">
+
+                <h5 class="mt-1 mb-2">Say Cook Book</h5>
+
+                <div class="ml-0 mr-0 mb-2 ">
+                    <mat-form-field>
+                        <input matInput name="oldid" [(ngModel)]="oldid" placeholder="Enter User Name" style="text-align:left" required>
+
+                        <mat-error *ngIf="!oldid">
+                            This field is required
+                        </mat-error>
+                        <mat-error *ngIf="!apears(oldid)">
+                            The User Name Is Not Exist!
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="options text-center text-md-right mt-1">
+                    <p>Not a member? <strong><a class="blue-text" (click)="form2.show(); form.hide()">Sign Up</a></strong></p>
+
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-cyan mt-1 waves-light" [disabled]="(!apears(oldid))||(!oldid)" mdbRippleRadius (click)="form.hide(); login()">Login <i class="fa fa-sign-in ml-1"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+-->
+
+<!--                       register                           -->
+<!--button type="button" class="btn btn-primary waves-light" (click)="form2.show()" mdbRippleRadius>Login with avatar form</button-->
+<!--Modal: Login with Avatar Form-->
+<!--
+<div mdbModal #form2="mdb-modal" class="modal fade ground" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <img src='assets\\homeImg\\logo1.png' class="rounded-circle img-responsive">
+            </div>
+
+            <div class="modal-body text-center mb-1">
+
+                <h5 class="mt-1 mb-3">Sign Up to:</h5>
+                <h5 class="mt-1 mb-3">Say Cook Book</h5>
+
+                <div class="ml-0 mr-0 mb-2 ">
+                    <mat-form-field>
+                        <input matInput name="newid" [(ngModel)]="newid" placeholder="Enter New User Name" style="text-align:left" required>
+
+                        <mat-error *ngIf="!newid">
+                            This field is required
+                        </mat-error>
+                        <mat-error *ngIf="apears(newid)">
+                            The User Name Is Exist!
+                        </mat-error>
+
+                    </mat-form-field>
+
+                    <div class="container center mt-4 pt-2 pb-2">
+                        <p>
+                            Uplode Profile Image
+                        </p>
+                        <input type="file" id="imageUser">
+
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-cyan mt-1 waves-light" mdbRippleRadius [disabled]="(apears(newid))||(!newid)" (click)="form2.hide(); signUp()">Sign In <i class="fa fa-sign-in ml-1"></i></button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+-->
+<!--Modal: Login with Avatar Form-->

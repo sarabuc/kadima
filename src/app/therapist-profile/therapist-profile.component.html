@@ -1,0 +1,22 @@
+<div class="px-3 py-1 mx-2 my-3" *ngIf="thera" style="text-align:right">
+    <div class="list-group px-2 py-3 mb-3">
+        <h3>פרטים אישיים</h3>
+        <div class="list-group-item"><small>שם</small> <strong>  {{thera.firstName}} {{thera.lastName}}</strong></div>
+        <div class="list-group-item"><small>נייד</small> <strong>  {{thera.phone1}} {{thera.phone2}}</strong></div>
+        <div class="list-group-item"><small>כתובת מייל</small> <strong>  {{thera.mail}}</strong></div>
+        <div class="list-group-item"><small>כתובת</small> <strong>  {{thera.address}}</strong></div>
+    </div>
+
+    <div class="list-group px-2 py-2 mb-3">
+        <h3>תיאור התמחות </h3>
+        <div class="list-group-item"><small>תיאור תפקיד</small> <strong>   {{thera.kind}}</strong> </div>
+        <div class="list-group-item"><small>תחום טיפול</small> <strong>  {{thera.treatmentArea}}</strong></div>
+        <div class="list-group-item"><small>דרגה </small> <strong>  {{thera.dergee}}</strong></div>
+        <div class="list-group-item"><small>שנות נסיון</small> <strong>  {{thera.experienceYears}}</strong></div>
+        <div class="list-group-item"><small>נסיון קודם </small> <strong>  {{thera.experienceBefore}}</strong></div>
+        <div class="list-group-item"><small>הערות והמלצות </small> <strong>  {{thera.comment}}</strong></div>
+    </div>
+
+    <app-time-table-to-show [timeStr]="thera.strFreeTime"></app-time-table-to-show>
+
+</div>
