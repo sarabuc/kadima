@@ -5,8 +5,10 @@
 
 
     <!--Intro Section-->
-    <section class="view intro-2">
-        <div class="full-bg-img mask rgba-stylish-strong">
+    <section class="view intro-2 w-100">
+        <img src="assets\\homeImg\\logun6.jpg" class="img-fluid w-100" alt="">
+
+        <div class="full-bg-img mask rgba-stylish-strong mt-5 mr-5 ml-5 mb-5">
             <div class="container flex-center">
                 <div class="d-flex align-items-center w-100">
                     <div class="row flex-center pt-5 mt-3 w-100">
@@ -16,19 +18,16 @@
                                 <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s">
                                 <h6 class="wow fadeInLeft" data-wow-delay="0.3s">ניהול מערכת לקידום תלמידים</h6>
                                 <br>
-                                <a class="btn peach-gradient wow fadeInLeft waves-light" data-wow-delay="0.3s" mdbWavesEffect>הרשם למערכת</a>
+                                <a class="btn gradient-3 wow fadeInLeft waves-light" data-wow-delay="0.3s" mdbWavesEffect>הרשם למערכת</a>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-5 offset-xl-1">
                             <!--Form-->
                             <div class="card wow fadeInRight" data-wow-delay="0.3s">
-                                <div class="card-body z-depth-2">
+                                <div class="card-body z-depth-2" style="text-align: right">
                                     <!--Header-->
-                                    <div class="text-center">
-                                        <h3>כניסה למערכת</h3>
-                                        <hr>
-                                    </div>
+
 
                                     <!--Body-->
                                     <div class="md-form">
@@ -46,26 +45,14 @@
 
 
                                     <div class="text-center">
-                                        <button class="btn peach-gradient waves-light" mdbWavesEffect>כניסה</button>
-                                        <hr>
-                                        <fieldset class="form-group">
-                                            <input type="checkbox" id="checkbox1">
-                                            <label for="checkbox1">זכור אותי</label>
-                                        </fieldset>
+                                        <button class="btn gradient-3 waves-light" mdbWavesEffect (click)="login()">כניסה</button>
+
                                     </div>
 
                                 </div>
                             </div>
                             <!--/.Form-->
-                            <a class="btn-floating btn-lg purple-gradient waves-light" mdbWavesEffect>
-                                <i class="fa fa-phone" [routerLink]="'/contact'"></i>
-                            </a>
-                            <a class="btn-floating btn-lg purple-gradient waves-light" mdbWavesEffect>
-                                <i class="fa fa-home" [routerLink]="'/about'"></i>
-                            </a>
-                            <a class="btn-floating btn-lg purple-gradient waves-light" mdbWavesEffect>
-                                <i class="fa fa-bolt"></i>
-                            </a>
+
 
                         </div>
                     </div>
@@ -75,4 +62,22 @@
     </section>
 
 </header>
+<div (mouseleave)="showOptions=false" style="position: fixed; bottom: 0; right:0.2rem" class="mb-3 mr-5">
+    <button *ngIf="showOptions" mat-mini-fab class="gradient-3 my-3">
+  <i class="fa fa-envelope fa-lg"></i>
+</button>
+    <br>
+    <button *ngIf="showOptions" mat-mini-fab class="gradient-3 my-3">
+  <i class="fa fa-home fa-lg"></i>
+</button>
+    <br>
+    <button *ngIf="showOptions" mat-mini-fab class="gradient-3 my-3">
+  <i class="fa fa-phone fa-lg"></i>
+</button>
+    <br>
+
+    <button mat-fab class="gradient-3 my-3" (click)="showOptions=!showOptions">
+<i class="fa fa-arrow-circle-up fa-2x" aria-hidden="true"></i>
+</button>
+</div>
 <!--Main Navigation-->

@@ -46,6 +46,12 @@ export interface Patient {
   grade: string;
   comment: string;
   strFreeTime: string;
+  haveDificult: boolean;
+}
+export interface PatientComment {
+  Pid: string;
+  commentDate: Date;
+  commentInfo: string;
 }
 export interface Difficulty {
   code: string;
@@ -65,6 +71,7 @@ export interface Method {
  export interface PatientsDifficult {
    Pid: string;
    Dcode: string;
+   mipuyDate: Date;
  }
  export interface TherapistMethods {
    Tid: string;
@@ -119,6 +126,7 @@ public methodsRef: AngularFirestoreCollection<Method>;
 public allPatientsRef: AngularFirestoreCollection<Patient>;
 public allTherapistsRef: AngularFirestoreCollection<Therapist>;
 public allDifficultsRef: AngularFirestoreCollection<Difficulty>;
+public allPatientsCommentRef: AngularFirestoreCollection<PatientComment>;
 public allMethodsRef: AngularFirestoreCollection<Method>;
 public difficultForPatientRef: AngularFirestoreCollection<PatientsDifficult>;
 public methodForTherapistRef: AngularFirestoreCollection<TherapistMethods>;
@@ -132,11 +140,12 @@ public therapistIDList: string[] = [];
 public patientIDList: string[] = [];
 public allDifficultsList: Difficulty[] = [];
 public allMethodsList: Method[] = [];
-
+public allPatientList: Patient[] = [];
+public allTherapistList: Therapist[] = [];
 public isBusy = false;
 public userNow: User;
-public isLoginV = false;
-
+public isLoginV = true;
+public newMipuy: string[] = [];
 
   constructor(private afs: AngularFirestore , private sd: ShareDataService) {
     // get all users
@@ -164,6 +173,8 @@ public isLoginV = false;
      this.allPatientsRef.valueChanges().subscribe(pats => {
        pats.forEach(pat => {
          this.patientIDList.push(pat.id);
+         this.allPatientList.push(pat);
+         console.log(pat);
        });
      });
      // get all therapist id
@@ -172,12 +183,19 @@ public isLoginV = false;
        console.log(theras);
        theras.forEach(th => {
          this.therapistIDList.push(th.id);
+         this.allTherapistList.push(th);
        });
+     });
+
+     // get all methods
+     this.allMethodsRef = this.afs.collection('methods');
+     this.allMethodsRef.valueChanges().subscribe(methods => {
+       this.allMethodsList = methods;
      });
      this.allDifficultsRef = this.afs.collection('difficults');
      this.allMethodsRef = this.afs.collection('methods');
 
-
+      this.allPatientsCommentRef = this.afs.collection('patientsComments');
    }
 
    isLogin() {
@@ -290,7 +308,12 @@ console.log(res);
     });
   }
 
-
+/**
+ * addComment
+ */
+public addComment(com: PatientComment) {
+  this.allPatientsCommentRef.add(com);
+}
 
 
 

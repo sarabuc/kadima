@@ -1,12 +1,11 @@
 <div>
-    <button mat-button>hello</button>
 
-    <nav *ngIf="db.isLogin()" class="navbar fixed-top navbar-expand-lg scrolling-navbar  navbar-dark  color1">
+    <nav *ngIf="db.isLogin()" class="navbar fixed-top navbar-expand-lg scrolling-navbar  navbar-dark  color1 mb-5">
         <div class="container">
 
             <a class="white-text" (click)="start.toggle(undefined, 'mouse')" mdbTooltip="תפריט" placement="bottom"><i class="fa fa-navicon fa-2x"></i></a>
 
-            <a class="navbar-brand" [routerLink]="'/home'">
+            <a class="navbar-brand" [routerLink]="'/'">
                 <h2><strong>קדימה</strong></h2>
             </a>
 
@@ -44,9 +43,9 @@
         <mat-sidenav #start [mode]="mode " [fixedInViewport]="fixed " position="start ">
             <button mat-button class="mt-1 mb-3 " (click)="start.close( 'mouse') ">הסתר תפריט</button>
             <div class="list-group mt-3 pt-2 ">
-                <a *ngFor="let option of menuOptions " class="list-group-item link-botton " [routerLink]="option.router ">{{option.option}}</a>
+                <a *ngFor="let option of menuOptions " class="list-group-item link-botton px-4" [routerLink]="option.router " style="text-align: right"><i [class]="option.icon"></i>{{option.option}}</a>
             </div>
-            <a [routerLink]="['/Tcard', code]" class=" btn btn-primary ">tryyyyyyyyyyyyyyyyy</a>
+
 
         </mat-sidenav>
         <mat-sidenav-content>
@@ -54,9 +53,10 @@
 
 
 
-            <div class="mt-4 pt-5 ">
+            <div class="mt-3 pt-5">
                 <router-outlet> </router-outlet>
             </div>
+            <p-growl [(value)]="sd.msgs" [life]="50000" [baseZIndex]="50000"></p-growl>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
@@ -65,4 +65,3 @@
 <!--
 <jaspero-alerts class="alerts " [defaultSettings]="options "></jaspero-alerts>
 -->
-<p>app worksS</p>

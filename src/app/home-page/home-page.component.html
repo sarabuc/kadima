@@ -1,108 +1,39 @@
-<!--  <div class="container-fluid d-flex row align-items-center justify-items-start ml-2 mt-2">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 justify-items-center align-items-center mb-3 mt-5 ml-3">
-            <img [src]="dbs.userImg" class=" mb-4 rounded-circle img-responsive w-50">
-            <h1 *ngIf="dbs.user=='demoUser'" class="orange-text font-bold animated flash">Attention!</h1>
-            <h5 *ngIf="dbs.user=='demoUser'" class="orange-text font-bold">You are not Log In</h5>
+<div class="view">
+    <img src="assets\\homeImg\\logun6.jpg" class="img-fluid w-100" alt="">
 
-            <h2 *ngIf="dbs.user!='demoUser'" class="orange-text font-bold mb-2">Hi {{dbs.user}}!</h2>
-            <p *ngIf="dbs.sharedRecipeList.length > 0" class="orange-text bold-text ">
-                There are recipes was shared with you that are waiting! Click on share option to get them.
-            </p>
-            <p class="white-text">{{dbs.sharedRecipeList.length > 0}}</p>
+    <div class="full-bg-img mask rgba-white-strong">
 
-            <botton class="btn btn-outline-orange mt-5 mb-3" (click)="form.show()">contact us
-            <i class="fa fa-phone ml-2"></i>
-        </botton>
-            <div class="options text-center text-md-right mt-5">
-                <p>Any problem?
-                    <strong>
-    
-<a class="blue-text" href="mailto:sm5800810@gmail.com?subject=The%20subject%20of%20the%20mail">Mail Us:</a>
-<i class="fa fa-phone blue-text"></i>
-  </strong>
-                </p>
+        <div class="row mb-4 mt-5 ">
 
-            </div>
-        </div>
-
-
-        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-         
-            <mdb-carousel [isControls]="true" class="carousel slide carousel-fade mb-2" [animation]="'fade'">
-                
-                <mdb-slide *ngFor="let im of images" routerLink="/{{im.route}}" class="link-cosmo" data-wow-delay="0.5s">
-
-                    <div class="view zoom" style="width:100%">
-
-                        <img class="d-block w-100 link-cosmo" src='assets\\nice\\{{im.src}}' style="width:100%; border:white" alt="First slide">
-                      
-                    </div>
-                    <div class="carousel-caption z-depth-2" style="background-color:#e6923578; border-radius: 5%">
-                        <h3 class="font-bold">{{im.head}}</h3>
-                        <hr class="hr-light">
-                        <p class="white-text">{{im.sub}}</p>
-                    </div>
-                </mdb-slide>
-                
-            </mdb-carousel>
-         
-        </div>
-    </div>
--->
-<div class="row mb-4 mt-3">
-
-    <div *ngFor="let feat of features1" routerLink="/{{feat.route}}" class="link-cosmo col-lg-3 col-md-3 col-sm-6 mb-4 pr-3 pt-1">
-        <div class="view overlay hm-blue-light pt-3 wow fadeInUp" style="border-radius:5%" data-wow-delay="0.5s">
-            <i [class]="feat.class"></i>
-            <h4 class="my-4 font-weight-bold">{{feat.text}}</h4>
-            <p>{{feat.sub}}</p>
-            <div class="mask flex-center"></div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row mb-4 mt-3 d-flex justify-content-around ">
-
-    <div *ngFor="let feat of features2" routerLink="/{{feat.route}}" [class]="feat.class2" data-wow-delay="0.5s">
-        <div class="view overlay hm-blue-light pt-3 blue-border" style="border-radius:5%">
-            <i [class]="feat.class"></i>
-            <h6 class="my-4 font-weight-bold">{{feat.text}}</h6>
-            <div class="mask flex-center"></div>
-        </div>
-    </div>
-</div>
-
-
-<!--                  favorites                        -->
-<!-- <div #fav class=" wow fadeInUp row d-flex flex-row justify-content-center mb-3" data-wow-delay="0.5s">
-        <div class="col-12">
-            <h2 class="orange-text font-weight-bold">
-                <i class="fa fa-star fa-2x orange-text"></i> Favorites
-            </h2>
-        </div>
-    </div>
-    <div class="row d-flex flex-row justify-content-center">
-        <div *ngFor="let recipe of dbs.favoriteRecipeList; let i = index" class="wow fadeInUp col-md-3 col-lg-3 col-sm-6 mb-2" data-wow-delay="0.5s">
-
-            
-            <div class="card view hm-zoom overlay" [routerLink]="['/recipe', recipe.id]">
-
-                
-                <img class="img-fluid blue-border" [src]='recipe.urlImg' alt="image">
-                <div class="mask align-items-end d-flex flex-row">
-
-                    <div class="orange mb-2 mu-5 align-self-end align-items-center" style="height:25%; width:100%">
-                        <h3 class="responsive mu-auto mb-auto">
-                            {{recipe.nameRecipe}}
-                        </h3>
+            <div *ngFor="let feat of features1" routerLink="/{{feat.route}}" class="col-lg-3 col-md-3 col-sm-6 mb-4 pr-3 pt-1">
+                <div class="view overlay  pt-3 wow fadeInUp" style="border-radius:5%" data-wow-delay="0.5s">
+                    <i [class]="feat.class"></i>
+                    <h4 class="my-4 font-weight-bold purple-text">{{feat.text}}</h4>
+                    <p class="purple-text">{{feat.sub}}</p>
+                    <div class="mask flex-center rgba-purple-light">
                     </div>
                 </div>
             </div>
 
+
+
+
+
+            <div class="row mb-4 mt-3 d-flex justify-content-around px-3 w-100">
+
+                <div *ngFor="let feat of features2" routerLink="/{{feat.route}}" [class]="feat.class2" data-wow-delay="0.5s">
+                    <div class="view overlay pt-3 purple-border" style="border-radius:5%">
+                        <i [class]="feat.class"></i>
+                        <h6 class="my-4 font-weight-bold purple-text">{{feat.text}}</h6>
+                        <div class="mask flex-center rgba-purple-light" rgba-purple-strong></div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
-    
-    -->
+    </div>
 
 
 
@@ -113,63 +44,59 @@
 
 
 
+    <!--Modal: Contact form-->
+    <div mdbModal #form="mdb-modal" class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+            <!--Content-->
+            <div class="modal-content">
 
-
-
-
-<!--Modal: Contact form-->
-<div mdbModal #form="mdb-modal" class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog cascading-modal" role="document">
-        <!--Content-->
-        <div class="modal-content">
-
-            <!--Header-->
-            <div class="modal-header light-blue darken-3 white-text">
-                <h4 class="title"><i class="fa fa-pencil"></i> Contact form</h4>
-                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+                <!--Header-->
+                <div class="modal-header light-blue darken-3 white-text">
+                    <h4 class="title"><i class="fa fa-pencil"></i> Contact form</h4>
+                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
-            </div>
-            <!--Body-->
-            <div class="modal-body mb-0">
-                <div class="md-form form-sm">
-                    <i class="fa fa-envelope prefix"></i>
-                    <input mdbActive type="text" id="form19" class="form-control">
-                    <label for="form19">Your name</label>
                 </div>
+                <!--Body-->
+                <div class="modal-body mb-0">
+                    <div class="md-form form-sm">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input mdbActive type="text" id="form19" class="form-control">
+                        <label for="form19">Your name</label>
+                    </div>
 
-                <div class="md-form form-sm">
-                    <i class="fa fa-lock prefix"></i>
-                    <input mdbActive type="password" id="form20" class="form-control">
-                    <label for="form20">Your email</label>
-                </div>
+                    <div class="md-form form-sm">
+                        <i class="fa fa-lock prefix"></i>
+                        <input mdbActive type="password" id="form20" class="form-control">
+                        <label for="form20">Your email</label>
+                    </div>
 
-                <div class="md-form form-sm">
-                    <i class="fa fa-tag prefix"></i>
-                    <input mdbActive type="text" id="form21" class="form-control">
-                    <label for="form21">Subject</label>
-                </div>
+                    <div class="md-form form-sm">
+                        <i class="fa fa-tag prefix"></i>
+                        <input mdbActive type="text" id="form21" class="form-control">
+                        <label for="form21">Subject</label>
+                    </div>
 
-                <div class="md-form form-sm">
-                    <i class="fa fa-pencil prefix"></i>
-                    <textarea mdbActive type="text" id="form8" class="md-textarea mb-0"></textarea>
-                    <label for="form8">Your message</label>
-                </div>
+                    <div class="md-form form-sm">
+                        <i class="fa fa-pencil prefix"></i>
+                        <textarea mdbActive type="text" id="form8" class="md-textarea mb-0"></textarea>
+                        <label for="form8">Your message</label>
+                    </div>
 
-                <div class="text-center mt-1-half">
-                    <a href="mailto:sm58000810@gmail.com?cc=name2@rapidtables.com&bcc=name3@rapidtables.com
+                    <div class="text-center mt-1-half">
+                        <a href="mailto:sm58000810@gmail.com?cc=name2@rapidtables.com&bcc=name3@rapidtables.com
 &amp;subject=The%20subject%20of%20the%20email
 &amp;body=The%20body%20of%20the%20email">
   mail us</a>
 
 
-                    <button class="btn btn-info mb-2 waves-light" mdbRippleRadius>Send <i class="fa fa-send ml-1"></i></button>
-                </div>
+                        <button class="btn btn-info mb-2 waves-light" mdbRippleRadius>Send <i class="fa fa-send ml-1"></i></button>
+                    </div>
 
+                </div>
             </div>
+            <!--/.Content-->
         </div>
-        <!--/.Content-->
     </div>
-</div>
-<!--Modal: Contact form-->
+    <!--Modal: Contact form-->
 </div>

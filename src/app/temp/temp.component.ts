@@ -1,224 +1,155 @@
-import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
-import {AccordionModule} from 'primeng/accordion';
-import {Message} from 'primeng/components/common/api';
-import {MessageService} from 'primeng/components/common/messageservice';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
 import { TreeNode } from 'primeng/api';
-import { ShareDataService } from '../services/share-data.service';
+import { NodeService } from '../services/node.service';
+/**
+ * File node data with nested structure.
+ * Each node has a filename, and a type or a list of children.
+ */
+export class FileNode {
+  children: FileNode[];
+  filename: string;
+  type: any;
+}
+
+/** Flat node with expandable and level information */
+export class FileFlatNode {
+  constructor(
+    public expandable: boolean, public filename: string, public level: number, public type: any) { }
+}
+
+/**
+ * The file structure tree data in string. The data could be parsed into a Json object
+ */
+const TREE_DATA = JSON.stringify({
+  Applications: {
+    Calendar: 'app',
+    Chrome: 'app',
+    Webstorm: 'app'
+  },
+  Documents: {
+    angular: {
+      src: {
+        compiler: 'ts',
+        core: 'ts'
+      }
+    },
+    material2: {
+      src: {
+        button: 'ts',
+        checkbox: 'ts',
+        input: 'ts'
+      }
+    }
+  },
+  Downloads: {
+    October: 'pdf',
+    November: 'pdf',
+    Tutorial: 'html'
+  },
+  Pictures: {
+    'Photo Booth Library': {
+      Contents: 'dir',
+      Pictures: 'dir'
+    },
+    Sun: 'png',
+    Woods: 'jpg'
+  }
+});
+
+/**
+ * File database, it can build a tree structured Json object from string.
+ * Each node in Json object represents a file or a directory. For a file, it has filename and type.
+ * For a directory, it has filename and children (a list of files or directories).
+ * The input will be a json object string, and the output is a list of `FileNode` with nested
+ * structure.
+ */
+@Injectable()
+export class FileDatabase {
+  dataChange = new BehaviorSubject<FileNode[]>([]);
+
+  get data(): FileNode[] { return this.dataChange.value; }
+
+  constructor() {
+    this.initialize();
+  }
+
+  initialize() {
+    // Parse the string to json object.
+    const dataObject = JSON.parse(TREE_DATA);
+
+    // Build the tree nodes from Json object. The result is a list of `FileNode` with nested
+    //     file node as children.
+    const data = this.buildFileTree(dataObject, 0);
+
+    // Notify the change.
+    this.dataChange.next(data);
+  }
+
+  /**
+   * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
+   * The return value is the list of `FileNode`.
+   */
+  buildFileTree(obj: object, level: number): FileNode[] {
+    return Object.keys(obj).reduce<FileNode[]>((accumulator, key) => {
+      const value = obj[key];
+      const node = new FileNode();
+      node.filename = key;
+
+      if (value != null) {
+        if (typeof value === 'object') {
+          node.children = this.buildFileTree(value, level + 1);
+        } else {
+          node.type = value;
+        }
+      }
+
+      return accumulator.concat(node);
+    }, []);
+  }
+}
+
+/**
+ * @title Tree with flat nodes
+ */
 @Component({
-  selector: 'app-temp',
-  templateUrl: './temp.component.html',
-  styleUrls: ['./temp.component.scss']
+  selector: 'app-temp-component',
+  templateUrl: 'temp.component.html',
+  styleUrls: ['temp.component.scss'],
+  providers: [FileDatabase]
 })
 export class TempComponent implements OnInit {
-val;
-noSpecial: RegExp = /^[^<>*!]+$/;
-msgs = [];
-sales: TreeNode[];
+  selectedColors: any[] = ['Primary', 'Warn'];
+  selectedColor = 'Accent';
 
-    files: TreeNode[];
+  treeControl: FlatTreeControl<FileFlatNode>;
+  treeFlattener: MatTreeFlattener<FileNode, FileFlatNode>;
+  dataSource: MatTreeFlatDataSource<FileNode, FileFlatNode>;
+  files: TreeNode[];
+  constructor(database: FileDatabase, private nodeService: NodeService) {
+    this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
+      this._isExpandable, this._getChildren);
+    this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
+    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-    cols: any[];
-  constructor(private messageService: MessageService, private sd: ShareDataService, private http: Http) { 
-    this.addMultiple();
-    this.show();
-    //this.getFilesystem();
+    database.dataChange.subscribe(data => this.dataSource.data = data);
   }
-eventClicked(calendarEvent) {
-  
-}
-    uploadedFiles: any[] = [];
 
-    onUpload(event) {
-        for (let file of event.files) {
-            this.uploadedFiles.push(file);
-        }
+  transformer = (node: FileNode, level: number) => {
+    return new FileFlatNode(!!node.children, node.filename, level, node.type);
+  }
 
-        this.msgs = [];
-        this.msgs.push({ severity: 'info', summary: 'File Uploaded', detail: '' });
-    }
+  private _getLevel = (node: FileFlatNode) => node.level;
+
+  private _isExpandable = (node: FileFlatNode) => node.expandable;
+
+  private _getChildren = (node: FileNode): Observable<FileNode[]> => observableOf(node.children);
+
+  hasChild = (_: number, _nodeData: FileFlatNode) => _nodeData.expandable;
   ngOnInit() {
-
-      this.getFilesystem();
-
-      this.cols = [
-          { field: 'name', header: 'Name' },
-          { field: 'size', header: 'Size' },
-          { field: 'type', header: 'Type' }
-      ];
-     this.sales = [
-            {
-                data: { brand: 'Bliss', lastYearSale: '51%', thisYearSale: '40%', lastYearProfit: '$54,406.00', thisYearProfit: '$43,342'},
-                expanded: true,
-                children: [
-                    {
-                        data: { brand: 'Product A', lastYearSale: '25%', thisYearSale: '20%', lastYearProfit: '$34,406.00', thisYearProfit: '$23,342' },
-                        expanded: true,
-                        children: [
-                            {
-                                data: { brand: 'Product A-1', lastYearSale: '20%', thisYearSale: '10%', lastYearProfit: '$24,406.00', thisYearProfit: '$13,342' }, 
-                            },
-                            {
-                                data: { brand: 'Product A-2', lastYearSale: '5%', thisYearSale: '10%', lastYearProfit: '$10,000.00', thisYearProfit: '$10,000' }, 
-                            }
-                        ]
-                    },
-                    {
-                        data: { brand: 'Product B', lastYearSale: '26%', thisYearSale: '20%', lastYearProfit: '$24,000.00', thisYearProfit: '$23,000' }, 
-                    }
-                ]
-            },
-            {
-                data: { brand: 'Fate', lastYearSale: '83%', thisYearSale: '96%', lastYearProfit: '$423,132', thisYearProfit: '$312,122' },
-                children: [
-                    {
-                        data: { brand: 'Product X', lastYearSale: '50%', thisYearSale: '40%', lastYearProfit: '$223,132', thisYearProfit: '$156,061' }, 
-                    },
-                    {
-                        data: { brand: 'Product Y', lastYearSale: '33%', thisYearSale: '56%', lastYearProfit: '$200,000', thisYearProfit: '$156,061' }, 
-                    }
-                ]
-            },
-            {
-                data: { brand: 'Ruby', lastYearSale: '38%', thisYearSale: '5%', lastYearProfit: '$12,321', thisYearProfit: '$8,500' },
-                children: [
-                    {
-                        data: { brand: 'Product M', lastYearSale: '18%', thisYearSale: '2%', lastYearProfit: '$10,300', thisYearProfit: '$5,500' }, 
-                    },
-                    {
-                        data: { brand: 'Product N', lastYearSale: '20%', thisYearSale: '3%', lastYearProfit: '$2,021', thisYearProfit: '$3,000' }, 
-                    }
-                ]
-            },
-            {
-                data: { brand: 'Sky', lastYearSale: '49%', thisYearSale: '22%', lastYearProfit: '$745,232', thisYearProfit: '$650,323' },
-                children: [
-                    {
-                        data: { brand: 'Product P', lastYearSale: '20%', thisYearSale: '16%', lastYearProfit: '$345,232', thisYearProfit: '$350,000' }, 
-                    },
-                    {
-                        data: { brand: 'Product R', lastYearSale: '29%', thisYearSale: '6%', lastYearProfit: '$400,009', thisYearProfit: '$300,323' }, 
-                    }
-                ]
-            },
-            {
-                data: { brand: 'Comfort', lastYearSale: '17%', thisYearSale: '79%', lastYearProfit: '$643,242', thisYearProfit: '500,332' },
-                children: [
-                    {
-                        data: { brand: 'Product S', lastYearSale: '10%', thisYearSale: '40%', lastYearProfit: '$243,242', thisYearProfit: '$100,000' }, 
-                    },
-                    {
-                        data: { brand: 'Product T', lastYearSale: '7%', thisYearSale: '39%', lastYearProfit: '$400,00', thisYearProfit: '$400,332' }, 
-                    }
-                ]
-            },
-            {
-                data: { brand: 'Merit', lastYearSale: '52%', thisYearSale: ' 65%', lastYearProfit: '$421,132', thisYearProfit: '$150,005' },
-                children: [
-                    {
-                        data: { brand: 'Product L', lastYearSale: '20%', thisYearSale: '40%', lastYearProfit: '$121,132', thisYearProfit: '$100,000' }, 
-                    },
-                    {
-                        data: { brand: 'Product G', lastYearSale: '32%', thisYearSale: '25%', lastYearProfit: '$300,000', thisYearProfit: '$50,005' }, 
-                    }
-                ]
-            },
-            {
-                data: { brand: 'Violet', lastYearSale: '82%', thisYearSale: '12%', lastYearProfit: '$131,211', thisYearProfit: '$100,214' },
-                children: [
-                    {
-                        data: { brand: 'Product SH1', lastYearSale: '30%', thisYearSale: '6%', lastYearProfit: '$101,211', thisYearProfit: '$30,214' }, 
-                    },
-                    {
-                        data: { brand: 'Product SH2', lastYearSale: '52%', thisYearSale: '6%', lastYearProfit: '$30,000', thisYearProfit: '$70,000' }, 
-                    }
-                ]
-            },
-            {
-                data: { brand: 'Dulce', lastYearSale: '44%', thisYearSale: '45%', lastYearProfit: '$66,442', thisYearProfit: '$53,322' },
-                children: [
-                    {
-                        data: { brand: 'Product PN1', lastYearSale: '22%', thisYearSale: '25%', lastYearProfit: '$33,221', thisYearProfit: '$20,000' }, 
-                    },
-                    {
-                        data: { brand: 'Product PN2', lastYearSale: '22%', thisYearSale: '25%', lastYearProfit: '$33,221', thisYearProfit: '$33,322' }, 
-                    }
-                ]
-            },
-            {
-                data: { brand: 'Solace', lastYearSale: '90%', thisYearSale: '56%', lastYearProfit: '$765,442', thisYearProfit: '$296,232' },
-                children: [
-                    {
-                        data: { brand: 'Product HT1', lastYearSale: '60%', thisYearSale: '36%', lastYearProfit: '$465,000', thisYearProfit: '$150,653' }, 
-                    },
-                    {
-                        data: { brand: 'Product HT2', lastYearSale: '30%', thisYearSale: '20%', lastYearProfit: '$300,442', thisYearProfit: '$145,579' }, 
-                    }
-                ]
-            },
-            {
-                data:  { brand: 'Essence', lastYearSale: '75%', thisYearSale: '54%', lastYearProfit: '$21,212', thisYearProfit: '$12,533' },
-                children: [
-                    {
-                        data: { brand: 'Product TS1', lastYearSale: '50%', thisYearSale: '34%', lastYearProfit: '$11,000', thisYearProfit: '$8,562' }, 
-                    },
-                    {
-                        data: { brand: 'Product TS2', lastYearSale: '25%', thisYearSale: '20%', lastYearProfit: '$11,212', thisYearProfit: '$3,971' }, 
-                    }
-                ]
-            }
-        ];
-    
+    this.nodeService.getFiles().then(files => this.files = files);
   }
-
-show() {
-//this.msgs.push({severity:'info', summary:'Info Message', detail:'PrimeNG rock'});
-this.msgs.push({severity:'success', summary:'Info Message', detail:'PrimeNG rock'});
-this.msgs.push({severity:'warn', summary:'Info Message', detail:'PrimeNG rock'});
-}
-
-
-
-hide() {
-this.msgs = [];
-}
-
-
-
-addSingle() {
-this.messageService.add({severity:'success', summary:'Service Message', detail:'jgyfrstytfhbjkn.knl'});
-}
-addMultiple() {
-this.messageService.addAll([{severity:'success', summary:'Service Mesnjhjg', detail:'gytfdtrserss'},
-{severity:'info', summary:'Info Message', detail:'Viajklhugbbi'}]);
-}
-clear() {
-this.messageService.clear();
-}
-
-  myUploader(e){
-    this.sd.createAlert('info', 'wow!!!!!!!!!', '');
-  }
-  getFilesystem() {
-    return this.http.get('..\\assets\\data.json')
-      .toPromise()
-      .then(res => {
-        this.files = <TreeNode[]>res.json().data; 
-    
-        console.log(this.files);
-      
-      });
-  }
-
-
-
-
-
-
-
-
-
-
-
 
 }

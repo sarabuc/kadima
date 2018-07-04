@@ -12,11 +12,13 @@ export class DifficultComponent implements OnInit {
   @Input() describtion: string;
   isLeave: boolean;
   isChoozen: boolean;
-  childDifficults: Difficulty [] = [];
+  childDifficults: Difficulty[] = [];
   newD = '';
   goHover = false;
-  constructor(public dbs: DbService, private sd: ShareDataService ) {
-    
+  addTreEnable = false;
+  addDiffEnable = false;
+  constructor(public db: DbService, private sd: ShareDataService) {
+
 
   }
 
@@ -36,7 +38,7 @@ export class DifficultComponent implements OnInit {
         this.childDifficults.push(diffi);
       }
     });
-  console.log(this.childDifficults);
+    console.log(this.childDifficults);
     return this.childDifficults.length;
   }
 
@@ -48,14 +50,20 @@ export class DifficultComponent implements OnInit {
   }
 
   updateDiffiStatus(checked: boolean) {
-
+    if (checked) {
+      this.db.newMipuy.push(this.code);
+    } else {
+      this.db.newMipuy.splice(this.db.newMipuy.indexOf(this.code), 1);
+    }
   }
   addDiffi() {
+  const dif = {
+    code: this.newD, description: this.newD, Dfather: this.code
+  };
 
-
-    //...
-    this.childDifficults.push({code: this.newD, description: this.newD, Dfather: this.code});
+    this.childDifficults.push(dif);
+    this.db.addDifficult(dif);
     this.newD = '';
-    
+
   }
 }

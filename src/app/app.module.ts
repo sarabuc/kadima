@@ -23,7 +23,10 @@ import {TreeTableModule} from 'primeng/treetable';
 import {TreeNode} from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import {GrowlModule} from 'primeng/growl';
+import { TreeModule } from 'primeng/tree';
+
 /*material*/
+import {MatTreeModule} from '@angular/material/tree';
 import {
   MatSelectModule,
   MatButtonModule,
@@ -37,7 +40,6 @@ import {
   MatSlideToggleModule,
   MatStepperModule,
   MatListModule,
-  MatTableModule,
   MatAutocompleteModule,
   MatButtonToggleModule,
   MatChipsModule,
@@ -53,6 +55,7 @@ import {
   MatNativeDateModule,
   MatDialog
 } from '@angular/material';
+import {MatTableModule} from '@angular/material/table';
 import 'hammerjs';
 // import { JasperoAlertsModule } from '@jaspero/ng2-alerts';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -70,6 +73,7 @@ import { AboutComponent } from './about/about.component';
 import { DbService } from './services/db.service';
 import { ShareDataService } from './services/share-data.service';
 import { AuthService } from './services/auth.service';
+import { NodeService } from './services/node.service';
 import { GuardGuard } from './services/guard.guard';
 // import { MessageService } from './services/message.service';
 import { ReturnMessageService } from './services/return-message.service';
@@ -103,18 +107,22 @@ import { AddTherapistFromExelComponent } from './add-therapist-from-exel/add-the
 import { TherapistListComponent } from './therapist-list/therapist-list.component';
 import { TimeTableToShowComponent } from './time-table-to-show/time-table-to-show.component';
 import { LoginComponent } from './login/login.component';
+import { NewMipuyComponent } from './new-mipuy/new-mipuy.component';
+import { DifficutForMipuyComponent } from './difficut-for-mipuy/difficut-for-mipuy.component';
+import { PatientCardComponent } from './patient-card/patient-card.component';
+import { PatientListComponent } from './patient-list/patient-list.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
 
 const firebase = {
-  apiKey: 'AIzaSyC39tgVZlnrGvyirclUb92ZiyCNOqcGubA',
-  authDomain: 'kadima1-fa119.firebaseapp.com',
-  databaseURL: 'https://kadima1-fa119.firebaseio.com',
-  projectId: 'kadima1-fa119',
-  storageBucket: 'kadima1-fa119.appspot.com',
-  messagingSenderId: '890519841483'
-};
+    apiKey: 'AIzaSyC39tgVZlnrGvyirclUb92ZiyCNOqcGubA',
+    authDomain: 'kadima1-fa119.firebaseapp.com',
+    databaseURL: 'https://kadima1-fa119.firebaseio.com',
+    projectId: 'kadima1-fa119',
+    storageBucket: 'kadima1-fa119.appspot.com',
+    messagingSenderId: '890519841483'
+  };
 
 
 @NgModule({
@@ -145,7 +153,11 @@ const firebase = {
     AddTherapistFromExelComponent,
     TherapistListComponent,
     TimeTableToShowComponent,
-    LoginComponent
+    LoginComponent,
+    NewMipuyComponent,
+    DifficutForMipuyComponent,
+    PatientCardComponent,
+    PatientListComponent
   ],
   imports: [
     routing,
@@ -161,11 +173,13 @@ const firebase = {
     MatSliderModule,
     MatInputModule,
     MatCheckboxModule,
+    MatTreeModule,
     MatSlideToggleModule,
     MatStepperModule,
     MatListModule,
     MatTableModule,
     MatAutocompleteModule,
+
     MatButtonToggleModule,
     MatChipsModule,
     MatFormFieldModule,
@@ -192,7 +206,8 @@ KeyFilterModule,
 TreeTableModule,
     FileUploadModule,
    HttpModule,
-   JsonpModule, GrowlModule
+   JsonpModule, GrowlModule,
+    TreeModule
   ],
   providers: [MatDialog,
   MessageService,
@@ -201,6 +216,7 @@ TreeTableModule,
     GuardGuard,
     AuthService,
     MessageService,
+    NodeService,
     ReturnMessageService],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]

@@ -16,8 +16,8 @@
                 <input matInput class="form-item" type="text" name="Pname" placeholder="שם תלמיד" [(ngModel)]="Pname" [matAutocomplete]="autoP">
 
                 <mat-autocomplete #autoP="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                        {{ option }}
+                    <mat-option *ngFor="let pat of db.allPatientList | async" [value]="pat.id">
+                        {{ pat.firstName }} {{ pat.lastName }}
                     </mat-option>
                 </mat-autocomplete>
 
@@ -37,8 +37,8 @@
                 <input matInput class="form-item" type="text" name="Tname" placeholder="שם מטפל" [(ngModel)]="Tname" [matAutocomplete]="autoT">
 
                 <mat-autocomplete #autoT="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                        {{ option }}
+                    <mat-option *ngFor="let thera of db.allTherapistList | async" [value]="thera.id">
+                        {{ thera.firstName }} {{thera.lastName}}
                     </mat-option>
                 </mat-autocomplete>
 
@@ -71,7 +71,7 @@
         <div class="col-md-3 col-sm-12 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-90">
                 <input matInput class="form-item" type="number" name="hours" placeholder="מספר שעות " [(ngModel)]="hours" required>
-                <mat-error *ngIf="!hours">חובה להכניס מספר שעות  </mat-error>
+                <mat-error *ngIf="!hours">חובה להכניס מספר שעות </mat-error>
             </mat-form-field>
         </div>
 

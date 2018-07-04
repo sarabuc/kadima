@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Therapist, Patient } from '../services/db.service';
+import { Therapist, Patient, DbService } from '../services/db.service';
+import { ShareDataService } from '../services/share-data.service';
 
 @Component({
   selector: 'app-new-treatment-info',
@@ -12,11 +13,12 @@ export class NewTreatmentInfoComponent implements OnInit {
   @Input() patient: Patient;
   Tid = '';
   Pid = '';
-  nameT = '';
-  nameP = '';
+  Tname = '';
+  Pname = '';
   date = '';
   val;
-  constructor() { }
+  startTime; endTime; hours; tDate; discrib; comment; kind;
+  constructor(public sd: ShareDataService, public db: DbService) { }
 
   ngOnInit() {
   }

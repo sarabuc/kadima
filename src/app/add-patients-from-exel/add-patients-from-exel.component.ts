@@ -10,7 +10,10 @@ import { ShareDataService } from '../services/share-data.service';
 })
 export class AddPatientsFromExelComponent implements OnInit {
  PfromExel: any [];
-  constructor(public dbs: DbService, public sd: ShareDataService) { }
+  constructor(public dbs: DbService, public sd: ShareDataService) {
+    this.sd.createAlert('success', 'works', 'halevay');
+  }
+
 
   arrayBuffer: any;
   file: File;
@@ -67,6 +70,7 @@ export class AddPatientsFromExelComponent implements OnInit {
         birthDate: p.birthDate,
         grade: p.grade,
         comment: '',
+        haveDificult: false,
         strFreeTime: this.sd.FREE_ALL_TIME
       };
       this.dbs.addPatient(pati);

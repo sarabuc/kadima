@@ -1,6 +1,9 @@
 import { ModuleWithProviders} from '@angular/core';
 import { Routes, RouterModule} from '@angular/router';
 // components
+import { PatientCardComponent } from './patient-card/patient-card.component';
+import { PatientListComponent } from './patient-list/patient-list.component';
+import { NewMipuyComponent } from './new-mipuy/new-mipuy.component';
 import { BeforeLoginComponent } from './before-login/before-login.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AboutComponent } from './about/about.component';
@@ -26,6 +29,8 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'Tcard/:id', component: TherapistCardComponent },
   { path: 'Tcards', component: TherapistListComponent },
+  { path: 'Pcard/:id', component: PatientCardComponent },
+  { path: 'Pcards', component: PatientListComponent },
   { path: 'newTreatmentInfo', component: NewTreatmentInfoComponent },
   { path: 'addPatient', component: NewPatientComponent },
   { path: 'addTherapist', component: NewTherapistComponent },
@@ -34,11 +39,11 @@ const appRoutes: Routes = [
   { path: 'addPPatientsFromExel', component: AddPatientsFromExelComponent },
   { path: 'addTherapistFromExel', component: AddPatientsFromExelComponent },
  { path: 'login', component: LoginComponent},
- /* { path: 'lessonsForStudent', component: LessonsForStudentComponent },
-  { path: 'lessonsForTeacher', component: LessonsForTeacherComponent },
-  { path: 'ookeepingForStudent', component: BookeepingForStudentComponent },*/
-  { path: 'contact', component: ContactComponent }, 
-  { path: 'difficult', component: ShowDifficultiesComponent }
+ { path: 'newMipuy', component: NewMipuyComponent },
+  { path: 'Report', component: TempComponent },
+  { path: 'check-progress', component: TempComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'Treatment-planning', component: TempComponent }
 ];
 
 

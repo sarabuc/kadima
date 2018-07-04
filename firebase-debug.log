@@ -1,0 +1,120 @@
+[debug] [2018-07-04T18:15:57.369Z] ----------------------------------------------------------------------
+[debug] [2018-07-04T18:15:57.369Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tmura\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2018-07-04T18:15:57.369Z] CLI Version:   3.19.0
+[debug] [2018-07-04T18:15:57.369Z] Platform:      win32
+[debug] [2018-07-04T18:15:57.369Z] Node Version:  v8.11.3
+[debug] [2018-07-04T18:15:57.369Z] Time:          Wed Jul 04 2018 21:15:57 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:15:57.369Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-07-04T18:15:57.400Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-07-04T18:15:57.400Z] > authorizing via signed-in user
+[debug] [2018-07-04T18:15:57.400Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/kadima-try  
+  
+ Wed Jul 04 2018 21:15:57 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:15:59.982Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-04T18:15:59.982Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/kadima-try/tokens  
+  
+ Wed Jul 04 2018 21:15:59 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:16:01.856Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'kadima-try'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing dist directory for upload...
+[warn] !  Warning: Public directory does not contain index.html
+[debug] [2018-07-04T18:16:04.629Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/kadima-try/uploads/-LGaVXJVtFNBTjLsG6lV?fileCount=97&message=  
+  
+ Wed Jul 04 2018 21:16:04 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:20:39.087Z] ----------------------------------------------------------------------
+[debug] [2018-07-04T18:20:39.091Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tmura\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2018-07-04T18:20:39.091Z] CLI Version:   3.19.0
+[debug] [2018-07-04T18:20:39.091Z] Platform:      win32
+[debug] [2018-07-04T18:20:39.095Z] Node Version:  v8.11.3
+[debug] [2018-07-04T18:20:39.095Z] Time:          Wed Jul 04 2018 21:20:39 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:20:39.095Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-07-04T18:20:39.111Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-07-04T18:20:39.115Z] > authorizing via signed-in user
+[debug] [2018-07-04T18:20:39.119Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/kadima-try  
+  
+ Wed Jul 04 2018 21:20:39 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:20:40.539Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-04T18:20:40.543Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/kadima-try/tokens  
+  
+ Wed Jul 04 2018 21:20:40 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:20:41.594Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'kadima-try'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing dist directory for upload...
+[debug] [2018-07-04T18:20:44.078Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/kadima-try/uploads/-LGaWaX5MzG3OwWPWVnv?fileCount=97&message=  
+  
+ Wed Jul 04 2018 21:20:44 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:28:22.969Z] Error: write ECONNRESET
+    at _errnoException (util.js:992:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:864:14)
+[error] 
+[error] Error: Server Error. write ECONNRESET
+[debug] [2018-07-04T18:30:43.256Z] ----------------------------------------------------------------------
+[debug] [2018-07-04T18:30:43.260Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tmura\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2018-07-04T18:30:43.260Z] CLI Version:   3.19.0
+[debug] [2018-07-04T18:30:43.260Z] Platform:      win32
+[debug] [2018-07-04T18:30:43.260Z] Node Version:  v8.11.3
+[debug] [2018-07-04T18:30:43.260Z] Time:          Wed Jul 04 2018 21:30:43 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:30:43.260Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-07-04T18:30:43.280Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-07-04T18:30:43.280Z] > authorizing via signed-in user
+[debug] [2018-07-04T18:30:43.288Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/kadima-try  
+  
+ Wed Jul 04 2018 21:30:43 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:31:01.929Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-04T18:31:01.933Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/kadima-try/tokens  
+  
+ Wed Jul 04 2018 21:31:01 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:31:21.688Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'kadima-try'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing dist directory for upload...
+[debug] [2018-07-04T18:31:51.684Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/kadima-try/uploads/-LGaZ8UpoG37OOv8LXtr?fileCount=97&message=  
+  
+ Wed Jul 04 2018 21:31:51 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:33:14.101Z] Error: socket hang up
+    at createHangUpError (_http_client.js:331:15)
+    at TLSSocket.socketOnEnd (_http_client.js:423:23)
+    at emitNone (events.js:111:20)
+    at TLSSocket.emit (events.js:208:7)
+    at endReadableNT (_stream_readable.js:1064:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: Server Error. socket hang up
+[debug] [2018-07-04T18:39:41.372Z] ----------------------------------------------------------------------
+[debug] [2018-07-04T18:39:41.376Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tmura\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2018-07-04T18:39:41.376Z] CLI Version:   3.19.0
+[debug] [2018-07-04T18:39:41.376Z] Platform:      win32
+[debug] [2018-07-04T18:39:41.376Z] Node Version:  v8.11.3
+[debug] [2018-07-04T18:39:41.376Z] Time:          Wed Jul 04 2018 21:39:41 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:39:41.376Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-07-04T18:39:41.396Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-07-04T18:39:41.396Z] > authorizing via signed-in user
+[debug] [2018-07-04T18:39:41.400Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/kadima-try  
+  
+ Wed Jul 04 2018 21:39:41 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:40:02.335Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-04T18:40:02.335Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/kadima-try/tokens  
+  
+ Wed Jul 04 2018 21:40:02 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2018-07-04T18:40:03.734Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'kadima-try'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing dist directory for upload...
+[debug] [2018-07-04T18:40:07.749Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/kadima-try/uploads/-LGaa1dqM3Je7xj_l1rl?fileCount=97&message=  
+  
+ Wed Jul 04 2018 21:40:07 GMT+0300 (Jerusalem Daylight Time)

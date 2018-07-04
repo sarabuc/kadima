@@ -49,7 +49,7 @@ export class NewPatientComponent implements OnInit {
   }
 
   cleanForm() {
-  
+
     this.Pid = '';
     this.firstName = '';
     this.lastName = '';
@@ -64,7 +64,7 @@ export class NewPatientComponent implements OnInit {
   }
   saveNewPatient() {
     let pati: Patient;
-    
+
     pati = {
       id: this.Pid,
       firstName: this.firstName,
@@ -76,6 +76,7 @@ export class NewPatientComponent implements OnInit {
       grade: this.grade,
       kupatCholim: this.kupatCholim,
       comment: this.comment,
+      haveDificult: false,
       strFreeTime: this.sd.FREE_ALL_TIME
       };
 

@@ -2,8 +2,12 @@ import { Injectable } from '@angular/core';
 // import { AlertsService } from '@jaspero/ng2-alerts';
 // import { AlertType } from '@jaspero/ng-alerts';
 import { Difficulty, PatientsDifficult, TherapistMethods } from './db.service';
+import {Router, ActivatedRoute} from '@angular/router';
+import { Message } from 'primeng/api';
+import { MessageService } from 'primeng/components/common/messageservice';
 @Injectable()
 export class ShareDataService {
+  msgs;
 
   // for free time
   TPstatusForTime: string; /*newP, newT, updateP, updateT */
@@ -53,7 +57,7 @@ export class ShareDataService {
   ];
 
 
-  constructor(/*private _alert: AlertsService*/) {
+  constructor(/*private _alert: AlertsService*/ private router: Router, private messageService: MessageService) {
     this.initFREE_ALL_TIME();
   }
 
@@ -61,11 +65,12 @@ export class ShareDataService {
   /****************************************************************** */
   /***************             alert             **************** */
    public createAlert(type, message, tytle) {
-    if (tytle === '') {
+     this.messageService.add({ severity: type, summary: tytle, detail: message });
+    /*if (tytle === '') {
     //  this._alert.create(type, message);
     } else {
     //  this._alert.create(type, message, tytle);
-    }
+    }*/
   }
 
   initFREE_ALL_TIME() {
@@ -137,6 +142,12 @@ export class ShareDataService {
     table.push(friday);
 
     return table;
+  }
+  /**
+   * routeTo
+   */
+  public routeTo(path: string) {
+    this.router.navigate([path]);
   }
 
 
