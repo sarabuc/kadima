@@ -15,7 +15,9 @@ This is due, inter alia, to the Insufficient utilization of resources.
   ## [live our application](https://github.com/sarabuc/kadima/wiki)
   
   ### Documentation
-- [Project proposal ](https://github.com/sarabuc/kadima/wiki)
+- [Project proposal ](https://github.com/sarabuc/kadima/blob/master/documents/%D7%93%D7%95%D7%97%20%D7%A7%D7%93%D7%99%D7%9E%D7%94-%D7%A4%D7%A8%D7%95%D7%99%D7%A7%D7%98.pdf)
+- [Alpha version ](https://github.com/sarabuc/kadima/blob/master/documents/-%D7%92%D7%A8%D7%A1%D7%AA%20%D7%90%D7%9C%D7%A4%D7%90-%D7%93%D7%95%D7%97%20%D7%A7%D7%93%D7%99%D7%9E%D7%94-%D7%A4%D7%A8%D7%95%D7%99%D7%A7%D7%98.pdf)
 
+ ### Shortcuts
 
-
+![logo1](https://github.com/sarabuc/kadima/blob/master/documents/logo.png)
