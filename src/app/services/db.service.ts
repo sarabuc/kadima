@@ -42,11 +42,11 @@ export interface Patient {
   fathersPhone: string;
   mothersPhone: string;
   kupatCholim: string;
-  birthDate: Date;
+  birthDate: string;
   grade: string;
   comment: string;
   strFreeTime: string;
-  haveDificult: boolean;
+  haveDificult: string;
 }
 export interface PatientComment {
   Pid: string;
@@ -62,6 +62,10 @@ export interface Difficulty {
 export interface Method {
   code: string;
   description: string;
+}
+export interface Mipuy {
+  Pid: string;
+  mipuyDate: Date;
 }
 
 /*export interface TreatmentCategory {
@@ -107,11 +111,11 @@ export interface TreatmentInfo { // key is Tid-treatmentNumber to example: 1234-
    Tid: string;
    progressionCode: string;
    kind: string;
-   treatmentNumber: number; // timestemp
-   treatDate: Date;
-   startTime: Time;
-   endTime: Time;
-   hours: number;
+   treatmentNumber: string; // timestemp
+   treatDate: string;
+   startTime: string;
+   endTime: string;
+   hours: string;
    description: string;
    comment: string;
  }
@@ -134,6 +138,7 @@ public methodForDifficultyRef: AngularFirestoreCollection<MethodForDifficulty>;
 public planForPatientRef: AngularFirestoreCollection<PlanForPatient>;
 public treatmentProgressionRef: AngularFirestoreCollection<TreatmentProgression>;
 public treatmentInfoForProgressRef: AngularFirestoreCollection<TreatmentInfo>;
+  public mipuyForPatientRef: AngularFirestoreCollection<Mipuy>;
 // list
 public userNameList: string[] = [];
 public therapistIDList: string[] = [];
@@ -142,12 +147,13 @@ public allDifficultsList: Difficulty[] = [];
 public allMethodsList: Method[] = [];
 public allPatientList: Patient[] = [];
 public allTherapistList: Therapist[] = [];
+public mipuyForPatientList: Mipuy[] = [];
 public isBusy = false;
 public userNow: User;
 public isLoginV = true;
 public newMipuy: string[] = [];
 
-  constructor(private afs: AngularFirestore , private sd: ShareDataService) {
+  constructor(public afs: AngularFirestore , private sd: ShareDataService) {
     // get all users
     this.allUsersRef = this.afs.collection('users');
     this.allUsersRef.valueChanges().subscribe(users => {
@@ -192,10 +198,20 @@ public newMipuy: string[] = [];
      this.allMethodsRef.valueChanges().subscribe(methods => {
        this.allMethodsList = methods;
      });
-     this.allDifficultsRef = this.afs.collection('difficults');
+     // get all difficults
+     const limu = 'לימודי';
+     this.allDifficultsRef = this.afs.collection('difficults', ref => {
+       return ref.where('Dfather', '==', limu);
+     });
+     this.allDifficultsRef.valueChanges().subscribe(diffs => {
+       this.allDifficultsList = diffs;
+     });
      this.allMethodsRef = this.afs.collection('methods');
 
       this.allPatientsCommentRef = this.afs.collection('patientsComments');
+      this.difficultForPatientRef = this.afs.collection('patientDifficults');
+      this.mipuyForPatientRef = this.afs.collection('mipuy');
+     this.treatmentInfoForProgressRef = this.afs.collection('treatmentInfo');
    }
 
    isLogin() {
@@ -315,7 +331,19 @@ public addComment(com: PatientComment) {
   this.allPatientsCommentRef.add(com);
 }
 
+/**
+ * addPatientDifficult
+ */
+public addPatientDifficult(diffi: PatientsDifficult) {
+  this.difficultForPatientRef.add(diffi);
+}
 
+/**
+ * addTreatmentInfo
+ */
+public addTreatmentInfo( treat: TreatmentInfo) {
+  this.treatmentInfoForProgressRef.add(treat);
+}
 
 
 
@@ -332,5 +360,34 @@ public addComment(com: PatientComment) {
     });
     this.sd.createAlert('success', 'מטפל עודכן בהצלחה', '');
   }
+
+
+  /**
+   * updatePatient
+   */
+  public updatePatient(pat) {
+    this.allPatientsRef.doc('' + pat.id).update(pat).then(res => {
+    });
+     this.sd.createAlert('success', 'תלמיד עודכן בהצלחה', '');
+  }
+
+  /***************************************************************** */
+  isDiffiExist(code) {
+return false; //??????????????????????????????????????????????????
+  }
+
+
+  getMipuyForPatient(Pid: string) {
+   // this.isBusy = true;
+    this.mipuyForPatientRef = this.afs.collection('mipuy', ref => {
+      return ref.where('Pid', '==', Pid).orderBy("mipuyDate", "desc");
+    });
+    // this.mipuyForPatientRef.valueChanges().subscribe(mipuy => {
+    //   this.mipuyForPatientList = mipuy;
+    //   this.isBusy = false;
+    //   this.mipuyForPatientRef = this.afs.collection('mipuy');
+    // });
+  }
+
 
 }

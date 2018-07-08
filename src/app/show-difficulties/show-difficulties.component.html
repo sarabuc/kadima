@@ -1,7 +1,10 @@
 <div class="list-group scrollable-x">
 
     <div class="list-group-item black-text border-top-bottom" *ngFor="let diffi of sd.treatmentCategories" style="text-align:right">
-        <app-difficult [code]="diffi.code" [describtion]="diffi.description" [isLeave]="diffi.isLeave"></app-difficult>
+        <app-difficult [status]="status" [code]="diffi.code" [describtion]="diffi.description" [isLeave]="diffi.isLeave"></app-difficult>
     </div>
+
+
     <mat-divider></mat-divider>
+    <button type="button" *ngIf="status == 'mipuy'" class="btn purple" (click)="addNewMipuy()">שמור מיפוי</button>
 </div>

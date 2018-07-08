@@ -1,3 +1,30 @@
-<p>
-  patient-card works!
-</p>
+<div *ngIf="readData || (!pat)" class="center">
+    <mat-card class="center">
+        <h4 class="center">loading...</h4>
+        <mat-spinner class="center"></mat-spinner>
+
+    </mat-card>
+</div>
+<div class="card  mx-2 my-2 px-3 py-3 " *ngIf="!readData">
+
+    <h3 class="purple-text h3 mt-2 mb-2">{{pat.firstName}} {{pat.lastName}} | <small>{{pat.grade}}</small></h3>
+    <mat-tab-group class="demo-tab-group" mat-stretch-tabs dynamicHeight [(selectedIndex)]="sd.activeTabIndex">
+        <mat-tab label="פרטים אישיים">
+            <app-patient-profile [pat]="pat" [Pid]="Pid"></app-patient-profile>
+        </mat-tab>
+        <mat-tab label="ערוך  פרטי תלמיד ">
+            <app-update-patient [patient]="pat"></app-update-patient>
+        </mat-tab>
+
+        <mat-tab label="דיווח על טיפול שהתקים">
+            <!--  <app-new-treatment-info [Pid]="Pid"></app-new-treatment-info>-->
+        </mat-tab>
+        <mat-tab label="היסטורית טיפולים">
+            <app-show-treatment-by-patient [Pid]="Pid"></app-show-treatment-by-patient>
+
+        </mat-tab>
+        <mat-tab label="מיפויים">
+            <app-mipuy-for-patient [Pid]="Pid" [status]="'all'"></app-mipuy-for-patient>
+        </mat-tab>
+    </mat-tab-group>
+</div>

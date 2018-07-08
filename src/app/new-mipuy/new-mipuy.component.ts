@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DbService } from '../services/db.service';
+import { DbService, Patient } from '../services/db.service';
 import { ShareDataService } from '../services/share-data.service';
 export interface UserData {
   id: string;
@@ -23,11 +23,12 @@ const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
 })
 export class NewMipuyComponent implements OnInit {
 
-selectedState: any;
+patientState: string;
 selectedcomm = '';
 comments: string[] = ['ניכר שיפור', 'לברר מול מורה', 'לדבר עם הורים', 'להעביר לאבחון', 'להעביר לתכנון טיפול'];
 Pid;
 selectedOptions: string[] = [];
+tooltip = '12345';
   constructor(public db: DbService, public sd: ShareDataService) {}
     ngOnInit() {
 
@@ -45,20 +46,13 @@ selectedOptions: string[] = [];
     this.selectedOptions = [];
   }
 
-  onSelectedOptionsChange(values: string[]) {
-    this.selectedOptions = values;
-    // this._recipeService.favorites = this.selectedOptions;
-   /* this.selectedOptions.forEach(element => {
-      const com = {
-        Pid: this.Pid,
-        commentInfo: element,
-        commentDate: new Date()
-      };
-      this.db.addComment(com);
 
-    });*/
+  onChoosed(have: string, P: Patient) {
+    P.haveDificult = have;
+ this.db.updatePatient(P);
+}
 
-  }
+
 }
 
 

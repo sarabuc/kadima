@@ -1,65 +1,59 @@
-<div>
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark purple fixed-top scrolling-navbar" *ngIf="db.isLogin()">
 
-    <nav *ngIf="db.isLogin()" class="navbar fixed-top navbar-expand-lg scrolling-navbar  navbar-dark  color1 mb-5">
-        <div class="container">
+    <!-- Navbar brand -->
+    <logo><a class="white-text" (click)="start.toggle(undefined, 'mouse')" mdbTooltip="תפריט" placement="bottom"><i class="fa fa-navicon fa-2x"></i></a>
 
-            <a class="white-text" (click)="start.toggle(undefined, 'mouse')" mdbTooltip="תפריט" placement="bottom"><i class="fa fa-navicon fa-2x"></i></a>
-
-            <a class="navbar-brand" [routerLink]="'/'">
-                <h2><strong>קדימה</strong></h2>
-            </a>
-
-
-
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav nav-flex-icons mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank">
+        <a class="navbar-brand" [routerLink]="'/'">
+            <h2><strong>קדימה</strong></h2>
+        </a>
+    </logo>
+    <links>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-flex-icons mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank">
                                  אברהם
                                 <i class="fa fa-user"></i>
                                 </a>
-                    </li>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link border border-light rounded" (click)="logout()" target="_blank">
+                <li class="nav-item">
+                    <a class="nav-link border border-light rounded" (click)="logout()" target="_blank">
                                 יציאה
                                 </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank"></a>
-                    </li>
-                    <li class="nav-item" [routerLink]="'/contact'">
-                        <a class="nav-link" target="_blank">צור קשר</a>
-                    </li>
-                </ul>
-            </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank"></a>
+                </li>
+                <li class="nav-item" [routerLink]="'/contact'">
+                    <a class="nav-link" target="_blank">צור קשר</a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </links>
+</mdb-navbar>
+<mat-sidenav-container fullscreen class="pb-1 pt-3" style="">
+
+    <mat-sidenav #start [mode]="mode " [fixedInViewport]="fixed " position="start " class="yellow">
+        <button mat-button class="mt-1 mb-3 " (click)="start.close( 'mouse') ">הסתר תפריט</button>
+        <div class="list-group mt-3 pt-2 ">
+            <a *ngFor="let option of menuOptions " class="list-group-item link-botton px-4" [routerLink]="option.router " style="text-align: right"><i [class]="option.icon"></i>{{option.option}}</a>
+        </div>
 
 
-    <mat-sidenav-container fullscreen class="pb-1 pt-3" style="">
-
-        <mat-sidenav #start [mode]="mode " [fixedInViewport]="fixed " position="start ">
-            <button mat-button class="mt-1 mb-3 " (click)="start.close( 'mouse') ">הסתר תפריט</button>
-            <div class="list-group mt-3 pt-2 ">
-                <a *ngFor="let option of menuOptions " class="list-group-item link-botton px-4" [routerLink]="option.router " style="text-align: right"><i [class]="option.icon"></i>{{option.option}}</a>
-            </div>
-
-
-        </mat-sidenav>
-        <mat-sidenav-content>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <!--Navbar-->
 
 
 
+        <div class="mt-3 pt-5">
+            <router-outlet> </router-outlet>
+        </div>
+        <p-growl [(value)]="sd.msgs" [life]="50000" [baseZIndex]="50000"></p-growl>
+    </mat-sidenav-content>
+</mat-sidenav-container>
 
-            <div class="mt-3 pt-5">
-                <router-outlet> </router-outlet>
-            </div>
-            <p-growl [(value)]="sd.msgs" [life]="50000" [baseZIndex]="50000"></p-growl>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-</div>
 
 
 <!--

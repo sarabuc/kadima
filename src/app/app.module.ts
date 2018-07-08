@@ -65,7 +65,7 @@ import { MenuComponent } from './menu/menu.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AboutComponent } from './about/about.component';
-
+import { DatePipe } from '@angular/common'
 
 
 
@@ -111,6 +111,13 @@ import { NewMipuyComponent } from './new-mipuy/new-mipuy.component';
 import { DifficutForMipuyComponent } from './difficut-for-mipuy/difficut-for-mipuy.component';
 import { PatientCardComponent } from './patient-card/patient-card.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
+import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { UpdatePatientComponent } from './update-patient/update-patient.component';
+import { MipuyForPatientComponent } from './mipuy-for-patient/mipuy-for-patient.component';
+import { ChipsInteractionComponent } from './chips-interaction/chips-interaction.component';
+import { AddDiffiFromExelComponent } from './add-diffi-from-exel/add-diffi-from-exel.component';
+import { DiffiAndMethodsComponent } from './diffi-and-methods/diffi-and-methods.component';
+import { ShowMipuyComponent } from './show-mipuy/show-mipuy.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -157,7 +164,14 @@ const firebase = {
     NewMipuyComponent,
     DifficutForMipuyComponent,
     PatientCardComponent,
-    PatientListComponent
+    PatientListComponent,
+    PatientProfileComponent,
+    UpdatePatientComponent,
+    MipuyForPatientComponent,
+    ChipsInteractionComponent,
+    AddDiffiFromExelComponent,
+    DiffiAndMethodsComponent,
+    ShowMipuyComponent
   ],
   imports: [
     routing,
@@ -217,6 +231,7 @@ TreeTableModule,
     AuthService,
     MessageService,
     NodeService,
+    DatePipe,
     ReturnMessageService],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]

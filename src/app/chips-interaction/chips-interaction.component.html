@@ -1,0 +1,5 @@
+<mat-chip-list [multiple]="'true'">
+    <mat-chip #haveDiffi (click)="clickOnChip('yes'); clsY = selectedCls; clsN = cls; clsM = cls">קים קושי</mat-chip>
+    <mat-chip #dontHaveDiff (click)="clickOnChip('no'); clsN = selectedCls; clsY = cls; clsM = cls">אין קושי</mat-chip>
+    <mat-chip #questionDiff (click)="clickOnChip('maybe'); clsM = selectedCls; clsN = cls; clsY = cls"> לא מאובחן</mat-chip>
+</mat-chip-list>

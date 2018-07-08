@@ -1,0 +1,11 @@
+<div class="card white-text mt-1 mr-3 ml-3 px-4 py-3 dark-card" style="">
+    <div class="row d-flex justify-content-end">
+        <button class=" my-button my-btn-lg" [routerLink]="'/addDiffiFromExel'">הוסף קשיים מקובץ
+                   <i class="fa fa-file mr-2"></i>
+                 </button>
+    </div>
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 mt-3 mb-3">
+            <h2 class="nice-text"> קשיים במערכת</h2>
+            <app-show-difficulties # [status]="'show'"></app-show-difficulties>
+        </div>

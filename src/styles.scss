@@ -1,4 +1,22 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+.mat-button-toggle-checked {
+    background: yellow !important;
+}
+
+.ui-growl {
+    top: 35rem !important;
+    right: 14rem !important;
+}
+
+.line-selected {
+    color: purple !important;
+    font: italic bold 18px/30px Georgia, serif !important;
+}
+
+.modal {
+    background: #131313b3 !important;
+}
+
 .sticky {
     position: fixed !important;
     top: 0 !important;
@@ -10,7 +28,6 @@
 }
 
 .gradient-card-header {
-    z-index: 1000;
     border-radius: 10%;
     background: linear-gradient(to bottom right, purple, yellow);
 }
@@ -29,8 +46,12 @@
     border: none !important;
 }
 
+.mat-form-field-empty.mat-form-field-label {
+    color: white !important;
+}
+
 .dark-card {
-    background-color: rgba(44, 44, 44, 0.94);
+    background-color: rgba(19, 19, 19, 0.94);
     padding: 2rem;
 }
 
@@ -112,7 +133,7 @@
 }
 
 .link-botton:hover {
-    background-color: #eee;
+    background-color: yellow !important;
 }
 
 // forms
@@ -153,13 +174,15 @@ mat-select {
 }
 
 .form-item:not([focus]) {
-    background-color: rgba(151, 146, 146, 0.945);
+    background-color: rgba(97, 97, 97, 0.945);
     padding-right: 1rem;
     border-radius: 0.3rem; // border-color: white;
     box-shadow: 0 2px 0 0 #ffc107;
     border: 1px double #e7e4dc;
     max-width: 115%;
     max-height: 115%;
+    min-height: 35px;
+    color: white !important;
 }
 
 .form-item:focus,
@@ -305,14 +328,18 @@ svg {
 
 .ground {
     background: rgba(39, 36, 36, 0.836);
+    overflow-x: auto !important;
+    overflow-y: auto !important;
 }
 
 .modal-backdrop {
-    z-index: 0;
+    z-index: 0 !important;
 }
 
 .modal-content {
-    z-index: 50000 !important;
+    /*  z-index: 50000 !important;*/
+    top: 7rem;
+    border: 5px solid yellow;
 }
 
 .center {
@@ -389,8 +416,6 @@ svg {
 
 /*************************************************************************/
 
-
-/*
 html,
 body {
     height: 100%;
@@ -496,7 +521,6 @@ input:-webkit-autofill {
     -webkit-transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
     transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
-*/
 
 
 /*
@@ -749,23 +773,6 @@ input {
 }
 */
 
-
-/*
-  *
-  *  Responsive attributes
-  *
-  *  References:
-  *  1) https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties#flex
-  *  2) https://css-tricks.com/almanac/properties/f/flex/
-  *  3) https://css-tricks.com/snippets/css/a-guide-to-flexbox/
-  *  4) https://github.com/philipwalton/flexbugs#3-min-height-on-a-flex-container-wont-apply-to-its-flex-items
-  *  5) http://godban.com.ua/projects/flexgrid
-  *
-  *
-  */
-
-
-/*
 .md-panel-outer-wrapper {
     height: 100%;
     left: 0;
@@ -1282,13 +1289,8 @@ md-bottom-sheet.md-grid md-list-item {
     transition: all 0.5s;
     height: 96px;
     margin-top: 8px;
-    margin-bottom: 8px;*/
-
-
-/* Mixin for how many grid items to show per row */
-
-
-/*
+    margin-bottom: 8px;
+    /* Mixin for how many grid items to show per row */
 }
 
 @media (max-width: 960px) {
@@ -1397,7 +1399,6 @@ button.md-button::-moz-focus-inner {
     display: inline-block;
     position: relative;
     cursor: pointer;
-
     min-height: 36px;
     min-width: 88px;
     line-height: 36px;
@@ -1408,20 +1409,17 @@ button.md-button::-moz-focus-inner {
     text-align: center;
     border-radius: 2px;
     box-sizing: border-box;
-
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     outline: none;
     border: 0;
-
     padding: 0 6px;
     margin: 6px 8px;
     background: transparent;
     color: currentColor;
     white-space: nowrap;
-
     text-transform: uppercase;
     font-weight: 500;
     font-size: 14px;
@@ -2114,13 +2112,9 @@ md-card md-card-footer {
 
 .md-chips md-chip._md-chip-content-edit-is-enabled {
     -webkit-user-select: none;
-
     -moz-user-select: none;
-
     -khtml-user-select: none;
-
     -ms-user-select: none;
-
 }
 
 .md-chips md-chip .md-chip-remove-container {
@@ -2467,13 +2461,11 @@ md-content[md-scroll-x] {
     md-content {
         overflow: visible !important;
     }
-}*/
+}
 
 
 /** Styles for mdCalendar. */
 
-
-/*
 md-calendar {
     font-size: 13px;
     -webkit-user-select: none;
@@ -2636,13 +2628,11 @@ md-calendar-month .md-calendar-month-label:not(.md-calendar-month-label-disabled
 .md-calendar tr {
     vertical-align: middle;
     box-sizing: content-box;
-}*/
+}
 
 
 /** Styles for mdDatepicker. */
 
-
-/*
 md-datepicker {
     white-space: nowrap;
     overflow: hidden;
@@ -3114,7 +3104,6 @@ md-fab-speed-dial {
     -webkit-align-items: center;
     align-items: center;
     z-index: 20;
-
 }
 
 md-fab-speed-dial.md-fab-bottom-right {
@@ -3312,7 +3301,6 @@ md-fab-speed-dial.md-scale .md-fab-action-item {
 
 md-fab-toolbar {
     display: block;
-
 }
 
 md-fab-toolbar.md-fab-bottom-right {
@@ -3596,7 +3584,6 @@ md-input-container {
     padding: 2px;
     margin: 18px 0;
     vertical-align: middle;
-
 }
 
 md-input-container:after {
@@ -3649,7 +3636,6 @@ md-input-container input[type="url"],
 md-input-container input[type="search"],
 md-input-container input[type="tel"],
 md-input-container input[type="color"] {
-
     -moz-appearance: none;
     -webkit-appearance: none;
 }
@@ -4746,7 +4732,6 @@ md-menu-item {
     -webkit-box-pack: start;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
-
 }
 
 md-menu-item>* {
@@ -4998,8 +4983,6 @@ md-menu-content.md-menu-bar-menu.md-dense .md-menu>.md-button:after {
     right: auto;
     left: 28px;
 }
-
-
 
 .md-nav-bar {
     border-style: solid;
@@ -5583,9 +5566,7 @@ md-radio-button .md-label {
     margin-right: 30px;
 }
 
-md-radio-group {
-
-}
+md-radio-group {}
 
 md-radio-group.layout-column md-radio-button,
 md-radio-group.layout-xs-column md-radio-button,
@@ -6413,7 +6394,6 @@ md-slider {
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
     flex-direction: row;
-
 }
 
 md-slider *,
@@ -6513,7 +6493,6 @@ md-slider .md-thumb:after {
 }
 
 md-slider .md-sign {
-
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
@@ -6533,7 +6512,6 @@ md-slider .md-sign {
     transform: scale(0.4) translate3d(0, 67.5px, 0);
     -webkit-transition: all 0.3s cubic-bezier(0.35, 0, 0.25, 1);
     transition: all 0.3s cubic-bezier(0.35, 0, 0.25, 1);
-
 }
 
 md-slider .md-sign:after {
@@ -6616,9 +6594,7 @@ md-slider.md-dragging .md-track-fill {
     transition: none;
 }
 
-md-slider:not([md-discrete]) {
-
-}
+md-slider:not([md-discrete]) {}
 
 md-slider:not([md-discrete]) .md-track-ticks,
 md-slider:not([md-discrete]) .md-sign {
@@ -6763,7 +6739,6 @@ md-slider[md-vertical][md-discrete] .md-sign {
     top: 9.5px;
     -webkit-transform: scale(0.4) translate3d(67.5px, 0, 0);
     transform: scale(0.4) translate3d(67.5px, 0, 0);
-
 }
 
 md-slider[md-vertical][md-discrete] .md-sign:after {
@@ -7654,7 +7629,6 @@ md-toast {
     opacity: 1;
     -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-
 }
 
 md-toast .md-toast-content {
@@ -7815,7 +7789,6 @@ md-toast .md-button {
 @media (min-width: 960px) {
     md-toast {
         min-width: 304px;
-
     }
     md-toast.md-bottom {
         bottom: 0;
@@ -8352,8 +8325,6 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
     }
 }
 
-
-
 [ng\:cloak],
 [ng-cloak],
 [data-ng-cloak],
@@ -8362,25 +8333,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
 .x-ng-cloak {
     display: none !important;
 }
-*/
 
-
-/*
-  *
-  *  Responsive attributes
-  *
-  *  References:
-  *  1) https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties#flex
-  *  2) https://css-tricks.com/almanac/properties/f/flex/
-  *  3) https://css-tricks.com/snippets/css/a-guide-to-flexbox/
-  *  4) https://github.com/philipwalton/flexbugs#3-min-height-on-a-flex-container-wont-apply-to-its-flex-items
-  *  5) http://godban.com.ua/projects/flexgrid
-  *
-  *
-  */
-
-
-/*
 @-moz-document url-prefix() {
     .layout-fill {
         margin: 0;
@@ -8389,9 +8342,6 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
         height: 100%;
     }
 }
-
-
-
 
 .flex-order {
     -webkit-box-ordinal-group: 1;
@@ -10170,24 +10120,6 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
     height: 100%;
 }
 
-*/
-
-
-/**
-   * `hide-gt-sm show-gt-lg` should hide from 600px to 1200px
-   * `show-md hide-gt-sm` should show from 0px to 960px and hide at >960px
-   * `hide-gt-md show-gt-sm` should show everywhere (show overrides hide)`
-   *
-   *  hide means hide everywhere
-   *  Sizes:
-   *         $layout-breakpoint-xs:     600px !default;
-   *         $layout-breakpoint-sm:     960px !default;
-   *         $layout-breakpoint-md:     1280px !default;
-   *         $layout-breakpoint-lg:     1920px !default;
-   */
-
-
-/*
 @media (max-width: 599px) {
     .hide-xs:not(.show-xs):not(.show),
     .hide:not(.show-xs):not(.show) {
@@ -23583,7 +23515,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
     .hide-print:not(.show-print):not(.show) {
         display: none !important;
     }
-}*/
+}
 
 
 /********************************************************************************************************************************************** */

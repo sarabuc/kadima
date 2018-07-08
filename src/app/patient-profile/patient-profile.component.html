@@ -1,0 +1,17 @@
+<div class="px-3 py-1 mx-2 my-3" style="text-align:right">
+    <div class="list-group px-2 py-3 mb-3">
+        <h3>פרטים אישיים</h3>
+        <div class="list-group-item"><small>תעודת זהות</small> <strong>  {{pat.id}} </strong></div>
+        <div class="list-group-item"><small>שם</small> <strong>  {{pat.firstName}} {{pat.lastName}}</strong></div>
+        <div class="list-group-item"><small>שם האב</small> <strong>  {{pat.fatherName}} </strong></div>
+        <div class="list-group-item"><small>טלפון האב</small> <strong>  {{pat.fatherPhone}}</strong></div>
+        <div class="list-group-item"><small>טלפון האם</small> <strong>  {{pat.motherPhone}} </strong></div>
+        <div class="list-group-item"><small>תאריך לידה</small> <strong>  {{pat.birthDate}}</strong></div>
+        <div class="list-group-item"><small>כתה</small> <strong>  {{pat.grade}} </strong></div>
+        <div class="list-group-item"><small>קופת חולים</small> <strong>  {{pat.kupatCholim}} </strong></div>
+    </div>
+
+    <app-mipuy-for-patient [Pid]="Pid" [status]="'last'"></app-mipuy-for-patient>
+    <app-time-table-to-show [timeStr]="pat.strFreeTime"></app-time-table-to-show>
+
+</div>

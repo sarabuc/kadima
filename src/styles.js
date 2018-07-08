@@ -2,6 +2,12 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   'import': 'url(~@angular/material/prebuilt-themes/deeppurple-amber.css)',
+  'line-selected': {
+    'backgroundColor': 'rgba(248, 248, 99, 0.979) !important'
+  },
+  'modal': {
+    'margin': [{ 'unit': 'rem', 'value': 2 }, { 'unit': 'string', 'value': '!important' }, { 'unit': 'rem', 'value': 2 }, { 'unit': 'string', 'value': '!important' }]
+  },
   'sticky': {
     'position': 'fixed !important',
     'top': [{ 'unit': 'px', 'value': 0 }, { 'unit': 'string', 'value': '!important' }],
@@ -11,7 +17,6 @@ export default StyleSheet.create({
     'borderRadius': '50%'
   },
   'gradient-card-header': {
-    'zIndex': '1000',
     'borderRadius': '10%',
     'background': 'linear-gradient(to bottom right, purple, yellow)'
   },
@@ -25,8 +30,11 @@ export default StyleSheet.create({
     'background': 'transparent !important',
     'border': [{ 'unit': 'string', 'value': 'none' }, { 'unit': 'string', 'value': '!important' }]
   },
+  'mat-form-field-emptymat-form-field-label': {
+    'color': 'white !important'
+  },
   'dark-card': {
-    'backgroundColor': 'rgba(44, 44, 44, 0.94)',
+    'backgroundColor': 'rgba(19, 19, 19, 0.94)',
     'padding': [{ 'unit': 'rem', 'value': 2 }, { 'unit': 'rem', 'value': 2 }, { 'unit': 'rem', 'value': 2 }, { 'unit': 'rem', 'value': 2 }]
   },
   'color1': {
@@ -90,7 +98,7 @@ export default StyleSheet.create({
     'textAlign': 'center'
   },
   'link-botton:hover': {
-    'backgroundColor': '#eee'
+    'backgroundColor': 'yellow !important'
   },
   'inputmat-input-element': {
     'marginTop': [{ 'unit': 'rem', 'value': 0.5 }]
@@ -124,13 +132,14 @@ export default StyleSheet.create({
     'fontSize': [{ 'unit': '%V', 'value': 1.6 }, { 'unit': 'string', 'value': '!important' }]
   },
   'form-item:not([focus])': {
-    'backgroundColor': 'rgba(151, 146, 146, 0.945)',
+    'backgroundColor': 'rgba(97, 97, 97, 0.945)',
     'paddingRight': [{ 'unit': 'rem', 'value': 1 }],
     'borderRadius': '0.3rem',
     'boxShadow': [{ 'unit': 'px', 'value': 0 }, { 'unit': 'px', 'value': 2 }, { 'unit': 'px', 'value': 0 }, { 'unit': 'px', 'value': 0 }, { 'unit': 'string', 'value': '#ffc107' }],
     'border': [{ 'unit': 'px', 'value': 1 }, { 'unit': 'string', 'value': 'double' }, { 'unit': 'string', 'value': '#e7e4dc' }],
     'maxWidth': [{ 'unit': '%H', 'value': 1.15 }],
-    'maxHeight': [{ 'unit': '%V', 'value': 1.15 }]
+    'maxHeight': [{ 'unit': '%V', 'value': 1.15 }],
+    'minHeight': [{ 'unit': 'px', 'value': 35 }]
   },
   'form-item:focus': {
     'border': [{ 'unit': 'px', 'value': 4 }, { 'unit': 'string', 'value': 'solid' }, { 'unit': 'string', 'value': '#ffc107' }, { 'unit': 'string', 'value': '!important' }],
@@ -162,7 +171,7 @@ export default StyleSheet.create({
     'borderTop': [{ 'unit': 'px', 'value': 1 }, { 'unit': 'string', 'value': 'solid' }, { 'unit': 'string', 'value': '#ffc107f5' }]
   },
   'purple-border': {
-    'border': [{ 'unit': 'px', 'value': 3 }, { 'unit': 'string', 'value': 'solid' }, { 'unit': 'string', 'value': '#673ab7' }]
+    'border': [{ 'unit': 'px', 'value': 1 }, { 'unit': 'string', 'value': 'solid' }, { 'unit': 'string', 'value': '#673ab7' }]
   },
   'custom-file-control': {
     'position': 'relative'
@@ -202,7 +211,7 @@ export default StyleSheet.create({
     'overflowY': 'scroll'
   },
   'fixed-top': {
-    'zIndex': '1000 !important'
+    'zIndex': '100 !important'
   },
   'main': {
     'paddingTop': [{ 'unit': 'rem', 'value': 3 }],
@@ -250,13 +259,15 @@ export default StyleSheet.create({
     'fontWeight': '300 !important'
   },
   'ground': {
-    'background': 'rgba(74, 64, 64, 0.65098)'
+    'background': 'rgba(39, 36, 36, 0.836)'
   },
   'modal-backdrop': {
-    'zIndex': '0'
+    'zIndex': '0 !important'
   },
   'modal-content': {
-    'zIndex': '5000'
+    // z-index: 50000 !important;
+    'top': [{ 'unit': 'rem', 'value': 7 }],
+    'border': [{ 'unit': 'px', 'value': 5 }, { 'unit': 'string', 'value': 'solid' }, { 'unit': 'string', 'value': 'yellow' }]
   },
   'center': {
     'marginRight': [{ 'unit': 'string', 'value': 'auto' }, { 'unit': 'string', 'value': '!important' }],

@@ -14,10 +14,8 @@
     overflow-y: scroll;
 }
 
- 
-
 .fixed-top {
-    z-index: 1000 !important;
+    z-index: 100 !important;
 }
 
 main {
@@ -89,7 +87,7 @@ svg {
 }
 
 .modal-content {
-    z-index: 5000;
+    z-index: 5000 !important;
 }
 
 .center {

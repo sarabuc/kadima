@@ -1,3 +1,24 @@
-<p>
-  patient-list works!
-</p>
+<div class="pb-4 my-4 card dark-card pt-3 mx-2">
+
+    <h3 class="white-text">בחר תלמיד כדי לראות פרטים </h3>
+    <div class="row mr-auto ml-auto pr-3">
+        <div class="col-sm-5 coll-md-4 px-3 mb-3">
+            <input type="text" class="form-item white-text" id="myInput" ng-model="test" placeholder="לפי שם פרטי " name="fname" [(ngModel)]="fname">
+
+        </div>
+        <div class="col-sm-5 coll-md-4 px-3 mb-3">
+            <input type="text" class="form-item white-text" id="myInput" ng-model="test" placeholder="לפי שם משפחה " name="lname" [(ngModel)]="lname">
+
+        </div>
+        <i class="fa fa-search fa-2x white-text mr-3"></i>
+
+    </div>
+
+
+    <div class="list-group mt-3 pt-2 ">
+        <div *ngFor="let p of  db.allPatientList">
+            <a *ngIf="isFnPrefix(p.firstName)&&isLnPrefix(p.lastName)" class="list-group-item link-botton " style="text-align:right" [routerLink]="['/Pcard', p.id]">
+                <i class="fa fa-user mx-5"></i>{{p.firstName}} {{p.lastName}}</a>
+        </div>
+    </div>
+</div>

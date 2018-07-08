@@ -1,0 +1,7 @@
+.mat-chip.mat-standard-chip {
+    background-color: rgba(243, 243, 93, 0.959) !important;
+}
+
+.mat-standard-chip:focus {
+    background-color: yellow !important;
+}

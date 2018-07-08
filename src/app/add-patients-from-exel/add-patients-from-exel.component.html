@@ -1,16 +1,16 @@
 <div class="black-text">
-    <p>
+    <p class="h2 purple-text mt-5 mb-4">
         הוספת מטופלים מקובץ אקסל
     </p>
 
 
     <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="בחר קובץ" accept=".xlsx">
-    <button type="button" class="btn btn-info" (click)="Upload()">טען נתונים</button>
+    <button type="button" class="btn purple" (click)="Upload()">טען נתונים</button>
 
 
-    <div class="container pt-5 ">
+    <div class="container pt-5 " *ngIf="afterUnload">
         <table class="table table-striped table-bordered table-hover">
-            <tr class="nice-text">
+            <tr class="purple-text purple-border" style="font-size: large; font-style: bold">
                 <th></th>
                 <th>שם פרטי</th>
                 <th>שם משפחה</th>
@@ -23,7 +23,9 @@
                 <th>קופת חולים</th>
             </tr>
             <tr class="black-text" *ngFor="let p of PfromExel; let i = index">
-                <td>{{i+1}}</td>
+                <td *ngIf="!successed[i]">{{i+1}}</td>
+                <td *ngIf="successed[i] == 1"><i class="fa fa-check green-text fa-2x"></i></td>
+                <td *ngIf="successed[i] == 2"><i class="fa fa-close red-text fa-2x"></i></td>
                 <td>{{p.fname}}</td>
                 <td>{{p.lname}}</td>
                 <td>{{p.id}}</td>
@@ -35,9 +37,9 @@
                 <td>{{p.kupatCholim}}</td>
             </tr>
         </table>
+
+
+        <button type="button" class="btn purple" (click)="addPatientFromExel()">שמור</button>
+        <button type="button" class="btn purple" (click)="updatePatientFromExel()">עדכן תלמידים קימים</button>
     </div>
-
-    <button type="button" class="btn btn-info" (click)="addPatientFromExel()">שמור</button>
-    <button type="button" class="btn btn-info" (click)="updatePatientFromExel()">עדכן תלמידים קימים</button>
-
 </div>

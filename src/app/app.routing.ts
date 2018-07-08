@@ -21,6 +21,8 @@ import { AddPatientsFromExelComponent } from './add-patients-from-exel/add-patie
 import { AddTherapistFromExelComponent } from './add-therapist-from-exel/add-therapist-from-exel.component';
 import { TherapistListComponent } from './therapist-list/therapist-list.component';
 import { LoginComponent } from './login/login.component';
+import { AddDiffiFromExelComponent } from './add-diffi-from-exel/add-diffi-from-exel.component';
+import { DiffiAndMethodsComponent } from './diffi-and-methods/diffi-and-methods.component';
 const appRoutes: Routes = [
 
  // { path: 'b', component: BeforeLoginComponent},
@@ -35,7 +37,7 @@ const appRoutes: Routes = [
   { path: 'addPatient', component: NewPatientComponent },
   { path: 'addTherapist', component: NewTherapistComponent },
   { path: 'temp', component: TempComponent },
-  { path: 'schdule', component: ScheduleComponent },
+  { path: 'addDiffiFromExel', component: AddDiffiFromExelComponent },
   { path: 'addPPatientsFromExel', component: AddPatientsFromExelComponent },
   { path: 'addTherapistFromExel', component: AddPatientsFromExelComponent },
  { path: 'login', component: LoginComponent},
@@ -43,7 +45,8 @@ const appRoutes: Routes = [
   { path: 'Report', component: TempComponent },
   { path: 'check-progress', component: TempComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'Treatment-planning', component: TempComponent }
+  { path: 'Treatment-planning', component: TempComponent }, 
+  {path: 'diffiAndMethods', component:DiffiAndMethodsComponent }
 ];
 
 

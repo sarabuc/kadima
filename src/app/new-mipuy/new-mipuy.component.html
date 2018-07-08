@@ -3,8 +3,8 @@
         <h1 class="h1-responsive mt-3 purple-text"> מיפוי חדש
             <small class="text-muted mr-3">סמן תלמידים הזקוקים למעקב ולחץ על התחל מיפוי</small>
         </h1>
-        <form class="form-inline md-form mt-2 ml-2 mr-2 w-100 pr-auto pl-auto">
-            <input class="form-control my-0 w-80" type="text" placeholder="חפש">
+        <form class="form-inline md-form mt-2 ml-2 mr-2 w-100 pr-auto pl-auto ">
+            <input class="form-control my-0 w-80 mr-5" type="text" placeholder="חפש">
             <button class="btn btn-sm btn-primary purple ml-2 px-1"><i class="fa fa-search"></i>  </button>
         </form>
 
@@ -39,28 +39,28 @@
 
 
 
-        <div class=" w-100  center">
+        <div class=" center">
             <!--Table-->
-            <table class="table table-hover mb-0  mr-auto ml-auto">
+            <table class="table  mb-0 table-responsive  mr-auto ml-auto">
 
                 <!--Table head-->
-                <thead class=" gradient-card-header view">
+                <thead class=" purple white-text view">
                     <tr>
                         <th>
                             <!-- <input class="form-check-input" type="checkbox" id="checkbox">
                                 <label class="form-check-label" for="checkbox" class="mr-2 label-table"></label> -->
                         </th>
-                        <th class=" "><a>תעודת זהות <i class="fa fa-sort ml-1"></i></a></th>
-                        <th class=""><a href="">שם פרטי<i class="fa fa-sort ml-1"></i></a></th>
-                        <th class=" "><a href="">שם משפחה<i class="fa fa-sort ml-1"></i></a></th>
-                        <th class=" "><a href="">כתה<i class="fa fa-sort ml-1"></i></a></th>
-                        <th class=" ">
+                        <th class="th-lg white-text"><a>תעודת זהות <i class="fa fa-sort ml-2"></i></a></th>
+                        <th class="th-lg white-text"><a href="">שם פרטי<i class="fa fa-sort ml-2"></i></a></th>
+                        <th class=" th-lg white-text"><a href="">שם משפחה<i class="fa fa-sort ml-2"></i></a></th>
+                        <th class=" th-lg white-text"><a href="">כתה<i class="fa fa-sort ml-2"></i></a></th>
+                        <th class="th-lg white-text">
 
                         </th>
-                        <th class=" ">
-
+                        <th class="th-lg white-text">
+                            האם קים קושי
                         </th>
-                        <th class=" "><a href="">פעולות</a></th>
+                        <th class="th-lg white-text"><a href="">אפשרויות</a></th>
                     </tr>
                 </thead>
                 <!--Table head-->
@@ -78,17 +78,37 @@
                         <td>{{pat.grade}}</td>
                         <td></td>
                         <td>
-                            <mat-chip-list [(ngModel)]="selectedState">
-                                <mat-chip #haveDiffi color="accent">קים קושי</mat-chip>
-                                <mat-chip #dontHaveDiff color="accent">אין קושי</mat-chip>
-                                <mat-chip #questionDiff color="accent"> לא מאובחן</mat-chip>
-                            </mat-chip-list>
-                            {{selectedState}}
+                            <!-- <app-chips-interaction (choosed)="onChoosed($event, pat)">
+                            </app-chips-interaction> -->
+                            <mat-button-toggle-group [value]="pat.haveDificult" #group="matButtonToggleGroup" (change)="onChoosed(group.value, pat)" class="yellow lighten-2">
+
+                                <mat-button-toggle value="yes" class='example-tooltip-host' [matTooltip]="tooltip" matTooltipPosition="above">
+                                    <i class="fa fa-check fa-lg"></i>
+                                </mat-button-toggle>
+
+
+                                <mat-button-toggle value="no" mdbTooltip="אין קושי" placement="bottom">
+                                    <i class="fa fa-close fa-lg"></i>
+                                </mat-button-toggle>
+                                <mat-button-toggle value="maybe" mdbTooltip="לא מאובחן" placement="bottom">
+                                    <i class="fa fa-question fa-lg"></i>
+                                </mat-button-toggle>
+
+                            </mat-button-toggle-group>
+                            <!-- <div class="example-selected-value">Selected value: {{group.value}}</div> -->
+                            <!-- <div class="example-selected-value">Selected value: {{pat.haveDificult}}</div> -->
+
                         </td>
                         <td>
-                            <a #comment (click)="fluid.show(); Pid = pat.id;" class="nav-item  btn-rounded"><i class="fa fa-2x fa-comment purple-text ml-2 mr-2"></i></a>
-                            <a #card [routerLink]="['/Pcard', pat.id]" class="nav-item   btn-rounded"><i class="fa fa-2x fa-id-card-o purple-text ml-2 mr-2"></i></a>
-                            <a #startMipuy (click)="form.show(); Pid= pat.id;" class="nav-item   btn-rounded"><i class="fa fa-2x fa-arrow-circle-left purple-text ml-2 mr-2"></i></a>
+                            <a #comment (click)="fluid.show(); Pid = pat.id;" class="nav-item  btn-rounded gray" mdbTooltip="הוסף הערות לתלמיד" placement="bottom">
+                                <i class="fa fa-2x fa-comment purple-text ml-2 mr-2"></i>
+                            </a>
+                            <a #card [routerLink]="['/Pcard', pat.id]" class="nav-item   btn-rounded gray" mdbTooltip="עבור לפרטי תלמיד" placement="bottom">
+                                <i class="fa fa-2x fa-id-card-o purple-text ml-2 mr-2"></i>
+                            </a>
+                            <a #startMipuy (click)="form.show(); Pid= pat.id;" class="nav-item gray  btn-rounded gray" disabled mdbTooltip="הוסף מיפוי" placement="bottom">
+                                <i class="fa fa-2x fa-arrow-circle-left purple-text ml-2 mr-2"></i>
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -106,64 +126,62 @@
 
 
 
-<div mdbModal #form="mdb-modal" class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog cascading-modal" role="document">
-        <!--Content-->
-        <div class="modal-content">
+<div mdbModal #form="mdb-modal" class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+    <div class="modal-dialog modal-fluid" role="document">
+        <div class="modal-dialog cascading-modal" role="document">
 
-            <!--Header-->
-            <div class="modal-header light-blue darken-3 white-text">
-                <h4 class="title">
-                    <i class="fa fa-pencil"></i> עדכן קשיים</h4>
-                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+            <div class="modal-content">
+
+
+                <div class="modal-header purple white-text">
+                    <h4 class="title">
+                        <i class="fa fa-pencil"></i> עדכן קשיים</h4>
+                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
           <span aria-hidden="true">×</span>
         </button>
-            </div>
-            <!--Body-->
-            <div class="modal-body mb-0">
+                </div>
 
-                <app-show-difficulties></app-show-difficulties>
-                <!-- <button class="btn btn-info mb-2 waves-light" mdbRippleRadius>שמור
-            <i class="fa fa-send ml-1"></i>
-          </button> -->
+                <div class="modal-body mb-0">
+
+                    <app-show-difficulties [status]="'mipuy'" [Pid]="Pid"></app-show-difficulties>
+
+                </div>
             </div>
+
         </div>
-        <!--/.Content-->
     </div>
-</div>
-<!--Modal: Contact form-->
 
 
 
 
-<div mdbModal #fluid="mdb-modal" class="modal fade left" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-left" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title w-100" id="myModalLabel">הוסף הערה</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fluid.hide()">
+    <div mdbModal #fluid="mdb-modal" class="modal fade left" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-left" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title w-100" id="myModalLabel">הוסף הערה</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fluid.hide()">
           <span aria-hidden="true">×</span>
         </button>
-            </div>
-            <div class="modal-body">
-                <h3 mat-subheader>הערות</h3>
-                <!-- {{selectedOptions | json}} -->
-                <mat-selection-list #comm [ngModel]="selectedOptions" (ngModelChange)="onSelectedOptionsChange($event)">
-                    <mat-list-option [value]="com" *ngFor="let com of comments">
-                        {{com}}
-                    </mat-list-option>
-                    <mat-list-option [value]="otherComm.value">
-                        <mat-form-field style="text-align: center">
-                            <input matInput #otherComm placeholder="אחר">
-                        </mat-form-field>
+                </div>
+                <div class="modal-body">
+                    <h3 mat-subheader>הערות</h3>
+                    <!-- {{selectedOptions | json}} -->
+                    <mat-selection-list #comm [ngModel]="selectedOptions" (ngModelChange)="onSelectedOptionsChange($event)">
+                        <mat-list-option [value]="com" *ngFor="let com of comments">
+                            {{com}}
+                        </mat-list-option>
+                        <mat-list-option [value]="otherComm.value">
+                            <mat-form-field style="text-align: center">
+                                <input matInput #otherComm placeholder="אחר">
+                            </mat-form-field>
 
-                    </mat-list-option>
-                </mat-selection-list>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide();selectedOptions = []" mdbWavesEffect>סגור</button>
-                <button type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="saveComments(); fluid.hide();">שמור</button>
+                        </mat-list-option>
+                    </mat-selection-list>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide();selectedOptions = []" mdbWavesEffect>סגור</button>
+                    <button type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="saveComments(); fluid.hide();">שמור</button>
+                </div>
             </div>
         </div>
     </div>
-</div>

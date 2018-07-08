@@ -10,8 +10,10 @@ import { ShareDataService } from '../services/share-data.service';
 })
 export class AddPatientsFromExelComponent implements OnInit {
  PfromExel: any [];
+ successed: number[] = [];
+  afterUnload = false;
   constructor(public dbs: DbService, public sd: ShareDataService) {
-    this.sd.createAlert('success', 'works', 'halevay');
+  //  this.sd.createAlert('success', 'works', 'halevay');
   }
 
 
@@ -37,6 +39,7 @@ export class AddPatientsFromExelComponent implements OnInit {
       console.log(this.PfromExel);
     };
     fileReader.readAsArrayBuffer(this.file);
+    this.afterUnload = true;
   }
 
   addPatientFromExel() {
@@ -48,13 +51,15 @@ export class AddPatientsFromExelComponent implements OnInit {
       const pid = p.id;
       const pfirstName =  p.fname;
       const plastName = p.lname;
-      p.father = 'בטיפול';
+
       if (this.dbs.isPatientExist(pid)) {
+        this.successed[i] = 2;
         countExist++;
         i++;
-        this.sd.createAlert('error', ' תלמיד בשם' + pfirstName + plastName + 'כבר מופיע במערכת ', '');
+       // this.sd.createAlert('error', ' תלמיד בשם' + pfirstName + ' ' + plastName + ' ' + 'כבר מופיע במערכת ', '');
       } else if ((!pfirstName) || (!plastName) || (!pid)) { // requiere data was missed
-        this.sd.createAlert('error' , ' בשורה' + i + ' חסרים פרטים נדרשים ', '');
+     //   this.sd.createAlert('error' , ' בשורה' + i + ' חסרים פרטים נדרשים ', '');
+        this.successed[i] = 2;
         countMiss++;
         i++;
       }
@@ -70,21 +75,23 @@ export class AddPatientsFromExelComponent implements OnInit {
         birthDate: p.birthDate,
         grade: p.grade,
         comment: '',
-        haveDificult: false,
+        haveDificult: 'no',
         strFreeTime: this.sd.FREE_ALL_TIME
       };
       this.dbs.addPatient(pati);
      // this.PfromExel.splice(this.PfromExel.indexOf(p) , 1);
      // console.log(pati);
       countSuccess++;
+      this.successed[i] = 1;
+      i++;
      // console.log(this.PfromExel);
     });
-    this.sd.createAlert ('info', countSuccess + 'תלמידים נוספו בהצלחה ' + '\n', '');
+    this.sd.createAlert('info', countSuccess + ' ' + 'תלמידים נוספו בהצלחה ' + '\n', '');
     if (countExist > 0) {
-      this.sd.createAlert('error', countExist + 'תלמידים לא נוספו משום שכבר קימים במערכת ' +  '\n', '');
+      this.sd.createAlert('error', countExist + ' ' + 'תלמידים לא נוספו משום שכבר קימים במערכת ' +  '\n', '');
     }
     if (countMiss > 0) {
-     this.sd.createAlert('error', countMiss + 'תלמידים לא נוספו משום שחסרים פרטים אישיים הכרחיים ' + '\n', '');
+     this.sd.createAlert('error', countMiss + ' ' + 'תלמידים לא נוספו משום שחסרים פרטים אישיים הכרחיים ' + '\n', '');
     }
   }
 

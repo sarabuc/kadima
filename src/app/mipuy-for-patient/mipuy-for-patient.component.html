@@ -1,0 +1,91 @@
+<!-- <div *ngIf="!mipuyDates" class="center">
+    <mat-card class="center">
+        <h4 class="center">loading...</h4>
+        <mat-spinner class="center"></mat-spinner>
+
+    </mat-card> -->
+
+<div >
+<div *ngIf = "status =='last'">
+<div *ngIf="!mipuyDates[0]" class="dark-card mx-3 my-3 yellow-text">לא קים מיפוי עבור תלמיד זה</div>
+<app-show-mipuy [Pid]="Pid" [mipuyDate]="mipuyDates[0].mipuyDate"  *ngIf="mipuyDates[0]"></app-show-mipuy>
+</div>
+
+
+<div class="card white-text mt-1 mr-3 ml-3 px-4 py-3 dark-card" style="" *ngIf = "status =='all'">
+
+    <div class="row d-flex justify-content-end">
+        <button class=" my-button my-btn-lg" (click)="basicModal.show()">הוסף מיפוי חדש
+        <i class="fa fa-file mr-2"></i>
+      </button>
+    </div>
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 mt-3 mb-3" >
+            <h2 class="nice-text mb-3"> מיפוים לתלמיד</h2>
+            <div *ngIf="!mipuyDates[0]">לא קימים מיפוים עבור תלמיד זה</div>
+      <app-show-mipuy [Pid]="Pid" [mipuyDate]="mipuyDates[i].mipuyDate"  *ngFor="let date of mipuyDates; let i=index"></app-show-mipuy>
+        </div>
+    </div>
+</div>
+            
+
+
+
+
+
+<div mdbModal #basicModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}" style="overflow: auto">
+    <div class="modal-dialog modal-fluid" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100 purple-text" id="myModalLabel">מיפוי חדש</h4>
+            </div>
+            <div class="modal-body">
+              <app-show-difficulties [status]="'mipuy'" [Pid]="Pid"></app-show-difficulties>
+
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div mdbModal #fluid="mdb-modal" class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto;">
+    <div class="modal-dialog modal-full-height  modal-fluid" role="document">
+        <div class="modal-content">
+            <div class="modal-header yellow">
+                <h4 class="modal-title w-100" id="myModalLabel">מיפוי חדש</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fluid.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <app-show-difficulties [status]="'mipuy'"></app-show-difficulties>
+
+            </div>
+
+        </div>
+    </div>
+</div>

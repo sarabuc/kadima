@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DatePipe } from '@angular/common'
 // import { AlertsService } from '@jaspero/ng2-alerts';
 // import { AlertType } from '@jaspero/ng-alerts';
 import { Difficulty, PatientsDifficult, TherapistMethods } from './db.service';
@@ -31,33 +32,17 @@ export class ShareDataService {
  public kupotCholim = ['ללא', 'מכבי', 'כללית', 'מאוחדת', 'לאומית'];
 
   public treatmentCategories: Difficulty[] = [
-    { code: 'למידה', description: 'למידה', Dfather: 'null'},
-    { code: 'קריאה', description: 'קריאה', Dfather: 'null'},
-    { code: 'כתיבה', description: 'כתיבה', Dfather: 'null'},
-    { code: 'התנהגות', description: 'התנהגות', Dfather: 'null'},
-    { code: 'קשב וריכוז', description: 'קשב וריכוז', Dfather: 'null'},
-    { code: 'שמיעה', description: 'שמיעה', Dfather: 'null'  },
-    { code: 'ראיה', description: 'ראיה', Dfather: 'null'  },
-    { code: 'פיגור', description: 'פיגור', Dfather: 'null'  },
-    { code: 'אוטיזם', description: 'אוטיזם', Dfather: 'null'  }
-    // {"קריאה"},{"כתיבה"}, {"התנהגות"}, {"קשב וריכוז"}, {"שמיעה"},{"ראיה"},{"פיגור"}, {"אוטיזם"}
-  ];
-
-  public treatmentCategories2: Difficulty[] = [
-    { code: 'למידה', description: 'למידה', Dfather: 'קריאה' },
-    { code: 'קריאה', description: 'קריאה', Dfather: 'פיגור' },
-    { code: 'כתיבה', description: 'כתיבה', Dfather: 'למידה' },
-    { code: 'התנהגות', description: 'התנהגות', Dfather: 'למידה' },
-    { code: 'קשב וריכוז', description: 'קשב וריכוז', Dfather: 'למידה' },
-    { code: 'שמיעה', description: 'שמיעה', Dfather: 'כתיבה' },
-    { code: 'ראיה', description: 'ראיה', Dfather: 'פיגור' },
-    { code: 'פיגור', description: 'פיגור', Dfather: 'ראיה' },
-    { code: 'אוטיזם', description: 'אוטיזם', Dfather: 'קריאה' }
+    { code: 'לימודי', description: 'לימודי', Dfather: 'null'},
+    { code: 'התפתחותי', description: 'התפתחותי', Dfather: 'null'},
+    { code: 'התנהגותי', description: 'התנהגותי', Dfather: 'null'},
+    { code: 'תקשורתי', description: 'תקשורתי', Dfather: 'null'},
+    { code: 'חושי-מוטורי', description: 'חושי-מוטורי', Dfather: 'null'},
+    
     // {"קריאה"},{"כתיבה"}, {"התנהגות"}, {"קשב וריכוז"}, {"שמיעה"},{"ראיה"},{"פיגור"}, {"אוטיזם"}
   ];
 
 
-  constructor(/*private _alert: AlertsService*/ private router: Router, private messageService: MessageService) {
+  constructor(/*private _alert: AlertsService*/ private router: Router, private messageService: MessageService, public datepipe: DatePipe) {
     this.initFREE_ALL_TIME();
   }
 
@@ -150,6 +135,9 @@ export class ShareDataService {
     this.router.navigate([path]);
   }
 
-
+public convertDateToString(date: Date) {
+  console.log(date);
+ return this.datepipe.transform(date, 'dd-MM-yyyy');
+}
 
 }
