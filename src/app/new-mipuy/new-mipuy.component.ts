@@ -1,30 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
+import {  ViewChild, AfterViewInit} from '@angular/core';
+import { ShowDifficultiesComponent } from '../show-difficulties/show-difficulties.component';
+
 import { DbService, Patient } from '../services/db.service';
 import { ShareDataService } from '../services/share-data.service';
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
 
-const COLORS: string[] = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
 @Component({
   selector: 'app-new-mipuy',
   templateUrl: './new-mipuy.component.html',
   styleUrls: ['./new-mipuy.component.css']
 })
 export class NewMipuyComponent implements OnInit {
-
+   @ViewChild(ShowDifficultiesComponent) showDif: ShowDifficultiesComponent;
+   mipuyModeClass = 'modal fade in show'; // when opened it is "modal fade in show"
+  fname = ''; // for search
+  lname = ''; // for serach
 patientState: string;
 selectedcomm = '';
+showWho = 'all';
 comments: string[] = ['ניכר שיפור', 'לברר מול מורה', 'לדבר עם הורים', 'להעביר לאבחון', 'להעביר לתכנון טיפול'];
 Pid;
 selectedOptions: string[] = [];
@@ -52,6 +45,28 @@ tooltip = '12345';
  this.db.updatePatient(P);
 }
 
+closeModal(str: string) {
+  // console.log('*********************************************' + str + this.mipuyModeClass);
+  if(str == 'finish') {
+ this.mipuyModeClass = 'modal fade';
+ //this.initDiffiForNewMipuy();
+  }
+}
+
+// for search
+  isFnPrefix(fn) {
+    const filter = this.fname.toUpperCase();
+    return (fn.toUpperCase().indexOf(filter) > -1);
+  }
+  // for search
+  isLnPrefix(ln) {
+    const filter = this.lname.toUpperCase();
+    return (ln.toUpperCase().indexOf(filter) > -1);
+  }
+  initDiffiForNewMipuy() {
+    console.log('inittttttttttttttttt');
+    this.showDif = new ShowDifficultiesComponent(this.sd, this.db);
+  }
 
 }
 

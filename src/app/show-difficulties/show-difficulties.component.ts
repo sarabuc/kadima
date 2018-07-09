@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ShareDataService } from '../services/share-data.service';
 import { DbService, PatientsDifficult } from '../services/db.service';
 
@@ -10,6 +10,7 @@ import { DbService, PatientsDifficult } from '../services/db.service';
 export class ShowDifficultiesComponent implements OnInit {
   @Input() status: string; // mipuy for mipuy and show for handle difficults
   @Input() Pid: string;
+  @Output() finishedMipuy = new EventEmitter();
   diffiArr: string[] = [];
   constructor(public sd: ShareDataService, public db: DbService) { }
 
@@ -33,6 +34,7 @@ this.db.newMipuy = [];
     if (status === 'show') {
       return;
     }
+    this.finishedMipuy.emit('finish');
     const date =  new Date();
     this.db.mipuyForPatientRef.add({Pid: this.Pid, mipuyDate: date });
     this.diffiArr = this.db.newMipuy;

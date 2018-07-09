@@ -1,12 +1,38 @@
 <div>
     <div>
-        <h1 class="h1-responsive mt-3 purple-text"> מיפוי חדש
+        <h1 class="h1-responsive mt-3 purple-text mb-3"> מיפוי חדש
             <small class="text-muted mr-3">סמן תלמידים הזקוקים למעקב ולחץ על התחל מיפוי</small>
         </h1>
-        <form class="form-inline md-form mt-2 ml-2 mr-2 w-100 pr-auto pl-auto ">
-            <input class="form-control my-0 w-80 mr-5" type="text" placeholder="חפש">
-            <button class="btn btn-sm btn-primary purple ml-2 px-1"><i class="fa fa-search"></i>  </button>
-        </form>
+        <div class="row mr-auto ml-auto pr-3 d-flex justify-content-center">
+            <div class="col-sm-5 coll-md-3 px-1 mb-3">
+                <input type="text" class="form-item white-text  mr-2 ml-2 mb-3" id="myInput" ng-model="test" placeholder="לפי שם פרטי " name="fname" [(ngModel)]="fname">
+                <input type="text" class="form-item white-text  mr-2 ml-2 mb-3" id="myInput" ng-model="test" placeholder="לפי שם משפחה " name="lname" [(ngModel)]="lname">
+                <i class="fa fa-search fa-2x purple-text mr-1"></i>
+            </div>
+            <div class="col-sm-5 coll-md-3 px-1 mb-3">
+                <mat-button-toggle-group #group2="matButtonToggleGroup"  class="yellow lighten-2 black-text" [(ngModel)]="showWho">
+
+                 <mat-button-toggle value="all" >
+                   הצג הכל
+                  </mat-button-toggle>
+                  <mat-button-toggle value="yes">
+                      <i class="fa fa-check fa-lg"></i>
+                  </mat-button-toggle>
+
+
+                  <mat-button-toggle value="no">
+                      <i class="fa fa-close fa-lg"></i>
+                  </mat-button-toggle>
+                  <mat-button-toggle value="maybe">
+                      <i class="fa fa-question fa-lg"></i>
+                  </mat-button-toggle>
+
+              </mat-button-toggle-group>
+            </div>
+            
+
+             
+        </div>
 
 
     </div>
@@ -50,24 +76,26 @@
                             <!-- <input class="form-check-input" type="checkbox" id="checkbox">
                                 <label class="form-check-label" for="checkbox" class="mr-2 label-table"></label> -->
                         </th>
-                        <th class="th-lg white-text"><a>תעודת זהות <i class="fa fa-sort ml-2"></i></a></th>
-                        <th class="th-lg white-text"><a href="">שם פרטי<i class="fa fa-sort ml-2"></i></a></th>
-                        <th class=" th-lg white-text"><a href="">שם משפחה<i class="fa fa-sort ml-2"></i></a></th>
-                        <th class=" th-lg white-text"><a href="">כתה<i class="fa fa-sort ml-2"></i></a></th>
+                        <th class="th-lg white-text">תעודת זהות </th>
+                        <th class="th-lg white-text">שם פרטי</th>
+                        <th class=" th-lg white-text">שם משפחה</th>
+                        <th class=" th-lg white-text">כתה</th>
                         <th class="th-lg white-text">
 
                         </th>
                         <th class="th-lg white-text">
                             האם קים קושי
                         </th>
-                        <th class="th-lg white-text"><a href="">אפשרויות</a></th>
+                        <th class="th-lg white-text">אפשרויות</th>
                     </tr>
                 </thead>
                 <!--Table head-->
-
+                <!-- <div *ngFor="let pat of db.allPatientList"> -->
                 <!--Table body-->
+                <!-- *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)"> -->
                 <tbody *ngFor="let pat of db.allPatientList">
-                    <tr>
+
+                    <tr *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&(showWho=='all'||pat.haveDificult==showWho)">
                         <th scope="row">
                             <!-- <input class="form-check-input" type="checkbox" id="checkbox1">
                                 <label class="form-check-label" for="checkbox1" class="label-table"></label> -->
@@ -100,21 +128,23 @@
 
                         </td>
                         <td>
-                            <a #comment (click)="fluid.show(); Pid = pat.id;" class="nav-item  btn-rounded gray" mdbTooltip="הוסף הערות לתלמיד" placement="bottom">
+                            <a #comment (click)="fluid.show(); Pid = pat.id;" class=" btn-rounded " mdbTooltip="הוסף הערות לתלמיד" placement="bottom">
                                 <i class="fa fa-2x fa-comment purple-text ml-2 mr-2"></i>
                             </a>
-                            <a #card [routerLink]="['/Pcard', pat.id]" class="nav-item   btn-rounded gray" mdbTooltip="עבור לפרטי תלמיד" placement="bottom">
+                            <a #card [routerLink]="['/Pcard', pat.id]" class="  btn-rounded " mdbTooltip="עבור לפרטי תלמיד" placement="bottom">
                                 <i class="fa fa-2x fa-id-card-o purple-text ml-2 mr-2"></i>
                             </a>
-                            <a #startMipuy (click)="form.show(); Pid= pat.id;" class="nav-item gray  btn-rounded gray" disabled mdbTooltip="הוסף מיפוי" placement="bottom">
-                                <i class="fa fa-2x fa-arrow-circle-left purple-text ml-2 mr-2"></i>
-                            </a>
+                            
+                            <button type="button" class="btn btn-outline-secondary btn-sm " mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי"
+                              placement="bottom">
+                               התחל מיפוי </button>
                         </td>
                     </tr>
                     <tr>
 
                 </tbody>
                 <!--Table body-->
+                <!-- </div> -->
             </table>
             <!--Table-->
         </div>
@@ -126,7 +156,7 @@
 
 
 
-<div mdbModal #form="mdb-modal" class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+<div mdbModal #form="mdb-modal" [class]="mipuyModeClass" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
     <div class="modal-dialog modal-fluid" role="document">
         <div class="modal-dialog cascading-modal" role="document">
 
@@ -135,15 +165,15 @@
 
                 <div class="modal-header purple white-text">
                     <h4 class="title">
-                        <i class="fa fa-pencil"></i> עדכן קשיים</h4>
-                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
-          <span aria-hidden="true">×</span>
-        </button>
+                        <i class="fa fa-pencil mr-1 ml-1"></i> עדכן קשיים</h4>
+                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide();">
+                       <span aria-hidden="true">×</span>
+                    </button>
                 </div>
 
                 <div class="modal-body mb-0">
 
-                    <app-show-difficulties [status]="'mipuy'" [Pid]="Pid"></app-show-difficulties>
+                    <app-show-difficulties (finishedMipuy)="closeModal($event)" #showDif [status]="'mipuy'" [Pid]="Pid"></app-show-difficulties>
 
                 </div>
             </div>
@@ -151,7 +181,7 @@
         </div>
     </div>
 
-
+  </div>
 
 
     <div mdbModal #fluid="mdb-modal" class="modal fade left" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -165,7 +195,7 @@
                 </div>
                 <div class="modal-body">
                     <h3 mat-subheader>הערות</h3>
-                    <!-- {{selectedOptions | json}} -->
+                  
                     <mat-selection-list #comm [ngModel]="selectedOptions" (ngModelChange)="onSelectedOptionsChange($event)">
                         <mat-list-option [value]="com" *ngFor="let com of comments">
                             {{com}}
@@ -185,3 +215,10 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+ 
