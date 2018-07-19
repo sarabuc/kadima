@@ -59,13 +59,50 @@ import {MatTableModule} from '@angular/material/table';
 import 'hammerjs';
 // import { JasperoAlertsModule } from '@jaspero/ng2-alerts';
 import { MatIconRegistry } from '@angular/material/icon';
+import { DatePipe } from '@angular/common';
 /*components*/
 import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu.component';
-import { SignupComponent } from './signup/signup.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import { AboutComponent } from './about/about.component';
-import { DatePipe } from '@angular/common'
+import { MenuComponent } from './parts/menu/menu.component';
+import { SignupComponent } from './parts/signup/signup.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { AboutComponent } from './pages/about/about.component';
+import { BeforeLoginComponent } from './pages/before-login/before-login.component';
+import { ContactComponent } from './pages/contact/contact.component';
+
+import { NewTherapistComponent } from './therapist/new-therapist/new-therapist.component';
+import { NewPatientComponent } from './patient/new-patient/new-patient.component';
+import { NewTreatmentProgressComponent } from './treatment/new-treatment-progress/new-treatment-progress.component';
+import { NewTreatmentInfoComponent } from './treatment/new-treatment-info/new-treatment-info.component';
+import { FreeTimeComponent } from './parts/free-time/free-time.component';
+import { DifficultComponent } from './mipuy/difficult/difficult.component';
+import { ShowDifficultiesComponent } from './mipuy/show-difficulties/show-difficulties.component';
+import { TherapistCardComponent } from './therapist/therapist-card/therapist-card.component';
+
+import { MethodsForTherapistComponent } from './therapist/methods-for-therapist/methods-for-therapist.component';
+import { TherapistProfileComponent } from './therapist/therapist-profile/therapist-profile.component';
+import { UpdateTherapistComponent } from './therapist/update-therapist/update-therapist.component';
+import { TempComponent } from './parts/temp/temp.component';
+import { AddPatientsFromExelComponent } from './patient/add-patients-from-exel/add-patients-from-exel.component';
+import { ScheduleComponent } from './parts/schedule/schedule.component';
+import { AddTherapistFromExelComponent } from './therapist/add-therapist-from-exel/add-therapist-from-exel.component';
+import { TherapistListComponent } from './therapist/therapist-list/therapist-list.component';
+import { TimeTableToShowComponent } from './parts/time-table-to-show/time-table-to-show.component';
+import { LoginComponent } from './pages/login/login.component';
+import { NewMipuyComponent } from './mipuy/new-mipuy/new-mipuy.component';
+import { DifficutForMipuyComponent } from './mipuy/difficut-for-mipuy/difficut-for-mipuy.component';
+import { PatientCardComponent } from './patient/patient-card/patient-card.component';
+import { PatientListComponent } from './patient/patient-list/patient-list.component';
+import { PatientProfileComponent } from './patient/patient-profile/patient-profile.component';
+import { UpdatePatientComponent } from './patient/update-patient/update-patient.component';
+import { MipuyForPatientComponent } from './patient/mipuy-for-patient/mipuy-for-patient.component';
+import { ChipsInteractionComponent } from './parts/chips-interaction/chips-interaction.component';
+import { AddDiffiFromExelComponent } from './mipuy/add-diffi-from-exel/add-diffi-from-exel.component';
+import { DiffiAndMethodsComponent } from './mipuy/diffi-and-methods/diffi-and-methods.component';
+import { ShowMipuyComponent } from './mipuy/show-mipuy/show-mipuy.component';
+import { ShowTreatmentInfoComponent } from './treatment/show-treatment-info/show-treatment-info.component';
+import { ShowTreatmentForPatientComponent } from './patient/show-treatment-for-patient/show-treatment-for-patient.component';
+import { ShowTreatmentForTherapistComponent } from './therapist/show-treatment-for-therapist/show-treatment-for-therapist.component';
+
 
 
 
@@ -84,43 +121,6 @@ import { ReturnMessageService } from './services/return-message.service';
 
 import {  NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { BeforeLoginComponent } from './before-login/before-login.component';
-import { ContactComponent } from './contact/contact.component';
-
-import { NewTherapistComponent } from './new-therapist/new-therapist.component';
-import { NewPatientComponent } from './new-patient/new-patient.component';
-import { NewTreatmentProgressComponent } from './new-treatment-progress/new-treatment-progress.component';
-import { NewTreatmentInfoComponent } from './new-treatment-info/new-treatment-info.component';
-import { FreeTimeComponent } from './free-time/free-time.component';
-import { DifficultComponent } from './difficult/difficult.component';
-import { ShowDifficultiesComponent } from './show-difficulties/show-difficulties.component';
-import { TherapistCardComponent } from './therapist-card/therapist-card.component';
-
-import { ShowTreatmentByTherapistComponent } from './show-treatment-by-therapist/show-treatment-by-therapist.component';
-import { MethodsForTherapistComponent } from './methods-for-therapist/methods-for-therapist.component';
-import { TherapistProfileComponent } from './therapist-profile/therapist-profile.component';
-import { UpdateTherapistComponent } from './update-therapist/update-therapist.component';
-import { TempComponent } from './temp/temp.component';
-import { AddPatientsFromExelComponent } from './add-patients-from-exel/add-patients-from-exel.component';
-import { ScheduleComponent } from './schedule/schedule.component';
-import { AddTherapistFromExelComponent } from './add-therapist-from-exel/add-therapist-from-exel.component';
-import { TherapistListComponent } from './therapist-list/therapist-list.component';
-import { TimeTableToShowComponent } from './time-table-to-show/time-table-to-show.component';
-import { LoginComponent } from './login/login.component';
-import { NewMipuyComponent } from './new-mipuy/new-mipuy.component';
-import { DifficutForMipuyComponent } from './difficut-for-mipuy/difficut-for-mipuy.component';
-import { PatientCardComponent } from './patient-card/patient-card.component';
-import { PatientListComponent } from './patient-list/patient-list.component';
-import { PatientProfileComponent } from './patient-profile/patient-profile.component';
-import { UpdatePatientComponent } from './update-patient/update-patient.component';
-import { MipuyForPatientComponent } from './mipuy-for-patient/mipuy-for-patient.component';
-import { ChipsInteractionComponent } from './chips-interaction/chips-interaction.component';
-import { AddDiffiFromExelComponent } from './add-diffi-from-exel/add-diffi-from-exel.component';
-import { DiffiAndMethodsComponent } from './diffi-and-methods/diffi-and-methods.component';
-import { ShowMipuyComponent } from './show-mipuy/show-mipuy.component';
-import { ShowTreatmentInfoComponent } from './show-treatment-info/show-treatment-info.component';
-import { ShowTreatmentForPatientComponent } from './show-treatment-for-patient/show-treatment-for-patient.component';
-import { ShowTreatmentForTherapistComponent } from './show-treatment-for-therapist/show-treatment-for-therapist.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -153,7 +153,6 @@ const firebase = {
     DifficultComponent,
     ShowDifficultiesComponent,
     TherapistCardComponent,
-    ShowTreatmentByTherapistComponent,
     MethodsForTherapistComponent,
     TherapistProfileComponent,
     UpdateTherapistComponent,

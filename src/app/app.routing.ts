@@ -1,28 +1,35 @@
 import { ModuleWithProviders} from '@angular/core';
 import { Routes, RouterModule} from '@angular/router';
-// components
-import { PatientCardComponent } from './patient-card/patient-card.component';
-import { PatientListComponent } from './patient-list/patient-list.component';
-import { NewMipuyComponent } from './new-mipuy/new-mipuy.component';
-import { BeforeLoginComponent } from './before-login/before-login.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import { AboutComponent } from './about/about.component';
-import { NewTherapistComponent } from './new-therapist/new-therapist.component';
-import { NewPatientComponent } from './new-patient/new-patient.component';
-import { NewTreatmentProgressComponent } from './new-treatment-progress/new-treatment-progress.component';
-import { NewTreatmentInfoComponent } from './new-treatment-info/new-treatment-info.component';
-import { ContactComponent } from './contact/contact.component';
-import { ShowDifficultiesComponent } from './show-difficulties/show-difficulties.component';
-import { UpdateTherapistComponent } from './update-therapist/update-therapist.component';
-import { TherapistCardComponent } from './therapist-card/therapist-card.component';
-import { TempComponent } from './temp/temp.component';
-import { ScheduleComponent } from './schedule/schedule.component';
-import { AddPatientsFromExelComponent } from './add-patients-from-exel/add-patients-from-exel.component';
-import { AddTherapistFromExelComponent } from './add-therapist-from-exel/add-therapist-from-exel.component';
-import { TherapistListComponent } from './therapist-list/therapist-list.component';
-import { LoginComponent } from './login/login.component';
-import { AddDiffiFromExelComponent } from './add-diffi-from-exel/add-diffi-from-exel.component';
-import { DiffiAndMethodsComponent } from './diffi-and-methods/diffi-and-methods.component';
+/*components*/
+
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { AboutComponent } from './pages/about/about.component';
+
+import { ContactComponent } from './pages/contact/contact.component';
+
+import { NewTherapistComponent } from './therapist/new-therapist/new-therapist.component';
+import { NewPatientComponent } from './patient/new-patient/new-patient.component';
+import { NewTreatmentProgressComponent } from './treatment/new-treatment-progress/new-treatment-progress.component';
+import { NewTreatmentInfoComponent } from './treatment/new-treatment-info/new-treatment-info.component';
+
+import { DifficultComponent } from './mipuy/difficult/difficult.component';
+
+import { TherapistCardComponent } from './therapist/therapist-card/therapist-card.component';
+
+import { TempComponent } from './parts/temp/temp.component';
+import { AddPatientsFromExelComponent } from './patient/add-patients-from-exel/add-patients-from-exel.component';
+import { TherapistListComponent } from './therapist/therapist-list/therapist-list.component';
+import { TimeTableToShowComponent } from './parts/time-table-to-show/time-table-to-show.component';
+import { LoginComponent } from './pages/login/login.component';
+import { NewMipuyComponent } from './mipuy/new-mipuy/new-mipuy.component';
+import { DifficutForMipuyComponent } from './mipuy/difficut-for-mipuy/difficut-for-mipuy.component';
+import { PatientCardComponent } from './patient/patient-card/patient-card.component';
+import { PatientListComponent } from './patient/patient-list/patient-list.component';
+import { AddDiffiFromExelComponent } from './mipuy/add-diffi-from-exel/add-diffi-from-exel.component';
+import { DiffiAndMethodsComponent } from './mipuy/diffi-and-methods/diffi-and-methods.component';
+
+
+
 const appRoutes: Routes = [
 
  // { path: 'b', component: BeforeLoginComponent},
@@ -45,7 +52,7 @@ const appRoutes: Routes = [
   { path: 'Report', component: TempComponent },
   { path: 'check-progress', component: TempComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'Treatment-planning', component: TempComponent }, 
+  { path: 'Treatment-planning', component: TempComponent },
   {path: 'diffiAndMethods', component:DiffiAndMethodsComponent }
 ];
 

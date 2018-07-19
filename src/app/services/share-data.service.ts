@@ -132,7 +132,7 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
   }
 
 public convertDateToString(date: Date) {
-  console.log(date);
+ // console.log(date);
  return this.datepipe.transform(date, 'dd-MM-yyyy');
 }
 

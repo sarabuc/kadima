@@ -181,13 +181,13 @@ public newMipuy: string[] = [];
        pats.forEach(pat => {
          this.patientIDList.push(pat.id);
 
-         console.log(pat);
+       //  console.log(pat);
        });
      });
      // get all therapist id
      this.allTherapistsRef = this.afs.collection('therapist');
      this.allTherapistsRef.valueChanges().subscribe(theras => {
-       console.log(theras);
+     //  console.log(theras);
        theras.forEach(th => {
          this.therapistIDList.push(th.id);
          this.allTherapistList.push(th);
@@ -312,7 +312,7 @@ public newMipuy: string[] = [];
    */
   public addPatient(pati: Patient) {
    this.allPatientsRef.doc('' + pati.id).set(pati).then(res => {
-console.log(res);
+// console.log(res);
    });
   }
 
@@ -344,7 +344,7 @@ public addPatientDifficult(diffi: PatientsDifficult) {
  */
 public addTreatmentInfo( treat: TreatmentInfo) {
   this.treatmentInfoForProgressRef.add(treat);
-  console.log(treat);
+ // console.log(treat);
 }
 
 
@@ -357,7 +357,7 @@ public addTreatmentInfo( treat: TreatmentInfo) {
    */
   public updateTherapist(th) {
     this.allTherapistsRef.doc('' + th.id).update(th).then(res => {
-      console.log('11111111111111111111111111111111');
+    //  console.log('11111111111111111111111111111111');
 
     });
     this.sd.createAlert('success', 'מטפל עודכן בהצלחה', '');
@@ -422,8 +422,9 @@ return false; // ??????????????????????????????????????????????????
     return '';
   }
   findPatientNameById(Pid) {
+   const  ID = '' + Pid;
     for (let i = 0; i < this.allPatientList.length; i++) {
-      if (this.allPatientList[i].id === Pid) {
+      if (this.allPatientList[i].id.toString() === ID) {
         return '' + this.allPatientList[i].firstName + ' ' + this.allPatientList[i].lastName;
       }
     }
