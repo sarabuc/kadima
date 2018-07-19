@@ -1,37 +1,39 @@
 <div>
     <div>
         <h1 class="h1-responsive mt-3 purple-text mb-3"> מיפוי חדש
-            <small class="text-muted mr-3">סמן תלמידים הזקוקים למעקב ולחץ על התחל מיפוי</small>
+            <small class="text-muted mr-3 mb-2">סמן תלמידים הזקוקים למעקב ולחץ על התחל מיפוי</small>
         </h1>
-        <div class="row mr-auto ml-auto pr-3 d-flex justify-content-center">
-            <div class="col-sm-5 coll-md-3 px-1 mb-3">
-                <input type="text" class="form-item white-text  mr-2 ml-2 mb-3" id="myInput" ng-model="test" placeholder="לפי שם פרטי " name="fname" [(ngModel)]="fname">
-                <input type="text" class="form-item white-text  mr-2 ml-2 mb-3" id="myInput" ng-model="test" placeholder="לפי שם משפחה " name="lname" [(ngModel)]="lname">
-                <i class="fa fa-search fa-2x purple-text mr-1"></i>
-            </div>
-            <div class="col-sm-5 coll-md-3 px-1 mb-3">
-                <mat-button-toggle-group #group2="matButtonToggleGroup"  class="yellow lighten-2 black-text" [(ngModel)]="showWho">
+        <div class="row  px-5 d-flex justify-content-around  py-2 grey lighten-3 my-2">
+            <!-- <div class="col-sm-6 coll-md-10 mb-3"> -->
+            <i class="fa fa-search fa-2x purple-text mr-1 align-self-center"></i>
+            <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" id="myInput" ng-model="test" placeholder="לפי שם פרטי " name="fname" [(ngModel)]="fname">
+            <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" id="myInput" ng-model="test" placeholder="לפי שם משפחה " name="lname" [(ngModel)]="lname">
+            <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" id="myInput" ng-model="test" placeholder="לפי  כתה " name="grade" [(ngModel)]="grade">
 
-                 <mat-button-toggle value="all" >
-                   הצג הכל
-                  </mat-button-toggle>
-                  <mat-button-toggle value="yes">
-                      <i class="fa fa-check fa-lg"></i>
-                  </mat-button-toggle>
+            <!-- </div>
+            <div class="col-sm-6 coll-md-2 px-1 mb-3"> -->
+            <mat-button-toggle-group #group2="matButtonToggleGroup" class="yellow lighten-2 black-text mr-auto" [(ngModel)]="showWho">
+
+                <mat-button-toggle value="all">
+                    הצג הכל
+                </mat-button-toggle>
+                <mat-button-toggle value="yes">
+                    <i class="fa fa-check fa-lg"></i>
+                </mat-button-toggle>
 
 
-                  <mat-button-toggle value="no">
-                      <i class="fa fa-close fa-lg"></i>
-                  </mat-button-toggle>
-                  <mat-button-toggle value="maybe">
-                      <i class="fa fa-question fa-lg"></i>
-                  </mat-button-toggle>
+                <mat-button-toggle value="no">
+                    <i class="fa fa-close fa-lg"></i>
+                </mat-button-toggle>
+                <mat-button-toggle value="maybe">
+                    <i class="fa fa-question fa-lg"></i>
+                </mat-button-toggle>
 
-              </mat-button-toggle-group>
-            </div>
-            
+            </mat-button-toggle-group>
+            <!-- </div> -->
 
-             
+
+
         </div>
 
 
@@ -95,7 +97,7 @@
                 <!-- *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)"> -->
                 <tbody *ngFor="let pat of db.allPatientList">
 
-                    <tr *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&(showWho=='all'||pat.haveDificult==showWho)">
+                    <tr *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&isGradePrefix(pat.grade)&&(showWho=='all'||pat.haveDificult==showWho)">
                         <th scope="row">
                             <!-- <input class="form-check-input" type="checkbox" id="checkbox1">
                                 <label class="form-check-label" for="checkbox1" class="label-table"></label> -->
@@ -134,9 +136,8 @@
                             <a #card [routerLink]="['/Pcard', pat.id]" class="  btn-rounded " mdbTooltip="עבור לפרטי תלמיד" placement="bottom">
                                 <i class="fa fa-2x fa-id-card-o purple-text ml-2 mr-2"></i>
                             </a>
-                            
-                            <button type="button" class="btn btn-outline-secondary btn-sm " mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי"
-                              placement="bottom">
+
+                            <button type="button" class="btn btn-outline-secondary btn-sm " mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom">
                                התחל מיפוי </button>
                         </td>
                     </tr>
@@ -181,44 +182,40 @@
         </div>
     </div>
 
-  </div>
+</div>
 
 
-    <div mdbModal #fluid="mdb-modal" class="modal fade left" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-left" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title w-100" id="myModalLabel">הוסף הערה</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fluid.hide()">
+<div mdbModal #fluid="mdb-modal" class="modal fade left" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel">הוסף הערה</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fluid.hide()">
           <span aria-hidden="true">×</span>
         </button>
-                </div>
-                <div class="modal-body">
-                    <h3 mat-subheader>הערות</h3>
-                  
-                    <mat-selection-list #comm [ngModel]="selectedOptions" (ngModelChange)="onSelectedOptionsChange($event)">
-                        <mat-list-option [value]="com" *ngFor="let com of comments">
-                            {{com}}
-                        </mat-list-option>
-                        <mat-list-option [value]="otherComm.value">
-                            <mat-form-field style="text-align: center">
-                                <input matInput #otherComm placeholder="אחר">
-                            </mat-form-field>
+            </div>
+            <div class="modal-body">
+                <h3 mat-subheader>הערות</h3>
 
-                        </mat-list-option>
-                    </mat-selection-list>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide();selectedOptions = []" mdbWavesEffect>סגור</button>
-                    <button type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="saveComments(); fluid.hide();">שמור</button>
-                </div>
+                <mat-selection-list #comm [ngModel]="selectedOptions">
+                    <mat-list-option [value]="com" *ngFor="let com of comments">
+                        {{com}}
+                    </mat-list-option>
+                    <mat-list-option [value]="otherComm.value">
+                        <mat-form-field style="text-align: center">
+                            <input matInput #otherComm placeholder="אחר">
+                        </mat-form-field>
+
+                    </mat-list-option>
+                </mat-selection-list>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide();selectedOptions = []" mdbWavesEffect>סגור</button>
+                <button type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="saveComments(); fluid.hide();">שמור</button>
             </div>
         </div>
     </div>
+</div>
 
 
 
-
-
-
- 

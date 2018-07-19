@@ -15,6 +15,7 @@ export class NewMipuyComponent implements OnInit {
    mipuyModeClass = 'modal fade in show'; // when opened it is "modal fade in show"
   fname = ''; // for search
   lname = ''; // for serach
+  grade = ''; // for search
 patientState: string;
 selectedcomm = '';
 showWho = 'all';
@@ -47,9 +48,9 @@ tooltip = '12345';
 
 closeModal(str: string) {
   // console.log('*********************************************' + str + this.mipuyModeClass);
-  if(str == 'finish') {
+  if (str === 'finish') {
  this.mipuyModeClass = 'modal fade';
- //this.initDiffiForNewMipuy();
+ // this.initDiffiForNewMipuy();
   }
 }
 
@@ -62,6 +63,11 @@ closeModal(str: string) {
   isLnPrefix(ln) {
     const filter = this.lname.toUpperCase();
     return (ln.toUpperCase().indexOf(filter) > -1);
+  }
+  // for search
+  isGradePrefix(grade) {
+    const filter = this.grade.toUpperCase();
+    return (grade.toUpperCase().indexOf(filter) > -1);
   }
   initDiffiForNewMipuy() {
     console.log('inittttttttttttttttt');

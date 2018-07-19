@@ -1,0 +1,64 @@
+<div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100">
+
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 mt-3 mb-3">
+            <h2 class="nice-text"> שיעורים שהתקימו </h2>
+        </div>
+
+
+        <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-100">
+                <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" סנן לפי מטפל" [(ngModel)]="Tid" [matAutocomplete]="autoT">
+
+                <mat-autocomplete #autoT="matAutocomplete">
+                    <mat-option *ngFor="let treat of treatments" [value]="treat.Tid">
+                        {{ db.findTherapistNameById(treat.Tid)}}
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+        </div>
+
+
+        <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-100">
+                <input matInput class="form-item white-text" type="text" name="kind" placeholder=" סנן לפי סוג טיפול" [(ngModel)]="kind" [matAutocomplete]="autoKind">
+
+                <mat-autocomplete #autoKind="matAutocomplete">
+                    <mat-option *ngFor="let treat of treatments" [value]="treat.kind">
+                        {{ treat.kind }}
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
+            <mat-form-field class=" w-100">
+                <input matInput class="form-item white-text" type="text" name="treatDate" placeholder=" סנן לפי תאריך" [(ngModel)]="treatDate" [matAutocomplete]="autoDate">
+
+                <mat-autocomplete #autoDate="matAutocomplete">
+                    <mat-option *ngFor="let treat of treatments" [value]="treat.treatDate.toDate()| date: 'dd/MM/yyyy'">
+                        {{ treat.treatDate.toDate()| date: 'dd/MM/yyyy' }}
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+        </div>
+
+
+
+    </div>
+
+
+    <div *ngFor="let treat of treatments">
+        <app-show-treatment-info [treat]="treat" [status]="byPatient" *ngIf="checkFilter(treat, treat.treatDate.toDate()| date: 'dd/MM/yyyy')"></app-show-treatment-info>
+
+    </div>
+
+
+
+
+
+
+</div>

@@ -8,17 +8,12 @@ import { Message } from 'primeng/api';
 import { MessageService } from 'primeng/components/common/messageservice';
 @Injectable()
 export class ShareDataService {
-  msgs;
+  msgs; // for all alerts
 
   // for free time
   TPstatusForTime: string; /*newP, newT, updateP, updateT */
-  TPidForTime: string;
 
-  // for difficults and methods
-  statusForDiffiAndMeth: string; /*newP, newT,updateP, updateT, newME, updateME  */
-  idForDiffiAndMeth: string;
-
-// for therapist card
+// for therapist and patient card
   activeTabIndex = 0;
 // const for enter free all the time - with '-' between hours and # betwwen days
   FREE_ALL_TIME = '';
@@ -37,11 +32,12 @@ export class ShareDataService {
     { code: 'התנהגותי', description: 'התנהגותי', Dfather: 'null'},
     { code: 'תקשורתי', description: 'תקשורתי', Dfather: 'null'},
     { code: 'חושי-מוטורי', description: 'חושי-מוטורי', Dfather: 'null'},
-    
+
     // {"קריאה"},{"כתיבה"}, {"התנהגות"}, {"קשב וריכוז"}, {"שמיעה"},{"ראיה"},{"פיגור"}, {"אוטיזם"}
   ];
 
-
+public daysName = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
+public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30' ];
   constructor(/*private _alert: AlertsService*/ private router: Router, private messageService: MessageService, public datepipe: DatePipe) {
     this.initFREE_ALL_TIME();
   }

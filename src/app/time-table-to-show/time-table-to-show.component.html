@@ -1,9 +1,19 @@
-<div class="card"*ngIf="table">
-  <h5>שעות פנויות</h5>
+<div class=" my-2 py-2" *ngIf="table">
+    <h5>שעות פנויות</h5>
     <table class="table">
-
-    <tr *ngFor="let day of table">
-      <td *ngFor="let hour of day"><i class="fa fa-check text-center" *ngIf="hour"></i></td>
-    </tr>
+        <th></th>
+        <th *ngFor="let day of sd.daysName" class="purple-text">
+            {{day}}
+        </th>
+        <tr *ngFor="let hour of sd.hourInDayName; let i =index">
+            <td class="purple-text">
+                {{hour}}
+            </td>
+            <td *ngFor="let day of sd.daysName; let j = index" class="py-1 alighn-content-center">
+                <i class="fa fa-check purple-text fa-2x" *ngIf="table[j][i]"></i>
+                <!-- <div class="green w-100 " *ngIf="hour" style="height:30px"></div>
+                <div class="red w-100" *ngIf="!hour" style="height:30px"></div> -->
+            </td>
+        </tr>
     </table>
 </div>

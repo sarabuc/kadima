@@ -36,13 +36,13 @@ this.db.newMipuy = [];
     }
     this.finishedMipuy.emit('finish');
     const date =  new Date();
-    this.db.mipuyForPatientRef.add({Pid: this.Pid, mipuyDate: date });
+    this.db.mipuyForPatientRef.add({Pid: '' + this.Pid, mipuyDate: date });
     this.diffiArr = this.db.newMipuy;
     this.db.newMipuy = [];
       let diffi: PatientsDifficult;
       diffi = {
         Dcode: '',
-        Pid: this.Pid,
+        Pid: '' +  this.Pid,
         mipuyDate: date
       };
       this.diffiArr.forEach(dif => {

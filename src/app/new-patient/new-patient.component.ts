@@ -67,7 +67,7 @@ export class NewPatientComponent implements OnInit {
     const date = this.birthDate.toLocaleDateString();
     // '' + this.birthDate.getDate + '/' + this.birthDate.getMonth + '/' + this.birthDate.getFullYear;
     pati = {
-      id: this.Pid,
+      id: '' + this.Pid,
       firstName: this.firstName,
       lastName: this.lastName,
       fathersName: this.fathersName,

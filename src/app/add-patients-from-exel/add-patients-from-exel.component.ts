@@ -48,7 +48,7 @@ export class AddPatientsFromExelComponent implements OnInit {
     let countExist = 0;
     let countMiss = 0;
     this.PfromExel.forEach(p => {
-      const pid = p.id;
+      const pid = '' + p.id;
       const pfirstName =  p.fname;
       const plastName = p.lname;
 
@@ -65,7 +65,7 @@ export class AddPatientsFromExelComponent implements OnInit {
       }
 
       const pati: Patient = {
-        id: p.id,
+        id: '' + p.id,
         firstName: p.fname,
         lastName: p.lname,
         fathersName: p.father,

@@ -8,7 +8,7 @@
 
 
 
-<div class="container white-text mt-3" *ngIf="!this.db.isBusy">
+<div class=" card white-text mt-1 mr-3 ml-3 px-4 py-3 dark-card" *ngIf="!this.db.isBusy">
     <form>
         <div class="row d-flex justify-content-around">
             <div class="col-12 mt-3 mb-3">
@@ -53,6 +53,53 @@
                     <input matInput class="form-item" type="text" name="mail" placeholder="מייל " [(ngModel)]="th.mail">
                 </mat-form-field>
             </div>
+
+
+
+            <div class="col-12 mt-3 mb-3">
+                <h5 class="nice-text" style="text-align: right"> עדכון התמחות </h5>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+
+                    <mat-select class="form-item form-item-select white-text" name="skill" placeholder="תיאור תפקיד" [(ngModel)]="th.skill">
+                        <mat-option value="{{s}}" *ngFor="let s of sd.kindOfTherapist">{{s}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+
+                    <mat-select class="form-item form-item-select white-text" name="kind" placeholder="תחום התמחות " [(ngModel)]="th.kind">
+                        <mat-option value="{{a}}" *ngFor="let a of sd.treatmentArea">{{a}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+
+                    <mat-select class="form-item form-item-select white-text" name="dergee" placeholder="דרגה" [(ngModel)]="th.dergee">
+                        <mat-option value="{{d}}" *ngFor="let d of sd.dergeeForTherapist">{{d}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="number" name="years" placeholder=" שנות נסיון" [(ngModel)]="th.experienceYears">
+                </mat-form-field>
+            </div>
+            <div class="col-md-9 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="experienceBefore" placeholder=" נסיון קודם" [(ngModel)]="th.experienceBefore">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-12 col-sm-12 mb-1 ml-2 form-group text-right">
+                <mat-form-field class=" w-100">
+                    <textarea matInput class="form-item" name="comment" placeholder=" הערות והמלצות" [(ngModel)]="th.comment"></textarea>
+                </mat-form-field>
+            </div>
         </div>
 
         <div class="row d-flex mt-5 mb-4 justify-content-end ">
@@ -70,6 +117,9 @@
         <mat-expansion-panel-header class="my-primary my-button text-center btn-lg btn btn-secondary mb-1 waves-light" mdbRippleRadius>
             עדכן התמחות
         </mat-expansion-panel-header>
+        <!--    עדכון התמחויות-->
+
+
         <app-methods-for-therapist></app-methods-for-therapist>
     </mat-expansion-panel>
 

@@ -1,22 +1,114 @@
-<div class="px-3 py-1 mx-2 my-3" *ngIf="thera" style="text-align:right">
-    <div class="list-group px-2 py-3 mb-3">
-        <h3>פרטים אישיים</h3>
-        <div class="list-group-item"><small>שם</small> <strong>  {{thera.firstName}} {{thera.lastName}}</strong></div>
-        <div class="list-group-item"><small>נייד</small> <strong>  {{thera.phone1}} {{thera.phone2}}</strong></div>
-        <div class="list-group-item"><small>כתובת מייל</small> <strong>  {{thera.mail}}</strong></div>
-        <div class="list-group-item"><small>כתובת</small> <strong>  {{thera.address}}</strong></div>
+<div class="mx-3 my-3  row" style="text-align:right">
+    <div class="col-12 d-flex justify-content-between">
+        <h3 class="h3">פרטים אישיים</h3>
+        <div>
+            <button class="red mx-1" mat-mini-fab (click)="style.show()">
+        <i class="fa fa-close"></i>
+      </button>
+            <button class="green mx-1" mat-mini-fab (click)="editTherapist()">
+        <i class="fa fa-pencil"></i>
+      </button>
+        </div>
+    </div>
+    <div class="list-group px-2 py-3 mb-1  col-md-6 col-sm-12">
+
+        <div class="list-group-item mb-1 mx-1">
+            <small class="purple-text">תעודת זהות</small>
+            <strong> {{thera.id}} </strong>
+        </div>
+        <div class="list-group-item  mb-1 mx-1">
+            <small class="purple-text">שם</small>
+            <strong> {{thera.firstName}} {{thera.lastName}}</strong>
+        </div>
+        <div class="list-group-item  mb-1 mx-1">
+            <small class="purple-text">נייד</small>
+            <strong> {{thera.phone1}} </strong>
+        </div>
+        <div class="list-group-item  mb-1 mx-1">
+            <small class="purple-text">נייד נוסף</small>
+            <strong> {{thera.phone2}}</strong>
+        </div>
+        <div class="list-group-item  mb-1 mx-1">
+            <small class="purple-text">כתובת מייל</small>
+            <strong> {{thera.mail}}</strong>
+        </div>
+        <div class="list-group-item  mb-1 mx-1">
+            <small class="purple-text">כתובת</small>
+            <strong> {{thera.address}}</strong>
+        </div>
+
     </div>
 
-    <div class="list-group px-2 py-2 mb-3">
-        <h3>תיאור התמחות </h3>
-        <div class="list-group-item"><small>תיאור תפקיד</small> <strong>   {{thera.kind}}</strong> </div>
-        <div class="list-group-item"><small>תחום טיפול</small> <strong>  {{thera.treatmentArea}}</strong></div>
-        <div class="list-group-item"><small>דרגה </small> <strong>  {{thera.dergee}}</strong></div>
-        <div class="list-group-item"><small>שנות נסיון</small> <strong>  {{thera.experienceYears}}</strong></div>
-        <div class="list-group-item"><small>נסיון קודם </small> <strong>  {{thera.experienceBefore}}</strong></div>
-        <div class="list-group-item"><small>הערות והמלצות </small> <strong>  {{thera.comment}}</strong></div>
+
+    <div class="list-group px-2 py-3 mb-3  col-md-6 col-sm-12">
+        <h4 class="purple-text">התמחות</h4>
+        <div class="list-group-item  mb-1 mx-1">
+            <small class="purple-text">תיאור תפקיד</small>
+            <strong> {{thera.skill}}</strong>
+        </div>
+        <div class="list-group-item mb-1 mx-1">
+            <small class="purple-text">תחום טיפול</small>
+            <strong> {{thera.kind}}</strong>
+        </div>
+        <div class="list-group-item  mb-1 mx-1">
+            <small class="purple-text">דרגה </small>
+            <strong> {{thera.dergee}}</strong>
+        </div>
+        <div class="list-group-item mb-1 mx-1">
+            <small class="purple-text">שנות נסיון</small>
+            <strong> {{thera.experienceYears}}</strong>
+        </div>
+        <div class="list-group-item mb-1 mx-1">
+            <small class="purple-text">נסיון קודם </small>
+            <strong> {{thera.experienceBefore}}</strong>
+        </div>
+
     </div>
+    <div class="list-group-item px-2 py-3 mb-3  col-md-12 col-sm-12" *ngIf="thera.comment">
+        <h6 class="purple-text">הערות והמלצות </h6>
+        <strong> {{thera.comment}}</strong>
+    </div>
+</div>
 
-    <app-time-table-to-show [timeStr]="thera.strFreeTime"></app-time-table-to-show>
+<!-- <app-mipuy-for-patient [Pid]="Pid" [status]="'last'"></app-mipuy-for-patient> -->
+<app-time-table-to-show [timeStr]="thera.strFreeTime"></app-time-table-to-show>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div mdbModal #style="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-danger " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead mr-2">האם אתה בטוח ?</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="style.hide()">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                    <p>האם אתה בטוח שברצונך למחק מטפל זה לצמיתות ?</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a type="button" class="btn btn-primary-modal waves-light white-text" mdbRippleRadius (click)="style.hide(); deleteTherapist();">מחק
+          <i class="fa fa-delete ml-1"></i>
+        </a>
+                <a type="button" class="btn btn-outline-secondary-modal" data-dismiss="modal" (click)="style.hide()" mdbRippleRadius>חזור</a>
+            </div>
+        </div>
+    </div>
 </div>

@@ -11,7 +11,7 @@ export class ShowMipuyComponent implements OnInit {
 @Input() Pid: string;
 // @Input() mipuyStatus: string;
 diffiArr: PatientsDifficult[] = [];
-@Input() mipuyDate: string;
+@Input() mipuyDate: Date;
 difficultForPatientRef: any;
   constructor(public db: DbService, public sd: ShareDataService, private datePipe: DatePipe) { }
 
@@ -20,9 +20,10 @@ difficultForPatientRef: any;
     if (this.mipuyDate) {
       this.getMipuy();
      // console.log(this.datePipe.transform(this.mipuyDate,"yyyy-MM-dd")); //output : 2018-02-13
+    } else {
+      this.sd.routeTo('/');
     }
-    else
-    this.sd.routeTo('/');
+
   }
 
   public getMipuy() {
@@ -33,7 +34,13 @@ difficultForPatientRef: any;
       });
       this.difficultForPatientRef.valueChanges().subscribe(diffs => {
         this.diffiArr = diffs;
-        console.log(this.diffiArr);
+        this.diffiArr.forEach(D => {
+          console.log(this.mipuyDate);
+          console.log(D.mipuyDate);
+          if(D.mipuyDate === this.mipuyDate) {
+            console.log ('true');
+          }
+        })
       });
 }
 

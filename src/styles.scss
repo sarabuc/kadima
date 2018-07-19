@@ -1,11 +1,15 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+.mat-select-value {
+    color: white !important;
+}
+
 .mat-button-toggle-checked {
     background: yellow !important;
 }
 
 .ui-growl {
-    top: 35rem !important;
-    right: 14rem !important;
+    // top: 5rem !important;
+    // right: 14rem !important;
 }
 
 .line-selected {
@@ -46,7 +50,8 @@
     border: none !important;
 }
 
-.mat-form-field-empty.mat-form-field-label {
+.mat-form-field-empty.mat-form-field-label,
+.mat-form-field-label {
     color: white !important;
 }
 
@@ -157,7 +162,8 @@ mat-select {
     width: 100% !important;
     max-height: 200% !important;
     height: 200% !important;
-    font-size: 160% !important;
+    font-size: 130% !important;
+    color: white !important;
 }
 
 .form-item-date {
@@ -170,7 +176,7 @@ mat-select {
     width: 100% !important;
     max-height: 200% !important;
     height: 200% !important;
-    font-size: 160% !important;
+    font-size: 110% !important;
 }
 
 .form-item:not([focus]) {

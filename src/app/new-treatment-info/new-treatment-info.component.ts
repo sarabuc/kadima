@@ -9,24 +9,23 @@ import { ShareDataService } from '../services/share-data.service';
 })
 export class NewTreatmentInfoComponent implements OnInit {
 
-  @Input() Therapist: Therapist;
-  @Input() patient: Patient;
-  Tid = '';
-  Pid = '';
+  @Input() Tid = '';//therapist: Therapist;
+  @Input() Pid = ''; //patient: Patient;
   Tname = '';
   Pname = '';
 
   val;
-  startTime = ''; endTime = ''; hours = ''; tDate = ''; discrib = ''; comment = ''; kind = '';
+  startTime = ''; endTime = ''; hours = ''; tDate: Date; discrib = ''; comment = ''; kind = '';
   constructor(public sd: ShareDataService, public db: DbService) { }
 
   ngOnInit() {
+
   }
 saveNewtreatment() {
   const progressCode = this.getProgressCode(this.Pid, this.Tid);
 const treat = {
-  Pid: this.Pid,
-  Tid: this.Tid,
+  Pid: '' + this.Pid,
+  Tid: '' + this.Tid,
   progressionCode: progressCode,
   kind: this.kind,
   treatmentNumber: new Date().toString(), // timestemp
@@ -50,7 +49,7 @@ this.sd.routeTo('/');
     this.startTime = '';
     this.endTime = '';
     this.hours = '';
-    this.tDate = '';
+    this.tDate = new Date();
     this.discrib = '';
     this.comment = '';
     this.kind = '';

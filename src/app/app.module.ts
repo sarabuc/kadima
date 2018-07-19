@@ -118,6 +118,9 @@ import { ChipsInteractionComponent } from './chips-interaction/chips-interaction
 import { AddDiffiFromExelComponent } from './add-diffi-from-exel/add-diffi-from-exel.component';
 import { DiffiAndMethodsComponent } from './diffi-and-methods/diffi-and-methods.component';
 import { ShowMipuyComponent } from './show-mipuy/show-mipuy.component';
+import { ShowTreatmentInfoComponent } from './show-treatment-info/show-treatment-info.component';
+import { ShowTreatmentForPatientComponent } from './show-treatment-for-patient/show-treatment-for-patient.component';
+import { ShowTreatmentForTherapistComponent } from './show-treatment-for-therapist/show-treatment-for-therapist.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -171,7 +174,10 @@ const firebase = {
     ChipsInteractionComponent,
     AddDiffiFromExelComponent,
     DiffiAndMethodsComponent,
-    ShowMipuyComponent
+    ShowMipuyComponent,
+    ShowTreatmentInfoComponent,
+    ShowTreatmentForPatientComponent,
+    ShowTreatmentForTherapistComponent
   ],
   imports: [
     routing,

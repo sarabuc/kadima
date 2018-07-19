@@ -112,7 +112,7 @@ export interface TreatmentInfo { // key is Tid-treatmentNumber to example: 1234-
    progressionCode: string;
    kind: string;
    treatmentNumber: string; // timestemp
-   treatDate: string;
+   treatDate: Date;
    startTime: string;
    endTime: string;
    hours: string;
@@ -177,9 +177,10 @@ public newMipuy: string[] = [];
      // get all patients id
      this.allPatientsRef = this.afs.collection('patients');
      this.allPatientsRef.valueChanges().subscribe(pats => {
+       this.allPatientList = pats;
        pats.forEach(pat => {
          this.patientIDList.push(pat.id);
-         this.allPatientList.push(pat);
+
          console.log(pat);
        });
      });
@@ -343,6 +344,7 @@ public addPatientDifficult(diffi: PatientsDifficult) {
  */
 public addTreatmentInfo( treat: TreatmentInfo) {
   this.treatmentInfoForProgressRef.add(treat);
+  console.log(treat);
 }
 
 
@@ -372,15 +374,36 @@ public addTreatmentInfo( treat: TreatmentInfo) {
   }
 
   /***************************************************************** */
+  /**************************************************** */
+  /*****************       delete to db           ******* */
+
+  /**
+   * deleteTherapist
+   */
+  public deleteTherapist(th) {
+    this.allTherapistsRef.doc('' + th.id).delete();
+    this.sd.createAlert('success', 'מטפל נמחק בהצלחה', '');
+  }
+
+
+  /**
+   * deletePatient
+   */
+  public deletePatient(pat) {
+    this.allPatientsRef.doc('' + pat.id).delete();
+    this.sd.createAlert('success', 'תלמיד נמחק בהצלחה', '');
+  }
+
+  /***************************************************************** */
   isDiffiExist(code) {
-return false; //??????????????????????????????????????????????????
+return false; // ??????????????????????????????????????????????????
   }
 
 
   getMipuyForPatient(Pid: string) {
    // this.isBusy = true;
     this.mipuyForPatientRef = this.afs.collection('mipuy', ref => {
-      return ref.where('Pid', '==', Pid).orderBy("mipuyDate", "desc");
+      return ref.where('Pid', '==', Pid).orderBy('mipuyDate', 'desc');
     });
     // this.mipuyForPatientRef.valueChanges().subscribe(mipuy => {
     //   this.mipuyForPatientList = mipuy;
@@ -389,5 +412,22 @@ return false; //??????????????????????????????????????????????????
     // });
   }
 
+
+  findTherapistNameById(Tid) {
+   for (let i = 0; i < this.allTherapistList.length; i++) {
+      if (this.allTherapistList[i].id === Tid) {
+        return '' + this.allTherapistList[i].firstName + ' ' + this.allTherapistList[i].lastName;
+      }
+    }
+    return '';
+  }
+  findPatientNameById(Pid) {
+    for (let i = 0; i < this.allPatientList.length; i++) {
+      if (this.allPatientList[i].id === Pid) {
+        return '' + this.allPatientList[i].firstName + ' ' + this.allPatientList[i].lastName;
+      }
+    }
+    return '';
+  }
 
 }

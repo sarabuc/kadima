@@ -50,10 +50,10 @@
         <div class="col-md-3 col-sm-12 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
 
-                <input type="text" class="form-item form-item-date " matInput [matDatepicker]="date" placeholder="תאריך " name="tDate" [(ngModel)]="tDate">
+                <input type="text" class="form-item form-item-date " matInput [matDatepicker]="date" placeholder="תאריך " name="tDate" [(ngModel)]="tDate" required>
                 <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
                 <mat-datepicker #date></mat-datepicker>
-
+                <mat-error *ngIf="!tDate">חובה להכניס תאריך </mat-error>
             </mat-form-field>
         </div>
         <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
@@ -71,9 +71,9 @@
         </div>
         <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput class="form-item back-translate form-item-inputmask" type="text" name="endTime" [(ngModel)]="endTime" placeholder="שעת התחלה" required>
+                <input matInput class="form-item back-translate form-item-inputmask" type="text" name="endTime" [(ngModel)]="endTime" placeholder="שעת סיום" required>
 
-                <mat-error *ngIf="!startTime">חובה להכניס שעת סיום </mat-error>
+                <mat-error *ngIf="!endTime">חובה להכניס שעת סיום </mat-error>
             </mat-form-field>
         </div>
 

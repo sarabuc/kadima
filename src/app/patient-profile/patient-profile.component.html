@@ -1,17 +1,68 @@
-<div class="px-3 py-1 mx-2 my-3" style="text-align:right">
-    <div class="list-group px-2 py-3 mb-3">
-        <h3>פרטים אישיים</h3>
-        <div class="list-group-item"><small>תעודת זהות</small> <strong>  {{pat.id}} </strong></div>
-        <div class="list-group-item"><small>שם</small> <strong>  {{pat.firstName}} {{pat.lastName}}</strong></div>
-        <div class="list-group-item"><small>שם האב</small> <strong>  {{pat.fatherName}} </strong></div>
-        <div class="list-group-item"><small>טלפון האב</small> <strong>  {{pat.fatherPhone}}</strong></div>
-        <div class="list-group-item"><small>טלפון האם</small> <strong>  {{pat.motherPhone}} </strong></div>
-        <div class="list-group-item"><small>תאריך לידה</small> <strong>  {{pat.birthDate}}</strong></div>
-        <div class="list-group-item"><small>כתה</small> <strong>  {{pat.grade}} </strong></div>
-        <div class="list-group-item"><small>קופת חולים</small> <strong>  {{pat.kupatCholim}} </strong></div>
+<div class="mx-3 my-3  row" style="text-align:right">
+    <div class="col-12 d-flex justify-content-between">
+        <h3 class="h3">פרטים אישיים</h3>
+        <div>
+            <button class="red mx-1" mat-mini-fab (click)="style.show()"><i class="fa fa-close"></i></button>
+            <button class="green mx-1" mat-mini-fab (click)="editPatient()"><i class="fa fa-pencil"></i></button>
+        </div>
     </div>
+    <div class="list-group px-2 py-3 mb-3  col-md-6 col-sm-12">
 
-    <app-mipuy-for-patient [Pid]="Pid" [status]="'last'"></app-mipuy-for-patient>
-    <app-time-table-to-show [timeStr]="pat.strFreeTime"></app-time-table-to-show>
+        <div class="list-group-item mb-1 mx-1"><small class="purple-text">תעודת זהות</small> <strong>  {{pat.id}} </strong></div>
+        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">שם</small> <strong>  {{pat.firstName}} {{pat.lastName}}</strong></div>
+        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">טלפון האב</small> <strong>  {{pat.fathersPhone}}</strong></div>
+        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">טלפון האם</small> <strong>  {{pat.mothersPhone}} </strong></div>
+    </div>
+    <div class="list-group px-2 py-3 mb-3  col-md-6 col-sm-12">
+        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">תאריך לידה</small> <strong>  {{pat.birthDate}}</strong></div>
+        <div class="list-group-item mb-1 mx-1"><small class="purple-text">כתה</small> <strong>  {{pat.grade}} </strong></div>
+        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">שם האב</small> <strong>  {{pat.fathersName}} </strong></div>
+        <div class="list-group-item mb-1 mx-1">
+            <small class="purple-text">קופת חולים</small>
+            <strong> {{pat.kupatCholim}} </strong>
+        </div>
+    </div>
+</div>
 
+<!-- <app-mipuy-for-patient [Pid]="Pid" [status]="'last'"></app-mipuy-for-patient> -->
+<app-time-table-to-show [timeStr]="pat.strFreeTime"></app-time-table-to-show>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div mdbModal #style="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-danger " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead mr-2">האם אתה בטוח ?</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="style.hide()">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                    <p>האם אתה בטוח שברצונך למחק תלמיד זה לצמיתות ?</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a type="button" class="btn btn-primary-modal waves-light white-text" mdbRippleRadius (click)="style.hide(); deletePatient();">מחק
+          <i class="fa fa-delete ml-1"></i>
+        </a>
+                <a type="button" class="btn btn-outline-secondary-modal" data-dismiss="modal" (click)="style.hide()" mdbRippleRadius>חזור</a>
+            </div>
+        </div>
+    </div>
 </div>

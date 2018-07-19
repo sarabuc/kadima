@@ -9,19 +9,21 @@ import { Router } from '@angular/router';
 })
 export class FreeTimeComponent implements OnInit {
 dbs: DbService;
-days: string[]  = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
+days: string[] ; // = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
 // hours = 12;
-lessons: string[] = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
- '12:00 - 13:00', '13:00 - 14:00', '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00', '17:00 - 18:00', '18:00 - 19:00'];
+lessons: string[]; /* = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
+ '12:00 - 13:00', '13:00 - 14:00', '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00', '17:00 - 18:00', '18:00 - 19:00'];*/
  freeTime: boolean[][] = [];
  @Input() status: string;
  @Input() id: string;
  @Input() therapist: Therapist;
  @Input() patient: Patient;
- 
+
   constructor(private db: DbService, private sd: ShareDataService, private router: Router) {
    this.dbs = db;
-   
+   this.lessons = this.sd.hourInDayName;
+   this.days = this.sd.daysName;
+
 
 }
 
@@ -32,7 +34,7 @@ lessons: string[] = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
     } else if (this.status === 'updateT' || this.status === 'updateP') {
       this.getTableFromDB();
     } else {
-      
+
     }
     console.log(this.status);
     console.log(this.id);
@@ -55,11 +57,11 @@ lessons: string[] = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
         console.log(this.therapist);
         this.freeTime = this.sd.parseTimeFromStr(this.therapist.strFreeTime);
         this.dbs.isBusy = false;
-      
+
     } else if (this.status === 'updateP') {
         this.freeTime = this.sd.parseTimeFromStr(this.patient.strFreeTime);
         this.dbs.isBusy = false;
-     
+
     } else {
       this.dbs.isBusy = false;
       return;
@@ -93,34 +95,28 @@ lessons: string[] = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
   }
 
   saveNewFreeTime() {
-    
+
   }
 
   updateFreeTime() {
+    this.sd.activeTabIndex = 0;
     console.log(this.status);
     this.dbs.isBusy = true;
     const str = this.sd.parseTimeToStr(this.freeTime);
     if (this.status === 'updateT') {
       this.therapist.strFreeTime = str;
-      this.dbs.allTherapistsRef.doc(this.id).update(this.therapist).then(thera => {
-        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        this.dbs.isBusy = false;
-        this.sd.activeTabIndex = 0;
-      });
+      this.dbs.updateTherapist(this.therapist);
     } else if (this.status === 'updateP') {
       this.patient.strFreeTime = str;
-      this.dbs.allPatientsRef.doc(this.id).update(this.patient).then(pati => {
-        this.dbs.isBusy = false;
-        this.sd.activeTabIndex = 0;
-      });
+      this.dbs.updatePatient(this.patient);
     } else { // newT????????????????/ newP????????????????????????/
       this.dbs.isBusy = false;
       return;
     }
-   
+
   }
 
-  
+
 
 
 }
