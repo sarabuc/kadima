@@ -1,7 +1,7 @@
 import { ModuleWithProviders} from '@angular/core';
 import { Routes, RouterModule} from '@angular/router';
 /*components*/
-
+import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { AboutComponent } from './pages/about/about.component';
 
@@ -39,7 +39,7 @@ const appRoutes: Routes = [
   { path: 'Tcard/:id', component: TherapistCardComponent },
   { path: 'Tcards', component: TherapistListComponent },
   { path: 'Pcard/:id', component: PatientCardComponent },
-  { path: 'Pcards', component: PatientListComponent },
+  { path: 'Pcards/:status', component: PatientListComponent },
   { path: 'newTreatmentInfo', component: NewTreatmentInfoComponent },
   { path: 'addPatient', component: NewPatientComponent },
   { path: 'addTherapist', component: NewTherapistComponent },
@@ -52,8 +52,9 @@ const appRoutes: Routes = [
   { path: 'Report', component: TempComponent },
   { path: 'check-progress', component: TempComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'Treatment-planning', component: TempComponent },
-  {path: 'diffiAndMethods', component:DiffiAndMethodsComponent }
+  { path: 'Treatment-planning/:status', component: PatientListComponent },
+  { path: 'plan/:id', component: NewPlanForPatientComponent },
+  {path: 'diffiAndMethods', component: DiffiAndMethodsComponent }
 ];
 
 

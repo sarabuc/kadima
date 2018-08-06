@@ -372,6 +372,10 @@ public addTreatmentInfo( treat: TreatmentInfo) {
     });
      this.sd.createAlert('success', 'תלמיד עודכן בהצלחה', '');
   }
+  updatePartOfPatient(pat_id, pat_part, part) {
+    this.allPatientsRef.doc('' + pat_id + '/' + part).update(pat_part).then(res => {
+    });
+  }
 
   /***************************************************************** */
   /**************************************************** */
@@ -389,8 +393,8 @@ public addTreatmentInfo( treat: TreatmentInfo) {
   /**
    * deletePatient
    */
-  public deletePatient(pat) {
-    this.allPatientsRef.doc('' + pat.id).delete();
+  public deletePatient(patID) {
+    this.allPatientsRef.doc('' + patID).delete();
     this.sd.createAlert('success', 'תלמיד נמחק בהצלחה', '');
   }
 
@@ -430,5 +434,21 @@ return false; // ??????????????????????????????????????????????????
     }
     return '';
   }
+  // getPatientById(pid): Patient {
+  //     const myPromise = new Promise((resolve, reject) => {
+
+  //        const patObs: Observable<Patient> =  this.allPatientsRef.doc<Patient>(pid).valueChanges();
+  //        patObs.subscribe(pat => {
+  //           resolve(pat);
+  //           reject(pat);
+  //         });
+  //       }).then(pat => {
+  //         return pat;
+  //       });
+
+  //       // myPromise.then(pat => {
+  //       // return pat;
+  //       // });
+  // }
 
 }

@@ -52,7 +52,7 @@
 
 
     <div *ngFor="let treat of treatments">
-        <app-show-treatment-info [treat]="treat" [status]="'byTherapist'" *ngIf="checkFilter(treat, treat.treatDate.toDate()| date: 'dd/MM/yyyy')"></app-show-treatment-info>
+        <app-show-treatment-info [treat]="treat" [date]="treat.treatDate.toDate()" [status]="'byTherapist'" *ngIf="checkFilter(treat, treat.treatDate.toDate()| date: 'dd/MM/yyyy')"></app-show-treatment-info>
 
     </div>
 

@@ -27,7 +27,7 @@ export class DifficultComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isChoozen = this.checkDiffiChoozen(this.code);
+    this.checkIfIsChoosen();
 
    // this.isLeave = !(this.getChildren() > 0);
   }
@@ -58,6 +58,8 @@ export class DifficultComponent implements OnInit {
   }
 
   updateDiffiStatus(checked: boolean) {
+    console.log('**********************************************');
+    console.log(checked);
     if (checked) {
       this.getChildren();
     }
@@ -79,5 +81,14 @@ export class DifficultComponent implements OnInit {
     this.db.addDifficult(dif);
     this.newD = '';
 
+  }
+
+  checkIfIsChoosen() {
+
+     this.isChoozen = this.db.newMipuy.indexOf(this.code) > -1;
+    if (!this.isChoozen) {
+      this.dificlass = '';
+    }
+     return this.isChoozen;
   }
 }

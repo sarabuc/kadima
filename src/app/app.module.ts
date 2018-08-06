@@ -121,6 +121,7 @@ import { ReturnMessageService } from './services/return-message.service';
 
 import {  NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -176,7 +177,8 @@ const firebase = {
     ShowMipuyComponent,
     ShowTreatmentInfoComponent,
     ShowTreatmentForPatientComponent,
-    ShowTreatmentForTherapistComponent
+    ShowTreatmentForTherapistComponent,
+    NewPlanForPatientComponent
   ],
   imports: [
     routing,

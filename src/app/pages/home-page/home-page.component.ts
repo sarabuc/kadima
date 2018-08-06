@@ -22,7 +22,7 @@ export class HomePageComponent implements OnInit {
 
 
   features1 = [
-    { route: 'Pcards', class: 'fa fa-id-card fa-4x  accent-3 amber-text', text: 'כרטיס תלמיד', sub: 'כל הפרטים על התלמיד שלך'},
+    { route: 'Pcards/card', class: 'fa fa-id-card fa-4x  accent-3 amber-text', text: 'כרטיס תלמיד', sub: 'כל הפרטים על התלמיד שלך'},
     {
       route: 'newTreatmentInfo', class: 'fa fa-calendar-check-o fa-4x accent-3 amber-text',
      text: 'דווח  טיפול', sub: 'דוח על טיפול שהתקים'},
@@ -42,7 +42,8 @@ export class HomePageComponent implements OnInit {
       route: 'check-progress', class: 'fa fa-check fa-4x yellow-text', text: 'בדוק התקדמות',
     class2: 'wow fadeInUp col-lg-2 col-md-2 col-sm-6 col-xs-6 mb-4 pt-1' },
     {
-      route: 'Treatment-planning', class: 'fa fa-navicon fa-4x yellow-text', text: 'תכנן תהליך טיפול',
+
+      route: 'Treatment-planning/plan', class: 'fa fa-navicon fa-4x yellow-text', text: 'תכנן תהליך טיפול',
     class2: 'wow fadeInUp col-lg-2 col-md-2 col-sm-6 col-xs-6 mb-4 pt-1' }
    ];
 

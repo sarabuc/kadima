@@ -1,17 +1,21 @@
 <div class="pr-3 pl-3 border-top pt-1">
     <div class="" (mouseleave)="goHover = false" (mouseenter)="goHover = true">
         <div [class]="dificlass">
-            <mat-checkbox #diffi [(ngModel)]="isChoozen" (change)="updateDiffiStatus(diffi.checked)">{{describtion}}</mat-checkbox>
+            <mat-checkbox #diffi [checked]="checkIfIsChoosen()" (change)="updateDiffiStatus(diffi.checked)">{{describtion}}</mat-checkbox>
         </div>
         <div class="" *ngIf="goHover && status == 'show'">
             <button class="btn my-button btn-sm" (click)="addDiffEnable=true"> הוסף קושי</button>
             <form class="form-inline md-form mt-2 ml-2 mr-2">
                 <div class="w-100 md-form" *ngIf="addDiffEnable">
                     <input class="form-control my-0" type="text" name="newD" placeholder="תיאור קושי" [(ngModel)]="newD" required>
-                    <button class="btn btn-sm btn-primary ml-2 px-1" (click)="addDiffi();addDiffEnable = false" [disabled]="!newD">
+                    <button class="btn btn-sm purple ml-2 px-1" (click)="addDiffi();addDiffEnable = false" [disabled]="!newD">
                       <i class="fa fa-check"></i>
                     </button>
+
                     <mat-error *ngIf="!newD">חובה להכניס תאור קושי </mat-error>
+                    <button class="btn btn-sm purple ml-2 px-1" (click)="addDiffEnable = false">
+                      <i class="fa fa-close"></i>חזור
+                    </button>
                 </div>
             </form>
 

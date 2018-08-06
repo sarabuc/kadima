@@ -1,8 +1,11 @@
 <div class="black-text">
+
+    <!-- <img [src]="urlImg" style="width:50px"> -->
     <p class="h2 purple-text mt-5 mb-4">
         הוספת מטופלים מקובץ אקסל
     </p>
-
+    <a href="https://drive.google.com/open?id=1fQ7EQCYUx-mroQreTOHDpn0JbAD2y8U4" class="purple-text" target="_blank">להורדת תבנית לטעינה -יש ללחוץ כאן</a>
+    <br>
 
     <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="בחר קובץ" accept=".xlsx">
     <button type="button" class="btn purple" (click)="Upload()">טען נתונים</button>
@@ -26,20 +29,53 @@
                 <td *ngIf="!successed[i]">{{i+1}}</td>
                 <td *ngIf="successed[i] == 1"><i class="fa fa-check green-text fa-2x"></i></td>
                 <td *ngIf="successed[i] == 2"><i class="fa fa-close red-text fa-2x"></i></td>
-                <td>{{p.fname}}</td>
-                <td>{{p.lname}}</td>
+                <td *ngIf="successed[i] == 3" class="red-text">חסר</td>
+
+                <td>{{p.first_name}}</td>
+                <td>{{p.last_name}}</td>
                 <td>{{p.id}}</td>
-                <td>{{p.father}}</td>
-                <td>{{p.fatherPhone}}</td>
-                <td>{{p.motherPhone}}</td>
-                <td>{{p.birthDate}}</td>
+                <td>{{p.father_name}}</td>
+                <td>{{p.father_phone}}</td>
+                <td>{{p.mother_phone}}</td>
+                <td>{{p.birth_date}}</td>
                 <td>{{p.grade}}</td>
-                <td>{{p.kupatCholim}}</td>
+                <td>{{p.kupat_cholim}}</td>
             </tr>
         </table>
 
 
         <button type="button" class="btn purple" (click)="addPatientFromExel()">שמור</button>
-        <button type="button" class="btn purple" (click)="updatePatientFromExel()">עדכן תלמידים קימים</button>
+        <button type="button" class="btn purple" (click)="style.show()">עדכן תלמידים קימים</button>
+    </div>
+</div>
+
+
+
+
+
+
+<div mdbModal #style="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-info " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="heading lead mr-2" style="text-align: center">שים לב</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="style.hide()">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                    <h5>מעדכן את כל השדות המופיעים בטבלה (גם תאים ריקים)</h5>
+                    <p> האם ברצונך להמשיך ?</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a type="button" class="btn btn-primary-modal waves-light white-text" mdbRippleRadius (click)="style.hide(); updatePatientFromExel();">המשך ועדכן
+          <i class="fa fa-delete ml-1"></i>
+        </a>
+                <a type="button" class="btn btn-outline-secondary-modal" data-dismiss="modal" (click)="style.hide()" mdbRippleRadius>חזור</a>
+            </div>
+        </div>
     </div>
 </div>

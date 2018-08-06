@@ -17,4 +17,20 @@ updatePatient() {
   this.db.updatePatient(this.pat);
   this.sd.activeTabIndex = 0;
 }
+
+
+  cleanForm() {
+
+    this.pat.id = '';
+    this.pat.firstName = '';
+    this.pat.lastName = '';
+    this.pat.fathersName = '';
+    this.pat.fathersPhone = '';
+    this.pat.mothersPhone = '';
+    this.pat.birthDate = new Date().toString();
+    this.pat.grade = '';
+    this.pat.comment = '';
+    this.pat.kupatCholim = '';
+
+  }
 }

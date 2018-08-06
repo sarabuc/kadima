@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ShareDataService } from '../../services/share-data.service';
 import { DbService, PatientsDifficult } from '../../services/db.service';
+import { DifficultComponent } from '../difficult/difficult.component';
+import { Button } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-show-difficulties',
@@ -11,12 +13,23 @@ export class ShowDifficultiesComponent implements OnInit {
   @Input() status: string; // mipuy for mipuy and show for handle difficults
   @Input() Pid: string;
   @Output() finishedMipuy = new EventEmitter();
+  @ViewChild(DifficultComponent) diff: DifficultComponent;
+  @ViewChild(DifficultComponent) diff2: DifficultComponent;
+
   diffiArr: string[] = [];
   constructor(public sd: ShareDataService, public db: DbService) { }
 
   ngOnInit() {
 this.db.newMipuy = [];
+// console.log(this.diff2);
+// this.diff.isChoozen = false;
 
+  }
+
+  init() {
+    this.db.newMipuy = [];
+    console.log(this.diff2);
+    this.diff.isChoozen = false;
   }
   // addToTempList(code: string) {
   //   if (this.diffiArr.indexOf(code) > -1) {
@@ -50,6 +63,7 @@ this.db.newMipuy = [];
         this.db.addPatientDifficult(diffi);
       });
       this.sd.createAlert('success', 'מיפוי הוסף בהצלחה', '');
+      // this.init();
   }
 
 }

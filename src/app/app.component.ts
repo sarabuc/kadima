@@ -23,7 +23,7 @@ export class AppComponent {
 
  code = 1234;
   fixed = false;
-  mode = 'side';
+  mode = 'over';
   modeIndex = 0;
   /* get mode() {
        return ['side',
@@ -32,7 +32,7 @@ export class AppComponent {
    }*/
 
   menuOptions = [
-    { option: ' כרטיס מטופל', icon: 'fa fa-address-card ml-4 purple-text', router: '/Pcards', admin: false },
+    { option: ' כרטיס מטופל', icon: 'fa fa-address-card ml-4 purple-text', router: '/Pcards/card', admin: false },
     { option: ' כרטיס מטפל', icon: 'fa fa-id-card-o ml-4 purple-text', router: '/Tcards', admin: true },
     { option: 'הוספת תלמיד', icon: 'fa fa-plus ml-4 purple-text', router: '/addPatient', admin: true },
     { option: 'הוספת מורה', icon: 'fa fa-plus ml-4 purple-text', router: '/addTherapist', admin: true },

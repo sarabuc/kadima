@@ -127,8 +127,13 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
   /**
    * routeTo
    */
-  public routeTo(path: string) {
-    this.router.navigate([path]);
+  public routeTo(path: string, param?: string) {
+    if (param) {
+      this.router.navigate([path, param]);
+    } else {
+      this.router.navigate([path]);
+    }
+
   }
 
 public convertDateToString(date: Date) {

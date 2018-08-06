@@ -99,21 +99,21 @@
                 </mat-expansion-panel-header>
 
 
-                <app-free-time [id]="Pid" [status]="'updateP'" [patient]="pat"></app-free-time>
+                <app-free-time [id]="pat.id" [status]="'updateP'" [patient]="pat"></app-free-time>
 
             </mat-expansion-panel>
         </mat-accordion>
 
 
 
-        <div class="row d-flex justify-content-around ">
+        <!-- <div class="row d-flex justify-content-around ">
             <div class="col-md-6 col-sm-12 mb-2 justify-content-center " *ngIf="showMoreOptions ">
                 <button class="w-100 my-primary my-button my-btn-lg" (click)="model.show()">עדכן התמחות </button>
             </div>
             <div class="col-md-6 col-sm-12 mb-2 justify-content-center " *ngIf="showMoreOptions ">
                 <button class="w-100 my-primary my-button my-btn-lg" (click)="freeTimeTable.show() ">עדכן מערכת שעות</button>
             </div>
-        </div>
+        </div> -->
 
 
     </form>

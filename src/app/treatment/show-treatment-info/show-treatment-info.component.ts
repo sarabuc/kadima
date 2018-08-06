@@ -9,6 +9,7 @@ import { TreatmentInfo, DbService, Therapist } from '../../services/db.service';
 export class ShowTreatmentInfoComponent implements OnInit {
   @Input() treat: TreatmentInfo;
   @Input() status: string;
+  @Input() this_treatDate: Date;
   constructor(public db: DbService) { }
 
 

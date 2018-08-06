@@ -41,6 +41,7 @@ this.mipuyForPatientRef.valueChanges().subscribe(mipuys => {
   if (str === 'finish') {
  this.mipuyModeClass = 'modal fade';
  // this.initDiffiForNewMipuy();
+ this.init();
   }
 }
 
@@ -48,6 +49,10 @@ updateThereIsDiffi() {
   this.pat.haveDificult = 'yes';
  this.db.updatePatient(this.pat);
 
+}
+
+init() {
+this.db.newMipuy = [];
 }
 
 }

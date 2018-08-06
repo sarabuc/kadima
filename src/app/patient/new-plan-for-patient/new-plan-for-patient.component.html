@@ -1,0 +1,59 @@
+<div *ngIf="!pat" class="center">
+    <mat-card class="center">
+        <h4 class="center">loading...</h4>
+        <mat-spinner class="center"></mat-spinner>
+
+    </mat-card>
+</div>
+{{Pid}}
+<div *ngIf="pat">
+    <h3 class="purple-text mt-5 mb-3">תכנון טיפול |
+        <strong> {{pat.firstName}} {{pat.lastName}}</strong>
+    </h3>
+
+    <mat-vertical-stepper [linear]="'false'">
+        <!-- כללי -->
+        <mat-step>
+            <ng-template matStepLabel>פרטים כללים</ng-template>
+
+            <div>
+                <button mat-button matStepperNext type="button" [disabled]="false"> הבא</button>
+            </div>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>
+                <div>כותרת</div>
+            </ng-template>
+
+            <mat-card-actions>
+                <button mat-button matStepperPrevious type="button"> הקודם</button>
+                <button mat-button matStepperNext type="button">הבא</button>
+            </mat-card-actions>
+
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>
+                <div>כותרת</div>
+            </ng-template>
+
+
+
+            <mat-card-actions>
+                <button mat-button matStepperPrevious type="button">הקודם</button>
+                <button mat-button matStepperNext type="button">הבא</button>
+            </mat-card-actions>
+
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>סיום ושמירה </ng-template>
+            <mat-card-actions>
+                <h3 class="purple-text pt-4">האם אתה בטוח שסימת את תכנון הטיפול?</h3>
+                <button mat-button matStepperPrevious type="button">הקודם</button>
+                <button mat-button (click)="finishPlan()" type="button">סיום</button>
+            </mat-card-actions>
+        </mat-step>
+    </mat-vertical-stepper>
+</div>

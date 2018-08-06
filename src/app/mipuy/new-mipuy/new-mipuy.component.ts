@@ -51,6 +51,7 @@ closeModal(str: string) {
   if (str === 'finish') {
  this.mipuyModeClass = 'modal fade';
  // this.initDiffiForNewMipuy();
+ this.init();
   }
 }
 
@@ -74,6 +75,9 @@ closeModal(str: string) {
     this.showDif = new ShowDifficultiesComponent(this.sd, this.db);
   }
 
+  init() {
+    this.db.newMipuy = [];
+  }
 }
 
 
