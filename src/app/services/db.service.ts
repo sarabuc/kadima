@@ -15,7 +15,6 @@ export interface User {
   name: string;
   id: string;
 }
-
 export interface Therapist {
   id: string;
   firstName: string;

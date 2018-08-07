@@ -9,7 +9,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule  } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { routing } from './app.routing';
-
+import { AuthModule } from './auth/auth.module';
 
 import {MessageService} from 'primeng/components/common/messageservice';
 import {MessagesModule} from 'primeng/messages';
@@ -181,6 +181,7 @@ const firebase = {
     NewPlanForPatientComponent
   ],
   imports: [
+    AuthModule,
     routing,
     BrowserModule,
     FormsModule,

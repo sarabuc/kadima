@@ -1,5 +1,6 @@
 import { ModuleWithProviders} from '@angular/core';
 import { Routes, RouterModule} from '@angular/router';
+import { GuardGuard } from './services/guard.guard';
 /*components*/
 import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -32,8 +33,7 @@ import { DiffiAndMethodsComponent } from './mipuy/diffi-and-methods/diffi-and-me
 
 const appRoutes: Routes = [
 
- // { path: 'b', component: BeforeLoginComponent},
-  { path: '', component: HomePageComponent },
+  { path: '', component: HomePageComponent, canActivate: [GuardGuard] },
 
   { path: 'about', component: AboutComponent },
   { path: 'Tcard/:id', component: TherapistCardComponent },
