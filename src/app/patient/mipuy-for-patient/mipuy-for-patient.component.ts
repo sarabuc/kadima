@@ -18,7 +18,7 @@ mipuyForPatientRef: any;
   ngOnInit() {
      // console.log(this.status);
     if (!this.status) {
-     this.sd.routeTo('/');
+     this.sd.routeTo('/home');
     }
     this.getMipuyDate();
   }

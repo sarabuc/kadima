@@ -3,7 +3,8 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
 import { TreeNode } from 'primeng/api';
-import { NodeService } from '../../services/node.service';
+
+// import { NodeService } from '../../services/node.service';
 /**
  * File node data with nested structure.
  * Each node has a filename, and a type or a list of children.
@@ -121,6 +122,13 @@ export class FileDatabase {
   providers: [FileDatabase]
 })
 export class TempComponent implements OnInit {
+
+
+ text: string;
+
+    results: string[];
+
+
   selectedColors: any[] = ['Primary', 'Warn'];
   selectedColor = 'Accent';
 
@@ -128,28 +136,17 @@ export class TempComponent implements OnInit {
   treeFlattener: MatTreeFlattener<FileNode, FileFlatNode>;
   dataSource: MatTreeFlatDataSource<FileNode, FileFlatNode>;
   files: TreeNode[];
-  constructor(database: FileDatabase, private nodeService: NodeService) {
-    this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
-      this._isExpandable, this._getChildren);
-    this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
-    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  constructor(database: FileDatabase) {
 
-    database.dataChange.subscribe(data => this.dataSource.data = data);
   }
 
-  transformer = (node: FileNode, level: number) => {
-    return new FileFlatNode(!!node.children, node.filename, level, node.type);
-  }
+   search(event) {
+        // this.mylookupservice.getResults(event.query).then(data => {
+        //     this.results = data;
+        // });
+    }
 
-  private _getLevel = (node: FileFlatNode) => node.level;
+    ngOnInit() {
 
-  private _isExpandable = (node: FileFlatNode) => node.expandable;
-
-  private _getChildren = (node: FileNode): Observable<FileNode[]> => observableOf(node.children);
-
-  hasChild = (_: number, _nodeData: FileFlatNode) => _nodeData.expandable;
-  ngOnInit() {
-    this.nodeService.getFiles().then(files => this.files = files);
-  }
-
+    }
 }

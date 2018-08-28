@@ -1,6 +1,6 @@
 import { ModuleWithProviders} from '@angular/core';
 import { Routes, RouterModule} from '@angular/router';
-import { GuardGuard } from './services/guard.guard';
+import { AuthGuard } from './services/auth.guard';
 /*components*/
 import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -28,33 +28,34 @@ import { PatientCardComponent } from './patient/patient-card/patient-card.compon
 import { PatientListComponent } from './patient/patient-list/patient-list.component';
 import { AddDiffiFromExelComponent } from './mipuy/add-diffi-from-exel/add-diffi-from-exel.component';
 import { DiffiAndMethodsComponent } from './mipuy/diffi-and-methods/diffi-and-methods.component';
-
+import { RegisterComponent } from './pages/login/register/register.component';
 
 
 const appRoutes: Routes = [
-
-  { path: '', component: HomePageComponent, canActivate: [GuardGuard] },
-
+  { path: '', redirectTo: 'home'/*'login'*/, pathMatch: 'full' },
+  { path: 'home', component: HomePageComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'about', component: AboutComponent },
   { path: 'Tcard/:id', component: TherapistCardComponent },
   { path: 'Tcards', component: TherapistListComponent },
   { path: 'Pcard/:id', component: PatientCardComponent },
   { path: 'Pcards/:status', component: PatientListComponent },
-  { path: 'newTreatmentInfo', component: NewTreatmentInfoComponent },
-  { path: 'addPatient', component: NewPatientComponent },
-  { path: 'addTherapist', component: NewTherapistComponent },
+  { path: 'newTreatmentInfo', component: NewTreatmentInfoComponent},
+  { path: 'addPatient', component: NewPatientComponent},
+  { path: 'addTherapist', component: NewTherapistComponent},
   { path: 'temp', component: TempComponent },
-  { path: 'addDiffiFromExel', component: AddDiffiFromExelComponent },
-  { path: 'addPPatientsFromExel', component: AddPatientsFromExelComponent },
-  { path: 'addTherapistFromExel', component: AddPatientsFromExelComponent },
+  { path: 'addDiffiFromExel', component: AddDiffiFromExelComponent},
+  { path: 'addPPatientsFromExel', component: AddPatientsFromExelComponent},
+  { path: 'addTherapistFromExel', component: AddPatientsFromExelComponent},
  { path: 'login', component: LoginComponent},
- { path: 'newMipuy', component: NewMipuyComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'newMipuy', component: NewMipuyComponent},
   { path: 'Report', component: TempComponent },
   { path: 'check-progress', component: TempComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'Treatment-planning/:status', component: PatientListComponent },
-  { path: 'plan/:id', component: NewPlanForPatientComponent },
-  {path: 'diffiAndMethods', component: DiffiAndMethodsComponent }
+  { path: 'plan/:id', component: TempComponent/*NewPlanForPatientComponent*/ },
+  { path: 'diffiAndMethods', component: DiffiAndMethodsComponent },
+  { path: '**', redirectTo: 'login' }
 ];
 
 

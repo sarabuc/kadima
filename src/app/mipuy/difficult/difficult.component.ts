@@ -58,11 +58,14 @@ export class DifficultComponent implements OnInit {
   }
 
   updateDiffiStatus(checked: boolean) {
+	  
     console.log('**********************************************');
     console.log(checked);
+	console.log(this.status);
     if (checked) {
       this.getChildren();
     }
+	console.log(this.status=== 'mipuy');
     if (this.status === 'mipuy' && checked) {
       this.db.newMipuy.push(this.code);
       this.dificlass = 'line-selected';

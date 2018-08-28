@@ -1,14 +1,29 @@
 <div>
     <div>
-        <h1 class="h1-responsive mt-3 purple-text mb-3"> מיפוי חדש
-            <small class="text-muted mr-3 mb-2">סמן תלמידים הזקוקים למעקב ולחץ על התחל מיפוי</small>
-        </h1>
+        <div class="row d-flex mx-3 px-3">
+            <h1 class="h1-responsive mt-3 purple-text mb-3"> מיפוי חדש
+                <small class="text-muted mr-3 mb-2">סמן תלמידים הזקוקים למעקב ולחץ על התחל מיפוי</small>
+            </h1>
+            <mat-slide-toggle class="mr-auto justify-self-end ml-3 mt-4" [(ngModel)]="checkedFastMipuy">
+                <strong> אפשר מיפוי מהיר
+                    </strong>
+                <small *ngIf="checkedFastMipuy">
+                      יש לשמור לפי יציאה
+                    </small>
+            </mat-slide-toggle>
+
+
+            <!-- <p-inputSwitch [(ngModel)]="checkedFastMipuy" class="justify-self-end mr-auto"><strong> אפשר מיפוי מהיר
+            </strong></p-inputSwitch> -->
+        </div>
+
         <div class="row  px-5 d-flex justify-content-around  py-2 grey lighten-3 my-2">
             <!-- <div class="col-sm-6 coll-md-10 mb-3"> -->
             <i class="fa fa-search fa-2x purple-text mr-1 align-self-center"></i>
             <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" id="myInput" ng-model="test" placeholder="לפי שם פרטי " name="fname" [(ngModel)]="fname">
             <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" id="myInput" ng-model="test" placeholder="לפי שם משפחה " name="lname" [(ngModel)]="lname">
             <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" id="myInput" ng-model="test" placeholder="לפי  כתה " name="grade" [(ngModel)]="grade">
+
 
             <!-- </div>
             <div class="col-sm-6 coll-md-2 px-1 mb-3"> -->
@@ -45,115 +60,135 @@
 
 
 
-    <div class="card card-cascade narrower">
-        <!--
+    <div class="card card-cascade narrower" *ngIf="this.patientsForMipuy.length>0">
 
-        <div class="view view-cascade  gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+        <section>
+            <div class="scroll-fixed-table center">
+                <!--Table-->
+                <table class="table  mb-0   mr-auto ml-auto w-100">
 
-            <div class="mr-5">
-                <button type="button nav-item" class="btn btn-outline-white btn-rounded btn-sm px-1waves-light" mdbTooltip="הוסף תלמיד" placement="bottom" mdbWavesEffect><i class="fa fa-plus mt-0 "></i></button>
-                <button type="button nav-item" class="btn btn-outline-white btn-rounded btn-sm px-1waves-light" mdbTooltip="כרטיס תלמיד" placement="bottom" mdbWavesEffect><i class="fa fa-address-card mt-0"></i></button>
-            </div>
-
-            <a href="" class="white-text mx-3">התלמידים במערכת</a>
-
-            <div class="ml-5">
-                <button type="button nav-item" class="btn btn-outline-white btn-rounded btn-sm px-1aves-light" mdbTooltip="קשיים וטיפולים" placement="bottom" mdbWavesEffect><i class="fa fa-th-list mt-0"></i></button>
-                <button type="button nav-item" class="btn btn-outline-white btn-rounded btn-sm px-1waves-light" mdbTooltip="דיווח על טיפול" placement="bottom" mdbWavesEffect><i class="fa fa-info-circle mt-0 "></i></button>
-            </div>
-
-        </div>
-      -->
-
-
-
-        <div class=" center">
-            <!--Table-->
-            <table class="table  mb-0 table-responsive  mr-auto ml-auto">
-
-                <!--Table head-->
-                <thead class=" purple white-text view">
-                    <tr>
-                        <th>
-                            <!-- <input class="form-check-input" type="checkbox" id="checkbox">
+                    <!--Table head-->
+                    <thead class="table-head purple white-text ">
+                        <tr>
+                            <th>
+                                <!-- <input class="form-check-input" type="checkbox" id="checkbox">
                                 <label class="form-check-label" for="checkbox" class="mr-2 label-table"></label> -->
-                        </th>
-                        <th class="th-lg white-text">תעודת זהות </th>
-                        <th class="th-lg white-text">שם פרטי</th>
-                        <th class=" th-lg white-text">שם משפחה</th>
-                        <th class=" th-lg white-text">כתה</th>
-                        <th class="th-lg white-text">
+                            </th>
+                            <th class="th-lg white-text">תעודת זהות
+                                <div>תעודת זהות</div>
+                            </th>
+                            <th class="th-lg white-text">שם פרטי
+                                <div>שם פרטי </div>
+                            </th>
+                            <th class=" th-lg white-text">שם משפחה
+                                <div>שם משפחה </div>
+                            </th>
+                            <th class=" th-lg white-text">כתה
+                                <div>כתה </div>
+                            </th>
+                            <th class="th-lg white-text" *ngIf="!checkedFastMipuy">
 
-                        </th>
-                        <th class="th-lg white-text">
-                            האם קים קושי
-                        </th>
-                        <th class="th-lg white-text">אפשרויות</th>
-                    </tr>
-                </thead>
-                <!--Table head-->
-                <!-- <div *ngFor="let pat of db.allPatientList"> -->
-                <!--Table body-->
-                <!-- *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)"> -->
-                <tbody *ngFor="let pat of db.allPatientList">
+                            </th>
+                            <th class="th-lg white-text" *ngIf="!checkedFastMipuy">
+                                האם קים קושי
+                                <div>האם קים קושי </div>
+                            </th>
+                            <th class="th-lg white-text" *ngIf="!checkedFastMipuy">אפשרויות
+                                <div>אפשרויות </div>
+                            </th>
+                            <div *ngIf="checkedFastMipuy">
+                                <th class=" white-text" *ngFor="let diffi of sd.treatmentCategories" style="width:130px">{{diffi.description}}
+                                    <div>{{diffi.description}} </div>
+                                </th>
+                            </div>
+                        </tr>
+                    </thead>
+                    <!--Table head-->
+                    <!-- <div *ngFor="let pat of db.allPatientList"> -->
+                    <!--Table body-->
+                    <!-- *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)"> -->
+                    <tbody *ngFor="let pat of patientsForMipuy; let i=index">
 
-                    <tr *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&isGradePrefix(pat.grade)&&(showWho=='all'||pat.haveDificult==showWho)">
-                        <th scope="row">
-                            <!-- <input class="form-check-input" type="checkbox" id="checkbox1">
+                        <tr *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&isGradePrefix(pat.grade)&&(showWho=='all'||pat.haveDificult==showWho)">
+                            <th scope="row">
+                                <!-- <input class="form-check-input" type="checkbox" id="checkbox1">
                                 <label class="form-check-label" for="checkbox1" class="label-table"></label> -->
-                        </th>
-                        <td>{{pat.id}}</td>
-                        <td>{{pat.firstName}}</td>
-                        <td>{{pat.lastName}}</td>
-                        <td>{{pat.grade}}</td>
-                        <td></td>
-                        <td>
-                            <!-- <app-chips-interaction (choosed)="onChoosed($event, pat)">
+                            </th>
+                            <td>{{pat.id}}</td>
+                            <td>{{pat.firstName}}</td>
+                            <td>{{pat.lastName}}</td>
+                            <td>{{pat.grade}}</td>
+                            <td *ngIf="!checkedFastMipuy"></td>
+                            <td *ngIf="!checkedFastMipuy">
+                                <!-- <app-chips-interaction (choosed)="onChoosed($event, pat)">
                             </app-chips-interaction> -->
-                            <mat-button-toggle-group [value]="pat.haveDificult" #group="matButtonToggleGroup" (change)="onChoosed(group.value, pat)" class="yellow lighten-2">
+                                <mat-button-toggle-group [value]="pat.haveDificult" #group="matButtonToggleGroup" (change)="onChoosed(group.value, pat)" class="yellow lighten-2">
 
-                                <mat-button-toggle value="yes" class='example-tooltip-host' [matTooltip]="tooltip" matTooltipPosition="above">
-                                    <i class="fa fa-check fa-lg"></i>
-                                </mat-button-toggle>
+                                    <mat-button-toggle value="yes" class='example-tooltip-host' [matTooltip]="tooltip" matTooltipPosition="above">
+                                        <i class="fa fa-check fa-lg"></i>
+                                    </mat-button-toggle>
 
 
-                                <mat-button-toggle value="no" mdbTooltip="אין קושי" placement="bottom">
-                                    <i class="fa fa-close fa-lg"></i>
-                                </mat-button-toggle>
-                                <mat-button-toggle value="maybe" mdbTooltip="לא מאובחן" placement="bottom">
-                                    <i class="fa fa-question fa-lg"></i>
-                                </mat-button-toggle>
+                                    <mat-button-toggle value="no" mdbTooltip="אין קושי" placement="bottom">
+                                        <i class="fa fa-close fa-lg"></i>
+                                    </mat-button-toggle>
+                                    <mat-button-toggle value="maybe" mdbTooltip="לא מאובחן" placement="bottom">
+                                        <i class="fa fa-question fa-lg"></i>
+                                    </mat-button-toggle>
 
-                            </mat-button-toggle-group>
-                            <!-- <div class="example-selected-value">Selected value: {{group.value}}</div> -->
-                            <!-- <div class="example-selected-value">Selected value: {{pat.haveDificult}}</div> -->
+                                </mat-button-toggle-group>
+                                <!-- <div class="example-selected-value">Selected value: {{group.value}}</div> -->
+                                <!-- <div class="example-selected-value">Selected value: {{pat.haveDificult}}</div> -->
 
-                        </td>
-                        <td>
-                            <a #comment (click)="fluid.show(); Pid = pat.id;" class=" btn-rounded " mdbTooltip="הוסף הערות לתלמיד" placement="bottom">
-                                <i class="fa fa-2x fa-comment purple-text ml-2 mr-2"></i>
-                            </a>
-                            <a #card [routerLink]="['/Pcard', pat.id]" class="  btn-rounded " mdbTooltip="עבור לפרטי תלמיד" placement="bottom">
-                                <i class="fa fa-2x fa-id-card-o purple-text ml-2 mr-2"></i>
-                            </a>
+                            </td>
+                            <td *ngIf="!checkedFastMipuy">
+                                <a #comment (click)="fluid.show(); Pid = pat.id;" class=" btn-rounded " mdbTooltip="הוסף הערות לתלמיד" placement="bottom">
+                                    <i class="fa fa-2x fa-comment purple-text ml-2 mr-2"></i>
+                                </a>
+                                <a #card [routerLink]="['/Pcard', pat.id]" class="  btn-rounded " mdbTooltip="עבור לפרטי תלמיד" placement="bottom">
+                                    <i class="fa fa-2x fa-id-card-o purple-text ml-2 mr-2"></i>
+                                </a>
 
-                            <button type="button" class="btn btn-outline-secondary btn-sm " mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom">
+                                <button type="button" class="btn btn-outline-secondary btn-sm " mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom">
                                התחל מיפוי </button>
-                        </td>
-                    </tr>
-                    <tr>
+                            </td>
 
-                </tbody>
-                <!--Table body-->
-                <!-- </div> -->
-            </table>
-            <!--Table-->
-        </div>
 
-        <hr class="my-0">
+                            <!-- FAST MIPUY -->
+                            <div *ngIf="checkedFastMipuy">
+                                <td *ngFor="let diffi of sd.treatmentCategories" style="width: 130px">
+                                    <button type="button" *ngIf="fastMipuyData[i][diffi.code]=='yes'" class="btn my-button my-primary btn-sm" mdbWavesEffect mdbTooltip="לחץ כדי לשנות " placement="bottom" (click)="changeFastData('maybe', i, diffi.code);">
+                                יש קושי </button>
+                                    <button type="button" *ngIf="fastMipuyData[i][diffi.code]=='no'" class="btn my-button  btn-sm" mdbWavesEffect mdbTooltip="לחץ כדי לשנות " placement="bottom" (click)="changeFastData('yes', i, diffi.code);">
+                                אין קושי </button>
+                                    <button type="button" *ngIf="fastMipuyData[i][diffi.code]=='maybe'" class="btn my-button purple lighten-4 btn-sm" mdbWavesEffect mdbTooltip="לחץ כדי לשנות " placement="bottom" (click)="changeFastData('no', i, diffi.code);">
+                                לבדיקה  </button>
+                                </td>
+                            </div>
+
+                            <!-- <div *ngFor="let area of this.sd.treatmentCategories">
+                            <td *ngIf="!checkedFastMipuy">
+
+                            </td>
+                        </div> -->
+                        </tr>
+                        <tr>
+
+                    </tbody>
+                    <!--Table body-->
+                    <!-- </div> -->
+                </table>
+                <!--Table-->
+            </div>
+        </section>
+        <mat-divider></mat-divider>
+        <button type="button" #btnn *ngIf="checkedFastMipuy" class="btn  my-button my-primary" (click)="saveFastMipuy()">שמור מיפוי מהיר</button>
+
     </div>
 </div>
-
+<div class="card purple-text" *ngIf="this.patientsForMipuy.length==0">
+    אין תלמידים ברשימה
+</div>
 
 
 

@@ -2,6 +2,11 @@
 
     <h1 class="purple-text center mt-5 mb-5">אנחנו עובדים על זה..... </h1>
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <div class="red" style="height:100px; width:100px">
+        <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)"></p-autoComplete>
+
+    </div>
+
     <!-- <p-treeTable [value]="files">
         <ng-template pTemplate="header">
             <tr>

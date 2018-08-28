@@ -23,7 +23,7 @@ export class TherapistProfileComponent implements OnInit {
 
   deleteTherapist() {
     this.db.deletePatient(this.thera.id);
-    this.sd.routeTo('/');
+    this.sd.routeTo('/home');
   }
 
 }

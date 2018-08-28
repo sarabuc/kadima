@@ -16,7 +16,7 @@ status;
   ngOnInit() {
     this.Pid = this.route.snapshot.params['id'];
     if (!this.Pid) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
       this.sd.createAlert('error', 'שגיאה בהעברת נתונים, נא נסה שוב', '');
 
     } else {

@@ -21,18 +21,20 @@ difficultForPatientRef: any;
       this.getMipuy();
      // console.log(this.datePipe.transform(this.mipuyDate,"yyyy-MM-dd")); //output : 2018-02-13
     } else {
-      this.sd.routeTo('/');
+      this.sd.routeTo('/home');
     }
 
   }
 
   public getMipuy() {
-
     this.difficultForPatientRef = this.db.afs.collection('patientDifficults', ref => {
-      return ref.where('Pid', '==', this.Pid).where('mipuyDate', '==', this.mipuyDate);
+      return ref.where('mipuyDate', '==', this.mipuyDate).where('Pid', '==', this.Pid); //
       });
       this.difficultForPatientRef.valueChanges().subscribe(diffs => {
         this.diffiArr = diffs;
+		diffs.forEach(e => {
+				console.log(e);
+		});
       });
 }
 

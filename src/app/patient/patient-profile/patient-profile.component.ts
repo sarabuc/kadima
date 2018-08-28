@@ -21,6 +21,6 @@ editPatient() {
 
 deletePatient() {
   this.db.deletePatient(this.pat.id);
-  this.sd.routeTo('/');
+  this.sd.routeTo('/home');
 }
 }

@@ -38,7 +38,7 @@ const treat = {
 };
 this.db.addTreatmentInfo(treat);
 this.sd.createAlert('success', 'דיווח נשמר בהצלחה', '');
-this.sd.routeTo('/');
+this.sd.routeTo('/home');
 }
   cleanForm() {
     this.Tid = '';

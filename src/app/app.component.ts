@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DbService } from './services/db.service';
-// import { AlertsService } from '@jaspero/ng2-alerts';
-// import { AlertType, AlertsService } from '@jaspero/ng-alerts';
-// import 'rxjs/add/operator/map';
+import { UserService } from './services/user.service';
+import { AuthService } from './services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FirebaseUserModel } from './services/user.model';
 import { Router } from '@angular/router';
 
 import { ChangeDetectionStrategy } from '@angular/core';
@@ -13,7 +16,8 @@ import { ShareDataService } from './services/share-data.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit  {
+  user: FirebaseUserModel = new FirebaseUserModel();
   options = {
     overlay: false,
     overlayClickToClose: true,
@@ -50,7 +54,11 @@ export class AppComponent {
 
   constructor(
   public db: DbService,
-    /*private _alert: AlertsService,*/
+    public userService: UserService,
+    public authService: AuthService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private fb: FormBuilder,
     private router: Router,
   public sd: ShareDataService) {
   }
@@ -75,12 +83,42 @@ export class AppComponent {
     return this.db.isLogin();
   }
 
-  login() {
-    this.db.isLoginV = true;
-  }
-   logout() {
-    this.db.isLoginV = false;
-    this.sd.routeTo('/login');
+  // login() {
+  //   this.db.isLoginV = true;
+  // }
+  ngOnInit(): void {
+    this.route.data.subscribe(routeData => {
+      const data = routeData['data'];
+      if (data) {
+        this.user = data;
+     //   this.createForm(this.user.name);
+      }
+    });
   }
 
+  // createForm(name) {
+  //   this.profileForm = this.fb.group({
+  //     name: [name, Validators.required]
+  //   });
+  // }
+
+  // save(value) {
+  //   this.userService.updateCurrentUser(value)
+  //     .then(res => {
+  //       console.log(res);
+  //     }, err => console.log(err))
+  // }
+
+  logout() {
+    this.authService.doLogout()
+      .then((res) => {
+        this.location.back();
+        this.sd.routeTo('/home');
+        this.db.isLoginV = false;
+        this.sd.createAlert('success', 'יצאת בהצלחה מחשבונך', '');
+      }, (error) => {
+        console.log('Logout error', error);
+        this.sd.createAlert('error', 'יציאה מהחשבון נכשלה', '');
+      });
+  }
 }

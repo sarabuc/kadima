@@ -18,7 +18,7 @@ export class PatientListComponent implements OnInit {
   ngOnInit() {
     this.status = this.route.snapshot.params['status'];
     if (!this.status) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
       this.sd.createAlert('error', 'שגיאה בהעברת נתונים, נא נסה שוב', '');
   }
 }
@@ -36,7 +36,7 @@ checkAndRoute(pat) {
   } else if (this.status === 'plan') {
     this.router.navigate(['plan', pat]);
   } else {
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
 }

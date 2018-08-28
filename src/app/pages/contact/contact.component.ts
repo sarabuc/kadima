@@ -25,7 +25,7 @@ export class ContactComponent implements OnInit {
   }
   logout() {
     this.db.isLoginV = false;
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
   apears() {
 

@@ -65,7 +65,7 @@ export class NewPatientComponent implements OnInit {
   saveNewPatient() {
     let pati: Patient;
     const date = this.birthDate.toLocaleDateString();
-    // '' + this.birthDate.getDate + '/' + this.birthDate.getMonth + '/' + this.birthDate.getFullYear;
+    // '' + this.birthDate.getDate + '/home' + this.birthDate.getMonth + '/home' + this.birthDate.getFullYear;
     pati = {
       id: '' + this.Pid,
       firstName: this.firstName,
@@ -82,7 +82,8 @@ export class NewPatientComponent implements OnInit {
       };
 
     this.db.addPatient(pati);
-    this.router.navigate(['/']);
+    this.cleanForm();
+   // this.router.navigate(['/home']);
   }
 
 }

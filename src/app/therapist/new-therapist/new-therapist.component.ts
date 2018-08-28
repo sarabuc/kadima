@@ -78,7 +78,7 @@ export class NewTherapistComponent implements OnInit {
 
     this.db.addTherapist(thera);
     
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   isTherapistExist() {

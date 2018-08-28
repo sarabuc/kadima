@@ -19,7 +19,7 @@ export class PatientCardComponent implements OnInit {
   ngOnInit() {
     this.Pid = this.route.snapshot.params['id'];
     if (!this.Pid) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
       this.sd.createAlert('error', 'שגיאה בהעברת נתונים, נא נסה שוב', '');
     }
     this.getPatientByID();

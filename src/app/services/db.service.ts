@@ -149,7 +149,7 @@ public allTherapistList: Therapist[] = [];
 public mipuyForPatientList: Mipuy[] = [];
 public isBusy = false;
 public userNow: User;
-public isLoginV = true;
+public isLoginV = false;
 public newMipuy: string[] = [];
 
   constructor(public afs: AngularFirestore , private sd: ShareDataService) {
@@ -215,7 +215,8 @@ public newMipuy: string[] = [];
    }
 
    isLogin() {
-     return this.isLoginV;
+	   return true;
+    // return this.isLoginV;
    }
 
 
@@ -372,7 +373,7 @@ public addTreatmentInfo( treat: TreatmentInfo) {
      this.sd.createAlert('success', 'תלמיד עודכן בהצלחה', '');
   }
   updatePartOfPatient(pat_id, pat_part, part) {
-    this.allPatientsRef.doc('' + pat_id + '/' + part).update(pat_part).then(res => {
+    this.allPatientsRef.doc('' + pat_id + '/home' + part).update(pat_part).then(res => {
     });
   }
 

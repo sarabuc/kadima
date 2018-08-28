@@ -19,7 +19,7 @@ export class TherapistCardComponent implements OnInit {
   ngOnInit() {
     this.Tid = this.route.snapshot.params['id'];
     if (!this.Tid) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
       this.sd.createAlert('error', 'שגיאה בהעברת נתונים, נא נסה שוב', '');
     }
     this.getTherapistByID();

@@ -44,22 +44,30 @@ this.db.newMipuy = [];
   // }
 
   addNewMipuy() {
+
     if (status === 'show') {
       return;
     }
+
     this.finishedMipuy.emit('finish');
     const date =  new Date();
     this.db.mipuyForPatientRef.add({Pid: '' + this.Pid, mipuyDate: date });
     this.diffiArr = this.db.newMipuy;
     this.db.newMipuy = [];
-      let diffi: PatientsDifficult;
+	  console.log(this.db.newMipuy);
+	 // console.log("1111111111111111111111111111111111111111");
+    let diffi: PatientsDifficult;
+
       diffi = {
         Dcode: '',
         Pid: '' +  this.Pid,
         mipuyDate: date
       };
+
       this.diffiArr.forEach(dif => {
+
         diffi.Dcode = dif;
+		console.log(diffi);
         this.db.addPatientDifficult(diffi);
       });
       this.sd.createAlert('success', 'מיפוי הוסף בהצלחה', '');

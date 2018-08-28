@@ -18,40 +18,52 @@
                                 <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s">
                                 <h6 class="wow fadeInLeft" data-wow-delay="0.3s">ניהול מערכת לקידום תלמידים</h6>
                                 <br>
-                                <a class="btn gradient-3 wow fadeInLeft waves-light" data-wow-delay="0.3s" mdbWavesEffect>הרשם למערכת</a>
+                                <a class="btn gradient-3 wow fadeInLeft waves-light" data-wow-delay="0.3s" mdbWavesEffect routerLink="/register">הרשם למערכת</a>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-5 offset-xl-1">
                             <!--Form-->
-                            <div class="card wow fadeInRight" data-wow-delay="0.3s">
-                                <div class="card-body z-depth-2" style="text-align: right">
-                                    <!--Header-->
+                            <form [formGroup]="loginForm">
+                                <div class="card wow fadeInRight" data-wow-delay="0.3s">
+                                    <div class="card-body z-depth-2" style="text-align: right">
+                                        <!--Header-->
 
 
-                                    <!--Body-->
-                                    <div class="md-form">
-                                        <i class="fa fa-user prefix grey-text"></i>
-                                        <input type="text" id="form3" class="form-control" mdbInputDirective>
-                                        <label for="form3">שם משתמש</label>
+                                        <!--Body-->
+                                        <div class="md-form">
+                                            <i class="fa fa-user prefix grey-text"></i>
+                                            <input type="email" formControlName="email" id="form3" class="form-control" mdbInputDirective>
+                                            <label for="form3">שם משתמש</label>
+                                        </div>
+                                        <div class="md-form">
+                                            <i class="fa fa-envelope prefix grey-text"></i>
+                                            <input type="password" formControlName="password" id="form2" class="form-control" mdbInputDirective>
+                                            <label for="form2">סיסמא</label>
+                                        </div>
+                                        <label class="error">{{errorMessage}}</label>
+                                        <!--Textarea with icon prefix-->
+
+
+                                        <div class="text-center">
+                                            <button class="btn gradient-3 waves-light" mdbWavesEffect (click)="tryLogin(loginForm.value)">כניסה</button>
+
+                                        </div>
+
+                                        <div class="col-md-12 col-md-offset-4 mb-4 mt-4">
+                                            <button type="button" class="btn yellow btn-block black-text" (click)="tryGoogleLogin()">כניסה עם google</button>
+                                        </div>
+
+
+
+
+
                                     </div>
-                                    <div class="md-form">
-                                        <i class="fa fa-envelope prefix grey-text"></i>
-                                        <input type="password" id="form2" class="form-control" mdbInputDirective>
-                                        <label for="form2">סיסמא</label>
-                                    </div>
-
-                                    <!--Textarea with icon prefix-->
-
-
-                                    <div class="text-center">
-                                        <button class="btn gradient-3 waves-light" mdbWavesEffect (click)="login()">כניסה</button>
-
-                                    </div>
-
                                 </div>
-                            </div>
+                            </form>
                             <!--/.Form-->
+
+
 
 
                         </div>

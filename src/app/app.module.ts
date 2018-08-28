@@ -9,10 +9,12 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule  } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { routing } from './app.routing';
-import { AuthModule } from './auth/auth.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 
 import {MessageService} from 'primeng/components/common/messageservice';
 import {MessagesModule} from 'primeng/messages';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import {MessageModule} from 'primeng/message';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {AccordionModule} from 'primeng/accordion';
@@ -24,7 +26,8 @@ import {TreeNode} from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import {GrowlModule} from 'primeng/growl';
 import { TreeModule } from 'primeng/tree';
-
+import { ButtonModule } from 'primeng/button';
+import {InputSwitchModule} from 'primeng/inputswitch';
 /*material*/
 import {MatTreeModule} from '@angular/material/tree';
 import {
@@ -88,6 +91,7 @@ import { AddTherapistFromExelComponent } from './therapist/add-therapist-from-ex
 import { TherapistListComponent } from './therapist/therapist-list/therapist-list.component';
 import { TimeTableToShowComponent } from './parts/time-table-to-show/time-table-to-show.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/login/register/register.component';
 import { NewMipuyComponent } from './mipuy/new-mipuy/new-mipuy.component';
 import { DifficutForMipuyComponent } from './mipuy/difficut-for-mipuy/difficut-for-mipuy.component';
 import { PatientCardComponent } from './patient/patient-card/patient-card.component';
@@ -108,14 +112,10 @@ import { ShowTreatmentForTherapistComponent } from './therapist/show-treatment-f
 
 /*services*/
 import { DbService } from './services/db.service';
+import { UserService } from './services/user.service';
 import { ShareDataService } from './services/share-data.service';
 import { AuthService } from './services/auth.service';
-import { NodeService } from './services/node.service';
-import { GuardGuard } from './services/guard.guard';
-// import { MessageService } from './services/message.service';
-import { ReturnMessageService } from './services/return-message.service';
-
-
+import { AuthGuard } from './services/auth.guard';
 
 
 
@@ -127,12 +127,12 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
 
 const firebase = {
-    apiKey: 'AIzaSyC39tgVZlnrGvyirclUb92ZiyCNOqcGubA',
-    authDomain: 'kadima1-fa119.firebaseapp.com',
-    databaseURL: 'https://kadima1-fa119.firebaseio.com',
-    projectId: 'kadima1-fa119',
-    storageBucket: 'kadima1-fa119.appspot.com',
-    messagingSenderId: '890519841483'
+    apiKey: "AIzaSyC39tgVZlnrGvyirclUb92ZiyCNOqcGubA",
+    authDomain: "kadima1-fa119.firebaseapp.com",
+    databaseURL: "https://kadima1-fa119.firebaseio.com",
+    projectId: "kadima1-fa119",
+    storageBucket: "kadima1-fa119.appspot.com",
+    messagingSenderId: "890519841483"
   };
 
 
@@ -178,10 +178,11 @@ const firebase = {
     ShowTreatmentInfoComponent,
     ShowTreatmentForPatientComponent,
     ShowTreatmentForTherapistComponent,
-    NewPlanForPatientComponent
+    NewPlanForPatientComponent,
+    RegisterComponent
   ],
   imports: [
-    AuthModule,
+    AngularFireAuthModule,
     routing,
     BrowserModule,
     FormsModule,
@@ -201,7 +202,7 @@ const firebase = {
     MatListModule,
     MatTableModule,
     MatAutocompleteModule,
-
+    ButtonModule,
     MatButtonToggleModule,
     MatChipsModule,
     MatFormFieldModule,
@@ -229,18 +230,21 @@ TreeTableModule,
     FileUploadModule,
    HttpModule,
    JsonpModule, GrowlModule,
-    TreeModule
+    TreeModule,
+    ReactiveFormsModule,
+    AutoCompleteModule,
+    TriStateCheckboxModule,
+    InputSwitchModule
   ],
   providers: [MatDialog,
   MessageService,
     DbService,
     ShareDataService,
-    GuardGuard,
+    AuthGuard,
     AuthService,
     MessageService,
-    NodeService,
-    DatePipe,
-    ReturnMessageService],
+    UserService,
+    DatePipe],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })
