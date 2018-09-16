@@ -4,6 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireFunctionsModule } from 'angularfire2/functions';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule  } from 'angularfire2/auth';
@@ -217,6 +218,7 @@ const firebase = {
     MatExpansionModule,
     AngularFireModule.initializeApp(firebase),
     AngularFireDatabaseModule,
+    AngularFireFunctionsModule,
     AngularFirestoreModule.enablePersistence(),
     MDBBootstrapModule.forRoot(),
     // JasperoAlertsModule,
@@ -233,6 +235,7 @@ TreeTableModule,
     TreeModule,
     ReactiveFormsModule,
     AutoCompleteModule,
+    FileUploadModule,
     TriStateCheckboxModule,
     InputSwitchModule
   ],

@@ -5,11 +5,12 @@ import { DatePipe } from '@angular/common'
 import { Difficulty, PatientsDifficult, TherapistMethods } from './db.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import { Message } from 'primeng/api';
+import * as firebase from 'firebase';
 import { MessageService } from 'primeng/components/common/messageservice';
 @Injectable()
 export class ShareDataService {
   msgs; // for all alerts
-
+  longMsgs; // for long alerts
   // for free time
   TPstatusForTime: string; /*newP, newT, updateP, updateT */
 
@@ -23,18 +24,20 @@ export class ShareDataService {
  public dergeeForTherapist = ['ללא דרגה', 'מורה בכיר', 'תואר ראשון', 'תואר שני'];
  public kindOfTherapist = ['מלמד', 'הורה', 'תרפיסט', 'מפקח', 'מנהל', 'פסיכולוג', 'פסיכיאטר', 'מורה מקדם',
 'מטפל רגשי', 'חונך', 'רופא משפחה', 'מומחה להתפתחות הילד', 'נוירולוג'];
- public treatmentArea = ['לימודי', 'התפתחותי', 'התנהגותי', 'מוטורי', 'תקשורתי'];
+ // public treatmentArea = ['לימודי', 'התפתחותי', 'התנהגותי', 'מוטורי', 'תקשורתי'];
  public kupotCholim = ['ללא', 'מכבי', 'כללית', 'מאוחדת', 'לאומית'];
+// public treatmentCategories;
 
-  public treatmentCategories: Difficulty[] = [
-    { code: 'לימודי', description: 'לימודי', Dfather: 'null'},
-    { code: 'התפתחותי', description: 'התפתחותי', Dfather: 'null'},
-    { code: 'התנהגותי', description: 'התנהגותי', Dfather: 'null'},
-    { code: 'תקשורתי', description: 'תקשורתי', Dfather: 'null'},
-    { code: 'חושי-מוטורי', description: 'חושי-מוטורי', Dfather: 'null'},
+
+  /*: Difficulty[] = [
+    { code: 'לימודי', description: 'לימודי', Dfather: 'null', isLeave: false, diffiDegree: 0},
+    { code: 'התפתחותי', description: 'התפתחותי', Dfather: 'null', isLeave: false, diffiDegree: 0},
+    { code: 'התנהגותי', description: 'התנהגותי', Dfather: 'null', isLeave: false, diffiDegree: 0},
+    { code: 'תקשורתי', description: 'תקשורתי', Dfather: 'null', isLeave: false, diffiDegree: 0},
+    { code: 'חושי-מוטורי', description: 'חושי-מוטורי', Dfather: 'null', isLeave: false, diffiDegree: 0},
 
     // {"קריאה"},{"כתיבה"}, {"התנהגות"}, {"קשב וריכוז"}, {"שמיעה"},{"ראיה"},{"פיגור"}, {"אוטיזם"}
-  ];
+  ];*/
 
 public daysName = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
 public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30' ];
@@ -47,6 +50,14 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
   /***************             alert             **************** */
    public createAlert(type, message, tytle) {
      this.messageService.add({ severity: type, summary: tytle, detail: message });
+    /*if (tytle === '') {
+    //  this._alert.create(type, message);
+    } else {
+    //  this._alert.create(type, message, tytle);
+    }*/
+  }
+  public createLongAlert(type, message, tytle) {
+    this.messageService.add({ severity: type, summary: tytle, detail: message });
     /*if (tytle === '') {
     //  this._alert.create(type, message);
     } else {

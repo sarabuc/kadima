@@ -23,7 +23,14 @@
         </div>
     </div>
 </div>
-
+<h5 class="first">העלאת נתונים ודוחות חיצוניים</h5>
+<p-fileUpload name="demo[]" customUpload="true" (uploadHandler)="myUploader($event)" multiple="multiple" class="purple" chooseLabel="בחר קבצים" uploadLabel="טען קבצים" cancelLabel="חזור">
+    <ng-template pTemplate="content">
+        <ul *ngIf="uploadedFiles.length">
+            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+        </ul>
+    </ng-template>
+</p-fileUpload>
 <!-- <app-mipuy-for-patient [Pid]="Pid" [status]="'last'"></app-mipuy-for-patient> -->
 <app-time-table-to-show [timeStr]="pat.strFreeTime"></app-time-table-to-show>
 

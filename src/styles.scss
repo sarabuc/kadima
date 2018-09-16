@@ -1,4 +1,10 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.ui-fileupload-buttonbar .ui-button {
+    background-color: purple !important;
+    border-color: yellow !important;
+}
+
 .scroll-fixed-table{
 overflow-y: auto;
   height: 300px;

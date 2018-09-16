@@ -1,11 +1,21 @@
 <div class="list-group scrollable-x" #list>
+    {{status}}
+    <div *ngIf="status != 'area'">
+        <div class="list-group-item black-text border-top-bottom" *ngFor="let diffi of db.treatmentCategories" style="text-align:right">
+            <app-difficult #diff [status]="status" [code]="diffi.code" [describtion]="diffi.description" [isLeave]="diffi.isLeave" [index]="diffi.index" [allFathers]="diffi.allFathers"></app-difficult>
 
-    <div class="list-group-item black-text border-top-bottom" *ngFor="let diffi of sd.treatmentCategories" style="text-align:right">
-        <app-difficult #diff [status]="status" [code]="diffi.code" [describtion]="diffi.description" [isLeave]="diffi.isLeave"></app-difficult>
+        </div>
 
+    </div>
+    <div *ngIf="status == 'area'">
+        <div class="list-group-item black-text border-top-bottom" style="text-align:right">
+            <app-difficult #areadiff [status]="status" [code]="areaForMipuy" [describtion]="areaForMipuy" [isLeave]="'false'" [index]="'0'" [allFathers]="'null'"></app-difficult>
+
+        </div>
     </div>
 
 
+
     <mat-divider></mat-divider>
-    <button type="button" #btnn *ngIf="status == 'mipuy'" class="btn purple" (click)="addNewMipuy()">שמור מיפוי</button>
+    <button type="button" #btnn *ngIf="status == 'mipuy'|| status == 'area'" class="btn purple" (click)="addNewMipuy()">שמור מיפוי</button>
 </div>

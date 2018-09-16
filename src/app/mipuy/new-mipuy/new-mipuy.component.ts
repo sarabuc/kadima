@@ -33,6 +33,7 @@ selectedOptions: string[] = [];
   noClass = 'btn btn-outline-secondary btn-sm' ;
   yesClass = 'btn my-button my-primary btn-sm';
   maybeClass = 'btn my-button  btn-sm';
+  flagForFastMipuy = []; // flag [i] = true iff pat num i was changed
   constructor(public db: DbService, public sd: ShareDataService) {}
     ngOnInit() {
       this.patientsForMipuy = this.db.allPatientList;
@@ -72,7 +73,7 @@ closeModal(str: string) {
   if (str === 'finish') {
  this.mipuyModeClass = 'modal fade';
  // this.initDiffiForNewMipuy();
- this.init();
+
   }
 }
 
@@ -102,18 +103,36 @@ closeModal(str: string) {
 
   changeFastData(newStatus: string, i: number, diffi: any) {
     this.fastMipuyData[i][diffi] = newStatus;
+    this.flagForFastMipuy[i] = true;
   }
   saveFastMipuy() {
     const date = new Date();
-    let flag = false;
+
     this.fastMipuyData.forEach(pat => {
-      this.sd.treatmentCategories.forEach(diff => {
+      let flag = false;
+      this.db.treatmentCategories.forEach(diff => {
         if (pat[diff.code] === 'yes') {
+          console.log('status is yes');
+          console.log(pat);
           flag = true;
           const newDiff: PatientsDifficult = {
             Pid: '' + pat.Pid,
             Dcode: diff.code,
-            mipuyDate: date
+            mipuyDate: date,
+            status: 'yes'
+          };
+          this.db.addPatientDifficult(newDiff);
+          console.log(newDiff);
+        }
+        if (pat[diff.code] === 'maybe') {
+          console.log('status is maybe');
+          console.log(pat);
+          flag = true;
+          const newDiff: PatientsDifficult = {
+            Pid: '' + pat.Pid,
+            Dcode: diff.code,
+            mipuyDate: date,
+            status: 'maybe'
           };
           this.db.addPatientDifficult(newDiff);
           console.log(newDiff);
@@ -129,13 +148,15 @@ closeModal(str: string) {
 
   initFastMipuyData() {
     this.fastMipuyData = [];
+    this.flagForFastMipuy = [];
     this.patientsForMipuy.forEach(pat => {
       const patData: { [k: string]: any } = {};
       patData['Pid'] = pat.id;
-      this.sd.treatmentCategories.forEach(diffi => {
+      this.db.treatmentCategories.forEach(diffi => {
         patData[diffi.code] = 'no';
       });
       this.fastMipuyData.push(patData);
+      this.flagForFastMipuy.push(false);
     });
   }
 }

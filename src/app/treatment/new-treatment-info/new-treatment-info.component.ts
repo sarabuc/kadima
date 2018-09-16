@@ -57,4 +57,8 @@ this.sd.routeTo('/home');
   getProgressCode(Pid, Tid) {
     return '1';
   }
+  getNameOfPatientByPid(Pid) {
+    const pat = this.db.allPatientList.find(P => P.id === Pid);
+    return pat.firstName + pat.lastName;
+  }
 }

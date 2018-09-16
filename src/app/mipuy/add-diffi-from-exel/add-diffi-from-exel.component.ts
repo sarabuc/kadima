@@ -51,7 +51,7 @@ export class AddDiffiFromExelComponent implements OnInit {
         i++;
 
       } else if (!code) { // requiere data was missed
-        this.sd.createAlert('error' , ' בשורה' + (i+1) + ' חסרים פרטים נדרשים  ', '');
+        this.sd.createAlert('error' , ' בשורה' + (i + 1) + ' חסרים פרטים נדרשים  ', '');
         countMiss++;
         i++;
       }
@@ -59,7 +59,10 @@ export class AddDiffiFromExelComponent implements OnInit {
       const dif: Difficulty = {
        code: d.Dcode,
        description: d.describtion,
-       Dfather: d.Dfather
+       Dfather: d.Dfather,
+       isLeave: false,
+       index: '' + d.index,
+       allFathers: d.all_fathers
       };
       this.dbs.addDifficult(dif);
      // this.PfromExel.splice(this.PfromExel.indexOf(p) , 1);

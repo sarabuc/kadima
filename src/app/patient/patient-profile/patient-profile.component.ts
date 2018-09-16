@@ -10,6 +10,7 @@ import { ShareDataService } from '../../services/share-data.service';
 export class PatientProfileComponent implements OnInit {
   @Input() pat: Patient;
   @Input() Pid: string;
+  uploadedFiles: any[] = [];
   constructor(public db: DbService, private sd: ShareDataService) { }
 
   ngOnInit() {
@@ -22,5 +23,13 @@ editPatient() {
 deletePatient() {
   this.db.deletePatient(this.pat.id);
   this.sd.routeTo('/home');
+}
+
+
+  myUploader(event) {
+    for (const file of event.files) {
+      console.log(file);
+       this.uploadedFiles.push(file);
+    }
 }
 }

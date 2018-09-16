@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Difficulty, DbService } from '../../services/db.service';
 import { ShareDataService } from '../../services/share-data.service';
 import { AngularFirestore } from 'angularfire2/firestore';
@@ -8,10 +8,12 @@ import { AngularFirestore } from 'angularfire2/firestore';
   templateUrl: './difficult.component.html',
   styleUrls: ['./difficult.component.scss']
 })
-export class DifficultComponent implements OnInit {
+export class DifficultComponent implements OnInit, OnChanges {
   @Input() code: string;
   @Input() describtion: string;
   @Input() status: string; // mipuy or show
+  @Input() index: string;
+  @Input() allFathers: string;
  // @Output() choosed = new EventEmitter();
   isLeave: boolean;
   isChoozen: boolean;
@@ -28,6 +30,15 @@ export class DifficultComponent implements OnInit {
 
   ngOnInit() {
     this.checkIfIsChoosen();
+    if (this.status === 'area') {
+      this.status = 'mipuy';
+    }
+  }
+    ngOnChanges() {
+
+      if (this.status === 'area') {
+        this.status = 'mipuy';
+      }
 
    // this.isLeave = !(this.getChildren() > 0);
   }
@@ -58,26 +69,36 @@ export class DifficultComponent implements OnInit {
   }
 
   updateDiffiStatus(checked: boolean) {
-	  
-    console.log('**********************************************');
+
+
     console.log(checked);
 	console.log(this.status);
     if (checked) {
+      this.isChoozen = true;
       this.getChildren();
+    } else {
+      this.isChoozen = false;
     }
-	console.log(this.status=== 'mipuy');
+	console.log(this.status === 'mipuy');
     if (this.status === 'mipuy' && checked) {
+      console.log('**********************************************');
       this.db.newMipuy.push(this.code);
       this.dificlass = 'line-selected';
-     // console.log(this.db.newMipuy);
+      console.log(this.db.newMipuy);
     } else if (this.status === 'mipuy' && !checked) {
       this.db.newMipuy.splice(this.db.newMipuy.indexOf(this.code), 1);
       this.dificlass = '';
     }
   }
-  addDiffi() {
+  async addDiffi() {
+
   const dif = {
-    code: this.newD, description: this.newD, Dfather: this.code
+    code: this.newD,
+    description: this.newD,
+    Dfather: this.code,
+    isLeave: true,
+    index: '' + this.index + '.',
+    allFathers: '' + this.allFathers + this.code
   };
 
     this.childDifficults.push(dif);
@@ -88,7 +109,7 @@ export class DifficultComponent implements OnInit {
 
   checkIfIsChoosen() {
 
-     this.isChoozen = this.db.newMipuy.indexOf(this.code) > -1;
+   //  this.isChoozen = this.db.newMipuy.indexOf(this.code) > -1;
     if (!this.isChoozen) {
       this.dificlass = '';
     }

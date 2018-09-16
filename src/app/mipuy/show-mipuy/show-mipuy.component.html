@@ -1,7 +1,61 @@
-<div class="dark-card mx-2 my-3 card" style="text-align: right">
-    <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate | date: 'dd/MM/yyyy'}}</strong></h3>
-    <div class="list-group px-2 py-3 mb-3">
-        <div class="list-group-item purple-text" *ngFor="let dif of diffiArr"><i class="fa fa-check ml-3"></i> <strong>  {{dif.Dcode}} - </strong></div>
+<div class="dark-card  card" style="text-align: right">
+    <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate| date: 'dd/MM/yyyy'}}</strong></h3>
+    <!-- <strong>{{mipuyDate | date: 'dd/MM/yyyy'}}</strong> -->
+    <div class="list-group px-1 py-1 mb-3">
+        <div class="" *ngFor="let dif of db.treatmentCategories">
+            <div class="row  list-group-item purple-text" *ngIf="mipuyData[dif.code]">
+
+                <div class="col-3"> <strong>  {{dif.code}} - </strong></div>
+                <div class="col-9">
+                    <div *ngIf="mipuyData[dif.code]!=dif.code">
+                        <div *ngFor="let D of mipuyData[dif.code]">
+                            <i class="fa fa-check ml-3"></i> {{D}}
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex w-100 justify-content-end" *ngIf="mipuyData[dif.code]==dif.code">
+                        <i class="fa fa-pencil ml-1  fa-lg link" *ngIf="'true'" (click)="currectArea = 'area*' + dif.code; addMipuyDetails.show()"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<div mdbModal #addMipuyDetails="mdb-modal" [class]="mipuyModeClass" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+    <div class="modal-dialog modal-fluid" role="document">
+        <div class="modal-dialog cascading-modal" role="document">
+
+            <div class="modal-content">
+
+
+                <div class="modal-header purple white-text">
+                    <h4 class="title">
+                        <i class="fa fa-pencil mr-1 ml-1"></i> עדכן קשיים</h4>
+                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="addMipuyDetails.hide();">
+            <span aria-hidden="true">×</span>
+          </button>
+                </div>
+
+                <div class="modal-body mb-0">
+
+                    <app-show-difficulties (finishedMipuy)="closeModal($event)" #showDif [status]="currectArea" [Pid]="Pid" [dateForMipuyByArea]="mipuyDate"></app-show-difficulties>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 
 </div>

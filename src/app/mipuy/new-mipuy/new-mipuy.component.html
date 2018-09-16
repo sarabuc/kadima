@@ -97,7 +97,7 @@
                                 <div>אפשרויות </div>
                             </th>
                             <div *ngIf="checkedFastMipuy">
-                                <th class=" white-text" *ngFor="let diffi of sd.treatmentCategories" style="width:130px">{{diffi.description}}
+                                <th class=" white-text" *ngFor="let diffi of db.treatmentCategories" style="width:130px">{{diffi.description}}
                                     <div>{{diffi.description}} </div>
                                 </th>
                             </div>
@@ -156,7 +156,7 @@
 
                             <!-- FAST MIPUY -->
                             <div *ngIf="checkedFastMipuy">
-                                <td *ngFor="let diffi of sd.treatmentCategories" style="width: 130px">
+                                <td *ngFor="let diffi of db.treatmentCategories" style="width: 130px">
                                     <button type="button" *ngIf="fastMipuyData[i][diffi.code]=='yes'" class="btn my-button my-primary btn-sm" mdbWavesEffect mdbTooltip="לחץ כדי לשנות " placement="bottom" (click)="changeFastData('maybe', i, diffi.code);">
                                 יש קושי </button>
                                     <button type="button" *ngIf="fastMipuyData[i][diffi.code]=='no'" class="btn my-button  btn-sm" mdbWavesEffect mdbTooltip="לחץ כדי לשנות " placement="bottom" (click)="changeFastData('yes', i, diffi.code);">
@@ -166,7 +166,7 @@
                                 </td>
                             </div>
 
-                            <!-- <div *ngFor="let area of this.sd.treatmentCategories">
+                            <!-- <div *ngFor="let area of this.db.treatmentCategories">
                             <td *ngIf="!checkedFastMipuy">
 
                             </td>

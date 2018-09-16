@@ -1,0 +1,32 @@
+{
+  "indexes": [
+    {
+      "collectionId": "mipuy",
+      "state": "READY",
+      "fields": [
+        {
+          "fieldPath": "Pid",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "mipuyDate",
+          "mode": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionId": "treatmentInfo",
+      "state": "READY",
+      "fields": [
+        {
+          "fieldPath": "Pid",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "treatDate",
+          "mode": "DESCENDING"
+        }
+      ]
+    }
+  ]
+}

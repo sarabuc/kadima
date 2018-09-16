@@ -56,6 +56,9 @@ export interface Difficulty {
   code: string;
   description: string;
   Dfather: string;
+  isLeave: boolean;
+  index: string;
+  allFathers: string;
 }
 
 export interface Method {
@@ -75,6 +78,7 @@ export interface Mipuy {
    Pid: string;
    Dcode: string;
    mipuyDate: Date;
+   status: string; // yes or maybe or not-relevant
  }
  export interface TherapistMethods {
    Tid: string;
@@ -138,6 +142,7 @@ public planForPatientRef: AngularFirestoreCollection<PlanForPatient>;
 public treatmentProgressionRef: AngularFirestoreCollection<TreatmentProgression>;
 public treatmentInfoForProgressRef: AngularFirestoreCollection<TreatmentInfo>;
   public mipuyForPatientRef: AngularFirestoreCollection<Mipuy>;
+  treatmentCategoriesRef: AngularFirestoreCollection<Difficulty>;
 // list
 public userNameList: string[] = [];
 public therapistIDList: string[] = [];
@@ -147,6 +152,7 @@ public allMethodsList: Method[] = [];
 public allPatientList: Patient[] = [];
 public allTherapistList: Therapist[] = [];
 public mipuyForPatientList: Mipuy[] = [];
+public treatmentCategories: Difficulty[] = [];
 public isBusy = false;
 public userNow: User;
 public isLoginV = false;
@@ -173,6 +179,13 @@ public newMipuy: string[] = [];
        userName: 'saraer',
        password: '1234'
      };
+     // get main diffis areas
+     this.treatmentCategoriesRef = this.afs.collection('difficults', ref => {
+       return ref.where('Dfather', '==', 'null');
+     });
+     this.treatmentCategoriesRef.valueChanges().subscribe(areas => {
+       this.treatmentCategories = areas;
+     });
      // get all patients id
      this.allPatientsRef = this.afs.collection('patients');
      this.allPatientsRef.valueChanges().subscribe(pats => {
@@ -198,14 +211,12 @@ public newMipuy: string[] = [];
      this.allMethodsRef.valueChanges().subscribe(methods => {
        this.allMethodsList = methods;
      });
-     // get all difficults
+     // get all difficults ref
      const limu = 'לימודי';
-     this.allDifficultsRef = this.afs.collection('difficults', ref => {
-       return ref.where('Dfather', '==', limu);
-     });
-     this.allDifficultsRef.valueChanges().subscribe(diffs => {
-       this.allDifficultsList = diffs;
-     });
+     this.allDifficultsRef = this.afs.collection('difficults');
+    //  this.allDifficultsRef.valueChanges().subscribe(diffs => {
+    //    this.allDifficultsList = diffs;
+    //  });
      this.allMethodsRef = this.afs.collection('methods');
 
       this.allPatientsCommentRef = this.afs.collection('patientsComments');

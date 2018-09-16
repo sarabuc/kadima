@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import {find} from 'p-iteration';
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -32,82 +33,257 @@ export const getMipuysForPatient = functions.https.onCall(async (data, context) 
     // const db = admin.firestore();
 
     const mipuys = await db.collection('mipuy').where('Pid', '==', Pid).get();
-    if (mipuys.size <= 0) {
+    console.log('mipuys:' + mipuys.docs.length);
+    if (mipuys.docs.length <= 0) {
      return 'no-mipuy';
     }
-
+    // const mipuys = mipuysT.docs.filter((item, pos) =>{
+    //   return mipuysT.docs.indexOf(item) === pos;
+    // });
     const allDiffi = await db.collection('difficults').get();
     const mainAreas = await db.collection('difficults').where('Dfather', '==', 'null').get();
     const allMipuysForPatient = [];
 
+
     for (const doc of mipuys.docs) { // run on all mipuys for patient
       const mipuyD = doc.data().mipuyDate;
-      const mipuyDetails = {
-        mipuyDate: mipuyD,
-        difficults: []
-      }//: { [k: string]: any } = {};
-      const mipuyDiffis = [];
+      console.log('mipuy date' + mipuyD);
+      const mipuyDetails: { [k: string]: any } = {};
+      let mipuyDiffis = [];
 
-      //mipuyDetails['mipuyDate'] = mipuyD;
+      mipuyDetails['mipuyDate'] = '' + mipuyD;
 
 
       const diffiForPatient = await db.collection('patientDifficults').where('Pid', '==', Pid).where('mipuyDate', '==', mipuyD).where('status', '==', 'yes').get();
+      console.log('all diffi for patient' + diffiForPatient.docs.length);
 
-      for (const area of mainAreas.docs) { // run on all main areas in each mipuy
-        const flag = diffiForPatient.docs.findIndex(D => D.data().Dcode === area.data().code);
-        if (flag > -1) {
-          //there is this difficult in this mipuy
-          const newDiff= { //{code, code}
-            code: diffiForPatient.docs[flag].data().code,
-            father: diffiForPatient.docs[flag].data().code
-          };
-          mipuyDiffis.push(newDiff);
-        diffiForPatient.docs.splice(flag, 1); // dont need more this doc in array
-        }
-      }
          for (const diffi of diffiForPatient.docs) {
-            //have to check for each diffi if it is a leave-
-            //do it so-
-            // prefer to enter new object {code, father } to list and check if there is in list {father, x} or { x, code},
-            //if there is {father, x}- have to remove { father, x} and update new object to {code, x}
-            // if there is {x, code} - have update existing obgect {x, code} to {x, father} and throw new object
-            const findD = allDiffi.docs.find(D => D.data().code === diffi.data().Dcode);
-            if (!findD) {
-              continue;
+           console.log('diffi is' + diffi.data().Dcode);
+           console.log('index is ' + mipuyDiffis.indexOf(diffi.data().Dcode));
+           if (mipuyDiffis.indexOf(diffi.data().Dcode) > -1) {
+             console.log('child was entered ' + diffi.data().Dcode);
+             // this difficult was enterd (his child)- have to do nothing
+             continue;
+           } else {
+             const findD = await allDiffi.docs.find(D => D.data().code === diffi.data().Dcode);
+            //  for (const D of allDiffi.docs) {
+            //    if (D.data().code === diffi.data().Dcode){
+            //      allMipuysForPatient.push(D.data().code)
+            //      findD = D;
+            //      break;
+            //    }
+            //  }
+            if(!findD) {
+              console.error('did not find diffi with name ' + diffi.data().Dcode);// dont remove
+              break;
             }
-            const newDiff = {
-              code: findD.data().code,
-              father: findD.data().Dfather
-            }
-            let i = mipuyDiffis.findIndex(D => D.father === newDiff.code); //{x, code} - have update existing obgect {x, code} to {x, father} and throw new object
-            if (i > -1) {
-              mipuyDiffis[i].father = newDiff.father;
-              continue;
-            }
-            i = mipuyDiffis.findIndex(D => D.code === newDiff.father); //{father, x}- have to remove { father, x} and update new object to {code, x}
-            if (i > -1) {
-              if(mipuyDiffis[i].father !== 'null') {
-                newDiff.father = mipuyDiffis[i].father;
-                mipuyDiffis.splice(i, 1);
-              }
+             console.log('findD '+ findD);
+             console.log('findD all fathers' + findD.data().allFathers);
+             const fathers = ('' + findD.data().allFathers).trim().split('*');
+           const mainFather = fathers[0];
+             console.log('findD main father ' + mainFather);
+           if (findD.data().Dfather === 'null') {
+             console.log('fatherisnull' + diffi.data().Dcode);
+             mipuyDetails[diffi.data().Dcode] = [];
+             mipuyDetails[diffi.data().Dcode].push(diffi.data().Dcode);
+           } else if (!mipuyDetails[mainFather] && findD.data().Dfather !== 'null') {
+             //if it is already underfind - didnt enter any diffrents in this area
+             console.log('new area ' + diffi.data().Dcode);
+             console.log('new area - main father ' + mainFather);
+             mipuyDetails[mainFather] = [];
+             mipuyDetails[mainFather].push(diffi.data().Dcode);
+             console.log('len diffs ' + mipuyDiffis.length);
+             mipuyDiffis = mipuyDiffis.concat(fathers);
+             console.log('diffs in array' + mipuyDiffis);
+             console.log('len diffs ' + mipuyDiffis.length);
+            //  var unique = arr.filter(function (elem, index, self) {
+            //    return index === self.indexOf(elem);
+            //  })
+           } else {
+             let flag = false;
+             // diff was not entered but maybe his father was entered- have to change him if was - if not have to push to areas array
+             // check if  one of his fathers was entered
+             for (const father of fathers) {
+               const i = mipuyDetails[mainFather].indexOf(father);
+               if (i > -1) {
+                 // have replace
+                 console.log('have replace' + mipuyDetails[mainFather][i] + diffi.data().Dcode);
+                 mipuyDetails[mainFather][i] = diffi.data().Dcode;
+                 flag = true;
+                 break;
+               }
+             } // end of for- there was not any father
+             if(!flag) {
+               // have to push to areas array
+               console.log('new leave in area' + diffi.data().Dcode);
+               mipuyDetails[mainFather].push(diffi.data().Dcode);
 
-              mipuyDiffis.push(newDiff);
-            }
+             }
+             mipuyDiffis = mipuyDiffis.concat(fathers);
+             console.log('diffs in array' + mipuyDiffis);
 
-           mipuyDiffis.push(newDiff); // ????????delete
-        }
-      mipuyDetails.difficults = mipuyDiffis;
+           }
+          }
+      }
       allMipuysForPatient.push(mipuyDetails);
 
-      }
+    }
     return allMipuysForPatient;
 
-   // response.status(200).send(JSON.stringify(allMipuysForPatient));
   } catch (error) {
-   return error;
+    return 'error!';
   }
 
 });
+          //   //have to check for each diffi if it is a leave-
+          //   //do it so-
+          //   // prefer to enter new object {code, father } to list and check if there is in list {father, x} or { x, code},
+          //   //if there is {father, x}- have to remove { father, x} and update new object to {code, x}
+          //   // if there is {x, code} - have update existing obgect {x, code} to {x, father} and throw new object
+          //   const findD = allDiffi.docs.find(D => D.data().code === diffi.data().Dcode);
+          //   if (!findD) {
+          //     continue;
+          //   }
+          //   const newDiff = {
+          //     code: findD.data().code,
+          //     father: findD.data().Dfather
+          //   }
+          //   let i = mipuyDiffis.findIndex(D => D.father === newDiff.code); //{x, code} - have update existing obgect {x, code} to {x, father} and throw new object
+          //   if (i > -1) {
+          //     mipuyDiffis[i].father = newDiff.father;
+          //     continue;
+          //   }
+          //   i = mipuyDiffis.findIndex(D => D.code === newDiff.father); //{father, x}- have to remove { father, x} and update new object to {code, x}
+          //   if (i > -1) {
+          //     if(mipuyDiffis[i].father !== 'null') {
+          //       newDiff.father = mipuyDiffis[i].father;
+          //       mipuyDiffis.splice(i, 1);
+          //     }
+
+          //     mipuyDiffis.push(newDiff);
+          //   }
+
+          //  mipuyDiffis.push(newDiff); // ????????delete
+
+
+// export const getMipuyForPatientByDate = functions.https.onCall(async (data, context) => {
+//   try {
+
+//     const text = data.text.split('*');
+
+//     const Pid  = text[0];
+//     const mipuyD = text[1];
+//     console.log('params' + Pid + mipuyD);
+//     // const db = admin.firestore();
+
+
+//     const allDiffi = await db.collection('difficults').get();
+
+//       const mipuyDetails: { [k: string]: any } = {};
+//       let mipuyDiffis = [];
+
+
+//       const diffiForPatient = await db.collection('patientDifficults').where('Pid', '==', Pid).where('mipuyDate', '==', mipuyD).where('status', '==', 'yes').get();
+//       console.log('all diffi for patient' + diffiForPatient.docs.length);
+
+//       for (const diffi of diffiForPatient.docs) {
+//         if (mipuyDiffis.indexOf(diffi.data().Dcode) > -1) {
+//           // this difficult was enterd (his child)- have to do nothing
+//           continue;
+//         } else {
+//           let findD; //await find(allDiffi.docs, (D) => D.data().code === diffi.data().Dcode);// allDiffi.docs.find(D => D.data().code === diffi.data().Dcode);
+//           for (const D of allDiffi.docs) {
+//             if (D.data().code === diffi.data().Dcode) {
+//               findD = D;
+//               break;
+//             }
+//           }
+//           const fathers = ('' + findD.data().allFathers).split('*');
+//           const mainFather = fathers[0];
+//           if (findD.data().Dfather === 'null') {
+//             console.log('fatherisnull' + diffi.data().Dcode);
+//             mipuyDetails[diffi.data().Dcode] = [];
+//             mipuyDetails[diffi.data().Dcode].push(diffi.data().Dcode);
+//           } else if (!mipuyDetails[mainFather] && findD.data().Dfather != 'null') {
+//             //if it is already underfind - didnt enter any diffrents in this area
+//             console.log('new area ' + diffi.data().Dcode);
+//             mipuyDetails[mainFather] = [];
+//             mipuyDetails[mainFather].push(diffi.data().Dcode);
+//             mipuyDiffis = mipuyDiffis.concat(fathers);
+
+//           } else {
+//             let flag = false;
+//             // diff was not entered but maybe his father was entered- have to change him if was - if not have to push to areas array
+//             // check if  one of his fathers was entered
+//             for (const father of fathers) {
+//               const i = mipuyDetails[mainFather].indexOf(father);
+//               if (i > -1) {
+//                 // have replace
+//                 console.log('have replace' + mipuyDetails[mainFather][i] + diffi.data().Dcode);
+//                 mipuyDetails[mainFather][i] = diffi.data().Dcode;
+//                 flag = true;
+//                 break;
+//               }
+//             } // end of for- there was not any father
+//             if (!flag) {
+//               // have to push to areas array
+//               console.log('new leave in area' + diffi.data().Dcode);
+//               mipuyDetails[mainFather].push(diffi.data().Dcode);
+//               mipuyDiffis = mipuyDiffis.concat(fathers);
+//             }
+
+//           }
+//         }
+
+//       }
+
+
+//     return mipuyDetails;
+
+
+//   } catch (error) {
+//     return error;
+//   }
+
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
