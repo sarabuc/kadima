@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Patient, DbService } from '../../services/db.service';
 import { ShareDataService } from '../../services/share-data.service';
-
+import * as firebase from 'firebase';
 @Component({
   selector: 'app-patient-profile',
   templateUrl: './patient-profile.component.html',
@@ -27,9 +27,22 @@ deletePatient() {
 
 
   myUploader(event) {
-    for (const file of event.files) {
+    const storegRef = firebase.storage().ref();
+   for (const file of event.files) {
+     const date = new Date();
+     const fileName = '' + file.name + '_' + date;
+     const path = `/${this.Pid}/${fileName}`;
+      const iRef = storegRef.child(path);
+      iRef.put(file).then((snapshot) => {
+        console.log(snapshot);
+      const Pfile = {
+        Pid: this.Pid,
+        fileName: file.name,
+        date: date
+      };
+      this.db.patientsFileRef.add(Pfile);
       console.log(file);
-       this.uploadedFiles.push(file);
+      });
     }
 }
 }

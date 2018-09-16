@@ -47,6 +47,11 @@ export interface Patient {
   strFreeTime: string;
   haveDificult: string;
 }
+export interface PatientFile {
+  Pid: string;
+  fileName: string;
+  date: Date;
+}
 export interface PatientComment {
   Pid: string;
   commentDate: Date;
@@ -142,6 +147,7 @@ public planForPatientRef: AngularFirestoreCollection<PlanForPatient>;
 public treatmentProgressionRef: AngularFirestoreCollection<TreatmentProgression>;
 public treatmentInfoForProgressRef: AngularFirestoreCollection<TreatmentInfo>;
   public mipuyForPatientRef: AngularFirestoreCollection<Mipuy>;
+  public patientsFileRef: AngularFirestoreCollection<PatientFile>;
   treatmentCategoriesRef: AngularFirestoreCollection<Difficulty>;
 // list
 public userNameList: string[] = [];
@@ -223,6 +229,7 @@ public newMipuy: string[] = [];
       this.difficultForPatientRef = this.afs.collection('patientDifficults');
       this.mipuyForPatientRef = this.afs.collection('mipuy');
      this.treatmentInfoForProgressRef = this.afs.collection('treatmentInfo');
+     this.patientsFileRef = this.afs.collection('patientFile');
    }
 
    isLogin() {
