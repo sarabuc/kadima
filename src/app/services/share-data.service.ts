@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
+//import * as writeJsonFile from 'write-json-file';
 // import { AlertsService } from '@jaspero/ng2-alerts';
 // import { AlertType } from '@jaspero/ng-alerts';
-import { Difficulty, PatientsDifficult, TherapistMethods } from './db.service';
 import {Router, ActivatedRoute} from '@angular/router';
-import { Message } from 'primeng/api';
 import * as firebase from 'firebase';
 import { MessageService } from 'primeng/components/common/messageservice';
+import { saveAs } from 'file-saver/FileSaver';
 @Injectable()
 export class ShareDataService {
-  msgs; // for all alerts
-  longMsgs; // for long alerts
+  msgs = []; // for msgs
+  alerts = []; // for  alerts
   // for free time
   TPstatusForTime: string; /*newP, newT, updateP, updateT */
 
@@ -24,45 +24,34 @@ export class ShareDataService {
  public dergeeForTherapist = ['ללא דרגה', 'מורה בכיר', 'תואר ראשון', 'תואר שני'];
  public kindOfTherapist = ['מלמד', 'הורה', 'תרפיסט', 'מפקח', 'מנהל', 'פסיכולוג', 'פסיכיאטר', 'מורה מקדם',
 'מטפל רגשי', 'חונך', 'רופא משפחה', 'מומחה להתפתחות הילד', 'נוירולוג'];
- // public treatmentArea = ['לימודי', 'התפתחותי', 'התנהגותי', 'מוטורי', 'תקשורתי'];
+ public treatmentArea = ['לימודי', 'התפתחותי', 'התנהגותי', 'מוטורי', 'תקשורתי'];
  public kupotCholim = ['ללא', 'מכבי', 'כללית', 'מאוחדת', 'לאומית'];
+  public FundingFactors = ['הורים', 'מוסד לימודי', 'קופת חולים', 'קופת צדקה', 'ידידות טורונטו', 'יד אליעזר',
+  'משרד החינוך שעות שילוב', 'משרד החינוך כיתת קידום', 'מחלקת רווחה', 'משרד הפריפריה', 'קרוב משפחה'];
 // public treatmentCategories;
 
 
-  /*: Difficulty[] = [
-    { code: 'לימודי', description: 'לימודי', Dfather: 'null', isLeave: false, diffiDegree: 0},
-    { code: 'התפתחותי', description: 'התפתחותי', Dfather: 'null', isLeave: false, diffiDegree: 0},
-    { code: 'התנהגותי', description: 'התנהגותי', Dfather: 'null', isLeave: false, diffiDegree: 0},
-    { code: 'תקשורתי', description: 'תקשורתי', Dfather: 'null', isLeave: false, diffiDegree: 0},
-    { code: 'חושי-מוטורי', description: 'חושי-מוטורי', Dfather: 'null', isLeave: false, diffiDegree: 0},
-
-    // {"קריאה"},{"כתיבה"}, {"התנהגות"}, {"קשב וריכוז"}, {"שמיעה"},{"ראיה"},{"פיגור"}, {"אוטיזם"}
-  ];*/
 
 public daysName = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
 public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30' ];
   constructor(/*private _alert: AlertsService*/ private router: Router, private messageService: MessageService, public datepipe: DatePipe) {
     this.initFREE_ALL_TIME();
+    this.getCsvFile();
   }
 
 
   /****************************************************************** */
   /***************             alert             **************** */
    public createAlert(type, message, tytle) {
-     this.messageService.add({ severity: type, summary: tytle, detail: message });
+     this.alerts.push({ severity: type, summary: tytle, detail: message });
     /*if (tytle === '') {
     //  this._alert.create(type, message);
     } else {
     //  this._alert.create(type, message, tytle);
     }*/
   }
-  public createLongAlert(type, message, tytle) {
-    this.messageService.add({ severity: type, summary: tytle, detail: message });
-    /*if (tytle === '') {
-    //  this._alert.create(type, message);
-    } else {
-    //  this._alert.create(type, message, tytle);
-    }*/
+  public createMessage(type, message, tytle) {
+    this.msgs.push({ severity: type, summary: tytle, detail: message });
   }
 
   initFREE_ALL_TIME() {
@@ -150,6 +139,21 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
 public convertDateToString(date: Date) {
  // console.log(date);
  return this.datepipe.transform(date, 'dd-MM-yyyy');
+}
+
+public getCsvFile() {
+  const mipuyForPatient = firebase.functions().httpsCallable('im_ex');
+  mipuyForPatient({ text: '' }).then(res => {
+    console.log(res);
+ //   const result = res.data;
+    // const blob = new Blob([res], {type: 'text/csv' });
+    // console.log(blob);
+    // saveAs(blob, 'patientDate.csv');
+    // writeJsonFile.sync('foo.json', res);
+
+  }).catch(err => {
+    console.log(err);
+  });
 }
 
 }

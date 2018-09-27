@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { routing } from './app.routing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import {InplaceModule} from 'primeng/inplace';
 
 import {MessageService} from 'primeng/components/common/messageservice';
 import {MessagesModule} from 'primeng/messages';
@@ -123,6 +124,7 @@ import { AuthGuard } from './services/auth.guard';
 import {  NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
+import { ShowMethodsComponent } from './mipuy/show-methods/show-methods.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -180,9 +182,11 @@ const firebase = {
     ShowTreatmentForPatientComponent,
     ShowTreatmentForTherapistComponent,
     NewPlanForPatientComponent,
-    RegisterComponent
+    RegisterComponent,
+    ShowMethodsComponent
   ],
   imports: [
+   InplaceModule,
     AngularFireAuthModule,
     routing,
     BrowserModule,

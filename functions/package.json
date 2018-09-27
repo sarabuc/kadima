@@ -12,6 +12,7 @@
     "main": "lib/index.js",
     "dependencies": {
         "@types/node": "^10.5.7",
+        "child-process-promise": "^2.2.1",
         "csv-file-creator": "^1.0.8",
         "dot-object": "^1.7.0",
         "emailjs": "^2.2.0",
@@ -23,8 +24,10 @@
         "lodash": "^4.17.11",
         "p-iteration": "^1.1.7",
         "python-shell": "^1.0.4",
+        "save": "^2.3.2",
         "shortid": "^2.2.13",
         "typescript": "^3.0.1",
+        "write-json-file": "^3.0.2",
         "xlsx": "^0.14.0"
     },
     "devDependencies": {

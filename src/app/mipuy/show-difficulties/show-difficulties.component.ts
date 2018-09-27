@@ -20,14 +20,8 @@ export class ShowDifficultiesComponent implements OnInit, OnChanges {
   constructor(public sd: ShareDataService, public db: DbService) { }
 
   ngOnInit() {
-    console.log('123' + this.status);
   this.db.newMipuy = [];
-
-console.log('456' + this.status);
   }
-// console.log(this.diff2);
-// this.diff.isChoozen = false;
-
 
 ngOnChanges(changes) {
    if (this.status !== 'mipuy' && this.status !== 'show') {
@@ -47,7 +41,6 @@ return null;
   }
 
   addNewMipuy() {
-console.log('afdddd');
     if (status === 'show') {
       return;
     }
@@ -84,7 +77,7 @@ console.log('afdddd');
         this.db.addPatientDifficult(diffi);
       });
       this.sd.createAlert('success', 'מיפוי הוסף בהצלחה', '');
-    this.sd.createAlert('info', 'רענו את הדף כדי לצפות בכל המיפויים  ', '');
+    this.sd.createMessage('warn', 'יש לרענו את הדף כדי לצפות בכל המיפויים  ', 'שים לב');
     this.db.newMipuy = [];
 
   }

@@ -20,7 +20,7 @@ currectArea = '';
 
 
   ngOnInit() {
-    console.log(this.mipuyDate);
+    // console.log(this.mipuyDate);
     // if (this.mipuyDate) {
     //   this.getMipuy();
 

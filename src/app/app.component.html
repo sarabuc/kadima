@@ -37,14 +37,15 @@
         </div>
     </links>
 </mdb-navbar>
+
+
 <div class="container" style="
     position: fixed;
     top: 40px;
     right: 500px;
     left: 0;
     z-index: 100;">
-    <p-growl [(value)]="sd.msgs" [life]="3000" [baseZIndex]="5000000" [autoZIndex]="false"></p-growl>
-    <p-growl [(value)]="sd.longMsgs" [life]="300000" [baseZIndex]="5000000" [autoZIndex]="false"></p-growl>
+    <p-growl [(value)]="sd.alerts" [life]="3000" [baseZIndex]="5000000" [autoZIndex]="false"></p-growl>
 </div>
 <mat-sidenav-container fullscreen class="pb-1 pt-3" style="">
 
@@ -62,6 +63,15 @@
 
 
         <div class="mt-3 pt-5">
+            <!-- <div class="" style="position: inherit;
+    top: 100px;
+    z-index: 100;
+    width: 96%;
+    right: 0;
+    margin-left: 2%;
+    margin-right: 2%;"> -->
+            <p-messages [(value)]="sd.msgs"></p-messages>
+            <!-- </div> -->
             <router-outlet> </router-outlet>
         </div>
 

@@ -11,6 +11,29 @@ export class NewPlanForPatientComponent implements OnInit {
 pat: Patient;
 Pid;
 status;
+// flags for all part
+whoPayF = true;
+parentsConfirmF = true;
+haveDoeDateF = false;
+dueDateF = false;
+amountConfirmLessonsF = true;
+wantWarningF = false;
+choozeMipuyF = false;
+addFilesF = false;
+
+// ngModel for all inputs
+whoPay;
+parentsConfirm;
+haveDoeDate = false;
+dueDate;
+amountConfirmLessons;
+wantWarning = false;
+choozedMipuy;
+addFiles = false;
+
+// any more
+optionsForParentConfirm;
+
   constructor(public sd: ShareDataService, public db: DbService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -21,6 +44,7 @@ status;
 
     } else {
       this.getPatientByID();
+      this.init();
     }
   }
 
@@ -40,6 +64,10 @@ status;
 
     // ...
     this.sd.routeTo('/Pcard', this.Pid);
+  }
+
+  init() {
+this.optionsForParentConfirm = ['יש אישור', 'אין אישור', 'לא נבדק עדין'];
   }
 
 }

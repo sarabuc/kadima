@@ -1,5 +1,4 @@
 <div class="list-group scrollable-x" #list>
-    {{status}}
     <div *ngIf="status != 'area'">
         <div class="list-group-item black-text border-top-bottom" *ngFor="let diffi of db.treatmentCategories" style="text-align:right">
             <app-difficult #diff [status]="status" [code]="diffi.code" [describtion]="diffi.description" [isLeave]="diffi.isLeave" [index]="diffi.index" [allFathers]="diffi.allFathers"></app-difficult>

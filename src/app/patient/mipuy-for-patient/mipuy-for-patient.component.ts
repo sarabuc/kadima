@@ -53,9 +53,6 @@ getAllMipuysForPat() {
   // console.log('*********************************************' + str + this.mipuyModeClass);
   if (str === 'finish') {
  this.mipuyModeClass = 'modal fade';
- // this.initDiffiForNewMipuy();
- // this.init();
- this.getAllMipuysForPat();
   }
 }
 

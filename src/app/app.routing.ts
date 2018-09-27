@@ -53,7 +53,7 @@ const appRoutes: Routes = [
   { path: 'check-progress', component: TempComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'Treatment-planning/:status', component: PatientListComponent },
-  { path: 'plan/:id', component: TempComponent/*NewPlanForPatientComponent*/ },
+  { path: 'plan/:id', component: NewPlanForPatientComponent },
   { path: 'diffiAndMethods', component: DiffiAndMethodsComponent },
   { path: '**', redirectTo: 'login' }
 ];
