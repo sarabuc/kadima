@@ -145,15 +145,54 @@ public getCsvFile() {
   const mipuyForPatient = firebase.functions().httpsCallable('im_ex');
   mipuyForPatient({ text: '' }).then(res => {
     console.log(res);
- //   const result = res.data;
-    // const blob = new Blob([res], {type: 'text/csv' });
-    // console.log(blob);
-    // saveAs(blob, 'patientDate.csv');
-    // writeJsonFile.sync('foo.json', res);
+ if (res.data === 'success') {
+this.getAndDownloadFile('exe/patientData.json', 'data.json');
+ }
 
   }).catch(err => {
     console.log(err);
   });
 }
+
+
+  getAndDownloadFile(path, fileName) {
+
+    const storageRef = firebase.storage();
+    // Create a reference to the file we want to download
+    const starsRef = storageRef.ref(path);
+    // Get the download URL
+    starsRef.getDownloadURL().then(url => {
+      console.log(url);
+      // const xhr = new XMLHttpRequest();
+      // xhr.responseType = 'blob';
+      // xhr.onload = function (event) {
+      //   const blob = xhr.response;
+      //   console.log(blob);
+        saveAs(url, fileName);
+      // };
+      // xhr.open('GET', url);
+      // xhr.send();
+    }).catch(error => {
+      console.log(error.code);
+      switch (error.code) {
+        case 'storage/object_not_found':
+          // File doesn't exist
+          break;
+
+        case 'storage/unauthorized':
+          // User doesn't have permission to access the object
+          break;
+
+        case 'storage/canceled':
+          // User canceled the upload
+          break;
+
+        case 'storage/unknown':
+          // Unknown error occurred, inspect the server response
+          break;
+      }
+    });
+  }
+
 
 }

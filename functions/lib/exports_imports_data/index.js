@@ -9,17 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // const admin = require("firebase-admin");
-const fs = require("fs-extra");
+const fs = require("fs");
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const path = require("path");
 const os = require("os");
+const writeJsonFile = require("write-json-file");
 //const gcs = require('@google-cloud/storage')();
 const spawn = require('child-process-promise').spawn;
 //const bucketPath = 'MYPROJECTNAME.appspot.com'
 //const serviceAccount = require("./serviceAccountKey.json");
-const collectionName = 'patient'; //process.argv[2];
-const subCollection = process.argv[3];
+const collectionName = 'patients';
 const db = admin.firestore();
 const storage = admin.storage();
 db.settings({ timestampsInSnapshots: true });
@@ -29,30 +29,27 @@ exports.getAllPatientsDataInCSV = functions.https.onCall((data1, context) => __a
     try {
         const file = 'patientData.json';
         const results = yield db.collection(collectionName).get();
+        console.log(results);
+        console.log('size' + results.size);
         for (const doc of results.docs) {
             data[collectionName][doc.id] = doc.data();
+            console.log(doc);
         }
         // return data;
         //const fileBucket = object.bucket;
+        console.log(data);
         const tempFilePath = path.join(os.tmpdir(), file);
         //const bucket = gcs.bucket(tempFilePath);
-        fs.writeJson(tempFilePath, JSON.stringify(data)).then(() => {
-            spawn('convert', [tempFilePath, '-thumbnail', '200x200>', tempFilePath]);
-        }).then(() => {
-            console.log('Thumbnail created at', tempFilePath);
-            // We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
-            const thumbFileName = `thumb_${file}`;
-            const thumbFilePath = path.join(path.dirname(file), thumbFileName);
-            storage.bucket().upload(tempFilePath, {
-                destination: thumbFilePath
-            });
-            // Uploading the thumbnail.
-            // return bucket.upload(tempFilePath, {
-            //   destination: thumbFilePath
-            // });
-            // Once the thumbnail has been uploaded delete the local file to free up disk space.
-        }).then(() => fs.unlinkSync(tempFilePath));
-        return 'sucess';
+        console.log('tmp + ' + tempFilePath);
+        writeJsonFile.sync(tempFilePath, JSON.stringify(data));
+        const read = fs.readFileSync(tempFilePath);
+        console.log(read);
+        const exe_file = 'exe/' + file;
+        const thumbFilePath = path.join(path.dirname(file), exe_file);
+        storage.bucket('kadima1-fa119.appspot.com').upload(tempFilePath, {
+            destination: thumbFilePath
+        });
+        return 'success';
     }
     catch (error) {
         return error;
