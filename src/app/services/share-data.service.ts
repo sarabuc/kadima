@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
-//import * as writeJsonFile from 'write-json-file';
+// import * as writeJsonFile from 'write-json-file';
 // import { AlertsService } from '@jaspero/ng2-alerts';
 // import { AlertType } from '@jaspero/ng-alerts';
 import {Router, ActivatedRoute} from '@angular/router';
@@ -36,7 +36,7 @@ public daysName = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמיש
 public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30' ];
   constructor(/*private _alert: AlertsService*/ private router: Router, private messageService: MessageService, public datepipe: DatePipe) {
     this.initFREE_ALL_TIME();
-    this.getCsvFile();
+
   }
 
 
@@ -163,17 +163,17 @@ this.getAndDownloadFile('exe/patientData.json', 'data.json');
     // Get the download URL
     starsRef.getDownloadURL().then(url => {
       console.log(url);
-      // const xhr = new XMLHttpRequest();
-      // xhr.responseType = 'blob';
-      // xhr.onload = function (event) {
-      //   const blob = xhr.response;
-      //   console.log(blob);
-        saveAs(url, fileName);
-      // };
-      // xhr.open('GET', url);
-      // xhr.send();
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function (event) {
+        const blob = xhr.response;
+        console.log(blob);
+        saveAs(blob, fileName);
+      };
+      xhr.open('GET', url);
+      xhr.send();
     }).catch(error => {
-      console.log(error.code);
+      console.log(error);
       switch (error.code) {
         case 'storage/object_not_found':
           // File doesn't exist
@@ -195,4 +195,9 @@ this.getAndDownloadFile('exe/patientData.json', 'data.json');
   }
 
 
+   converrSecondsToDateTime(secs) {
+    const t = new Date(); // Epoch
+     t.setTime(secs * 1000);
+    return t;
+}
 }

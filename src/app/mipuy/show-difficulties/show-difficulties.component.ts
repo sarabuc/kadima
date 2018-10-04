@@ -44,22 +44,28 @@ return null;
     if (status === 'show') {
       return;
     }
+    this.diffiArr = this.db.newMipuy;
     let date ;
     this.finishedMipuy.emit('finish');
     if (this.status === 'mipuy') {
-      date = new Date();
-      date.setHours(0, 0, 0, 0);
+     const t_date = new Date();
+      date = '' + t_date.getDate() + '.' + (t_date.getMonth() + 1) + '.' + t_date.getFullYear();
 
     } else if (this.status === 'area') {
-      date = new Date(this.dateForMipuyByArea);
+      date = this.dateForMipuyByArea;
     } else {
       return;
     }//
 
-
-    this.diffiArr = this.db.newMipuy;
-    if (this.diffiArr.length > 0 && this.status === 'mipuy') {
-      this.db.mipuyForPatientRef.doc('' + this.Pid + '_' + date).set({ Pid: '' + this.Pid, mipuyDate: date });
+console.log('date' + date);
+   if (this.diffiArr.length > 0 && this.status === 'mipuy') {
+     console.log('date' + date);
+     const docName = '' + this.Pid + '_' + date;
+     const mipuy = {
+       Pid: '' + this.Pid,
+        mipuyDate: date
+     };
+      this.db.mipuyForPatientRef.doc(docName).set(mipuy);
     }
 
     let diffi: PatientsDifficult;

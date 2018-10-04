@@ -15,8 +15,8 @@ const functions = require("firebase-functions");
 const path = require("path");
 const os = require("os");
 const writeJsonFile = require("write-json-file");
+const json2csv = require("json2csv");
 //const gcs = require('@google-cloud/storage')();
-const spawn = require('child-process-promise').spawn;
 //const bucketPath = 'MYPROJECTNAME.appspot.com'
 //const serviceAccount = require("./serviceAccountKey.json");
 const collectionName = 'patients';
@@ -41,9 +41,24 @@ exports.getAllPatientsDataInCSV = functions.https.onCall((data1, context) => __a
         const tempFilePath = path.join(os.tmpdir(), file);
         //const bucket = gcs.bucket(tempFilePath);
         console.log('tmp + ' + tempFilePath);
-        writeJsonFile.sync(tempFilePath, JSON.stringify(data));
-        const read = fs.readFileSync(tempFilePath);
-        console.log(read);
+        if (false) {
+            writeJsonFile.sync(tempFilePath, data);
+            const read = fs.readFileSync(tempFilePath);
+            console.log(read);
+        }
+        if (true) {
+            const Json2csvParser = json2csv.Parser;
+            const fields = ["field", "header"];
+            const opts = { fields };
+            try {
+                const parser = new Json2csvParser(opts);
+                const csv = parser.parse(data);
+                console.log(csv);
+            }
+            catch (err) {
+                console.error(err);
+            }
+        }
         const exe_file = 'exe/' + file;
         const thumbFilePath = path.join(path.dirname(file), exe_file);
         storage.bucket('kadima1-fa119.appspot.com').upload(tempFilePath, {

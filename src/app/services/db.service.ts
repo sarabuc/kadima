@@ -72,23 +72,18 @@ export interface Method {
 }
 export interface Mipuy {
   Pid: string;
-  mipuyDate: Date;
+  mipuyDate: string;
 }
-
-/*export interface TreatmentCategory {
-  code: string;
-  description: string;
-}*/
  export interface PatientsDifficult {
    Pid: string;
    Dcode: string;
-   mipuyDate: Date;
+   mipuyDate: string;
    status: string; // yes or maybe or not-relevant
  }
  export interface TherapistMethods {
    Tid: string;
    Mcode: string;
-   priceForLesson: number;
+  // priceForLesson: number;
  }
  export interface MethodForDifficulty {
    Mcode: string;
@@ -127,6 +122,18 @@ export interface TreatmentInfo { // key is Tid-treatmentNumber to example: 1234-
    description: string;
    comment: string;
  }
+export interface MipuyDecideForPlan {
+  mipuy_id_in_db: string;
+  [k: string]: any;
+}
+
+export interface massageForUser {
+ userId: string;
+ massage: string;
+ date: Date;
+kind: string;
+comments: string;
+}
 
 
 @Injectable()
@@ -214,22 +221,22 @@ public newMipuy: string[] = [];
 
      // get all methods
      this.allMethodsRef = this.afs.collection('methods');
-     this.allMethodsRef.valueChanges().subscribe(methods => {
-       this.allMethodsList = methods;
-     });
+
      // get all difficults ref
      const limu = 'לימודי';
      this.allDifficultsRef = this.afs.collection('difficults');
     //  this.allDifficultsRef.valueChanges().subscribe(diffs => {
     //    this.allDifficultsList = diffs;
     //  });
-     this.allMethodsRef = this.afs.collection('methods');
+
 
       this.allPatientsCommentRef = this.afs.collection('patientsComments');
       this.difficultForPatientRef = this.afs.collection('patientDifficults');
       this.mipuyForPatientRef = this.afs.collection('mipuy');
      this.treatmentInfoForProgressRef = this.afs.collection('treatmentInfo');
      this.patientsFileRef = this.afs.collection('patientFile');
+     this.methodForTherapistRef = this.afs.collection('methodForThertapist');
+     this.methodForDifficultyRef = this.afs.collection('methodForDifficult');
    }
 
    isLogin() {
@@ -358,6 +365,13 @@ public addPatientDifficult(diffi: PatientsDifficult) {
 }
 
 /**
+ * addMethodForTherapist
+ */
+public addMethodForTherapist(methodForThera: TherapistMethods) {
+  this.methodForTherapistRef.add(methodForThera);
+}
+
+/**
  * addTreatmentInfo
  */
 public addTreatmentInfo( treat: TreatmentInfo) {
@@ -365,7 +379,33 @@ public addTreatmentInfo( treat: TreatmentInfo) {
  // console.log(treat);
 }
 
+/**
+ * addMethod
+method: Method */
+public addMethod(method: Method) {
+  this.allMethodsRef.add(method).then(res => {
+    this.sd.createAlert('success', 'שיטה נוספה בהצלחה', '');
+  });
 
+}
+  /**
+     * addMethodForDifficult
+     */
+  public addMethodForDifficult(methodForDifficult: MethodForDifficulty) {
+    this.methodForDifficultyRef.add(methodForDifficult);
+  }
+
+  addMassageForUser(date: Date, massage: string, kind: string, comment: string){
+     const M ={
+    userId: this.userNow.id,
+    date: date,
+    massage: massage, 
+    kind: kind, 
+    comments: comment
+  }
+  this.afs.collection('users').doc(this.userNow.id).collection('massages').add(M);
+  }
+ 
 
   /**************************************************** */
   /*****************       update to db           ******* */
@@ -395,6 +435,15 @@ public addTreatmentInfo( treat: TreatmentInfo) {
     });
   }
 
+
+  /**
+   * updateMipuyDecideForPlanOfPatient(this.mipuyDecideForPlan, this.Pid);------- add or update
+   */
+  public updateMipuyDecideForPlanOfPatient(mipuyDecideForPlan: MipuyDecideForPlan, Pid: string) {
+    this.afs.collection('patientsData').doc(Pid).collection('mipuyDecideForPlan').doc(mipuyDecideForPlan.mipuy_id_in_db)
+    .set(mipuyDecideForPlan);
+  }
+
   /***************************************************************** */
   /**************************************************** */
   /*****************       delete to db           ******* */
@@ -422,11 +471,12 @@ return false; // ??????????????????????????????????????????????????
   }
 
 
-  getMipuyForPatient(Pid: string) {
+  getMipuyForPatient(Pid: string): Observable<Mipuy[]> {
    // this.isBusy = true;
     this.mipuyForPatientRef = this.afs.collection('mipuy', ref => {
       return ref.where('Pid', '==', Pid).orderBy('mipuyDate', 'desc');
     });
+    return this.mipuyForPatientRef.valueChanges();
     // this.mipuyForPatientRef.valueChanges().subscribe(mipuy => {
     //   this.mipuyForPatientList = mipuy;
     //   this.isBusy = false;
@@ -452,21 +502,13 @@ return false; // ??????????????????????????????????????????????????
     }
     return '';
   }
-  // getPatientById(pid): Patient {
-  //     const myPromise = new Promise((resolve, reject) => {
-
-  //        const patObs: Observable<Patient> =  this.allPatientsRef.doc<Patient>(pid).valueChanges();
-  //        patObs.subscribe(pat => {
-  //           resolve(pat);
-  //           reject(pat);
-  //         });
-  //       }).then(pat => {
-  //         return pat;
-  //       });
-
-  //       // myPromise.then(pat => {
-  //       // return pat;
-  //       // });
-  // }
-
+  getAllMethodsRef()/*: Observable<Method[]>*/ {
+    return this.allMethodsRef; // .valueChanges();
+  }
+  getAllTherapistsRef() {
+    return this.allTherapistsRef;
+  }
+  getTreatmentCategoriesRef() {
+    return this.treatmentCategoriesRef;
+  }
 }

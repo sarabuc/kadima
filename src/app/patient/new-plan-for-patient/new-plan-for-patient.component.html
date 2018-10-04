@@ -10,13 +10,19 @@
         <strong> {{pat.firstName}} {{pat.lastName}}</strong>
     </h3>
 
-    <mat-vertical-stepper [linear]="'false'">
+    <mat-horizontal-stepper [linear]="'true'">
         <!-- כללי -->
         <mat-step>
             <ng-template matStepLabel>פרטים כללים</ng-template>
 
-            <div class="row d-flex justify-content-around">
-                <div class="col-md-12 col-sm-12 mb-1 ml-2 form-group text-right" *ngIf="parentsConfirmF">
+            <div class="row d-flex justify-content-around dark-card">
+
+                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="amountConfirmLessonsF">
+                    <mat-form-field class=" w-100">
+                        <textarea matInput class="form-item" type="text" name="history" placeholder="הסטוריה בקצרה " [(ngModel)]="history"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="parentsConfirmF">
                     <mat-form-field class=" w-80">
 
                         <mat-select class="form-item form-item-select" name="parentsConfirm" placeholder="האם יש אישור הורים" [(ngModel)]="parentsConfirm">
@@ -24,7 +30,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 col-sm-12 mb-1 ml-2 form-group text-right" *ngIf="whoPayF">
+                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="whoPayF">
                     <mat-form-field class=" w-80">
 
                         <mat-select class="form-item form-item-select" name="whoPay" placeholder="גורם מממן" [(ngModel)]="whoPay">
@@ -32,23 +38,26 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 col-sm-12 mb-1 ml-2 form-group text-right" *ngIf="amountConfirmLessonsF">
+                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="amountConfirmLessonsF">
                     <mat-form-field class=" w-80">
-                        <input matInput class="form-item" type="number" name="amountConfirmLessons" placeholder="מספר שעות " [(ngModel)]="amountConfirmLessons">
+                        <input matInput class="form-item" type="number" name="amountConfirmLessons" placeholder="מספר שעות מאושר " [(ngModel)]="amountConfirmLessons">
                         <mat-error *ngIf="!amountConfirmLessons">חובה להכניס מספר שעות </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 col-sm-12 mb-1 ml-2 form-group text-right" *ngIf="amountConfirmLessonsF">
+                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="amountConfirmLessonsF">
 
                     <mat-slide-toggle class="example-margin" color="primary" [(ngModel)]="haveDueDate" checkes="false">
-                        יש תאריך לתפוגת תוקף
+                        יש תאריך תפוגת תוקף
                     </mat-slide-toggle>
-                    <!-- <mat-form-field class=" " *ngIf="haveDueDate">
-                        <input type="text" class="form-item form-item-date " matInput [matDatepicker]="dueDate" placeholder="תאריך תפוגה" name="dueDate" [(ngModel)]="dueDate">
-                        <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
-                        <mat-datepicker #dueDate></mat-datepicker>
+                    <br>
+                    <mat-form-field *ngIf="haveDueDate" class=" w-80">
 
-                    </mat-form-field> -->
+                        <input type="text" class="form-item form-item-date " matInput [matDatepicker]="birthdate" placeholder="תאריך תפוגה" name="birthDate" [(ngModel)]="dueDate">
+
+                        <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
+                        <mat-datepicker #birthdate></mat-datepicker>
+
+                    </mat-form-field>
                 </div>
             </div>
             <div>
@@ -61,69 +70,154 @@
                 <div>קשיים לטיפול</div>
             </ng-template>
 
-            <p-inplace closable="closable">
-                <span pInplaceDisplay>
-                 <div class="row d-flex mt-5 mb-4 justify-content-around ">
-                <div class="col-md-5 col-sm-12 col-xs-12 col-lg-25 mr-auto mb-2">
-                    <button class="my-primary my-button my-btn-lg w-100" (click)="showListOfMipuy()">בחר מתוך רשימת כל במיפויים</button>
+            <div class="row d-flex mt-1 mb-2 justify-content-around ">
+                <div class="col-md-5 col-sm-12 col-xs-12 col-lg-25  mb-2">
+                    <button class="my-primary my-button my-btn-md w-100" (click)="showListOfMipuy()">בחר מתוך רשימת כל המיפויים</button>
                 </div>
-                <div class="col-md-5 col-sm-12 col-xs-12 col-lg-5 mr-auto mb-2">
-                    <button class="my-primary my-button my-btn-lg w-100" (click)="showLastMipuy()">הראה מיפוי אחרון </button>
+                <div class="col-md-5 col-sm-12 col-xs-12 col-lg-5 o mb-2">
+                    <button class="my-primary my-button my-btn-md w-100" (click)="showLastMipuy()">הראה מיפוי אחרון </button>
                 </div>
             </div>
-                </span>
-                <span pInplaceContent>
-                  <div *ngIf="!pat" class="center">
-                      <mat-card class="center">
-                          <h4 class="center">loading...</h4>
-                          <mat-spinner class="center"></mat-spinner>
 
-                      </mat-card>
-                      <p-listbox [options]="cars" [(ngModel)]="selectedCar"} [listStyle]="{'max-height':'250px'}">
-  <ng-template let-car pTemplate="item">
-    <div class="ui-helper-clearfix">
-      <img src="assets/showcase/images/demo/car/{{car.label}}.png" style="display:inline-block;margin:5px 0 0 5px" width="48">
-      <span style="float:right;margin:20px 10px 0 0">{{car.value}}</span>
+
+            <div class="list-group mt-1 pt-2  w-60" *ngIf="showListMipuy_V">
+                <div *ngFor="let d of mipuyDates ">
+                    <a class="list-group-item link-botton " style="text-align:right" (click)="showOneMipuy(d)">
+                        <i class="fa fa-check mx-5"></i>{{d.mipuyDate | date: 'dd/MM/yyyy'}}</a>
+                </div>
+            </div>
+            <div class=" gray lighten-2 my-3" *ngIf="showMipuy_V">
+                <div *ngIf="!chooesedMipuy" class="center">
+                    <mat-card class="center">
+                        <h4 class="center">טוען...</h4>
+                        <mat-spinner class="center"></mat-spinner>
+
+                    </mat-card>
+                </div>
+                <div *ngIf="chooesedMipuy == 'no-mipuy'">לא קימים מיפוים עבור תלמיד זה</div>
+                <div *ngIf="chooesedMipuy == 'no internet'">שגיאה בקליטת נתונים. נא בדוק את חיבור האינטרנט שלך</div>
+                <div *ngIf="chooesedMipuy && chooesedMipuy.mipuyDate">
+                    <app-show-mipuy [status]="'plan'" [Pid]="Pid" [mipuyDate]="chooesedMipuy.mipuyDate" [mipuyData]="chooesedMipuy" (updateDiffForPlan)="updatediffiForPlan($event)"></app-show-mipuy>
+                </div>
+
+            </div>
+
+
+            <mat-card-actions>
+                <button mat-button matStepperPrevious type="button"> הקודם</button>
+                <button mat-button matStepperNext type="button">הבא</button>
+            </mat-card-actions>
+
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>
+                <div>התאמת טיפול</div>
+            </ng-template>
+            <div *ngIf="diffiForPlan.length == 0" class="mb-3 mt-3">לא נבחרו קשיים לטיפול עבור תלמיד זה</div>
+            <div class="list-group px-1 py-1 mb-3">
+                <div class="" *ngFor="let dif of diffiForPlan">
+                    <div class="row  list-group-item purple-text yellow lighten-3" *ngIf="dif.value == 'yes'">
+
+                        <div class="col-md-3 col-sm-12">
+                            <strong> {{dif.Dcode}} - </strong>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <mat-form-field *ngIf="helpPlanning">
+
+                                <mat-select class="form-item form-item-select" name="method" placeholder="בחר שיטת טיפול" [(ngModel)]="dif.method">
+                                    <mat-option value="{{m}}" *ngFor="let m of allMethods">{{m}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div *ngIf="!helpPlanning">
+                                <input matInput class="form-item white-text" type="text" name="method" placeholder=" שיטת טיפול" [(ngModel)]="dif.method" [matAutocomplete]="autoM">
+                                <mat-autocomplete #autoM="matAutocomplete">
+                                    <mat-option *ngFor="let method of allMethods" [value]="method.code">
+                                        {{ method.code }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-10">
+                            <div *ngIf="!helpPlanning">
+                                <input matInput class="form-item white-text" type="text" name="therapist" placeholder=" מטפל" [(ngModel)]="dif.therapist" [matAutocomplete]="autoT">
+                                <mat-autocomplete #autoT="matAutocomplete">
+                                    <mat-option *ngFor="let thera of allTherapists" [value]="thera.id">
+                                        {{ thera.firstName }} {{thera.lastName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-1 col-sm-2">
+                        <i class="fa fa-save fa-lg purple-text" (click)="" ></i>
+                    </div> -->
+                </div>
+            </div>
+            <div class="row d-flex mt-5 mb-4 justify-content-end ">
+                <div class="col-md-4 col-sm-12">
+                    <button class="my-primary my-button my-btn-lg w-100"  *ngIf="helpPlanning" (click)="saveMethodsAndTherapist()"> שמור
+                        <i class="fa fa-save mr-1 "></i>
+                    </button>
+                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="!helpPlanning"(click)="beforeSave.show()"> שמור
+                        <i class="fa fa-save mr-1 "></i>
+                    </button>
+                </div>
+            </div>
+
+            <mat-card-actions>
+                <button mat-button matStepperPrevious type="button">הקודם</button>
+                <button mat-button matStepperNext type="button">הבא</button>
+            </mat-card-actions>
+
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>סיום ושמירה </ng-template>
+            <h5 class="first mt-3">העלאת נתונים ודוחות חיצוניים</h5>
+            <p-fileUpload name="demo[]" customUpload="true" (uploadHandler)="myUploader($event)" multiple="multiple" class="purple" chooseLabel="בחר קבצים" uploadLabel="טען קבצים" cancelLabel="חזור">
+                <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                    </ul>
+                </ng-template>
+            </p-fileUpload>
+            <mat-card-actions>
+                <h3 class="purple-text pt-4">האם אתה בטוח שסימת את תכנון הטיפול?</h3>
+
+                <mat-divider></mat-divider>
+                <button type="button" #btnn class="btn purple" (click)="finishPlan()">שמור וסיים</button>
+                <br>
+                <br>
+                <br>
+                <button mat-button matStepperPrevious type="button">הקודם</button>
+
+            </mat-card-actions>
+        </mat-step>
+    </mat-horizontal-stepper>
 </div>
-</ng-template>
-<p-footer>
-    Selected: {{selectedCar||'none'}}
-</p-footer>
-</p-listbox>
-
-</div>
-</span>
-</p-inplace>
-
-
-<mat-card-actions>
-    <button mat-button matStepperPrevious type="button"> הקודם</button>
-    <button mat-button matStepperNext type="button">הבא</button>
-</mat-card-actions>
-
-</mat-step>
-
-<mat-step>
-    <ng-template matStepLabel>
-        <div>כותרת</div>
-    </ng-template>
 
 
 
-    <mat-card-actions>
-        <button mat-button matStepperPrevious type="button">הקודם</button>
-        <button mat-button matStepperNext type="button">הבא</button>
-    </mat-card-actions>
 
-</mat-step>
 
-<mat-step>
-    <ng-template matStepLabel>סיום ושמירה </ng-template>
-    <mat-card-actions>
-        <h3 class="purple-text pt-4">האם אתה בטוח שסימת את תכנון הטיפול?</h3>
-        <button mat-button matStepperPrevious type="button">הקודם</button>
-        <button mat-button (click)="finishPlan()" type="button">סיום</button>
-    </mat-card-actions>
-</mat-step>
-</mat-vertical-stepper>
+<div mdbModal #beforeSave="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="beforeSave.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">לחץ לביצוע השמירה</h4>
+            </div>
+            <div class="modal-body">
+               האם ברצונך לעדכן קשרים חדשים בין קשיים לשיטות טיפול ו/או מטפלים?
+            </div>
+            <div class="modal-footer">
+                <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist()">שמירה בלבד</button>
+                <button type="button" mdbBtn color="primary" class="btn btn-secondery purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist(); cretaNewConnections()">שמירה ועדכון</button>
+            </div>
+        </div>
+    </div>
 </div>

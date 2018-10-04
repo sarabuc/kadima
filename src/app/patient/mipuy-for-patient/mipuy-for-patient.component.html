@@ -8,7 +8,7 @@
 <div>
     <div *ngIf="status =='last'">
         <div *ngIf="!mipuyDates[0]" class="dark-card mx-3 my-3 yellow-text">לא קים מיפוי עבור תלמיד זה</div>
-        <app-show-mipuy [Pid]="Pid" [mipuyDate]="mipuyDates[0].mipuyDate" *ngIf="mipuyDates[0]"></app-show-mipuy>
+        <app-show-mipuy [status]="'show'" [Pid]="Pid" [mipuyDate]="mipuyDates[0].mipuyDate" *ngIf="mipuyDates[0]"></app-show-mipuy>
     </div>
 
 
@@ -35,6 +35,7 @@
                     </mat-card>
                 </div>
                 <div *ngIf="allMipuy == 'no-mipuy'">לא קימים מיפוים עבור תלמיד זה</div>
+                <div *ngIf="allMipuy == 'no internet'">שגיאה בקליטת נתונים. נא בדוק את חיבור האינטרנט שלך</div>
                 <div *ngIf="allMipuy && allMipuy[0]">
                     <app-show-mipuy [Pid]="Pid" [mipuyDate]="mipuy.mipuyDate" [mipuyData]="mipuy" *ngFor="let mipuy of allMipuy; let i=index"></app-show-mipuy>
                 </div>

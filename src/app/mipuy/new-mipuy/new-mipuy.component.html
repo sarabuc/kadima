@@ -65,7 +65,7 @@
         <section>
             <div class="scroll-fixed-table center">
                 <!--Table-->
-                <table class="table  mb-0   mr-auto ml-auto w-100">
+                <table class="table table-responsive  mb-0   mr-auto ml-auto w-100">
 
                     <!--Table head-->
                     <thead class="table-head purple white-text ">
@@ -124,7 +124,7 @@
                             </app-chips-interaction> -->
                                 <mat-button-toggle-group [value]="pat.haveDificult" #group="matButtonToggleGroup" (change)="onChoosed(group.value, pat)" class="yellow lighten-2">
 
-                                    <mat-button-toggle value="yes" class='example-tooltip-host' [matTooltip]="tooltip" matTooltipPosition="above">
+                                    <mat-button-toggle value="yes" class='-tooltip-host' [matTooltip]="tooltip" matTooltipPosition="above">
                                         <i class="fa fa-check fa-lg"></i>
                                     </mat-button-toggle>
 

@@ -5,8 +5,9 @@ import * as functions from 'firebase-functions';
 import * as path from 'path';
 import * as os from 'os';
 import * as writeJsonFile from 'write-json-file';
+import * as json2csv from 'json2csv';
 //const gcs = require('@google-cloud/storage')();
-const spawn = require('child-process-promise').spawn;
+
 
 //const bucketPath = 'MYPROJECTNAME.appspot.com'
 //const serviceAccount = require("./serviceAccountKey.json");
@@ -36,9 +37,26 @@ console.log(doc);
     const tempFilePath = path.join(os.tmpdir(), file);
     //const bucket = gcs.bucket(tempFilePath);
     console.log('tmp + ' + tempFilePath);
-    writeJsonFile.sync(tempFilePath, JSON.stringify(data));
+    if(false) {
+      writeJsonFile.sync(tempFilePath, data);
     const read = fs.readFileSync(tempFilePath);
     console.log(read);
+
+    }
+    if (true) {
+      const Json2csvParser = json2csv.Parser;
+        const fields = ["field", "header"];
+        const opts = { fields };
+
+        try {
+          const parser = new Json2csvParser(opts);
+          const csv = parser.parse(data);
+          console.log(csv);
+        }catch(err) {
+          console.error(err);
+
+        }
+    }
 
     const exe_file = 'exe/' + file;
     const thumbFilePath = path.join(path.dirname(file), exe_file);

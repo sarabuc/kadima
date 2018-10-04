@@ -1,21 +1,35 @@
 <div class="dark-card  card" style="text-align: right">
-    <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate| date: 'dd/MM/yyyy'}}</strong></h3>
+    <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate | date: 'MM/dd/yyyy'}}</strong></h3>
     <!-- <strong>{{mipuyDate | date: 'dd/MM/yyyy'}}</strong> -->
     <div class="list-group px-1 py-1 mb-3">
         <div class="" *ngFor="let dif of db.treatmentCategories">
             <div class="row  list-group-item purple-text" *ngIf="mipuyData[dif.code]">
 
-                <div class="col-3"> <strong>  {{dif.code}} - </strong></div>
-                <div class="col-9">
-                    <div *ngIf="mipuyData[dif.code]!=dif.code">
+                <div class="col-md-3 col-sm-12"> <strong>  {{dif.code}} - </strong></div>
+                <div class="col-md-9 col-sm-12">
+                    <div *ngIf="mipuyData[dif.code]!=dif.code && status != 'plan'">
                         <div *ngFor="let D of mipuyData[dif.code]">
                             <i class="fa fa-check ml-3"></i> {{D}}
                         </div>
                     </div>
 
 
-                    <div class="d-flex w-100 justify-content-end" *ngIf="mipuyData[dif.code]==dif.code">
-                        <i class="fa fa-pencil ml-1  fa-lg link" *ngIf="'true'" (click)="currectArea = 'area*' + dif.code; addMipuyDetails.show()"></i>
+                    <div class="d-flex w-100 justify-content-end" *ngIf="true">
+                        <i class="fa fa-pencil ml-1  fa-lg link" *ngIf="mipuyData[dif.code]==dif.code && status != 'plan'" (click)="currectArea = 'area*' + dif.code; addMipuyDetails.show()"></i>
+                    <mat-button-toggle-group [value]="mipuyDecideForPlan[dif.code]" #group="matButtonToggleGroup" (change)="onChoosed(group.value, dif.code, picker, basicModal)" class="yellow lighten-2" *ngIf="status == 'plan'">
+                     <mat-button-toggle value="yes">
+                            התחל טיפול
+                        </mat-button-toggle>
+                    
+                        <mat-button-toggle value="no">
+                           אין צורך
+                        </mat-button-toggle>
+                        <mat-button-toggle value="later">
+                          טיפול בהמשך
+                        </mat-button-toggle>
+                    
+                    </mat-button-toggle-group>
+
                     </div>
 
                 </div>
@@ -29,11 +43,32 @@
 
 
 
+<div mdbModal #basicModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">בחר תאריך לתזכורת</h4>
+      </div>
+      <div class="modal-body">
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="בחר תאריך לתזכורת"  [(ngModel)]="remainDate" name="remainDate">
+            <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="basicModal.hide();saveDateToRemainPlan()">שמור!</button>
+      </div>
+    </div>
+  </div>
+</div> 
 
 
 
-
-<div mdbModal #addMipuyDetails="mdb-modal" [class]="mipuyModeClass" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+<div mdbModal #addMipuyDetails="mdb-modal" [class]="mipuyModeClass" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto" *ngIf="status =='show'">
     <div class="modal-dialog modal-fluid" role="document">
         <div class="modal-dialog cascading-modal" role="document">
 

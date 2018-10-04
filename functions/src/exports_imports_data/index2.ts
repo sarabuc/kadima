@@ -7,7 +7,7 @@ import * as admin from 'firebase-admin';
 // import * as dot from 'dot-object';
 
 import * as json2csv from 'json2csv';
-//import * as createCSVFile from 'csv-file-creator';
+import * as createCSVFile from 'csv-file-creator';
 //import { sortByKeysFn, decodeDoc } from '../shared';
 
 const db = admin.firestore();

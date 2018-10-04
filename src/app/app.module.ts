@@ -13,7 +13,8 @@ import { routing } from './app.routing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import {InplaceModule} from 'primeng/inplace';
-
+import {ListboxModule} from 'primeng/listbox';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {MessageService} from 'primeng/components/common/messageservice';
 import {MessagesModule} from 'primeng/messages';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -22,6 +23,7 @@ import {KeyFilterModule} from 'primeng/keyfilter';
 import {AccordionModule} from 'primeng/accordion';
 import { FieldsetModule } from 'primeng/fieldset';
 import {InputMaskModule} from 'primeng/inputmask';
+import {ToggleButtonModule} from 'primeng/togglebutton';
 import { HttpModule, JsonpModule } from '@angular/http'; /* */
 import {TreeTableModule} from 'primeng/treetable';
 import {TreeNode} from 'primeng/api';
@@ -186,7 +188,10 @@ const firebase = {
     ShowMethodsComponent
   ],
   imports: [
+    ToggleButtonModule,
    InplaceModule,
+   OverlayPanelModule,
+    ListboxModule,
     AngularFireAuthModule,
     routing,
     BrowserModule,

@@ -16,7 +16,6 @@ const admin = require("firebase-admin");
 // import * as shortid from 'shortid';
 // import * as dot from 'dot-object';
 const json2csv = require("json2csv");
-//import * as createCSVFile from 'csv-file-creator';
 //import { sortByKeysFn, decodeDoc } from '../shared';
 const db = admin.firestore();
 const pat_data = {};

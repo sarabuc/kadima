@@ -125,7 +125,7 @@ exports.getMipuysForPatient = functions.https.onCall((data, context) => __awaite
             console.log('mipuy date' + mipuyD);
             const mipuyDetails = {};
             let mipuyDiffis = [];
-            mipuyDetails['mipuyDate'] = '' + mipuyD;
+            mipuyDetails['mipuyDate'] = mipuyD;
             const diffiForPatient = yield db.collection('patientDifficults').where('Pid', '==', Pid).where('mipuyDate', '==', mipuyD).where('status', '==', 'yes').get();
             console.log('all diffi for patient' + diffiForPatient.docs.length);
             for (const diffi of diffiForPatient.docs) {

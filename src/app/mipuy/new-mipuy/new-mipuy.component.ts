@@ -106,7 +106,8 @@ closeModal(str: string) {
     this.flagForFastMipuy[i] = true;
   }
   saveFastMipuy() {
-    const date = new Date();
+    const t_date = new Date();
+    const date = '' + t_date.getDate() + '/' + (t_date.getMonth() + 1) + '/' + t_date.getFullYear();
 
     this.fastMipuyData.forEach(pat => {
       let flag = false;
@@ -139,7 +140,7 @@ closeModal(str: string) {
         }
       });
       if (flag) {
-        this.db.mipuyForPatientRef.add({ Pid: '' + pat.Pid, mipuyDate: date });
+        this.db.mipuyForPatientRef.doc('' + pat.Pid + '_' + date).set({ Pid: '' + pat.Pid, mipuyDate: date });
       }
     });
     this.sd.createAlert('success', 'מיפוי הוסף בהצלחה', '');

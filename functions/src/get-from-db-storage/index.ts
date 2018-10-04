@@ -126,7 +126,7 @@ const db = admin.firestore();
       const mipuyDetails: { [k: string]: any } = {};
       let mipuyDiffis = [];
 
-      mipuyDetails['mipuyDate'] = '' + mipuyD;
+      mipuyDetails['mipuyDate'] = mipuyD;
 
 
       const diffiForPatient = await db.collection('patientDifficults').where('Pid', '==', Pid).where('mipuyDate', '==', mipuyD).where('status', '==', 'yes').get();

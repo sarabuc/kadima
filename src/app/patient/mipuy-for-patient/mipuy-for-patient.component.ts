@@ -42,9 +42,14 @@ getAllMipuysForPat() {
   console.log('get mipuy');
   const mipuyForPatient = firebase.functions().httpsCallable('getMipuysForPatient');
   mipuyForPatient({ text: this.Pid }).then(res => {
-    console.log(res);
+    // console.log(res);
+    // for (const mipuy of res.data) {
+    //   mipuy.mipuyDate = this.sd.converrSecondsToDateTime(mipuy.mipuyDate._seconds);
+    // }
     this.allMipuy = res.data;
+    console.log(this.allMipuy);
   }).catch(err => {
+    this.allMipuy = 'no internet';
     console.log(err);
   });
 }
