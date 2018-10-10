@@ -63,7 +63,8 @@ console.log('date' + date);
      const docName = '' + this.Pid + '_' + date;
      const mipuy = {
        Pid: '' + this.Pid,
-        mipuyDate: date
+        mipuyDate: date,
+        planForPatient: ''
      };
       this.db.mipuyForPatientRef.doc(docName).set(mipuy);
     }

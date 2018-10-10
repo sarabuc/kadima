@@ -83,6 +83,7 @@ export class NewPatientComponent implements OnInit {
 
     this.db.addPatient(pati);
     this.cleanForm();
+    this.sd.routeTo('/Pcard', this.Pid);
    // this.router.navigate(['/home']);
   }
 

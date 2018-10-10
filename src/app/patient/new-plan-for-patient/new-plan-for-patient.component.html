@@ -17,42 +17,42 @@
 
             <div class="row d-flex justify-content-around dark-card">
 
-                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="amountConfirmLessonsF">
+                <div class="col-md-12 col-sm-12  ml-2  text-right">
                     <mat-form-field class=" w-100">
-                        <textarea matInput class="form-item" type="text" name="history" placeholder="הסטוריה בקצרה " [(ngModel)]="history"></textarea>
+                        <textarea matInput class="form-item" type="text" name="history" placeholder="הסטוריה בקצרה " [(ngModel)]="PLAN.history"></textarea>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="parentsConfirmF">
-                    <mat-form-field class=" w-80">
+                <div class="col-md-12 col-sm-12  ml-2  text-right">
+                    <mat-form-field class=" w-80 mr-auto ml-auto ">
 
-                        <mat-select class="form-item form-item-select" name="parentsConfirm" placeholder="האם יש אישור הורים" [(ngModel)]="parentsConfirm">
+                        <mat-select class="form-item form-item-select" name="parentsConfirm" placeholder="האם יש אישור הורים" [(ngModel)]="PLAN.parentsApproved">
                             <mat-option value="{{o}}" *ngFor="let o of optionsForParentConfirm">{{o}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="whoPayF">
+                <div class="col-md-12 col-sm-12  ml-2  text-right">
                     <mat-form-field class=" w-80">
 
-                        <mat-select class="form-item form-item-select" name="whoPay" placeholder="גורם מממן" [(ngModel)]="whoPay">
+                        <mat-select class="form-item form-item-select" name="whoPay" placeholder="גורם מממן" [(ngModel)]="PLAN.payer">
                             <mat-option value="{{o}}" *ngFor="let o of sd.FundingFactors">{{o}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="amountConfirmLessonsF">
+                <div class="col-md-12 col-sm-12  ml-2  text-right">
                     <mat-form-field class=" w-80">
-                        <input matInput class="form-item" type="number" name="amountConfirmLessons" placeholder="מספר שעות מאושר " [(ngModel)]="amountConfirmLessons">
+                        <input matInput class="form-item" type="number" name="amountConfirmLessons" placeholder="מספר שעות מאושר " [(ngModel)]="PLAN.approvedAmountLesson">
                         <mat-error *ngIf="!amountConfirmLessons">חובה להכניס מספר שעות </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 col-sm-12  ml-2  text-right" *ngIf="amountConfirmLessonsF">
+                <div class="col-md-12 col-sm-12  ml-2  text-right">
 
-                    <mat-slide-toggle class="example-margin" color="primary" [(ngModel)]="haveDueDate" checkes="false">
+                    <mat-slide-toggle class="example-margin" color="primary" [(ngModel)]="PLAN.haveDueDate" checkes="false">
                         יש תאריך תפוגת תוקף
                     </mat-slide-toggle>
                     <br>
                     <mat-form-field *ngIf="haveDueDate" class=" w-80">
 
-                        <input type="text" class="form-item form-item-date " matInput [matDatepicker]="birthdate" placeholder="תאריך תפוגה" name="birthDate" [(ngModel)]="dueDate">
+                        <input type="text" class="form-item form-item-date " matInput [matDatepicker]="birthdate" placeholder="תאריך תפוגה" name="birthDate" [(ngModel)]="PLAN.dueDate">
 
                         <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
                         <mat-datepicker #birthdate></mat-datepicker>
@@ -60,6 +60,16 @@
                     </mat-form-field>
                 </div>
             </div>
+
+            <div class="row d-flex mt-5 mb-4 justify-content-end ">
+                <div class="col-md-4 col-sm-12">
+                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="true" (click)="saveMethodsAndTherapist()">
+                        שמור
+                        <i class="fa fa-save mr-1 "></i>
+                    </button>
+                </div>
+            </div>
+
             <div>
                 <button mat-button matStepperNext type="button" [disabled]="amountConfirmLessons&&parentsConfirm&&whoPay"> הבא</button>
             </div>
@@ -80,13 +90,13 @@
             </div>
 
 
-            <div class="list-group mt-1 pt-2  w-60" *ngIf="showListMipuy_V">
+            <div class="list-group mt-1 pt-2  w-90" *ngIf="showListMipuy_V">
                 <div *ngFor="let d of mipuyDates ">
                     <a class="list-group-item link-botton " style="text-align:right" (click)="showOneMipuy(d)">
                         <i class="fa fa-check mx-5"></i>{{d.mipuyDate | date: 'dd/MM/yyyy'}}</a>
                 </div>
             </div>
-            <div class=" gray lighten-2 my-3" *ngIf="showMipuy_V">
+            <div class=" gray lighten-2 my-3 purple-text" *ngIf="showMipuy_V">
                 <div *ngIf="!chooesedMipuy" class="center">
                     <mat-card class="center">
                         <h4 class="center">טוען...</h4>
@@ -102,6 +112,14 @@
 
             </div>
 
+            <div class="row d-flex mt-5 mb-4 justify-content-end ">
+                <div class="col-md-4 col-sm-12">
+                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="thereIsDiffs" (click)="saveMethodsAndTherapist()">
+                    שמור
+                        <i class="fa fa-save mr-1 "></i>
+                    </button>
+                </div>
+            </div>
 
             <mat-card-actions>
                 <button mat-button matStepperPrevious type="button"> הקודם</button>
@@ -115,21 +133,28 @@
                 <div>התאמת טיפול</div>
             </ng-template>
             <div *ngIf="diffiForPlan.length == 0" class="mb-3 mt-3">לא נבחרו קשיים לטיפול עבור תלמיד זה</div>
+            <div class="row d-flex mt-5 mb-4 justify-content-start " *ngIf="diffiForPlan.length != 0">
+                <p-toggleButton [(ngModel)]="dontHelpPlanning" offLabel="עזור לי להחליט" onLabel="תן לי רשימות מלאות לבחירה" onIcon="pi pi-times" offIcon="pi pi-check" [style]="{'width':'250px'}"></p-toggleButton>
+            </div>
+
             <div class="list-group px-1 py-1 mb-3">
-                <div class="" *ngFor="let dif of diffiForPlan">
+                <div class="" *ngFor="let dif of diffiForPlan; let i = index">
                     <div class="row  list-group-item purple-text yellow lighten-3" *ngIf="dif.value == 'yes'">
 
                         <div class="col-md-3 col-sm-12">
                             <strong> {{dif.Dcode}} - </strong>
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <mat-form-field *ngIf="helpPlanning">
+                            <div *ngIf="dontHelpPlanning">
+                                <input matInput class="form-item white-text" type="text" name="method" placeholder=" שיטת טיפול" [(ngModel)]="dif.method" [matAutocomplete]="autoMH">
+                                <mat-autocomplete #autoMH="matAutocomplete">
+                                    <mat-option *ngFor="let method of filterMethodForDiff(dif.Dcode)" [value]="method.Mcode">
+                                        {{ method.Mcode }}
+                                    </mat-option>
+                                </mat-autocomplete>
 
-                                <mat-select class="form-item form-item-select" name="method" placeholder="בחר שיטת טיפול" [(ngModel)]="dif.method">
-                                    <mat-option value="{{m}}" *ngFor="let m of allMethods">{{m}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <div *ngIf="!helpPlanning">
+                            </div>
+                            <div *ngIf="!dontHelpPlanning">
                                 <input matInput class="form-item white-text" type="text" name="method" placeholder=" שיטת טיפול" [(ngModel)]="dif.method" [matAutocomplete]="autoM">
                                 <mat-autocomplete #autoM="matAutocomplete">
                                     <mat-option *ngFor="let method of allMethods" [value]="method.code">
@@ -139,7 +164,15 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-10">
-                            <div *ngIf="!helpPlanning">
+                            <div *ngIf="dontHelpPlanning">
+                                <input matInput class="form-item white-text" type="text" name="therapist" placeholder=" מטפל" [(ngModel)]="dif.therapist" [matAutocomplete]="autoTH">
+                                <mat-autocomplete #autoTH="matAutocomplete">
+                                    <mat-option *ngFor="let thera of filterMethodForTherapist(diffiForPlan[i].method)" [value]="thera.Tid">
+                                        {{ thera.Tid }} {{thera.lastName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div *ngIf="!dontHelpPlanning">
                                 <input matInput class="form-item white-text" type="text" name="therapist" placeholder=" מטפל" [(ngModel)]="dif.therapist" [matAutocomplete]="autoT">
                                 <mat-autocomplete #autoT="matAutocomplete">
                                     <mat-option *ngFor="let thera of allTherapists" [value]="thera.id">
@@ -156,10 +189,10 @@
             </div>
             <div class="row d-flex mt-5 mb-4 justify-content-end ">
                 <div class="col-md-4 col-sm-12">
-                    <button class="my-primary my-button my-btn-lg w-100"  *ngIf="helpPlanning" (click)="saveMethodsAndTherapist()"> שמור
+                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="helpPlanning&&thereIsDiffs" (click)="saveMethodsAndTherapist()"> שמור
                         <i class="fa fa-save mr-1 "></i>
                     </button>
-                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="!helpPlanning"(click)="beforeSave.show()"> שמור
+                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="!helpPlanning&&thereIsDiffs" (click)="beforeSave.show()"> שמור
                         <i class="fa fa-save mr-1 "></i>
                     </button>
                 </div>
@@ -175,7 +208,7 @@
         <mat-step>
             <ng-template matStepLabel>סיום ושמירה </ng-template>
             <h5 class="first mt-3">העלאת נתונים ודוחות חיצוניים</h5>
-            <p-fileUpload name="demo[]" customUpload="true" (uploadHandler)="myUploader($event)" multiple="multiple" class="purple" chooseLabel="בחר קבצים" uploadLabel="טען קבצים" cancelLabel="חזור">
+            <p-fileUpload #files customUpload="true" (uploadHandler)="uploadFilesForPlan($event, files)" multiple="multiple" class="purple" chooseLabel="בחר קבצים" uploadLabel="טען קבצים" cancelLabel="חזור">
                 <ng-template pTemplate="content">
                     <ul *ngIf="uploadedFiles.length">
                         <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
@@ -201,8 +234,7 @@
 
 
 
-<div mdbModal #beforeSave="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
-    aria-hidden="true">
+<div mdbModal #beforeSave="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -212,7 +244,7 @@
                 <h4 class="modal-title w-100" id="myModalLabel">לחץ לביצוע השמירה</h4>
             </div>
             <div class="modal-body">
-               האם ברצונך לעדכן קשרים חדשים בין קשיים לשיטות טיפול ו/או מטפלים?
+                האם ברצונך לעדכן קשרים חדשים בין קשיים לשיטות טיפול ו/או מטפלים?
             </div>
             <div class="modal-footer">
                 <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist()">שמירה בלבד</button>

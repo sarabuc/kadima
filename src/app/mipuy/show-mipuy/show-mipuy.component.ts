@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { ShareDataService } from '../../services/share-data.service';
-import { DbService, PatientsDifficult, Difficulty, MipuyDecideForPlan } from '../../services/db.service';
+import { DbService, MipuyDecideForPlan, PlanForPatient, Mipuy } from '../../services/db.service';
 import { DatePipe } from '@angular/common';
-import * as firebase from 'firebase';
+
 
 @Component({
   selector: 'app-show-mipuy',
@@ -16,14 +16,16 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
   @Input() mipuyData: any;
   @Input() status: string;
   @Output() updateDiffForPlan = new EventEmitter();
-  // @Output() initDiffForPlan = new EventEmitter();
+  planP: PlanForPatient;
+  planedDiffi = [];
+  planFiles = [];
   currectArea = '';
 
   // difficultForPatientRef: any;
   mipuyModeClass = 'modal fade in show'; // when opened it is "modal fade in show"
   mainDifToChooseTreat;
   diffiToChooseTreat;
-  mipuyDecideForPlan: MipuyDecideForPlan = {mipuy_id_in_db: ''};
+  mipuyDecideForPlan: MipuyDecideForPlan = { Pid: '', mipuy_id_in_db: ''};
   selectedDifToRemainLater;
 remainDate;
 
@@ -32,9 +34,11 @@ remainDate;
 
   ngOnInit() {
     this.mipuyDecideForPlan.mipuy_id_in_db = '' + this.Pid + '_' + this.mipuyDate;
+    this.mipuyDecideForPlan.Pid =  this.Pid ;
   }
   ngOnChanges() {
-    console.log('in changes5555555555555555555555555555555555555555');
+    this.mipuyDecideForPlan.mipuy_id_in_db = '' + this.Pid + '_' + this.mipuyDate;
+    this.mipuyDecideForPlan.Pid = this.Pid;
     const keys = Object.keys(this.mipuyData);
     const i = keys.indexOf('mipuyDate');
     keys.splice(i, 1);
@@ -42,6 +46,7 @@ remainDate;
       this.mipuyDecideForPlan[k] = 'no';
     }
     console.log(this.mipuyDecideForPlan);
+    this.getPlanForPatient();
    // this.initDiffForPlan.emit(this.mipuyDecideForPlan);
   }
 
@@ -67,7 +72,7 @@ remainDate;
       picker.open();
     }
     this.mipuyDecideForPlan[D] = decide;
-    this.db.updateMipuyDecideForPlanOfPatient(this.mipuyDecideForPlan, this.Pid);
+   // this.db.updateMipuyDecideForPlanOfPatient(this.mipuyDecideForPlan, this.Pid);
     this.updateDiffForPlan.emit(this.mipuyDecideForPlan);
     console.log(this.mipuyDecideForPlan);
   }
@@ -76,5 +81,47 @@ this.db.addMassageForUser(this.remainDate,
    ' יש לחזור ולתכנן טיפול עבור התלמיד' + this.Pid + ', בתחום ה' + this.selectedDifToRemainLater, 'info', '');
 this.remainDate = null;
 }
+
+
+async  getPlanForPatient() {
+ 
+  if (this.planP) {
+    return; // callthis func only once
+  }
+  const mipuy_docName = '' + this.Pid + '_' + this.mipuyDate;
+  let plan_docName;
+  this.db.mipuyForPatientRef.doc<Mipuy>(mipuy_docName).valueChanges().subscribe(mipuy => {
+    console.log('mipuy');
+    plan_docName = mipuy.planForPatient;
+    this.db.getPlanForPatientRef(this.Pid).doc<PlanForPatient>(plan_docName).valueChanges().subscribe(plan => {
+      this.planP = plan;
+      console.log(this.planP);
+      this.planedDiffi = [];
+      Object.keys(this.planP).forEach(key => {
+        if (this.planP[key] === 'yes') { // this is a diffi was planed
+          const Tkey = key + '_THERAPIST';
+          const Mkey = key + '_METHOD';
+          this.planedDiffi.push({ code: key, method: this.planP[Mkey], thera: this.planP[Tkey]});
+        }
+        if (this.planP[key] === 'file') { // this is a file
+            this.planFiles.push({file: key, fileName: this.getFileName(key)});
+        }
+      });
+      console.log(this.planedDiffi);
+    });
+  });
+ 
+
+  }
+
+  updatePlan() {
+    this.sd.routeTo('updatePlan', this.planP.mipuy_id_in_db + '_P_' + this.planP.date);
+  }
+  getFileName(file: string) {
+return file.split('_D_')[0];
+  }
+  dawnloadFile(file: string, fileName: string) {
+    this.sd.getAndDownloadFile( this.Pid + '/' + file, fileName);
+  }
 
 }

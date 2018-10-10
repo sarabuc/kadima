@@ -12,7 +12,7 @@ import { NewTherapistComponent } from './therapist/new-therapist/new-therapist.c
 import { NewPatientComponent } from './patient/new-patient/new-patient.component';
 import { NewTreatmentProgressComponent } from './treatment/new-treatment-progress/new-treatment-progress.component';
 import { NewTreatmentInfoComponent } from './treatment/new-treatment-info/new-treatment-info.component';
-
+// import { UpdatePlanForPatientComponent } from './patient/update-plan-for-patient/update-plan-for-patient.component';
 import { DifficultComponent } from './mipuy/difficult/difficult.component';
 
 import { TherapistCardComponent } from './therapist/therapist-card/therapist-card.component';
@@ -54,6 +54,7 @@ const appRoutes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'Treatment-planning/:status', component: PatientListComponent },
   { path: 'plan/:id', component: NewPlanForPatientComponent },
+  { path: 'updatePlan/:id', component: NewPlanForPatientComponent },
   { path: 'diffiAndMethods', component: DiffiAndMethodsComponent },
   { path: '**', redirectTo: 'login' }
 ];

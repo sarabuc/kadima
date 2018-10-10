@@ -61,7 +61,7 @@ export class ShowMethodsComponent implements OnInit {
     };
     this.selectedTheras.forEach(thera => {
       M_T.Tid = thera.id;
-      this.db.addMethodForTherapist(M_T);
+      this.db.addTherapistForMethod(M_T);
     });
     this.selectedTheras = [];
     list.value = [];

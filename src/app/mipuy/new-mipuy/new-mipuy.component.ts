@@ -113,8 +113,6 @@ closeModal(str: string) {
       let flag = false;
       this.db.treatmentCategories.forEach(diff => {
         if (pat[diff.code] === 'yes') {
-          console.log('status is yes');
-          console.log(pat);
           flag = true;
           const newDiff: PatientsDifficult = {
             Pid: '' + pat.Pid,
@@ -126,8 +124,6 @@ closeModal(str: string) {
           console.log(newDiff);
         }
         if (pat[diff.code] === 'maybe') {
-          console.log('status is maybe');
-          console.log(pat);
           flag = true;
           const newDiff: PatientsDifficult = {
             Pid: '' + pat.Pid,
@@ -140,7 +136,7 @@ closeModal(str: string) {
         }
       });
       if (flag) {
-        this.db.mipuyForPatientRef.doc('' + pat.Pid + '_' + date).set({ Pid: '' + pat.Pid, mipuyDate: date });
+        this.db.mipuyForPatientRef.doc('' + pat.Pid + '_' + date).set({ Pid: '' + pat.Pid, mipuyDate: date, planForPatient: '' });
       }
     });
     this.sd.createAlert('success', 'מיפוי הוסף בהצלחה', '');

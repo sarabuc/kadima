@@ -126,18 +126,19 @@ import { AuthGuard } from './services/auth.guard';
 import {  NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
+// import { UpdatePlanForPatientComponent } from './patient/update-plan-for-patient/update-plan-for-patient.component';
 import { ShowMethodsComponent } from './mipuy/show-methods/show-methods.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
 
 const firebase = {
-    apiKey: "AIzaSyC39tgVZlnrGvyirclUb92ZiyCNOqcGubA",
-    authDomain: "kadima1-fa119.firebaseapp.com",
-    databaseURL: "https://kadima1-fa119.firebaseio.com",
-    projectId: "kadima1-fa119",
-    storageBucket: "kadima1-fa119.appspot.com",
-    messagingSenderId: "890519841483"
+    apiKey: 'AIzaSyC39tgVZlnrGvyirclUb92ZiyCNOqcGubA',
+    authDomain: 'kadima1-fa119.firebaseapp.com',
+    databaseURL: 'https://kadima1-fa119.firebaseio.com',
+    projectId: 'kadima1-fa119',
+    storageBucket: 'kadima1-fa119.appspot.com',
+    messagingSenderId: '890519841483'
   };
 
 
@@ -186,6 +187,7 @@ const firebase = {
     NewPlanForPatientComponent,
     RegisterComponent,
     ShowMethodsComponent
+   //  UpdatePlanForPatientComponent
   ],
   imports: [
     ToggleButtonModule,

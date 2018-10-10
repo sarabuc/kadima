@@ -5,7 +5,6 @@ import { map, filter, switchMap } from 'rxjs/operators';
 // import 'rxjs/add/operator/map';
 import * as firebase from 'firebase';
 import { ShareDataService } from './share-data.service';
-import { Time } from '@angular/common';
 
 export interface User {
   isAdmin: boolean;
@@ -73,6 +72,7 @@ export interface Method {
 export interface Mipuy {
   Pid: string;
   mipuyDate: string;
+  planForPatient: string;
 }
  export interface PatientsDifficult {
    Pid: string;
@@ -91,9 +91,16 @@ export interface Mipuy {
  }
  export interface PlanForPatient {
    Pid: string;
-   parentsApproved: boolean;
+   history: string;
+   parentsApproved: string;
    approvedAmountLesson: number;
-   progressionNumber: number;
+   payer: string;
+   haveDueDate: boolean;
+   dueDate?: Date;
+   // progressionNumber: number;
+   mipuy_id_in_db: string;
+   date: string;
+   [k: string]: any; // key loos like DIFNAME_THERPIST or DIFNAME_METHOD or DIFNAME and than the value
  }
  /*export interface PayTreatment {
   Pid: string;
@@ -123,11 +130,13 @@ export interface TreatmentInfo { // key is Tid-treatmentNumber to example: 1234-
    comment: string;
  }
 export interface MipuyDecideForPlan {
+  Pid: string;
   mipuy_id_in_db: string;
-  [k: string]: any;
+  date?: Date;
+  [k: string]: any; // key loos like DIFNAME_THERPIST or DIFNAME_METHOD and than the value
 }
 
-export interface massageForUser {
+export interface MassageForUser {
  userId: string;
  massage: string;
  date: Date;
@@ -156,6 +165,7 @@ public treatmentInfoForProgressRef: AngularFirestoreCollection<TreatmentInfo>;
   public mipuyForPatientRef: AngularFirestoreCollection<Mipuy>;
   public patientsFileRef: AngularFirestoreCollection<PatientFile>;
   treatmentCategoriesRef: AngularFirestoreCollection<Difficulty>;
+  methodAndTherapistForPatientPlanDiffRef: AngularFirestoreCollection<MipuyDecideForPlan>;
 // list
 public userNameList: string[] = [];
 public therapistIDList: string[] = [];
@@ -206,13 +216,11 @@ public newMipuy: string[] = [];
        pats.forEach(pat => {
          this.patientIDList.push(pat.id);
 
-       //  console.log(pat);
        });
      });
      // get all therapist id
      this.allTherapistsRef = this.afs.collection('therapist');
      this.allTherapistsRef.valueChanges().subscribe(theras => {
-     //  console.log(theras);
        theras.forEach(th => {
          this.therapistIDList.push(th.id);
          this.allTherapistList.push(th);
@@ -337,7 +345,6 @@ public newMipuy: string[] = [];
    */
   public addPatient(pati: Patient) {
    this.allPatientsRef.doc('' + pati.id).set(pati).then(res => {
-// console.log(res);
    });
   }
 
@@ -365,18 +372,10 @@ public addPatientDifficult(diffi: PatientsDifficult) {
 }
 
 /**
- * addMethodForTherapist
- */
-public addMethodForTherapist(methodForThera: TherapistMethods) {
-  this.methodForTherapistRef.add(methodForThera);
-}
-
-/**
  * addTreatmentInfo
  */
 public addTreatmentInfo( treat: TreatmentInfo) {
   this.treatmentInfoForProgressRef.add(treat);
- // console.log(treat);
 }
 
 /**
@@ -392,20 +391,47 @@ public addMethod(method: Method) {
      * addMethodForDifficult
      */
   public addMethodForDifficult(methodForDifficult: MethodForDifficulty) {
-    this.methodForDifficultyRef.add(methodForDifficult);
+    this.methodForDifficultyRef.doc('' + methodForDifficult.Dcode + '_' + methodForDifficult.Mcode).set(methodForDifficult);
   }
-
+/**
+     * addMassageFor
+     * user
+     */
   addMassageForUser(date: Date, massage: string, kind: string, comment: string){
-     const M ={
+     const M = {
     userId: this.userNow.id,
     date: date,
-    massage: massage, 
-    kind: kind, 
+    massage: massage,
+    kind: kind,
     comments: comment
-  }
+  };
   this.afs.collection('users').doc(this.userNow.id).collection('massages').add(M);
   }
- 
+
+//   /**
+//      * addMethodAndTherapistForPatientPlan
+//      */
+//   addMethodAndTherapistForPatientPlan(difInfo, Pid, mipuyDate) {
+// this.methodAndTherapistForPatientPlanDiffRef.doc
+//   }
+
+  /**
+     * addTherapistForMethod
+     */
+  addTherapistForMethod(theraForMethod: TherapistMethods) {
+   
+    this.methodForTherapistRef.doc('' + theraForMethod.Tid + '_' + theraForMethod.Mcode).set(theraForMethod);
+  }
+
+
+  /**
+   * addPlanForPatient
+   */
+  public addPlanForPatient(plan: PlanForPatient, docName: string) {
+    this.getPlanForPatientRef(plan.Pid).doc(docName).set(plan).then(res => {
+      this.sd.createAlert('success', 'תכנון עודכן בהצלחה', '');
+    });
+    }
 
   /**************************************************** */
   /*****************       update to db           ******* */
@@ -415,8 +441,6 @@ public addMethod(method: Method) {
    */
   public updateTherapist(th) {
     this.allTherapistsRef.doc('' + th.id).update(th).then(res => {
-    //  console.log('11111111111111111111111111111111');
-
     });
     this.sd.createAlert('success', 'מטפל עודכן בהצלחה', '');
   }
@@ -477,11 +501,6 @@ return false; // ??????????????????????????????????????????????????
       return ref.where('Pid', '==', Pid).orderBy('mipuyDate', 'desc');
     });
     return this.mipuyForPatientRef.valueChanges();
-    // this.mipuyForPatientRef.valueChanges().subscribe(mipuy => {
-    //   this.mipuyForPatientList = mipuy;
-    //   this.isBusy = false;
-    //   this.mipuyForPatientRef = this.afs.collection('mipuy');
-    // });
   }
 
 
@@ -510,5 +529,25 @@ return false; // ??????????????????????????????????????????????????
   }
   getTreatmentCategoriesRef() {
     return this.treatmentCategoriesRef;
+  }
+  getMethodForDiffiRefByDcode(Dcode) {
+    return this.afs.collection('methodForDifficult', ref => {
+      return ref.where('Dcode', '==', Dcode);
+    });
+  }
+  getTherapistForMethodRefByMcode(Mcode) {
+    return this.afs.collection('methodForThertapist', ref => {
+      return ref.where('Mcode', '==', Mcode);
+    });
+  }
+
+  getMethodForDiffiRef() {
+    return this.afs.collection('methodForDifficult');
+  }
+  getTherapistForMethodRef() {
+    return this.afs.collection('methodForThertapist');
+  }
+  getPlanForPatientRef(Pid) {
+    return this.afs.collection('patientDate').doc(Pid).collection('plans');
   }
 }

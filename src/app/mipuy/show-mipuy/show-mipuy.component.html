@@ -1,6 +1,7 @@
 <div class="dark-card  card" style="text-align: right">
     <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate | date: 'MM/dd/yyyy'}}</strong></h3>
     <!-- <strong>{{mipuyDate | date: 'dd/MM/yyyy'}}</strong> -->
+    <a class="purple-text" (click)="showplan.show()" *ngIf="status != 'plan'">צפה בתכנון טיפול</a>
     <div class="list-group px-1 py-1 mb-3">
         <div class="" *ngFor="let dif of db.treatmentCategories">
             <div class="row  list-group-item purple-text" *ngIf="mipuyData[dif.code]">
@@ -16,19 +17,19 @@
 
                     <div class="d-flex w-100 justify-content-end" *ngIf="true">
                         <i class="fa fa-pencil ml-1  fa-lg link" *ngIf="mipuyData[dif.code]==dif.code && status != 'plan'" (click)="currectArea = 'area*' + dif.code; addMipuyDetails.show()"></i>
-                    <mat-button-toggle-group [value]="mipuyDecideForPlan[dif.code]" #group="matButtonToggleGroup" (change)="onChoosed(group.value, dif.code, picker, basicModal)" class="yellow lighten-2" *ngIf="status == 'plan'">
-                     <mat-button-toggle value="yes">
-                            התחל טיפול
-                        </mat-button-toggle>
-                    
-                        <mat-button-toggle value="no">
-                           אין צורך
-                        </mat-button-toggle>
-                        <mat-button-toggle value="later">
-                          טיפול בהמשך
-                        </mat-button-toggle>
-                    
-                    </mat-button-toggle-group>
+                        <mat-button-toggle-group [value]="mipuyDecideForPlan[dif.code]" #group="matButtonToggleGroup" (change)="onChoosed(group.value, dif.code, picker, basicModal)" class="yellow lighten-2" *ngIf="status == 'plan'">
+                            <mat-button-toggle value="yes">
+                                התחל טיפול
+                            </mat-button-toggle>
+
+                            <mat-button-toggle value="no">
+                                אין צורך
+                            </mat-button-toggle>
+                            <mat-button-toggle value="later">
+                                טיפול בהמשך
+                            </mat-button-toggle>
+
+                        </mat-button-toggle-group>
 
                     </div>
 
@@ -44,27 +45,27 @@
 
 
 <div mdbModal #basicModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
           <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title w-100" id="myModalLabel">בחר תאריך לתזכורת</h4>
-      </div>
-      <div class="modal-body">
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="בחר תאריך לתזכורת"  [(ngModel)]="remainDate" name="remainDate">
-            <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="modal-footer">
-        <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="basicModal.hide();saveDateToRemainPlan()">שמור!</button>
-      </div>
+                <h4 class="modal-title w-100" id="myModalLabel">בחר תאריך לתזכורת</h4>
+            </div>
+            <div class="modal-body">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="בחר תאריך לתזכורת" [(ngModel)]="remainDate" name="remainDate">
+                    <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="modal-footer">
+                <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="basicModal.hide();saveDateToRemainPlan()">שמור!</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div> 
+</div>
 
 
 
@@ -93,4 +94,103 @@
         </div>
     </div>
 
+</div>
+
+
+
+
+
+<!-- SHOW PLAN -->
+<div mdbModal #showplan="mdb-modal" class="modal fade top" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" style="overflow: auto" *ngIf="status !='plan'">
+    <div class="modal-dialog modal-full-height modal-top" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="showplan.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">לחץ לביצוע השמירה</h4>
+            </div>
+            <div class="modal-body black-text">
+
+                <div class="mx-3 my-3  row" style="text-align:right">
+                    <div class="col-12 d-flex justify-content-between">
+                        <h3 class="h3">פרטי טיפול </h3>
+                    </div>
+                    <div class="list-group px-2 py-3 mb-3  col-md-12 col-sm-12">
+
+                        <div class="list-group-item mb-1 mx-1">
+                            <small class="purple-text"> שם תלמיד</small>
+                            <strong> {{planP.Pid}} </strong>
+                        </div>
+                        <div class="list-group-item mb-1 mx-1">
+                            <small class="purple-text">הסטוריה קודמת והערות</small>
+                            <strong> {{planP.history}} </strong>
+                        </div>
+                    </div>
+                    <div class="list-group px-2 py-3 mb-3  col-md-6 col-sm-12">
+                        <div class="list-group-item  mb-1 mx-1">
+                            <small class="purple-text">סטטוס אישור הורים</small>
+                            <strong> {{planP.parentsApproved}}</strong>
+                        </div>
+                        <div class="list-group-item  mb-1 mx-1">
+                            <small class="purple-text">גורם מממן </small>
+                            <strong> {{planP.payer}}</strong>
+                        </div>
+                    </div>
+                    <div class="list-group px-2 py-3 mb-3  col-md-6 col-sm-12">
+                        <div class="list-group-item  mb-1 mx-1">
+                            <small class="purple-text">מספר שעות מאושרות </small>
+                            <strong> {{planP.approvedAmountLesson}} </strong>
+                        </div>
+                        <div class="list-group-item  mb-1 mx-1">
+                            <small class="purple-text">תאריך פקיעת תוקף אישור </small>
+                            <strong *ngIf="planP&&planP.haveDueDate"> {{planP.dueDate}}</strong>
+                            <strong *ngIf="planP&&!planP.haveDueDate"> לא הוגדר</strong>
+                        </div>
+                    </div>
+                </div>
+                <table class="table hover striped mx-3">
+                    <thead>
+                        <tr class="purple-text">
+                            <th scope="col" class="purple-text"><strong>קושי</strong> </th>
+                            <th scope="col" class="purple-text"><strong>שיטת טיפול</strong> </th>
+                            <th scope="col" class="purple-text"><strong>מטפל</strong> </th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="hover">
+                        <tr mdbTableCol *ngFor="let dif of planedDiffi">
+                            <th scope="row" class="black-text">{{dif.code}}</th>
+                            <td>{{dif.method}}</td>
+                            <td>{{dif.thera}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="list-group px-2 py-3 mb-3  col-md-12 col-sm-12">
+                    <h3>
+                        קבצים ואסמכתאות חיצוניות
+                    </h3>
+                    <div *ngIf="planFiles.length < 1">
+                        אין קבצים מתאימים
+                    </div>
+                    <div class="list-group-item mb-1 mx-1 row d-flex justify-content-around" *ngFor="let file of planFiles">
+                        <h5 class="black-text">{{file.fileName}}</h5>
+                        <div>
+                            <a (click)="showFileInBrouser(file.file)" class="purple-text">הצג קובץ</a>
+                            <a (click)="dawnloadFile(file.file, file.fileName)" class="purple-text">הורד קובץ</a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" mdbBtn color="primary" class="btn btn-secondary waves-light" mdbWavesEffect (click)="showplan.hide();"> חזור</button>
+            <button type="button" mdbBtn color="primary" class="btn btn-outline-secondary  waves-light" mdbWavesEffect (click)="showplan.hide(); updatePlan()">ערוך תכנון טיפול</button>
+
+        </div>
+    </div>
 </div>
