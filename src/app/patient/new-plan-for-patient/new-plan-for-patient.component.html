@@ -1,11 +1,11 @@
-<div *ngIf="!pat" class="center">
+<div *ngIf="!pat && !PLAN" class="center">
     <mat-card class="center">
-        <h4 class="center">loading...</h4>
+        <h4 class="center">טוען...</h4>
         <mat-spinner class="center"></mat-spinner>
 
     </mat-card>
 </div>
-<div *ngIf="pat">
+<div *ngIf="pat && PLAN">
     <h3 class="purple-text mt-5 mb-3">תכנון טיפול |
         <strong> {{pat.firstName}} {{pat.lastName}}</strong>
     </h3>
@@ -61,15 +61,6 @@
                 </div>
             </div>
 
-            <div class="row d-flex mt-5 mb-4 justify-content-end ">
-                <div class="col-md-4 col-sm-12">
-                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="true" (click)="saveMethodsAndTherapist()">
-                        שמור
-                        <i class="fa fa-save mr-1 "></i>
-                    </button>
-                </div>
-            </div>
-
             <div>
                 <button mat-button matStepperNext type="button" [disabled]="amountConfirmLessons&&parentsConfirm&&whoPay"> הבא</button>
             </div>
@@ -107,7 +98,7 @@
                 <div *ngIf="chooesedMipuy == 'no-mipuy'">לא קימים מיפוים עבור תלמיד זה</div>
                 <div *ngIf="chooesedMipuy == 'no internet'">שגיאה בקליטת נתונים. נא בדוק את חיבור האינטרנט שלך</div>
                 <div *ngIf="chooesedMipuy && chooesedMipuy.mipuyDate">
-                    <app-show-mipuy [status]="'plan'" [Pid]="Pid" [mipuyDate]="chooesedMipuy.mipuyDate" [mipuyData]="chooesedMipuy" (updateDiffForPlan)="updatediffiForPlan($event)"></app-show-mipuy>
+                    <app-show-mipuy [status]="'plan'" [Pid]="Pid" [mipuyDate]="chooesedMipuy.mipuyDate" [mipuyData]="chooesedMipuy" [planedDiffi]="diffiForPlan" (updateDiffForPlan)="updatediffiForPlan($event)"></app-show-mipuy>
                 </div>
 
             </div>
@@ -215,6 +206,23 @@
                     </ul>
                 </ng-template>
             </p-fileUpload>
+            <div class="list-group px-2 py-3 mb-3  col-md-12 col-sm-12" *ngIf="status != 'new'">
+                <h6>
+                    קבצים שהועלו
+                </h6>
+                <div *ngIf="planFiles.length < 1">
+                    אין קבצים מתאימים
+                </div>
+                <div class="list-group-item  mx-1 row d-flex justify-content-between" *ngFor="let file of planFiles">
+                    <p class="black-text">{{file.fileName}}</p>
+                    <div>
+                        <!-- <a (click)="showFileInBrouser(file.file)" class="purple-text mx-2">הצג קובץ</a>
+                            <a (click)="dawnloadFile(file.file, file.fileName)" class="purple-text mx-2">הורד קובץ</a> -->
+
+                    </div>
+                </div>
+            </div>
+
             <mat-card-actions>
                 <h3 class="purple-text pt-4">האם אתה בטוח שסימת את תכנון הטיפול?</h3>
 
@@ -248,7 +256,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist()">שמירה בלבד</button>
-                <button type="button" mdbBtn color="primary" class="btn btn-secondery purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist(); cretaNewConnections()">שמירה ועדכון</button>
+                <button type="button" mdbBtn color="primary" class="btn  purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist(); cretaNewConnections()">שמירה ועדכון</button>
             </div>
         </div>
     </div>

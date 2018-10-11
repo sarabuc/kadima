@@ -3,7 +3,7 @@ import { DbService, Patient, Mipuy, MipuyDecideForPlan, PlanForPatient } from '.
 import { ShareDataService } from '../../services/share-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
-import { saveAs } from 'file-saver/FileSaver';
+
 @Component({
   selector: 'app-new-plan-for-patient',
   templateUrl: './new-plan-for-patient.component.html',
@@ -11,6 +11,8 @@ import { saveAs } from 'file-saver/FileSaver';
 })
 export class NewPlanForPatientComponent implements OnInit {
   PLAN: PlanForPatient;
+  planedDiffi = [];
+  planFiles = [];
   pat: Patient;
   Pid;
   status;
@@ -42,6 +44,26 @@ export class NewPlanForPatientComponent implements OnInit {
     const id = <string>this.route.snapshot.params['id'];
     if (id.includes('_P_')) {// if true its update plan
       this.status = 'update';
+      this.thereIsDiffs = true;
+      const plan_doc = id;
+      const mipuy_doc = id.split('_P_')[0];
+      this.Pid = mipuy_doc.split('_')[0];
+       const mipuyDate = mipuy_doc.split('_')[1];
+      this.getPatientByID();
+      this.getOneMipuyForPat(mipuyDate);
+      this.db.getPlanForPatientRef(this.Pid).doc<PlanForPatient>(plan_doc).valueChanges().subscribe(plan => {
+        this.PLAN = plan;
+        Object.keys(plan).forEach(key => {
+          // if (plan[key] === 'yes') { // this is a diffi was planed
+          //   const Tkey = key + '_THERAPIST';
+          //   const Mkey = key + '_METHOD';
+          //   this.planedDiffi.push({ code: key, method: plan[Mkey], thera: plan[Tkey] });
+          // }
+          if (plan[key] === 'file') { // this is a file
+            this.planFiles.push({ file: key, fileName: key.split('_')[0] });
+          }
+        });
+      });
 
     } else {
       this.status = 'new';
@@ -80,17 +102,17 @@ export class NewPlanForPatientComponent implements OnInit {
   }
 
   finishPlan() {
-
-
-
-
-    // ...
-    this.sd.routeTo('/Pcard', this.Pid);
+this.saveMethodsAndTherapist();
+this.sd.routeTo('/Pcard', this.Pid);
   }
 
   init() {
     this.optionsForParentConfirm = ['יש אישור', 'אין אישור', 'לא נבדק עדין'];
     this.db.getMipuyForPatient(this.Pid).subscribe(M => {
+      if (M.length < 1) {
+        this.sd.createAlert('error', 'לא הוגדר מיפוי לתלמיד זה', '');
+        this.sd.routeTo('/Pcard', this.Pid);
+      }
       this.mipuyDates = M;
     });
 
@@ -103,22 +125,20 @@ export class NewPlanForPatientComponent implements OnInit {
       if (dif !== 'mipuyDate') {
         const ob = {
           Dcode: dif,
-          value: 'no',
-          method: '',
-          therapist: ''
+          value: (this.PLAN[dif]) ? this.PLAN[dif] : 'no',
+          method: (this.PLAN[dif + '_METHOD']) ? this.PLAN[dif + '_METHOD'] : '',
+          therapist: (this.PLAN[dif + '_THERAPIST']) ? this.PLAN[dif + '_THERAPIST'] : ''
         };
         this.diffiForPlan.push(ob);
       }
     });
+    console.log(this.diffiForPlan);
   }
   showListOfMipuy() {
     this.showListMipuy_V = true;
-    console.log('in show list mipuy- in plan');
-
   }
 
   showLastMipuy() {
-    this.showMipuy_V = true;
     if (this.mipuyDates[0]) {
       this.getOneMipuyForPat(this.mipuyDates[0].mipuyDate);
     } else {
@@ -128,6 +148,7 @@ export class NewPlanForPatientComponent implements OnInit {
   }
 
   getOneMipuyForPat(selectedDate) {
+    console.log(selectedDate);
     this.showListMipuy_V = false;
     this.chooesedMipuy = undefined;
     console.log('get mipuy');
@@ -135,7 +156,8 @@ export class NewPlanForPatientComponent implements OnInit {
     mipuyForPatient({ text: '' + this.Pid + '_' + selectedDate }).then(res => {
       console.log(res);
       this.chooesedMipuy = res.data;
-      this.initDiffiForPlan();
+        this.initDiffiForPlan();
+      this.showMipuy_V = true;
     }).catch(err => {
       this.chooesedMipuy = 'no internet';
       console.log(err);
@@ -143,7 +165,7 @@ export class NewPlanForPatientComponent implements OnInit {
   }
 
   showOneMipuy(d: Mipuy) {
-    this.showMipuy_V = true;
+   // this.showMipuy_V = true;
     this.getOneMipuyForPat(d.mipuyDate);
   }
 
@@ -156,15 +178,17 @@ export class NewPlanForPatientComponent implements OnInit {
       const fileName = '' + file.name + '_D_' + date;
       const path = `/${this.Pid}/${fileName}`;
       const iRef = storegRef.child(path);
+      this.PLAN[fileName] = 'file';
+        console.log(this.PLAN);
       iRef.put(file).then((snapshot) => {
         console.log(snapshot);
-        const Pfile = {
-          Pid: this.Pid,
-          fileName: file.name,
-          date: date
-        };
+        // const Pfile = {
+        //   Pid: this.Pid,
+        //   fileName: file.name,
+        //   date: date
+        // };
        // this.db.patientsFileRef.add(Pfile);
-        this.PLAN[fileName] = 'file';
+        
         this.sd.createAlert('success', 'קובץ התוסף בהצלחה', '');
       }).catch(error => {
         console.log(error);
@@ -185,13 +209,13 @@ export class NewPlanForPatientComponent implements OnInit {
   }
 
   saveMethodsAndTherapist() {
-    if (this.status === 'new') {
+    // if (this.status === 'new') {
       this.PLAN.parentsApproved = (this.PLAN.parentsApproved) ? this.PLAN.parentsApproved : 'אין אישור';
        this.PLAN.mipuy_id_in_db = '' + this.pat.id + '_' + this.chooesedMipuy.mipuyDate;
       const planDocName = '' + this.PLAN.mipuy_id_in_db + '_P_' + this.PLAN.date;
       // update mipuy
       this.db.mipuyForPatientRef.doc(this.PLAN.mipuy_id_in_db).update({ 'planForPatient': planDocName });
-      this.diffiForPlan.forEach(dif => {
+      for (const dif of this.diffiForPlan) {
         this.PLAN[dif.Dcode] = dif.value;
         if (dif.value === 'yes' && dif.method !== '') {
           this.PLAN['' + dif.Dcode + '_METHOD'] = dif.method;
@@ -200,22 +224,12 @@ export class NewPlanForPatientComponent implements OnInit {
         if (dif.value === 'yes' && dif.therapist !== '') {
           this.PLAN['' + dif.Dcode + '_THERAPIST'] = dif.therapist;
         }
-      });
+      }
       this.db.addPlanForPatient(this.PLAN, planDocName);
-    }
-    // const patPlan: PlanForPatient = {
-    //   Pid: this.pat.id,
-    //   history: (this.history) ? this.history : '',
-    //   parentsApproved: (this.parentsConfirm) ? this.parentsConfirm : 'אין אישור',
-    //   approvedAmountLesson: (this.amountConfirmLessons) ? this.amountConfirmLessons : 0,
-    //   payer: (this.whoPay) ? this.whoPay : '',
-    //   haveDueDate: this.haveDueDate,
-    //   dueDate: (this.haveDueDate) ? this.dueDate : '',
-    //   date: this.sd.convertDateToStringDD_MM_YYYY(new Date()),
-    //   mipuy_id_in_db: '' + this.pat.id + '_' + this.chooesedMipuy.mipuyDate,
-    // };
-   
-    
+      this.sd.routeTo('updatePlan', planDocName);
+    // } else if (this.status === 'update') {
+     
+    // }
   }
   cretaNewConnections() {
     this.diffiForPlan.forEach(dif => {

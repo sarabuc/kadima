@@ -150,7 +150,7 @@ public getCsvFile() {
   mipuyForPatient({ text: '' }).then(res => {
     console.log(res);
  if (res.data === 'success') {
-this.getAndDownloadFile('exe/patientData.json', 'data.json');
+this.getAndDownloadFile('exe/patientData.json', 'data.json', 'dawn');
  }
 
   }).catch(err => {
@@ -159,7 +159,7 @@ this.getAndDownloadFile('exe/patientData.json', 'data.json');
 }
 
 
-  getAndDownloadFile(path, fileName) {
+  getAndDownloadFile(path, fileName, option) {
 
     const storageRef = firebase.storage();
     // Create a reference to the file we want to download
@@ -167,15 +167,27 @@ this.getAndDownloadFile('exe/patientData.json', 'data.json');
     // Get the download URL
     starsRef.getDownloadURL().then(url => {
       console.log(url);
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = function (event) {
-        const blob = xhr.response;
-        console.log(blob);
-        saveAs(blob, fileName);
-      };
-      xhr.open('GET', url);
-      xhr.send();
+      if (option === 'open') {
+        console.log('open');
+       const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = url;
+        a.download = fileName;
+        a.click();
+         //  window.open(url, '_blank');
+      } else if (option === 'dawn') {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = function (event) {
+          const blob = xhr.response;
+          console.log(blob);
+          saveAs(blob, fileName);
+        };
+        xhr.open('GET', url);
+        xhr.send();
+      }
+     
     }).catch(error => {
       console.log(error);
       switch (error.code) {

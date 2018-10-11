@@ -15,9 +15,10 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
   @Input() mipuyDate: Date;
   @Input() mipuyData: any;
   @Input() status: string;
+  @Input() planedDiffi: any[] = [];
   @Output() updateDiffForPlan = new EventEmitter();
   planP: PlanForPatient;
-  planedDiffi = [];
+
   planFiles = [];
   currectArea = '';
 
@@ -27,7 +28,7 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
   diffiToChooseTreat;
   mipuyDecideForPlan: MipuyDecideForPlan = { Pid: '', mipuy_id_in_db: ''};
   selectedDifToRemainLater;
-remainDate;
+  remainDate;
 
   constructor(public db: DbService, public sd: ShareDataService, private datePipe: DatePipe) { }
 
@@ -37,17 +38,22 @@ remainDate;
     this.mipuyDecideForPlan.Pid =  this.Pid ;
   }
   ngOnChanges() {
+    console.log(this.planedDiffi);
     this.mipuyDecideForPlan.mipuy_id_in_db = '' + this.Pid + '_' + this.mipuyDate;
     this.mipuyDecideForPlan.Pid = this.Pid;
     const keys = Object.keys(this.mipuyData);
     const i = keys.indexOf('mipuyDate');
     keys.splice(i, 1);
+    for (const dif of this.planedDiffi) {
+      this.mipuyDecideForPlan[dif.Dcode] = dif.value;
+    }
     for (const k of keys) {
+      if (!this.mipuyDecideForPlan[k]) { // dont was in plan
       this.mipuyDecideForPlan[k] = 'no';
+      }
     }
     console.log(this.mipuyDecideForPlan);
     this.getPlanForPatient();
-   // this.initDiffForPlan.emit(this.mipuyDecideForPlan);
   }
 
 
@@ -84,15 +90,16 @@ this.remainDate = null;
 
 
 async  getPlanForPatient() {
- 
-  if (this.planP) {
-    return; // callthis func only once
+  if (this.status === 'plan') {
+    return; // call this func only once
   }
-  const mipuy_docName = '' + this.Pid + '_' + this.mipuyDate;
   let plan_docName;
-  this.db.mipuyForPatientRef.doc<Mipuy>(mipuy_docName).valueChanges().subscribe(mipuy => {
+  this.db.mipuyForPatientRef.doc<Mipuy>(this.mipuyDecideForPlan.mipuy_id_in_db).valueChanges().subscribe(mipuy => {
     console.log('mipuy');
     plan_docName = mipuy.planForPatient;
+    if (plan_docName === '') {
+      return;
+    }
     this.db.getPlanForPatientRef(this.Pid).doc<PlanForPatient>(plan_docName).valueChanges().subscribe(plan => {
       this.planP = plan;
       console.log(this.planP);
@@ -121,7 +128,10 @@ async  getPlanForPatient() {
 return file.split('_D_')[0];
   }
   dawnloadFile(file: string, fileName: string) {
-    this.sd.getAndDownloadFile( this.Pid + '/' + file, fileName);
+    this.sd.getAndDownloadFile( this.Pid + '/' + file, fileName, 'dawn');
+  }
+  showFileInBrouser(file) {
+    this.sd.getAndDownloadFile(this.Pid + '/' + file, '',  'open');
   }
 
 }

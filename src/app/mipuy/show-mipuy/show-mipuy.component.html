@@ -1,7 +1,11 @@
 <div class="dark-card  card" style="text-align: right">
-    <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate | date: 'MM/dd/yyyy'}}</strong></h3>
-    <!-- <strong>{{mipuyDate | date: 'dd/MM/yyyy'}}</strong> -->
-    <a class="purple-text" (click)="showplan.show()" *ngIf="status != 'plan'">צפה בתכנון טיפול</a>
+    <div class="row d-flex justify-content-between">
+        <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate | date: 'MM/dd/yyyy'}}</strong></h3>
+        <a class="yellow-text" (click)="showplan.show()" *ngIf="planP && status != 'plan'">צפה בתכנון טיפול</a>
+        <a class="gray-text" *ngIf="!planP && status != 'plan'">אין תכנון טיפול</a>
+
+    </div>
+
     <div class="list-group px-1 py-1 mb-3">
         <div class="" *ngFor="let dif of db.treatmentCategories">
             <div class="row  list-group-item purple-text" *ngIf="mipuyData[dif.code]">
@@ -101,20 +105,28 @@
 
 
 <!-- SHOW PLAN -->
-<div mdbModal #showplan="mdb-modal" class="modal fade top" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" style="overflow: auto" *ngIf="status !='plan'">
+<div mdbModal #showplan="mdb-modal" class="modal fade top" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" style="overflow: auto">
     <div class="modal-dialog modal-full-height modal-top" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close pull-right" aria-label="Close" (click)="showplan.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title w-100" id="myModalLabel">לחץ לביצוע השמירה</h4>
+                <h4 class="modal-title w-100" id="myModalLabel"></h4>
             </div>
-            <div class="modal-body black-text">
+            <div class="modal-body black-text" *ngIf="status !='plan'">
+                <div *ngIf="!planP" class="center">
+                    <mat-card class="center">
+                        <h4 class="center">טוען...</h4>
+                        <mat-spinner class="center"></mat-spinner>
 
-                <div class="mx-3 my-3  row" style="text-align:right">
-                    <div class="col-12 d-flex justify-content-between">
+                    </mat-card>
+                </div>
+                <div class="mx-3 my-3  row" style="text-align:right" *ngIf="planP">
+                    <div class="col-12 row d-flex justify-content-between">
                         <h3 class="h3">פרטי טיפול </h3>
+                        <button type="button" color="primary" class="btn btn-outline-secondary  waves-light" mdbWavesEffect (click)="showplan.hide(); updatePlan()"><i class="fa fa-pencil mx-2 purple-text"></i>ערוך תכנון טיפול</button>
+
                     </div>
                     <div class="list-group px-2 py-3 mb-3  col-md-12 col-sm-12">
 
@@ -169,17 +181,17 @@
                 </table>
 
                 <div class="list-group px-2 py-3 mb-3  col-md-12 col-sm-12">
-                    <h3>
+                    <h4>
                         קבצים ואסמכתאות חיצוניות
-                    </h3>
+                    </h4>
                     <div *ngIf="planFiles.length < 1">
                         אין קבצים מתאימים
                     </div>
-                    <div class="list-group-item mb-1 mx-1 row d-flex justify-content-around" *ngFor="let file of planFiles">
-                        <h5 class="black-text">{{file.fileName}}</h5>
+                    <div class="list-group-item  mx-1 row d-flex justify-content-between" *ngFor="let file of planFiles">
+                        <p class="black-text">{{file.fileName}}</p>
                         <div>
-                            <a (click)="showFileInBrouser(file.file)" class="purple-text">הצג קובץ</a>
-                            <a (click)="dawnloadFile(file.file, file.fileName)" class="purple-text">הורד קובץ</a>
+                            <a (click)="showFileInBrouser(file.file)" class="purple-text mx-2">הצג קובץ</a>
+                            <a (click)="dawnloadFile(file.file, file.fileName)" class="purple-text mx-2">הורד קובץ</a>
 
                         </div>
                     </div>
@@ -188,8 +200,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" mdbBtn color="primary" class="btn btn-secondary waves-light" mdbWavesEffect (click)="showplan.hide();"> חזור</button>
-            <button type="button" mdbBtn color="primary" class="btn btn-outline-secondary  waves-light" mdbWavesEffect (click)="showplan.hide(); updatePlan()">ערוך תכנון טיפול</button>
+            <button type="button" color="primary" class="btn btn-secondary waves-light" mdbWavesEffect (click)="showplan.hide();"> חזור</button>
+            <button type="button" color="primary" class="btn btn-outline-secondary  waves-light" mdbWavesEffect (click)="showplan.hide(); updatePlan()">ערוך תכנון טיפול</button>
 
         </div>
     </div>
