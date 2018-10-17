@@ -9,6 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
+// import * as admin from 'firebase-admin';
+// import { saveAs } from 'file-saver';
 exports.getFileFromStorage = functions.https.onCall((data, context) => __awaiter(this, void 0, void 0, function* () {
     // const storageRef = admin.storage();
     // // Create a reference to the file we want to download

@@ -1,7 +1,8 @@
-import * as functions from 'firebase-functions';
+//import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 admin.initializeApp();
 import * as getFromFirebase from './get-from-db-storage';
+import * as sendMail_Noti from './sendMailAndNoti';
 //import * as ML from './ML';
 //import {find} from 'p-iteration';
 import * as import_export from './exports_imports_data';
@@ -11,6 +12,7 @@ export const im_ex = import_export.getAllPatientsDataInCSV;
 export const getMipuysForPatient = getFromFirebase.getMipuysForPatient;
 export const getOneMipuyByDateAndId = getFromFirebase.getOneMipuyByDateAndId
 export const getMainDiffiAreas = getFromFirebase.getMainDiffiAreas;
+export const sendMail = sendMail_Noti.helloWorld;
 //export const getMethodWithML = ML.MLFunction;
           //   //have to check for each diffi if it is a leave-
           //   //do it so-

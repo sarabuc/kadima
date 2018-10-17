@@ -5,7 +5,7 @@ import { AuthGuard } from './services/auth.guard';
 import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { AboutComponent } from './pages/about/about.component';
-
+import { NewMipuyFromExelComponent } from './new-mipuy-from-exel/new-mipuy-from-exel.component';
 import { ContactComponent } from './pages/contact/contact.component';
 
 import { NewTherapistComponent } from './therapist/new-therapist/new-therapist.component';
@@ -32,7 +32,7 @@ import { RegisterComponent } from './pages/login/register/register.component';
 
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'home'/*'login'*/, pathMatch: 'full' },
+  { path: '', redirectTo: /*'home'*/'login', pathMatch: 'full' },
   { path: 'home', component: HomePageComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'about', component: AboutComponent },
   { path: 'Tcard/:id', component: TherapistCardComponent },
@@ -56,6 +56,7 @@ const appRoutes: Routes = [
   { path: 'plan/:id', component: NewPlanForPatientComponent },
   { path: 'updatePlan/:id', component: NewPlanForPatientComponent },
   { path: 'diffiAndMethods', component: DiffiAndMethodsComponent },
+  { path: 'mipuy-exel', component: NewMipuyFromExelComponent },
   { path: '**', redirectTo: 'login' }
 ];
 

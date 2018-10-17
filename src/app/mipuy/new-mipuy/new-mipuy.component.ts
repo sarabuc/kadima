@@ -14,8 +14,7 @@ export class NewMipuyComponent implements OnInit {
    @ViewChild(ShowDifficultiesComponent) showDif: ShowDifficultiesComponent;
   text: string[];
   patientsForMipuy: Patient[];
-  results: string[] = ['111', '222', '333'];
-
+  categoriesForFastMipuy = [];
 
    mipuyModeClass = 'modal fade in show'; // when opened it is "modal fade in show"
   fname = ''; // for search
@@ -156,6 +155,29 @@ closeModal(str: string) {
       this.flagForFastMipuy.push(false);
     });
   }
+
+  saveCategories(values: any[]) {
+     const allCat = this.db.treatmentCategories;
+    for(let i = 0; i<values.length; i++ ) {
+      if (values[i].selected) {
+        this.categoriesForFastMipuy.push(allCat[i]);
+      }
+    }
+    console.log(this.categoriesForFastMipuy);
+  }
+
+  // onSelectedOptionsChange(values: string[]) {
+  //   const allCat = this.db.treatmentCategories;
+  //   for(let i = 0; i<values.length; i++ ) {
+  //     if (values[i].selected) {
+  //       this.categoriesForFastMipuy.push(values[i]);
+  //     }
+  //   }
+   
+  //   // this._recipeService.favorites = this.selectedOptions;
+  // console.log(values);
+  //   }
+  
 }
 
 

@@ -128,6 +128,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
 // import { UpdatePlanForPatientComponent } from './patient/update-plan-for-patient/update-plan-for-patient.component';
 import { ShowMethodsComponent } from './mipuy/show-methods/show-methods.component';
+import { NewMipuyFromExelComponent } from './new-mipuy-from-exel/new-mipuy-from-exel.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -186,7 +187,8 @@ const firebase = {
     ShowTreatmentForTherapistComponent,
     NewPlanForPatientComponent,
     RegisterComponent,
-    ShowMethodsComponent
+    ShowMethodsComponent,
+    NewMipuyFromExelComponent
    //  UpdatePlanForPatientComponent
   ],
   imports: [

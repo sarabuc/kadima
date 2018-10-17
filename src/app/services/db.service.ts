@@ -45,6 +45,9 @@ export interface Patient {
   comment: string;
   strFreeTime: string;
   haveDificult: string;
+  address?: string;
+  morePhone?: string;
+  mothersName?: string;
 }
 export interface PatientFile {
   Pid: string;
@@ -248,8 +251,8 @@ public newMipuy: string[] = [];
    }
 
    isLogin() {
-	   return true;
-    // return this.isLoginV;
+	  // return true;
+     return this.isLoginV;
    }
 
 
@@ -352,7 +355,7 @@ public newMipuy: string[] = [];
    * addDifficult
    */
   public addDifficult(diffi: Difficulty) {
-    this.allDifficultsRef.doc('' + diffi.code).set(diffi).then(res => {
+    this.allDifficultsRef.doc('' + diffi.code + '_' + diffi.Dfather).set(diffi).then(res => {
 
     });
   }

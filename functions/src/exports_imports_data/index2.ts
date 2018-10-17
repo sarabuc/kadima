@@ -7,14 +7,14 @@ import * as admin from 'firebase-admin';
 // import * as dot from 'dot-object';
 
 import * as json2csv from 'json2csv';
-import * as createCSVFile from 'csv-file-creator';
+//import * as createCSVFile from 'csv-file-creator';
 //import { sortByKeysFn, decodeDoc } from '../shared';
 
 const db = admin.firestore();
 const pat_data = {};
 pat_data['patients'] = [];
 export const getAllPatientsDataInCSV =  functions.https.onCall(async (data, context) => {
-  const file = '/tmp/patientSata.csv';
+  //const file = '/tmp/patientSata.csv';
 
     const collection = await db.collection('patient').get(); //const collectionPaths = await db.getCollections();//.then(colls => colls.map(coll => coll.path));
 for(const pat of collection.docs) {

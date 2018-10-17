@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+//import * as admin from 'firebase-admin';
 // import * as fs from 'fs-extra';
 // import * as _ from 'lodash';
 // import * as XLSX from 'xlsx';
@@ -7,7 +7,7 @@ import * as admin from 'firebase-admin';
 
 // //import { sortByKeysFn, decodeDoc } from '../shared';
 
-const db = admin.firestore();
+//const db = admin.firestore();
 // let args;
 
 // export const execute = async (file: string, collectionPaths: string[], options) => {

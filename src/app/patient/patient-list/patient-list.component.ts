@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PatientListComponent implements OnInit {
   fname = '';
   lname = '';
+  grade = '';
   allP: Patient[];
   status;
   constructor(public sd: ShareDataService, public db: DbService, private route: ActivatedRoute, private router: Router) { }
@@ -22,6 +23,12 @@ export class PatientListComponent implements OnInit {
       this.sd.createAlert('error', 'שגיאה בהעברת נתונים, נא נסה שוב', '');
   }
 }
+
+// for search
+  isGradePrefix(grade) {
+    const filter = this.grade.toUpperCase();
+    return (grade.toUpperCase().indexOf(filter) > -1);
+  }
   isFnPrefix(fn) {
     const filter = this.fname.toUpperCase();
     return (fn.toUpperCase().indexOf(filter) > -1);

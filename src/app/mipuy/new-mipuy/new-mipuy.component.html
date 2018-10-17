@@ -4,17 +4,19 @@
             <h1 class="h1-responsive mt-3 purple-text mb-3"> מיפוי חדש
                 <small class="text-muted mr-3 mb-2">סמן תלמידים הזקוקים למעקב ולחץ על התחל מיפוי</small>
             </h1>
-            <mat-slide-toggle class="mr-auto justify-self-end ml-3 mt-4" [(ngModel)]="checkedFastMipuy">
+            <mat-slide-toggle class="mr-auto justify-self-end ml-3 mt-4" [(ngModel)]="checkedFastMipuy" (change)="selectCategories.show()">
                 <strong> אפשר מיפוי מהיר
                     </strong>
                 <small *ngIf="checkedFastMipuy">
                       יש לשמור לפי יציאה
                     </small>
             </mat-slide-toggle>
+<!-- 
+            <div class="row d-flex mt-5 mb-4 justify-content-end ">
+                <p-toggleButton [(ngModel)]="checkedFastMipuy" offLabel="צא ממיפוי מהיר" onLabel="התחל מיפוי מהיר" onIcon="pi pi-times" offIcon="pi pi-check" [style]="{'width':'250px'}"></p-toggleButton>
+            </div> -->
 
 
-            <!-- <p-inputSwitch [(ngModel)]="checkedFastMipuy" class="justify-self-end mr-auto"><strong> אפשר מיפוי מהיר
-            </strong></p-inputSwitch> -->
         </div>
 
         <div class="row  px-5 d-flex justify-content-around  py-2 grey lighten-3 my-2">
@@ -74,30 +76,30 @@
                                 <!-- <input class="form-check-input" type="checkbox" id="checkbox">
                                 <label class="form-check-label" for="checkbox" class="mr-2 label-table"></label> -->
                             </th>
-                            <th class="th-lg white-text">תעודת זהות
+                            <th class="white-text" *ngIf="!checkedFastMipuy">תעודת זהות
                                 <div>תעודת זהות</div>
                             </th>
-                            <th class="th-lg white-text">שם פרטי
+                            <th class="white-text">שם פרטי
                                 <div>שם פרטי </div>
                             </th>
-                            <th class=" th-lg white-text">שם משפחה
+                            <th class="white-text">שם משפחה
                                 <div>שם משפחה </div>
                             </th>
-                            <th class=" th-lg white-text">כתה
+                            <th class="white-text">כתה
                                 <div>כתה </div>
                             </th>
-                            <th class="th-lg white-text" *ngIf="!checkedFastMipuy">
+                            <th class="white-text" *ngIf="!checkedFastMipuy">
 
                             </th>
-                            <th class="th-lg white-text" *ngIf="!checkedFastMipuy">
+                            <th class="white-text" *ngIf="!checkedFastMipuy">
                                 האם קים קושי
                                 <div>האם קים קושי </div>
                             </th>
-                            <th class="th-lg white-text" *ngIf="!checkedFastMipuy">אפשרויות
+                            <th class="white-text" *ngIf="!checkedFastMipuy">אפשרויות
                                 <div>אפשרויות </div>
                             </th>
                             <div *ngIf="checkedFastMipuy">
-                                <th class=" white-text" *ngFor="let diffi of db.treatmentCategories" style="width:130px">{{diffi.description}}
+                                <th class=" white-text" *ngFor="let diffi of categoriesForFastMipuy" style="width:130px">{{diffi.description}}
                                     <div>{{diffi.description}} </div>
                                 </th>
                             </div>
@@ -114,7 +116,7 @@
                                 <!-- <input class="form-check-input" type="checkbox" id="checkbox1">
                                 <label class="form-check-label" for="checkbox1" class="label-table"></label> -->
                             </th>
-                            <td>{{pat.id}}</td>
+                            <td *ngIf="!checkedFastMipuy">{{pat.id}}</td>
                             <td>{{pat.firstName}}</td>
                             <td>{{pat.lastName}}</td>
                             <td>{{pat.grade}}</td>
@@ -156,7 +158,7 @@
 
                             <!-- FAST MIPUY -->
                             <div *ngIf="checkedFastMipuy">
-                                <td *ngFor="let diffi of db.treatmentCategories" style="width: 130px">
+                                <td *ngFor="let diffi of categoriesForFastMipuy" style="width: 130px">
                                     <button type="button" *ngIf="fastMipuyData[i][diffi.code]=='yes'" class="btn my-button my-primary btn-sm" mdbWavesEffect mdbTooltip="לחץ כדי לשנות " placement="bottom" (click)="changeFastData('maybe', i, diffi.code);">
                                 יש קושי </button>
                                     <button type="button" *ngIf="fastMipuyData[i][diffi.code]=='no'" class="btn my-button  btn-sm" mdbWavesEffect mdbTooltip="לחץ כדי לשנות " placement="bottom" (click)="changeFastData('yes', i, diffi.code);">
@@ -247,6 +249,42 @@
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide();selectedOptions = []" mdbWavesEffect>סגור</button>
                 <button type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="saveComments(); fluid.hide();">שמור</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div mdbModal #selectCategories="mdb-modal" class="modal fade left" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+    <div class="modal-dialog  modal-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel" *ngIf="checkedFastMipuy">בחר תחומים למיפוי</h4>
+                <h4 class="modal-title w-100" id="myModalLabel" *ngIf="!checkedFastMipuy">שים לב</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="selectCategories.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <mat-selection-list #cats >
+                   <div *ngIf="checkedFastMipuy">
+                    <mat-list-option *ngFor="let cat of db.treatmentCategories">
+                        {{cat.code}}
+                    </mat-list-option>
+                </div>
+                </mat-selection-list>
+
+
+                <p class="purple-text" *ngIf="!checkedFastMipuy">נתונים שלא שמרת לא נשמרו.</p>
+
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="selectCategories.hide();" mdbWavesEffect>סגור</button>
+                <button type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="saveCategories(cats.options._results); selectCategories.hide();" *ngIf="checkedFastMipuy">שמור והתחל מיפוי</button>
             </div>
         </div>
     </div>

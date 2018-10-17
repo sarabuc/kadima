@@ -15,15 +15,15 @@
         <table class="table table-striped table-bordered table-hover">
             <tr class="purple-text purple-border" style="font-size: large; font-style: bold">
                 <th></th>
-                <th>שם פרטי</th>
-                <th>שם משפחה</th>
-                <th>מספר זהות</th>
-                <th>שם האב </th>
-                <th> נייד אבא </th>
-                <th>נייד אמא </th>
-                <th>תאריך לידה </th>
-                <th>כתה</th>
-                <th>קופת חולים</th>
+                <th class="purple-text purple-border" style="font-size: large; font-style: bold">שם פרטי</th>
+                <th class="purple-text purple-border" style="font-size: large; font-style: bold">שם משפחה</th>
+                <th class="purple-text purple-border" style="font-size: large; font-style: bold">מספר זהות</th>
+                <th class="purple-text purple-border" style="font-size: large; font-style: bold">שם האב </th>
+                <th class="purple-text purple-border" style="font-size: large; font-style: bold"> נייד אבא </th>
+                <th class="purple-text purple-border" style="font-size: large; font-style: bold">נייד אמא </th>
+                <th class="purple-text purple-border" style="font-size: large; font-style: bold">תאריך לידה </th>
+                <th class="purple-text purple-border" style="font-size: large; font-style: bold">כתה</th>
+                <th class="purple-text purple-border" style="font-size: large; font-style: bold">קופת חולים</th>
             </tr>
             <tr class="black-text" *ngFor="let p of PfromExel; let i = index">
                 <td *ngIf="!successed[i]">{{i+1}}</td>

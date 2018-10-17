@@ -4,13 +4,16 @@ import {  delay } from 'rxjs/operators';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { ShareDataService } from './share-data.service';
+import { DbService } from './db.service';
+
 
 @Injectable()
 export class AuthService {
 
   constructor(
   private sd: ShareDataService,
-   public afAuth: AngularFireAuth
+   public afAuth: AngularFireAuth,
+   private db: DbService
  ) {}
 
   // doFacebookLogin() {
@@ -73,6 +76,7 @@ export class AuthService {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
       .then(res => {
+        this.db.isLoginV = true;
 		   this.sd.createAlert('success', 'נכנסת לחשבונך בהצלחה', '');
         resolve(res);
       }, err => reject(err));

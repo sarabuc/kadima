@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+//import * as functions from 'firebase-functions';
 const admin = require("firebase-admin");
 admin.initializeApp();
 const getFromFirebase = require("./get-from-db-storage");
+const sendMail_Noti = require("./sendMailAndNoti");
 //import * as ML from './ML';
 //import {find} from 'p-iteration';
 const import_export = require("./exports_imports_data");
@@ -11,6 +13,7 @@ exports.im_ex = import_export.getAllPatientsDataInCSV;
 exports.getMipuysForPatient = getFromFirebase.getMipuysForPatient;
 exports.getOneMipuyByDateAndId = getFromFirebase.getOneMipuyByDateAndId;
 exports.getMainDiffiAreas = getFromFirebase.getMainDiffiAreas;
+exports.sendMail = sendMail_Noti.helloWorld;
 //export const getMethodWithML = ML.MLFunction;
 //   //have to check for each diffi if it is a leave-
 //   //do it so-

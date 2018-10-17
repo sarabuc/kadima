@@ -1,0 +1,15 @@
+<div class="black-text">
+
+    <!-- <img [src]="urlImg" style="width:50px"> -->
+    <p class="h2 purple-text mt-5 mb-4">
+        הוספת מיפוי מקובץ אקסל
+    </p>
+    <!-- <a href="https://drive.google.com/open?id=1fQ7EQCYUx-mroQreTOHDpn0JbAD2y8U4" class="purple-text" target="_blank">להורדת תבנית לטעינה -יש ללחוץ כאן</a> -->
+    <br>
+
+    <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="בחר קובץ" accept=".xlsx">
+    <button type="button" class="btn purple" (click)="Upload()">טען נתונים</button>
+
+    <br>
+    <br>
+    <button type="button" class="btn purple" (click)="addMipuyFromExel()">שמור</button>

@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-import { saveAs } from 'file-saver';
+// import * as admin from 'firebase-admin';
+// import { saveAs } from 'file-saver';
 
 export const getFileFromStorage = functions.https.onCall(async (data, context) => {
   // const storageRef = admin.storage();
