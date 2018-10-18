@@ -13,13 +13,12 @@
                 <li class="nav-item">
 
                     <a class="nav-link" target="_blank" *ngIf='user.provider != "password"'>
-                                {{user.name}}אברהם
+                                {{db.userNow.name}}
                                 <i class="fa fa-user"></i>
                                 </a>
                     <a class="nav-link" target="_blank" *ngIf='user.provider == "password"'>
-                    אברהם
-                    <i class="fa fa-user"></i>
-                  </a>
+                        <i class="fa fa-user"></i>
+                    </a>
                 </li>
 
                 <li class="nav-item">
@@ -45,7 +44,8 @@
     right: 500px;
     left: 0;
     z-index: 100;">
-    <p-growl [(value)]="sd.alerts" [life]="3000" [baseZIndex]="5000000" [autoZIndex]="false"></p-growl>
+    <p-growl [(value)]="sd.alerts"></p-growl>
+    <!-- <p-growl [(value)]="sd.alerts" [baseZIndex]="5000000" [autoZIndex]="false"></p-growl> -->
 </div>
 <mat-sidenav-container fullscreen class="pb-1 pt-3" style="">
 
@@ -70,7 +70,7 @@
     right: 0;
     margin-left: 2%;
     margin-right: 2%;"> -->
-            <p-messages [(value)]="sd.msgs"></p-messages>
+            <p-messages [(value)]="sd.msgs" [sticky]="false"></p-messages>
             <!-- </div> -->
             <router-outlet> </router-outlet>
         </div>

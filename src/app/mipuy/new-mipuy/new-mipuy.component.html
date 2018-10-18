@@ -11,7 +11,7 @@
                       יש לשמור לפי יציאה
                     </small>
             </mat-slide-toggle>
-<!-- 
+            <!-- 
             <div class="row d-flex mt-5 mb-4 justify-content-end ">
                 <p-toggleButton [(ngModel)]="checkedFastMipuy" offLabel="צא ממיפוי מהיר" onLabel="התחל מיפוי מהיר" onIcon="pi pi-times" offIcon="pi pi-check" [style]="{'width':'250px'}"></p-toggleButton>
             </div> -->
@@ -25,7 +25,10 @@
             <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" id="myInput" ng-model="test" placeholder="לפי שם פרטי " name="fname" [(ngModel)]="fname">
             <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" id="myInput" ng-model="test" placeholder="לפי שם משפחה " name="lname" [(ngModel)]="lname">
             <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" id="myInput" ng-model="test" placeholder="לפי  כתה " name="grade" [(ngModel)]="grade">
-
+            <mat-select class="form-item w-25" name="findByCategory" placeholder="סנן לפי קושי" (selectionChange)="findPatientsForDiffi()" [(ngModel)]="findByCategory">
+                <mat-option value="empty" class="gray">ללא סינון</mat-option>
+                <mat-option value="{{cat.code}}" *ngFor="let cat of db.treatmentCategories">{{cat.code}}</mat-option>
+            </mat-select>
 
             <!-- </div>
             <div class="col-sm-6 coll-md-2 px-1 mb-3"> -->
@@ -59,10 +62,16 @@
 
 
 
+    <div *ngIf="!findedPatientForDiff" class="center w-100">
+        <mat-card class="center">
+            <h4 class="center">טוען...</h4>
+            <mat-spinner class="center"></mat-spinner>
+
+        </mat-card>
+    </div>
 
 
-
-    <div class="card card-cascade narrower" *ngIf="this.patientsForMipuy.length>0">
+    <div class="card card-cascade narrower" *ngIf="this.patientsForMipuy.length>0 && findedPatientForDiff">
 
         <section>
             <div class="scroll-fixed-table center">
@@ -111,7 +120,7 @@
                     <!-- *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)"> -->
                     <tbody *ngFor="let pat of patientsForMipuy; let i=index">
 
-                        <tr *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&isGradePrefix(pat.grade)&&(showWho=='all'||pat.haveDificult==showWho)">
+                        <tr *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&isGradePrefix(pat.grade)&&(showWho=='all'||pat.haveDificult==showWho)&&isPidExist(p.id)">
                             <th scope="row">
                                 <!-- <input class="form-check-input" type="checkbox" id="checkbox1">
                                 <label class="form-check-label" for="checkbox1" class="label-table"></label> -->
@@ -270,12 +279,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <mat-selection-list #cats >
-                   <div *ngIf="checkedFastMipuy">
-                    <mat-list-option *ngFor="let cat of db.treatmentCategories">
-                        {{cat.code}}
-                    </mat-list-option>
-                </div>
+                <mat-selection-list #cats>
+                    <div *ngIf="checkedFastMipuy">
+                        <mat-list-option *ngFor="let cat of db.treatmentCategories">
+                            {{cat.code}}
+                        </mat-list-option>
+                    </div>
                 </mat-selection-list>
 
 

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/once-a-day/index.ts"],"names":[],"mappings":";;AAAA,gDAAgD;AAEhD,2CAA2C;AAC3C,oDAAoD;AACpD,wBAAwB;AACX,QAAA,aAAa,GAAG,SAAS,CAAC,KAAK,CAAC,SAAS,CAAC,CAAC,GAAG,EAAE,GAAG,EAAE,EAAE;IAChE,qBAAqB;IACtB,mDAAmD;IAClD,qBAAqB;IAErB,qBAAqB;IACrB,oBAAoB;IACpB,GAAG,CAAC,IAAI,CAAC,GAAG,CAAC,CAAC;AAClB,CAAC,CAAC,CAAC"}

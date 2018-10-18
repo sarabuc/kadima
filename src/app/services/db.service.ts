@@ -8,11 +8,13 @@ import { ShareDataService } from './share-data.service';
 
 export interface User {
   isAdmin: boolean;
-  userName: string;
+  userName?: string;
   password: string;
   mail: string;
   name: string;
-  id: string;
+  id?: string;
+  insertBy?: string;
+  insertTime?: Date;
 }
 export interface Therapist {
   id: string;
@@ -30,6 +32,8 @@ export interface Therapist {
   kind: string;
   dergee: string;
   comment: string;
+  insertBy?: string;
+  insertTime?: Date;
 
 }
 export interface Patient {
@@ -48,16 +52,22 @@ export interface Patient {
   address?: string;
   morePhone?: string;
   mothersName?: string;
+  insertBy?: string;
+  insertTime?: Date;
 }
 export interface PatientFile {
   Pid: string;
   fileName: string;
   date: Date;
+  insertBy?: string;
+  insertTime?: Date;
 }
 export interface PatientComment {
   Pid: string;
   commentDate: Date;
   commentInfo: string;
+  insertBy?: string;
+  insertTime?: Date;
 }
 export interface Difficulty {
   code: string;
@@ -66,50 +76,61 @@ export interface Difficulty {
   isLeave: boolean;
   index: string;
   allFathers: string;
+  insertBy?: string;
+  insertTime?: Date;
 }
 
 export interface Method {
   code: string;
   description: string;
+  insertBy?: string;
+  insertTime?: Date;
 }
 export interface Mipuy {
   Pid: string;
   mipuyDate: string;
   planForPatient: string;
+  insertBy?: string;
+  insertTime?: Date;
 }
  export interface PatientsDifficult {
    Pid: string;
    Dcode: string;
    mipuyDate: string;
    status: string; // yes or maybe or not-relevant
+   insertBy?: string;
+   insertTime?: Date;
  }
  export interface TherapistMethods {
    Tid: string;
    Mcode: string;
   // priceForLesson: number;
+   insertBy?: string;
+   insertTime?: Date;
  }
  export interface MethodForDifficulty {
    Mcode: string;
    Dcode: string;
+   insertBy?: string;
+   insertTime?: Date;
  }
  export interface PlanForPatient {
    Pid: string;
    history: string;
    parentsApproved: string;
    approvedAmountLesson: number;
+   hoursLeft: number;
    payer: string;
    haveDueDate: boolean;
    dueDate?: Date;
+   insertBy?: string;
+   insertTime?: Date;
    // progressionNumber: number;
    mipuy_id_in_db: string;
    date: string;
    [k: string]: any; // key loos like DIFNAME_THERPIST or DIFNAME_METHOD or DIFNAME and than the value
  }
- /*export interface PayTreatment {
-  Pid: string;
-  payer: string;
-  approvedAmount: number;
- }*/
+ 
  export interface TreatmentProgression {
   Pid: string;
   // Tid: string;
@@ -118,6 +139,8 @@ export interface Mipuy {
   methodCode: string;
   approvedAmountLesson: number;
   paysBy: string;
+   insertBy?: string;
+   insertTime?: Date;
  }
 export interface TreatmentInfo { // key is Tid-treatmentNumber to example: 1234-519898195149
    Pid: string;
@@ -131,12 +154,16 @@ export interface TreatmentInfo { // key is Tid-treatmentNumber to example: 1234-
    hours: string;
    description: string;
    comment: string;
+  insertBy?: string;
+  insertTime?: Date;
  }
 export interface MipuyDecideForPlan {
   Pid: string;
   mipuy_id_in_db: string;
   date?: Date;
   [k: string]: any; // key loos like DIFNAME_THERPIST or DIFNAME_METHOD and than the value
+  insertBy?: string;
+  insertTime?: Date;
 }
 
 export interface MassageForUser {
@@ -145,6 +172,8 @@ export interface MassageForUser {
  date: Date;
 kind: string;
 comments: string;
+  insertBy?: string;
+  insertTime?: Date;
 }
 
 
@@ -338,6 +367,8 @@ public newMipuy: string[] = [];
    * addTherapist
    */
   public addTherapist(thera: Therapist) {
+    thera.insertBy = this.userNow.mail;
+    thera.insertTime = new Date();
     this.allTherapistsRef.doc('' + thera.id).set(thera).then(res => {
     });
     this.sd.createAlert('info', 'מטפל בשם' + thera.firstName + thera.lastName + 'נוסף בהצלחה', '');
@@ -347,6 +378,8 @@ public newMipuy: string[] = [];
    * addPatient
    */
   public addPatient(pati: Patient) {
+    pati.insertBy = this.userNow.mail;
+    pati.insertTime = new Date();
    this.allPatientsRef.doc('' + pati.id).set(pati).then(res => {
    });
   }
@@ -355,6 +388,8 @@ public newMipuy: string[] = [];
    * addDifficult
    */
   public addDifficult(diffi: Difficulty) {
+    diffi.insertBy = this.userNow.mail;
+    diffi.insertTime = new Date();
     this.allDifficultsRef.doc('' + diffi.code + '_' + diffi.Dfather).set(diffi).then(res => {
 
     });
@@ -364,6 +399,8 @@ public newMipuy: string[] = [];
  * addComment
  */
 public addComment(com: PatientComment) {
+  com.insertBy = this.userNow.mail;
+  com.insertTime = new Date();
   this.allPatientsCommentRef.add(com);
 }
 
@@ -371,6 +408,8 @@ public addComment(com: PatientComment) {
  * addPatientDifficult
  */
 public addPatientDifficult(diffi: PatientsDifficult) {
+  diffi.insertBy = this.userNow.mail;
+  diffi.insertTime = new Date();
   this.difficultForPatientRef.add(diffi);
 }
 
@@ -378,6 +417,8 @@ public addPatientDifficult(diffi: PatientsDifficult) {
  * addTreatmentInfo
  */
 public addTreatmentInfo( treat: TreatmentInfo) {
+  treat.insertBy = this.userNow.mail;
+  treat.insertTime = new Date();
   this.treatmentInfoForProgressRef.add(treat);
 }
 
@@ -385,6 +426,8 @@ public addTreatmentInfo( treat: TreatmentInfo) {
  * addMethod
 method: Method */
 public addMethod(method: Method) {
+  method.insertBy = this.userNow.mail;
+  method.insertTime = new Date();
   this.allMethodsRef.add(method).then(res => {
     this.sd.createAlert('success', 'שיטה נוספה בהצלחה', '');
   });
@@ -394,6 +437,8 @@ public addMethod(method: Method) {
      * addMethodForDifficult
      */
   public addMethodForDifficult(methodForDifficult: MethodForDifficulty) {
+    methodForDifficult.insertBy = this.userNow.mail;
+    methodForDifficult.insertTime = new Date();
     this.methodForDifficultyRef.doc('' + methodForDifficult.Dcode + '_' + methodForDifficult.Mcode).set(methodForDifficult);
   }
 /**
@@ -406,7 +451,9 @@ public addMethod(method: Method) {
     date: date,
     massage: massage,
     kind: kind,
-    comments: comment
+    comments: comment,
+    insertBy: this.userNow.mail,
+    insertTime: new Date()
   };
   this.afs.collection('users').doc(this.userNow.id).collection('massages').add(M);
   }
@@ -422,7 +469,8 @@ public addMethod(method: Method) {
      * addTherapistForMethod
      */
   addTherapistForMethod(theraForMethod: TherapistMethods) {
-   
+    theraForMethod.insertBy = this.userNow.mail;
+    theraForMethod.insertTime = new Date();
     this.methodForTherapistRef.doc('' + theraForMethod.Tid + '_' + theraForMethod.Mcode).set(theraForMethod);
   }
 
@@ -431,6 +479,8 @@ public addMethod(method: Method) {
    * addPlanForPatient
    */
   public addPlanForPatient(plan: PlanForPatient, docName: string) {
+    plan.insertBy = this.userNow.mail;
+    plan.insertTime = new Date();
     this.getPlanForPatientRef(plan.Pid).doc(docName).set(plan).then(res => {
       this.sd.createAlert('success', 'תכנון עודכן בהצלחה', '');
     });
@@ -553,4 +603,9 @@ return false; // ??????????????????????????????????????????????????
   getPlanForPatientRef(Pid) {
     return this.afs.collection('patientDate').doc(Pid).collection('plans');
   }
+
+
+
+
+
 }

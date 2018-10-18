@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  ViewChild, AfterViewInit} from '@angular/core';
 import { ShowDifficultiesComponent } from '../show-difficulties/show-difficulties.component';
-
+import * as firebase from 'firebase';
 import { DbService, Patient, PatientsDifficult } from '../../services/db.service';
 import { ShareDataService } from '../../services/share-data.service';
 
@@ -15,11 +15,13 @@ export class NewMipuyComponent implements OnInit {
   text: string[];
   patientsForMipuy: Patient[];
   categoriesForFastMipuy = [];
+  findedPatientForDiff = [];
 
    mipuyModeClass = 'modal fade in show'; // when opened it is "modal fade in show"
   fname = ''; // for search
   lname = ''; // for serach
   grade = ''; // for search
+  findByCategory; // for search
   patientState: string;
 selectedcomm = '';
 showWho = 'all';
@@ -35,6 +37,12 @@ selectedOptions: string[] = [];
   flagForFastMipuy = []; // flag [i] = true iff pat num i was changed
   constructor(public db: DbService, public sd: ShareDataService) {}
     ngOnInit() {
+      // guard
+      if ((!this.db.isLogin()) || (!this.db.userNow)) {
+        // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+        this.sd.routeTo('login');
+      }
+      
       this.patientsForMipuy = this.db.allPatientList;
     this.initFastMipuyData();
   }
@@ -90,6 +98,9 @@ closeModal(str: string) {
   isGradePrefix(grade) {
     const filter = this.grade.toUpperCase();
     return (grade.toUpperCase().indexOf(filter) > -1);
+  }
+  isPidExist(Pid) {
+    return (this.findedPatientForDiff.indexOf(Pid) > -1) || (!this.findByCategory) || (this.findByCategory === 'empty');
   }
   initDiffiForNewMipuy() {
    // console.log('inittttttttttttttttt');
@@ -158,7 +169,7 @@ closeModal(str: string) {
 
   saveCategories(values: any[]) {
      const allCat = this.db.treatmentCategories;
-    for(let i = 0; i<values.length; i++ ) {
+    for(let i = 0; i < values.length; i++ ) {
       if (values[i].selected) {
         this.categoriesForFastMipuy.push(allCat[i]);
       }
@@ -166,18 +177,21 @@ closeModal(str: string) {
     console.log(this.categoriesForFastMipuy);
   }
 
-  // onSelectedOptionsChange(values: string[]) {
-  //   const allCat = this.db.treatmentCategories;
-  //   for(let i = 0; i<values.length; i++ ) {
-  //     if (values[i].selected) {
-  //       this.categoriesForFastMipuy.push(values[i]);
-  //     }
-  //   }
-   
-  //   // this._recipeService.favorites = this.selectedOptions;
-  // console.log(values);
-  //   }
-  
+  public findPatientsForDiffi() {
+    if (this.findByCategory && this.findByCategory !== 'empty') {
+      this.findedPatientForDiff = undefined;
+      console.log('cate' + this.findByCategory);
+      const findPat = firebase.functions().httpsCallable('getPatByDiffi');
+      findPat({ text: this.findByCategory }).then(res => {
+        console.log(res);
+        this.findedPatientForDiff = res.data;
+
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+
+  }
 }
 
 

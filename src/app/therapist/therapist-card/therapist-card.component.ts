@@ -17,6 +17,11 @@ export class TherapistCardComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, public db: DbService, public sd: ShareDataService) { }
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
     this.Tid = this.route.snapshot.params['id'];
     if (!this.Tid) {
       this.router.navigate(['/home']);

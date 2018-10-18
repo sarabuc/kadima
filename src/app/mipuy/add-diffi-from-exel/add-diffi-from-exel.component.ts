@@ -9,7 +9,7 @@ import { ShareDataService } from '../../services/share-data.service';
 })
 export class AddDiffiFromExelComponent implements OnInit {
  DfromExel: any [];
-  constructor(public dbs: DbService, public sd: ShareDataService) {
+  constructor(public db: DbService, public sd: ShareDataService) {
 
   }
 
@@ -46,7 +46,7 @@ export class AddDiffiFromExelComponent implements OnInit {
     this.DfromExel.forEach(d => {
       const code = d.Dcode;
 
-      if (this.dbs.isDiffiExist(code)) {
+      if (this.db.isDiffiExist(code)) {
         countExist++;
         i++;
 
@@ -64,7 +64,7 @@ export class AddDiffiFromExelComponent implements OnInit {
        index: '' + d.index,
        allFathers: d.all_fathers
       };
-      this.dbs.addDifficult(dif);
+      this.db.addDifficult(dif);
      // this.PfromExel.splice(this.PfromExel.indexOf(p) , 1);
      // console.log(pati);
       countSuccess++;
@@ -83,6 +83,11 @@ export class AddDiffiFromExelComponent implements OnInit {
 
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+     // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+     this.sd.routeTo('login');
+    }
   }
 
 }

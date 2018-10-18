@@ -41,6 +41,11 @@ export class NewPlanForPatientComponent implements OnInit {
   constructor(public sd: ShareDataService, public db: DbService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
     const id = <string>this.route.snapshot.params['id'];
     if (id.includes('_P_')) {// if true its update plan
       this.status = 'update';
@@ -81,7 +86,8 @@ export class NewPlanForPatientComponent implements OnInit {
           payer: '',
           haveDueDate: false,
           mipuy_id_in_db: '',
-          date: this.sd.convertDateToStringDD_MM_YYYY(new Date())
+          date: this.sd.convertDateToStringDD_MM_YYYY(new Date()),
+          hoursLeft: 0
         };
         this.getPatientByID();
         this.init();
@@ -210,6 +216,7 @@ this.sd.routeTo('/Pcard', this.Pid);
 
   saveMethodsAndTherapist() {
     // if (this.status === 'new') {
+      this.PLAN.hoursLeft = this.PLAN.approvedAmountLesson;
       this.PLAN.parentsApproved = (this.PLAN.parentsApproved) ? this.PLAN.parentsApproved : 'אין אישור';
        this.PLAN.mipuy_id_in_db = '' + this.pat.id + '_' + this.chooesedMipuy.mipuyDate;
       const planDocName = '' + this.PLAN.mipuy_id_in_db + '_P_' + this.PLAN.date;

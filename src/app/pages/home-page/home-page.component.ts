@@ -62,6 +62,11 @@ export class HomePageComponent implements OnInit {
 
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
   }
 
 

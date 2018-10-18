@@ -29,6 +29,11 @@ export class DifficultComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
     this.checkIfIsChoosen();
     if (this.status === 'area') {
       this.status = 'mipuy';

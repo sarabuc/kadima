@@ -14,7 +14,7 @@ export class AddPatientsFromExelComponent implements OnInit {
  successed: number[] = [];
   afterUnload = false;
   urlImg;
-  constructor(public dbs: DbService, public sd: ShareDataService) {
+  constructor(public db: DbService, public sd: ShareDataService) {
   //  this.sd.createAlert('success', 'works', 'halevay');
   }
 
@@ -57,7 +57,7 @@ export class AddPatientsFromExelComponent implements OnInit {
       const pfirstName =  p.first_name;
       const plastName = p.last_name;
 
-      if (this.dbs.isPatientExist(pid)) {
+      if (this.db.isPatientExist(pid)) {
         this.successed[i] = 2;
         countExist++;
 
@@ -83,7 +83,7 @@ export class AddPatientsFromExelComponent implements OnInit {
         haveDificult: 'no',
         strFreeTime: this.sd.FREE_ALL_TIME
       };
-      this.dbs.addPatient(pati);
+      this.db.addPatient(pati);
      // this.PfromExel.splice(this.PfromExel.indexOf(p) , 1);
      // console.log(pati);
       countSuccess++;
@@ -113,7 +113,7 @@ export class AddPatientsFromExelComponent implements OnInit {
       const pfirstName = p.first_name;
       const plastName = p.last_name;
 
-      if (!this.dbs.isPatientExist(pid)) {
+      if (!this.db.isPatientExist(pid)) {
         this.successed[i] = 2;
         countNotExist++;
 
@@ -126,7 +126,7 @@ export class AddPatientsFromExelComponent implements OnInit {
       } else {
        const myPromise = new Promise((resolve, reject) => {
 
-         const patObs: Observable<Patient> =  this.dbs.allPatientsRef.doc<Patient>(pid).valueChanges();
+         const patObs: Observable<Patient> =  this.db.allPatientsRef.doc<Patient>(pid).valueChanges();
          patObs.subscribe(pat => {
             resolve(pat);
           });
@@ -158,7 +158,7 @@ export class AddPatientsFromExelComponent implements OnInit {
         //   pat.birthDate = '' + this.getData(p.birth_date);
         //   pat.grade = '' + this.getData(p.grade);
 
-          this.dbs.updatePatient(pati);
+          this.db.updatePatient(pati);
             countSuccess++;
             this.successed[i] = 1;
         });
@@ -181,6 +181,11 @@ export class AddPatientsFromExelComponent implements OnInit {
 
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
 
   }
   getData(data) {

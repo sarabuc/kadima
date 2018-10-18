@@ -66,26 +66,16 @@ export class AppComponent implements OnInit  {
   getmode() {
     return 'side';
   }
-/*
-  createAlert(type, message, tytle) {
-    if (tytle === '') {
-     // this._alert.create(type, message);
-    } else {
-     // this._alert.create(type, message, tytle);
-    }
-  }*/
 
   apears(user) {
-  //  return (this.dbs.userNameList.indexOf(user) > 0);
+    return (this.db.userNameList.indexOf(user) > 0);
   }
 
   isLogin() {
     return this.db.isLogin();
   }
 
-  // login() {
-  //   this.db.isLoginV = true;
-  // }
+  
   ngOnInit(): void {
     this.route.data.subscribe(routeData => {
       const data = routeData['data'];
@@ -96,29 +86,23 @@ export class AppComponent implements OnInit  {
     });
   }
 
-  // createForm(name) {
-  //   this.profileForm = this.fb.group({
-  //     name: [name, Validators.required]
-  //   });
-  // }
-
-  // save(value) {
-  //   this.userService.updateCurrentUser(value)
-  //     .then(res => {
-  //       console.log(res);
-  //     }, err => console.log(err))
-  // }
-
   logout() {
-    this.authService.doLogout()
-      .then((res) => {
-        this.location.back();
-        this.sd.routeTo('/home');
-        this.db.isLoginV = false;
-        this.sd.createAlert('success', 'יצאת בהצלחה מחשבונך', '');
-      }, (error) => {
-        console.log('Logout error', error);
-        this.sd.createAlert('error', 'יציאה מהחשבון נכשלה', '');
-      });
+    this.db.isLoginV = false;
+    this.sd.routeTo('/home');
+    this.db.userNow = undefined;
+    this.sd.createAlert('success', 'יצאת בהצלחה מחשבונך', '');
   }
+
+  // logout() {
+  //   this.authService.doLogout()
+  //     .then((res) => {
+  //       this.location.back();
+  //       this.sd.routeTo('/home');
+  //       this.db.isLoginV = false;
+  //       this.sd.createAlert('success', 'יצאת בהצלחה מחשבונך', '');
+  //     }, (error) => {
+  //       console.log('Logout error', error);
+  //       this.sd.createAlert('error', 'יציאה מהחשבון נכשלה', '');
+  //     });
+  // }
 }

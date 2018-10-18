@@ -8,12 +8,15 @@ const sendMail_Noti = require("./sendMailAndNoti");
 //import * as ML from './ML';
 //import {find} from 'p-iteration';
 const import_export = require("./exports_imports_data");
+const once_a_day = require("./once-a-day");
 // admin.initializeApp(functions.config().firebase);
 exports.im_ex = import_export.getAllPatientsDataInCSV;
 exports.getMipuysForPatient = getFromFirebase.getMipuysForPatient;
 exports.getOneMipuyByDateAndId = getFromFirebase.getOneMipuyByDateAndId;
+exports.getPatByDiffi = getFromFirebase.getPatientListByDiffiInLastMipuy;
 exports.getMainDiffiAreas = getFromFirebase.getMainDiffiAreas;
 exports.sendMail = sendMail_Noti.helloWorld;
+exports.onceADay = once_a_day.do_once_a_day;
 //export const getMethodWithML = ML.MLFunction;
 //   //have to check for each diffi if it is a leave-
 //   //do it so-

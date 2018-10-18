@@ -17,6 +17,11 @@ export class PatientCardComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, public db: DbService, public sd: ShareDataService) { }
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
     this.Pid = this.route.snapshot.params['id'];
     if (!this.Pid) {
       this.router.navigate(['/home']);

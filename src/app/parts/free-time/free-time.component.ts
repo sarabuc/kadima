@@ -28,6 +28,11 @@ lessons: string[]; /* = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
 }
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
     if (this.status === 'newT' || this.status === 'newP') {
       this.freeTime = this.sd.parseTimeFromStr(this.sd.FREE_ALL_TIME);
       // this.createTime();

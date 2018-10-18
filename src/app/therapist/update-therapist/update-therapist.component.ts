@@ -37,6 +37,11 @@ export class UpdateTherapistComponent implements OnInit {
   }
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
 
     // init
     console.log(this.th);

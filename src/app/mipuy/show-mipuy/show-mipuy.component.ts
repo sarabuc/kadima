@@ -34,6 +34,12 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
 
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
+    
     this.mipuyDecideForPlan.mipuy_id_in_db = '' + this.Pid + '_' + this.mipuyDate;
     this.mipuyDecideForPlan.Pid =  this.Pid ;
   }

@@ -44,11 +44,11 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
   /***************             alert             **************** */
    public createAlert(type, message, tytle) {
      this.alerts.push({ severity: type, summary: tytle, detail: message });
-    /*if (tytle === '') {
-    //  this._alert.create(type, message);
-    } else {
-    //  this._alert.create(type, message, tytle);
-    }*/
+     setTimeout(() => {
+       if (this.alerts[0]) {
+         this.alerts.splice(0, 1);
+       }
+  }  , 3000 );
   }
   public createMessage(type, message, tytle) {
     this.msgs.push({ severity: type, summary: tytle, detail: message });
@@ -157,6 +157,8 @@ this.getAndDownloadFile('exe/patientData.json', 'data.json', 'dawn');
     console.log(err);
   });
 }
+
+
 
 
   getAndDownloadFile(path, fileName, option) {

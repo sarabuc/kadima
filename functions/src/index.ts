@@ -6,13 +6,16 @@ import * as sendMail_Noti from './sendMailAndNoti';
 //import * as ML from './ML';
 //import {find} from 'p-iteration';
 import * as import_export from './exports_imports_data';
+import * as once_a_day from './once-a-day';
 // admin.initializeApp(functions.config().firebase);
 
 export const im_ex = import_export.getAllPatientsDataInCSV;
 export const getMipuysForPatient = getFromFirebase.getMipuysForPatient;
-export const getOneMipuyByDateAndId = getFromFirebase.getOneMipuyByDateAndId
+export const getOneMipuyByDateAndId = getFromFirebase.getOneMipuyByDateAndId;
+export const getPatByDiffi = getFromFirebase.getPatientListByDiffiInLastMipuy;
 export const getMainDiffiAreas = getFromFirebase.getMainDiffiAreas;
 export const sendMail = sendMail_Noti.helloWorld;
+export const onceADay = once_a_day.do_once_a_day;
 //export const getMethodWithML = ML.MLFunction;
           //   //have to check for each diffi if it is a leave-
           //   //do it so-

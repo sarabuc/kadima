@@ -214,6 +214,12 @@ this.sd.createAlert('success', 'added ' + count + 'times', '');
 
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
+    
 
   }
   getData(data) {

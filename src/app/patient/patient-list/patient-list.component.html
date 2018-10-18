@@ -7,15 +7,26 @@
         <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" placeholder="לפי שם פרטי " name="fname" [(ngModel)]="fname">
         <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" placeholder="לפי שם משפחה " name="lname" [(ngModel)]="lname">
         <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" placeholder="לפי  כתה " name="grade" [(ngModel)]="grade">
+        <mat-select class="form-item w-25" name="findByCategory" placeholder="סנן לפי קושי" (selectionChange)="findPatientsForDiffi()" [(ngModel)]="findByCategory">
+            <mat-option value="empty" class="gray">ללא סינון</mat-option>
+            <mat-option value="{{cat.code}}" *ngFor="let cat of db.treatmentCategories">{{cat.code}}</mat-option>
+        </mat-select>
+
     </div>
 
 
+    <div *ngIf="!findedPatientForDiff" class="center w-100">
+        <mat-card class="center">
+            <h4 class="center">טוען...</h4>
+            <mat-spinner class="center"></mat-spinner>
 
+        </mat-card>
+    </div>
 
-    <div class="list-group mt-3 pt-2 ">
-        {{db.allPatientList.length}} תלמידים
+    <div class="list-group mt-3 pt-2 " *ngIf="patientList && findedPatientForDiff">
+        <!-- {{db.allPatientList.length}} תלמידים -->
         <div *ngFor="let p of  db.allPatientList">
-            <a *ngIf="isFnPrefix(p.firstName)&&isLnPrefix(p.lastName)&&isGradePrefix(p.grade)" class="list-group-item link-botton " style="text-align:right" (click)="checkAndRoute(p.id)" [routerLink]="['/Pcard', p.id]">
+            <a *ngIf="isFnPrefix(p.firstName)&&isLnPrefix(p.lastName)&&isGradePrefix(p.grade)&&isPidExist(p.id)" class="list-group-item link-botton " style="text-align:right" (click)="checkAndRoute(p.id)" [routerLink]="['/Pcard', p.id]">
                 <i class="fa fa-user mx-5"></i>{{p.firstName}} {{p.lastName}}</a>
         </div>
     </div>

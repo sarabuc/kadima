@@ -14,7 +14,11 @@ export class TherapistProfileComponent implements OnInit {
   constructor(public sd: ShareDataService, public db: DbService) { }
 
   ngOnInit() {
-
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
   }
 
   editTherapist() {
