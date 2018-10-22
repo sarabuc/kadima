@@ -171,7 +171,7 @@ this.sd.routeTo('/Pcard', this.Pid);
   }
 
   showOneMipuy(d: Mipuy) {
-   // this.showMipuy_V = true;
+    this.showMipuy_V = true;
     this.getOneMipuyForPat(d.mipuyDate);
   }
 
@@ -230,6 +230,8 @@ this.sd.routeTo('/Pcard', this.Pid);
 
         if (dif.value === 'yes' && dif.therapist !== '') {
           this.PLAN['' + dif.Dcode + '_THERAPIST'] = dif.therapist;
+          this.db.addAprovedPlanForTherapist(dif.therapist, planDocName);
+          this.db.addPatientToTherapist(dif.therapist, this.Pid);
         }
       }
       this.db.addPlanForPatient(this.PLAN, planDocName);

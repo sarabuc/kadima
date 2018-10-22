@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { Observable, Subject } from 'rxjs';
 import { map, filter, switchMap } from 'rxjs/operators';
 // import 'rxjs/add/operator/map';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase'
 import { ShareDataService } from './share-data.service';
 
 export interface User {
@@ -175,6 +175,10 @@ comments: string;
   insertBy?: string;
   insertTime?: Date;
 }
+export interface aprovedPlanForTherpist {
+  Tid: string;
+  PlanDocId: string;
+}
 
 
 @Injectable()
@@ -245,6 +249,9 @@ public newMipuy: string[] = [];
      this.allPatientsRef = this.afs.collection('patients');
      this.allPatientsRef.valueChanges().subscribe(pats => {
        this.allPatientList = pats;
+       this.allPatientList.sort((a, b) => {
+         return a.grade.localeCompare(b.grade) || a.lastName.localeCompare(b.lastName) || a.firstName.localeCompare(b.firstName);
+       });
        pats.forEach(pat => {
          this.patientIDList.push(pat.id);
 
@@ -486,6 +493,15 @@ public addMethod(method: Method) {
     });
     }
 
+
+    addAprovedPlanForTherapist(Tid, planDoc) {
+      this.afs.collection('therapist').doc('' + Tid).collection('aprovedPlans').doc('' + planDoc).set({Tid: Tid, planDocId: planDoc});
+    }
+
+    addPatientToTherapist(Tid, Pid) {
+      this.afs.collection('therapist').doc(Tid).update({'patients': firebase.FieldValue.arrayUnion(Pid)});
+    }
+
   /**************************************************** */
   /*****************       update to db           ******* */
 
@@ -594,6 +610,12 @@ return false; // ??????????????????????????????????????????????????
     });
   }
 
+  getAprovedPlansForTherapistByTid(Tid) {
+    return this.afs.collection('plan', ref => {
+      return ref.where('*', '==', Tid);
+    });
+  }
+
   getMethodForDiffiRef() {
     return this.afs.collection('methodForDifficult');
   }
@@ -603,6 +625,7 @@ return false; // ??????????????????????????????????????????????????
   getPlanForPatientRef(Pid) {
     return this.afs.collection('patientDate').doc(Pid).collection('plans');
   }
+
 
 
 

@@ -12,6 +12,8 @@ import { environment } from '../environments/environment';
 import { routing } from './app.routing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { CheckboxModule } from 'primeng/checkbox';
+
 import {InplaceModule} from 'primeng/inplace';
 import {ListboxModule} from 'primeng/listbox';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
@@ -195,6 +197,7 @@ const firebase = {
     ToggleButtonModule,
    InplaceModule,
    OverlayPanelModule,
+    CheckboxModule,
     ListboxModule,
     AngularFireAuthModule,
     routing,

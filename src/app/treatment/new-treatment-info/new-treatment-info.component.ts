@@ -8,7 +8,10 @@ import { ShareDataService } from '../../services/share-data.service';
   styleUrls: ['./new-treatment-info.component.scss']
 })
 export class NewTreatmentInfoComponent implements OnInit {
-
+  canGetInfo = false;
+  canGetPlan = false;
+  canGetTherapist = false;
+  theraPatientList = [];
   @Input() Tid = '';//therapist: Therapist;
   @Input() Pid = ''; //patient: Patient;
   Tname = '';
@@ -23,6 +26,8 @@ export class NewTreatmentInfoComponent implements OnInit {
     if ((!this.db.isLogin()) || (!this.db.userNow)) {
       // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
       this.sd.routeTo('login');
+    } else if(!this.db.userNow.isAdmin) {
+      this.getPatientListForThera()
     }
   }
 saveNewtreatment() {
@@ -64,5 +69,10 @@ this.sd.routeTo('/home');
   getNameOfPatientByPid(Pid) {
     const pat = this.db.allPatientList.find(P => P.id === Pid);
     return pat.firstName + pat.lastName;
+  }
+
+
+  getPatientListForThera() {
+//this.db.getPlanForPatientRef()
   }
 }

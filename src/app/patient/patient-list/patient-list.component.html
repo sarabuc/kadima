@@ -26,8 +26,9 @@
     <div class="list-group mt-3 pt-2 " *ngIf="patientList && findedPatientForDiff">
         <!-- {{db.allPatientList.length}} תלמידים -->
         <div *ngFor="let p of  db.allPatientList">
-            <a *ngIf="isFnPrefix(p.firstName)&&isLnPrefix(p.lastName)&&isGradePrefix(p.grade)&&isPidExist(p.id)" class="list-group-item link-botton " style="text-align:right" (click)="checkAndRoute(p.id)" [routerLink]="['/Pcard', p.id]">
-                <i class="fa fa-user mx-5"></i>{{p.firstName}} {{p.lastName}}</a>
+            <a *ngIf="isFnPrefix(p.firstName)&&isLnPrefix(p.lastName)&&isGradePrefix(p.grade)&&isPidExist(p.id)" class="list-group-item link-botton " style="text-align:right" (click)="checkAndRoute(p.id)" >
+              <!-- [routerLink]="['/Pcard', p.id]" -->
+                <i class="fa fa-user mx-5"></i>{{p.firstName}} {{p.lastName}} |    כתה {{p.grade}}</a>
         </div>
     </div>
 </div>

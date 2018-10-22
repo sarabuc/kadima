@@ -1,6 +1,11 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import { checkServerIdentity } from 'tls';
+// import { checkServerIdentity } from 'tls';
+
+export const getPatientListForTherapist = functions.https.onCall(async (data, context) => {
+
+});
+
 
 export const getPatientListByDiffiInLastMipuy = functions.https.onCall(async (data, context) => {
   const db = admin.firestore();

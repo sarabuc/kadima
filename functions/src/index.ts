@@ -14,7 +14,9 @@ export const getMipuysForPatient = getFromFirebase.getMipuysForPatient;
 export const getOneMipuyByDateAndId = getFromFirebase.getOneMipuyByDateAndId;
 export const getPatByDiffi = getFromFirebase.getPatientListByDiffiInLastMipuy;
 export const getMainDiffiAreas = getFromFirebase.getMainDiffiAreas;
-export const sendMail = sendMail_Noti.helloWorld;
+export const sendMail3 = sendMail_Noti.sendWelcomeEmailFunc2;
+export const sendMail2 = sendMail_Noti.sendByeEmailFunc;
+//export const sendMail = sendMail_Noti.helloWorld;
 export const onceADay = once_a_day.do_once_a_day;
 //export const getMethodWithML = ML.MLFunction;
           //   //have to check for each diffi if it is a leave-

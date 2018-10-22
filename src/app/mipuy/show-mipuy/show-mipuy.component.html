@@ -2,7 +2,7 @@
     <div class="row d-flex justify-content-between">
         <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate}}</strong></h3> <!-- | date: 'MM/dd/yyyy'-->
         <a class="yellow-text" (click)="showplan.show()" *ngIf="planP && status != 'plan'">צפה בתכנון טיפול</a>
-        <a class="gray-text" *ngIf="!planP && status != 'plan'">אין תכנון טיפול</a>
+        <a class="gray-text" *ngIf="!planP && status != 'plan'" [routerLink]="['/plan', Pid]">התחל תכנון טיפול</a>
 
     </div>
 

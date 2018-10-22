@@ -84,15 +84,15 @@
             <div class="list-group mt-1 pt-2  w-90" *ngIf="showListMipuy_V">
                 <div *ngFor="let d of mipuyDates ">
                     <a class="list-group-item link-botton " style="text-align:right" (click)="showOneMipuy(d)">
-                        <i class="fa fa-check mx-5"></i>{{d.mipuyDate | date: 'dd/MM/yyyy'}}</a>
+                        <i class="fa fa-check mx-5"></i>{{d.mipuyDate }}</a>
+                        <!--| date: 'dd/MM/yyyy'-->
                 </div>
             </div>
-            <div class=" gray lighten-2 my-3 purple-text" *ngIf="showMipuy_V">
+            <div class="gray lighten-2 my-3 purple-text" *ngIf="showMipuy_V">
                 <div *ngIf="!chooesedMipuy" class="center">
                     <mat-card class="center">
                         <h4 class="center">טוען...</h4>
                         <mat-spinner class="center"></mat-spinner>
-
                     </mat-card>
                 </div>
                 <div *ngIf="chooesedMipuy == 'no-mipuy'">לא קימים מיפוים עבור תלמיד זה</div>

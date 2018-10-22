@@ -1,4 +1,4 @@
-<div>
+03<div>
     <div>
         <div class="row d-flex mx-3 px-3">
             <h1 class="h1-responsive mt-3 purple-text mb-3"> מיפוי חדש
@@ -88,6 +88,9 @@
                             <th class="white-text" *ngIf="!checkedFastMipuy">תעודת זהות
                                 <div>תעודת זהות</div>
                             </th>
+                             <th class="white-text">כתה 
+                                <div>כתה </div>
+                            </th>
                             <th class="white-text">שם פרטי
                                 <div>שם פרטי </div>
                             </th>
@@ -120,12 +123,13 @@
                     <!-- *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)"> -->
                     <tbody *ngFor="let pat of patientsForMipuy; let i=index">
 
-                        <tr *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&isGradePrefix(pat.grade)&&(showWho=='all'||pat.haveDificult==showWho)&&isPidExist(p.id)">
+                        <tr *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&isGradePrefix(pat.grade)&&(showWho=='all'||pat.haveDificult==showWho)&&isPidExist(pat.id)">
                             <th scope="row">
                                 <!-- <input class="form-check-input" type="checkbox" id="checkbox1">
                                 <label class="form-check-label" for="checkbox1" class="label-table"></label> -->
                             </th>
                             <td *ngIf="!checkedFastMipuy">{{pat.id}}</td>
+                            <td>{{pat.grade}}</td>
                             <td>{{pat.firstName}}</td>
                             <td>{{pat.lastName}}</td>
                             <td>{{pat.grade}}</td>
@@ -160,8 +164,13 @@
                                     <i class="fa fa-2x fa-id-card-o purple-text ml-2 mr-2"></i>
                                 </a>
 
-                                <button type="button" class="btn btn-outline-secondary btn-sm " mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom">
-                               התחל מיפוי </button>
+                                <!-- <a type="button" class="cosmu-link purple-text" mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom" style="text-decoration: underline;">
+                               התחל מיפוי </a> 
+                                <a type="button" class="btn btn-secondary btn-sm " mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom" style="text-decoration: underline;">
+                               התחל טיפול חדש </a> -->
+                             <button type="button" class="btn btn-sm btn-outline-secondary" mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom">התחל מיפוי</button>
+                             <button type="button" class="btn btn-outline-secondary btn-sm" mdbWavesEffect #startMipuy  [routerLink]="['/plan', pat.id]" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף טיפול" placement="bottom">התחל טיפול</button>
+
                             </td>
 
 

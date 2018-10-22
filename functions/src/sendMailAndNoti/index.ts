@@ -1,93 +1,87 @@
+//'use strict';
+import * as  functions from 'firebase-functions';
+import * as  nodemailer from 'nodemailer';
+// Configure the email transport using the default SMTP transport and a GMail account.
+// For Gmail, enable these:
+// 1. https://www.google.com/settings/security/lesssecureapps
+// 2. https://accounts.google.com/DisplayUnlockCaptcha
+// For other types of transports such as Sendgrid see https://nodemailer.com/transports/
+// TODO: Configure the `gmail.email` and `gmail.password` Google Cloud environment variables.
 
-// using SendGrid's v3 Node.js Library
-// https://github.com/sendgrid/sendgrid-nodejs
-import * as functions from 'firebase-functions';
-import * as request from 'request';
-//import * as sgMail from '@sendgrid/mail';
 
-export const helloWorld = functions.https.onRequest((req, response) => {
- 
-  request.get('https://afternoon-atoll-13086.herokuapp.com', function (error, respo, body) {
-    console.log('error:', error); // Print the error if one occurred 
-    console.log('statusCode:', respo && respo.statusCode); // Print the response status code if a response was received 
-    console.log('body:', body); //Prints the response of the request. 
-  });
+// [START sendWelcomeEmail]
+/**
+ * Sends a welcome email to new user.
+ */
+// [START onCreateTrigger]
+export const sendWelcomeEmailFunc2 = functions.https.onRequest(async (req, res) => {
+    console.log('works');
+    const gmailEmail = functions.config().gmail.email;
+    console.log(gmailEmail);
+    const gmailPassword = functions.config().gmail.password;
+    console.log(gmailPassword);
+    const mailTransport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: gmailEmail,
+            pass: gmailPassword,
+        },
+    });
 
-  // https.get('https://afternoon-atoll-13086.herokuapp.com/', resp => {
-  //   let data = '';
-
-  //   // A chunk of data has been recieved.
-  //   resp.on('data', chunk => {
-  //     data += chunk;
-  //   });
-
-  //   // The whole response has been received. Print out the result.
-  //   resp.on('end', () => {
-  //     console.log(JSON.parse(data).explanation);
-  //   });
-
-  // }).on("error", err => {
-  //   console.log("Error: " + err.message);
-  // });
+    // Your company name to include in the emails
+    // TODO: Change this to your app or company name to customize the email sent.
+    const APP_NAME = 'קדימה לקידם תלמידים';
+    const email = '5324270@gmail.com'; // The email of the user.
   
+    console.log('mail: ' + gmailEmail + 'password ' + gmailPassword + 'user: ' + email);
+   // const displayName = user.displayName; // The display name of the user.
+    // [END eventAttributes]
+
+    const mailOptions = {
+        from: `${APP_NAME} <noreply@firebase.com>`,
+        to: email,
+        subject: 'שלום לך',
+        text: 'cgv hvhv cxsr'
+    };
+
+    // The user subscribed to the newsletter.
+    // mailOptions['subject'] = `Welcome to ${APP_NAME}!`;
+    //  mailOptions['text'] = `Hey ${displayName || ''}! Welcome to ${APP_NAME}. I hope you will enjoy our service.`;
+     mailTransport.sendMail(mailOptions).then((result) => {
+         console.log('New welcome email sent to:', email + result); 
+         res.send(result); 
+     }).catch((err) => {
+         console.error(err);
+         res.send(err);
+     });
+    
+});
+// [END sendWelcomeEmail]
+
+// [START sendByeEmail]
+/**
+ * Send an account deleted email confirmation to users who delete their accounts.
+ */
+// [START onDeleteTrigger]
+export const sendByeEmailFunc = functions.auth.user().onDelete((user) => {
+    // [END onDeleteTrigger]
+    const email = user.email;
+    const displayName = user.displayName;
+
+    //return sendGoodbyeEmail(email, displayName);
 });
 
-  /*const SENDGRID_API_KEY = firebaseConfig.sendgrid.key;
-  sgMail.setApiKey(SENDGRID_API_KEY);*/
-//sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  // sgMail.setApiKey(functions.config().sendgrid.key);
-  // const msg = {
-  //   to: 'sm5800810@gmail.com', // user.email,
-  //   from: 'kadima1313@gmail.com',
-  //   subject: 'New Follower',
-  //   text: 'and easy to do anywhere, even with Node.js',
 
-    // custom templates
-    //templateId: 'd-da927ddaea9e4881a36fcdad722e4751',
-    //substitutionWrappers: ['{{', '}}'],
-    // substitutions: {
-    //   name: user.displayName
-    //   // and other custom properties here
-    // }
-  //};
-// const msg = {
-//   to: 'sm5800810@gmail.com',
-//   from: 'kadima1313@gmail.com',
-//   subject: 'Sending with SendGrid is Fun',
-//   text: 'and easy to do anywhere, even with Node.js',
-//   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-// };
-// sgMail.send(msg).then(res => {
-//   console.log(res);
-// }).catch(err => {
-//   console.error(err);
-// });
-//   response.status(200).send('success');
-// });
+// // Sends a goodbye email to the given user.
+// async function sendGoodbyeEmail(email, displayName) {
+//     const mailOptions = {
+//         from: `${APP_NAME} <noreply@firebase.com>`,
+//         to: email,
+//     };
 
-/*<html>
-    <head>
-      <title></title>
-  
-    </head>
-    <body style="text-align:center" >
-      <h1 style="font-size:60px ; color:purple">תזכורת</h1>
-      <br>
-     <p>   לעדכן תכנון טיפול עבור </p>
-    <a href="https://kadima1-fa119.firebaseapp.com">למעבר לקדימה לחץ כאן</a>
-      <img src='https://marketing-image-production.s3.amazonaws.com/uploads/30ab38917bc6e6ffbea84335d03054a13d615e494db8ec16da445acbef9a379e5f4a3de5b6ddd4fefd8ed190bceb307b0dd45403b4f638110ddac98c5ad7e1d8.png' class="center w-50" alt="">
-       <style>
-        .center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        }
-        .w-50 {
-           width: 50%;
-        }
-        </style> 
-      
-    </body>
-  
-    </html>
-  */
+//     // The user unsubscribed to the newsletter.
+//     mailOptions['subject'] = `Bye!`;
+//     mailOptions['text'] = `Hey ${displayName || ''}!, We confirm that we have deleted your ${APP_NAME} account.`;
+//     await mailTransport.sendMail(mailOptions);
+//     console.log('Account deletion confirmation email sent to:', email);
+// }

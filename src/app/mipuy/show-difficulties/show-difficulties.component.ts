@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges } 
 import { ShareDataService } from '../../services/share-data.service';
 import { DbService, PatientsDifficult } from '../../services/db.service';
 import { DifficultComponent } from '../difficult/difficult.component';
-import { Button } from 'selenium-webdriver';
+
 
 @Component({
   selector: 'app-show-difficulties',
