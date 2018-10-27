@@ -5,6 +5,8 @@ import { DatePipe } from '@angular/common';
 // import { AlertType } from '@jaspero/ng-alerts';
 import {Router, ActivatedRoute} from '@angular/router';
 import * as firebase from 'firebase';
+import * as hebrewDate from 'hebrew-date';
+// const hebrewDate = require('hebrew-date');
 import { MessageService } from 'primeng/components/common/messageservice';
 import { saveAs } from 'file-saver/FileSaver';
 @Injectable()
@@ -36,7 +38,7 @@ public daysName = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמיש
 public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30' ];
   constructor(/*private _alert: AlertsService*/ private router: Router, private messageService: MessageService, public datepipe: DatePipe) {
     this.initFREE_ALL_TIME();
-
+    console.log(this.convertDateToHebrewDate(26, 10, 2018));
   }
 
 
@@ -135,7 +137,35 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
     }
 
   }
+convertDateToHebrewDate(date, month, year) {
+  const Hdate =  hebrewDate(year, month, date);
+  console.log(Hdate);
+  return this.getHebrewDate(Hdate.date) + ' ' + this.getHebrewMonth(Hdate.month) + ' ' + this.getHebrewYear(Hdate.year);
+  // [a.slice(0, position), b, a.slice(position)].join('');
+}
 
+ private getHebrewYear(year) {
+   const yearS = '' + year;
+   return this.getGimatryMeot(yearS[1]) + this.getGimatryAsarot(yearS[2]) + this.getGimatryYechidot(yearS[3]);
+  }
+  private getGimatryYechidot(num) {
+    return ['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט'][num];
+  }
+  private getGimatryAsarot(num) {
+    console.log(num);
+    return ['', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', ''][num];
+  }
+  private getGimatryMeot(num) {
+    console.log(num);
+    return ['', 'ק', 'ר', 'ש', 'ת', 'תק', 'תר', 'תש', 'תת', 'תתק', ''][num];
+  }
+ private getHebrewMonth(month) {
+return ['', 'תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר ב', 'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'][month];
+  }
+private  getHebrewDate(date) {
+return ['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח',
+ 'י"ט', 'כ', 'כ"א', 'כ"ב', 'כ"ג', 'כ"ד', 'כ"ה', 'כ"ו', 'כ"ז', 'כ"ח', 'כ"ט', 'ל'][date];
+  }
 public convertDateToString(date: Date) {
 
  return this.datepipe.transform(date, 'dd-MM-yyyy');
@@ -159,7 +189,23 @@ this.getAndDownloadFile('exe/patientData.json', 'data.json', 'dawn');
 }
 
 
+deleteFile(filePath: string, fileName, planDocId, Pid) {
+  // Create a reference to the file to delete
+  const desertRef = firebase.storage().ref(filePath);
 
+  // Delete the file
+  desertRef.delete().then(res => {
+    // File deleted successfully
+    // have delete from plans collection
+    const object: any = {};
+    object[fileName] = firebase.firestore.FieldValue.delete();
+    firebase.firestore().collection('patientDate').doc(Pid).collection('plans').doc(planDocId).update(object);
+    
+      this.createAlert('success', 'קובץ נמחק בהצלחה', '');
+  }).catch(err => {
+    // Uh-oh, an error occurred!
+  });
+}
 
   getAndDownloadFile(path, fileName, option) {
 

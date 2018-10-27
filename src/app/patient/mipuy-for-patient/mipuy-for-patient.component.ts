@@ -14,7 +14,7 @@ export class MipuyForPatientComponent implements OnInit {
 allMipuy: any;
 mipuyDates: Mipuy[] = [];
 mipuyForPatientRef: any;
- mipuyModeClass = 'modal fade in show'; // when opened it is "modal fade in show"
+ mipuyModeClass = 'modal fade in show top'; // when opened it is "modal fade in show"
   constructor(public db: DbService, public sd: ShareDataService) { }
 
   ngOnInit() {
@@ -63,7 +63,7 @@ getAllMipuysForPat() {
   closeModal(str: string) {
   // console.log('*********************************************' + str + this.mipuyModeClass);
   if (str === 'finish') {
- this.mipuyModeClass = 'modal fade';
+ this.mipuyModeClass = 'modal fade top';
   }
 }
 

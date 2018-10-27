@@ -22,13 +22,15 @@
                         <textarea matInput class="form-item" type="text" name="history" placeholder="הסטוריה בקצרה " [(ngModel)]="PLAN.history"></textarea>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 col-sm-12  ml-2  text-right">
+                <div class="row col-md-12 col-sm-12  ml-2  text-right">
                     <mat-form-field class=" w-80 mr-auto ml-auto ">
 
                         <mat-select class="form-item form-item-select" name="parentsConfirm" placeholder="האם יש אישור הורים" [(ngModel)]="PLAN.parentsApproved">
                             <mat-option value="{{o}}" *ngFor="let o of optionsForParentConfirm">{{o}}</mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <a class="mt-auto mb-auto mr-1 yellow-text" (click)="showParentsDetails.show()" >פרטי התקשרות</a>
+
                 </div>
                 <div class="col-md-12 col-sm-12  ml-2  text-right">
                     <mat-form-field class=" w-80">
@@ -38,11 +40,13 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-12 col-sm-12  ml-2  text-right">
+                <div class="row col-md-12 col-sm-12  ml-2  text-right">
                     <mat-form-field class=" w-80">
                         <input matInput class="form-item" type="number" name="amountConfirmLessons" placeholder="מספר שעות מאושר " [(ngModel)]="PLAN.approvedAmountLesson">
                         <mat-error *ngIf="!amountConfirmLessons">חובה להכניס מספר שעות </mat-error>
                     </mat-form-field>
+                 <a class="mt-auto mb-2 mr-1 yellow-text"  >מספר שעות שנותרו : {{PLAN.hoursLeft}} </a>
+
                 </div>
                 <div class="col-md-12 col-sm-12  ml-2  text-right">
 
@@ -216,6 +220,8 @@
                 <div class="list-group-item  mx-1 row d-flex justify-content-between" *ngFor="let file of planFiles">
                     <p class="black-text">{{file.fileName}}</p>
                     <div>
+                     <a (click)="deleteFile(file.file)" class="purple-text mx-2">מחק קובץ</a>
+
                         <!-- <a (click)="showFileInBrouser(file.file)" class="purple-text mx-2">הצג קובץ</a>
                             <a (click)="dawnloadFile(file.file, file.fileName)" class="purple-text mx-2">הורד קובץ</a> -->
 
@@ -227,7 +233,7 @@
                 <h3 class="purple-text pt-4">האם אתה בטוח שסימת את תכנון הטיפול?</h3>
 
                 <mat-divider></mat-divider>
-                <button type="button" #btnn class="btn purple" (click)="finishPlan()">שמור וסיים</button>
+                <button type="button" #btnn class="btn purple" (click)="finishPlan()" [disabled]="!chooesedMipuy">שמור וסיים</button>
                 <br>
                 <br>
                 <br>
@@ -258,6 +264,16 @@
                 <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist()">שמירה בלבד</button>
                 <button type="button" mdbBtn color="primary" class="btn  purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist(); cretaNewConnections()">שמירה ועדכון</button>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<div mdbModal #showParentsDetails="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+             <app-patient-profile [pat]="pat" [Pid]="Pid" [status]="'show'" *ngIf="pat"></app-patient-profile>
+
         </div>
     </div>
 </div>

@@ -2,11 +2,6 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 // import { checkServerIdentity } from 'tls';
 
-export const getPatientListForTherapist = functions.https.onCall(async (data, context) => {
-
-});
-
-
 export const getPatientListByDiffiInLastMipuy = functions.https.onCall(async (data, context) => {
   const db = admin.firestore();
   const diffi = data.text;
@@ -140,18 +135,12 @@ export const getMipuysForPatient = functions.https.onCall(async (data, context) 
   try {
     const db = admin.firestore();
     const Pid = data.text;
-    // const db = admin.firestore();
-
     const mipuys = await db.collection('mipuy').where('Pid', '==', Pid).get();
     console.log('mipuys:' + mipuys.docs.length);
     if (mipuys.docs.length <= 0) {
       return 'no-mipuy';
     }
-    // const mipuys = mipuysT.docs.filter((item, pos) =>{
-    //   return mipuysT.docs.indexOf(item) === pos;
-    // });
     const allDiffi = await db.collection('difficults').get();
-    //const mainAreas = await db.collection('difficults').where('Dfather', '==', 'null').get();
     const allMipuysForPatient = [];
 
 

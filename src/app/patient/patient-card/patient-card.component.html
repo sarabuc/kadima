@@ -10,7 +10,9 @@
     <h3 class="purple-text h3 mt-2 mb-2">{{pat.firstName}} {{pat.lastName}} | <small> כתה {{pat.grade}}</small></h3>
     <mat-tab-group class="demo-tab-group" mat-stretch-tabs dynamicHeight [(selectedIndex)]="sd.activeTabIndex">
         <mat-tab label="פרטים אישיים">
-            <app-patient-profile [pat]="pat" [Pid]="Pid"></app-patient-profile>
+            <app-patient-profile [pat]="pat" [Pid]="Pid" [status]="'card'"></app-patient-profile>
+            <app-time-table-to-show [timeStr]="pat.strFreeTime"></app-time-table-to-show>
+
         </mat-tab>
         <mat-tab label="ערוך  פרטי תלמיד ">
             <app-update-patient [pat]="pat"></app-update-patient>

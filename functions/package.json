@@ -14,7 +14,6 @@
         "@sendgrid/mail": "^6.3.1",
         "@types/json2csv": "^4.2.0",
         "@types/node": "^10.5.7",
-        "child-process-promise": "^2.2.1",
         "csv-file-creator": "^1.0.8",
         "dot-object": "^1.7.0",
         "emailjs": "^2.2.0",

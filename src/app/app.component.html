@@ -1,40 +1,48 @@
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark purple fixed-top scrolling-navbar" *ngIf="db.isLogin()">
+<mdb-navbar SideClass="navbar  navbar-dark purple fixed-top " *ngIf="db.isLogin()">
 
-    <!-- Navbar brand -->
-    <logo><a class="white-text" (click)="start.toggle(undefined, 'mouse')" mdbTooltip="תפריט" placement="bottom"><i class="fa fa-navicon fa-2x"></i></a>
+    <!-- Navbar brand  scrolling-navbar navbar-expand-lg class="collapse navbar-collapse" id="navbarSupportedContent"-->
+   <logo class="w-100">
+   <div class="row d-flex justify-content-between">
+   <div>
+    <a class="white-text" (click)="start.toggle(undefined, 'mouse')" mdbTooltip="תפריט" placement="bottom"><i class="fa fa-navicon fa-2x"></i></a>
 
         <a class="navbar-brand" [routerLink]="'/home'">
             <h2><strong>קדימה    </strong></h2>
         </a>
-    </logo>
-    <links>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+   <!-- <links>-->
+   </div>
+        <div style="display: -webkit-inline-box;" class="mt-2">
             <ul class="navbar-nav nav-flex-icons mr-auto">
-                <li class="nav-item">
+            
+                <li class="nav-item mx-2">
 
-                    <a class="nav-link" target="_blank" *ngIf='user.provider != "password"'>
+                    <a class="nav-link " target="_blank" >
                                 {{db.userNow.name}}
                                 <i class="fa fa-user"></i>
                                 </a>
-                    <a class="nav-link" target="_blank" *ngIf='user.provider == "password"'>
-                        <i class="fa fa-user"></i>
-                    </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link border border-light rounded" (click)="logout()" target="_blank">
+                <li class="nav-item mx-2">
+                    <a class="nav-link border border-light rounded mx-2" (click)="logout()" target="_blank">
                                 יציאה
                                 </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mx-2">
                     <a class="nav-link" target="_blank"></a>
                 </li>
-                <li class="nav-item" [routerLink]="'/contact'">
+                <li class="nav-item mx-2" [routerLink]="'/contact'">
                     <a class="nav-link" target="_blank">צור קשר</a>
+                </li>
+                 <li class="nav-item mx-2">
+                    <a class="nav-link" target="_blank">
+                    <i class="fa fa-envelope" (click)="showM.show()" ></i>
+                    </a>
                 </li>
             </ul>
         </div>
-    </links>
+        </div>
+            </logo>
+ <!--   </links>-->
 </mdb-navbar>
 
 
@@ -84,3 +92,14 @@
 <!--
 <jaspero-alerts class="alerts " [defaultSettings]="options "></jaspero-alerts>
 -->
+
+
+
+
+<div mdbModal #showM="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+<app-create-massage-for-user></app-create-massage-for-user>
+        </div>
+    </div>
+</div>

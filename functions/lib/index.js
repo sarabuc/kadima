@@ -5,7 +5,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const getFromFirebase = require("./get-from-db-storage");
 const sendMail_Noti = require("./sendMailAndNoti");
-//import * as ML from './ML';
+const ML = require("./ML");
 //import {find} from 'p-iteration';
 const import_export = require("./exports_imports_data");
 const once_a_day = require("./once-a-day");
@@ -16,9 +16,9 @@ exports.getOneMipuyByDateAndId = getFromFirebase.getOneMipuyByDateAndId;
 exports.getPatByDiffi = getFromFirebase.getPatientListByDiffiInLastMipuy;
 exports.getMainDiffiAreas = getFromFirebase.getMainDiffiAreas;
 exports.sendMail3 = sendMail_Noti.sendWelcomeEmailFunc2;
-exports.sendMail2 = sendMail_Noti.sendByeEmailFunc;
 //export const sendMail = sendMail_Noti.helloWorld;
 exports.onceADay = once_a_day.do_once_a_day;
+exports.MLFunc = ML.MLFunction;
 //export const getMethodWithML = ML.MLFunction;
 //   //have to check for each diffi if it is a leave-
 //   //do it so-

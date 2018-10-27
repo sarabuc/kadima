@@ -1,6 +1,11 @@
 <div class="pr-3 pl-3 border-top pt-1">
     <div class="" (mouseleave)="goHover = false" (mouseenter)="goHover = true">
         <div [class]="dificlass">
+      <small>  
+      <i class="fa fa-plus ml-1 grey-text" (click)="childrenAreOpen = true" *ngIf="!childrenAreOpen && !isLeave"></i>
+      <i class="fa fa-plus ml-1 white-text"  *ngIf="isLeave"></i>
+      <i class="fa fa-minus ml-1 grey-text" (click)="childrenAreOpen = false" *ngIf="childrenAreOpen && !isLeave"></i>
+      </small>
             <p-checkbox #diffi value="{{describtion}}" label="{{describtion}}" (onChange)="updateDiffiStatus(diffi.checked)"></p-checkbox>
             <!-- <mat-checkbox #diffi (change)="updateDiffiStatus(diffi.checked)">{{describtion}}</mat-checkbox> -->
         </div>
@@ -23,7 +28,7 @@
 
         </div>
     </div>
-    <div class="mr-8" *ngIf="isChoozen">
+    <div class="mr-8" *ngIf=" childrenAreOpen">
         <!-- children -->
         <app-difficult *ngFor="let child of childDifficults" [status]="status" [code]="child.code" [describtion]="child.description" [index]="child.index" [allFathers]="child.allFathers"></app-difficult>
     </div>

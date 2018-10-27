@@ -78,6 +78,7 @@ export class NewPlanForPatientComponent implements OnInit {
         this.sd.createAlert('error', 'שגיאה בהעברת נתונים, נא נסה שוב', '');
 
       } else {
+        this.init();
         this.PLAN = {
           Pid: this.Pid,
           history: '',
@@ -90,7 +91,7 @@ export class NewPlanForPatientComponent implements OnInit {
           hoursLeft: 0
         };
         this.getPatientByID();
-        this.init();
+       
         this.helpMeChooseMAndT();
       }
     }
@@ -117,7 +118,8 @@ this.sd.routeTo('/Pcard', this.Pid);
     this.db.getMipuyForPatient(this.Pid).subscribe(M => {
       if (M.length < 1) {
         this.sd.createAlert('error', 'לא הוגדר מיפוי לתלמיד זה', '');
-        this.sd.routeTo('/Pcard', this.Pid);
+     //   this.sd.routeTo('/Pcard', this.Pid);
+        this.sd.routeTo('/Pcards', 'plan');
       }
       this.mipuyDates = M;
     });
@@ -154,6 +156,8 @@ this.sd.routeTo('/Pcard', this.Pid);
   }
 
   getOneMipuyForPat(selectedDate) {
+    this.showMipuy_V = true;
+
     console.log(selectedDate);
     this.showListMipuy_V = false;
     this.chooesedMipuy = undefined;
@@ -163,9 +167,12 @@ this.sd.routeTo('/Pcard', this.Pid);
       console.log(res);
       this.chooesedMipuy = res.data;
         this.initDiffiForPlan();
-      this.showMipuy_V = true;
+      this.showMipuy_V = false;
+
     }).catch(err => {
       this.chooesedMipuy = 'no internet';
+      this.showMipuy_V = false;
+
       console.log(err);
     });
   }
@@ -230,8 +237,7 @@ this.sd.routeTo('/Pcard', this.Pid);
 
         if (dif.value === 'yes' && dif.therapist !== '') {
           this.PLAN['' + dif.Dcode + '_THERAPIST'] = dif.therapist;
-          this.db.addAprovedPlanForTherapist(dif.therapist, planDocName);
-          this.db.addPatientToTherapist(dif.therapist, this.Pid);
+          this.db.addAprovedPlanForTherapist(dif.therapist, planDocName, this.Pid);
         }
       }
       this.db.addPlanForPatient(this.PLAN, planDocName);
@@ -279,6 +285,10 @@ this.sd.routeTo('/Pcard', this.Pid);
   }
   filterMethodForTherapist(Mcode) {
     return this.therapistsForMethod.filter(item => item.Mcode === Mcode);
+  }
+
+  deleteFile(file) {
+    this.sd.deleteFile('' + this.PLAN.Pid + '/' + file, file, this.PLAN.mipuy_id_in_db + '_P_' + this.PLAN.date, this.Pid);
   }
 
 

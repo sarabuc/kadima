@@ -34,7 +34,6 @@ export interface Therapist {
   comment: string;
   insertBy?: string;
   insertTime?: Date;
-
 }
 export interface Patient {
   id: string;
@@ -178,6 +177,7 @@ comments: string;
 export interface aprovedPlanForTherpist {
   Tid: string;
   PlanDocId: string;
+  Pid: string;
 }
 
 
@@ -217,6 +217,15 @@ public userNow: User;
 public isLoginV = false;
 public newMipuy: string[] = [];
 
+// for patient list filter
+public filteredPatientList = [];
+  fname = '';
+  lname = '';
+  grade = '';
+  findByCategory;
+
+// end for patient list filter
+
   constructor(public afs: AngularFirestore , private sd: ShareDataService) {
     // get all users
     this.allUsersRef = this.afs.collection('users');
@@ -252,6 +261,7 @@ public newMipuy: string[] = [];
        this.allPatientList.sort((a, b) => {
          return a.grade.localeCompare(b.grade) || a.lastName.localeCompare(b.lastName) || a.firstName.localeCompare(b.firstName);
        });
+        this.filteredPatientList = this.allPatientList;
        pats.forEach(pat => {
          this.patientIDList.push(pat.id);
 
@@ -494,13 +504,21 @@ public addMethod(method: Method) {
     }
 
 
-    addAprovedPlanForTherapist(Tid, planDoc) {
-      this.afs.collection('therapist').doc('' + Tid).collection('aprovedPlans').doc('' + planDoc).set({Tid: Tid, planDocId: planDoc});
-    }
+    addAprovedPlanForTherapist(Tid, planDoc, Pid) {
+    this.afs.collection('therapist').doc(Tid).collection('patient').doc(planDoc).set({
+      Tid: Tid, 
+      Pid: Pid, 
+      planDocId: planDoc});
 
-    addPatientToTherapist(Tid, Pid) {
-      this.afs.collection('therapist').doc(Tid).update({'patients': firebase.FieldValue.arrayUnion(Pid)});
-    }
+    // const updataList = firebase.functions().httpsCallable('setPatientForTherapist');
+    // updataList({ Tid: Tid, Pid: Pid }).then(res => {
+    //   console.log(res);
+    // }).catch(err => {
+    //   this.sd.createAlert('error', 'ארעה שגיאה במהלך השמירה יתכן וחלק מהנתונים לא נשמרו', '');
+    //   console.log(err);
+    // });
+  }
+    
 
   /**************************************************** */
   /*****************       update to db           ******* */

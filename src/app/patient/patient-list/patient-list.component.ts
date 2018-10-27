@@ -9,10 +9,11 @@ import * as firebase from 'firebase';
   styleUrls: ['./patient-list.component.css']
 })
 export class PatientListComponent implements OnInit {
-  fname = '';
-  lname = '';
-  grade = '';
-  findByCategory;
+  // moved to db service
+  // fname = '';
+  // lname = '';
+  // grade = '';
+  // findByCategory;
   patientList: any[];
   status;
   findedPatientForDiff = [];
@@ -24,7 +25,7 @@ export class PatientListComponent implements OnInit {
       // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
       this.sd.routeTo('login');
     }
-    
+    this.patientList = this.db.filteredPatientList;
     this.status = this.route.snapshot.params['status'];
     if (!this.status) {
       this.router.navigate(['/home']);
@@ -36,22 +37,29 @@ export class PatientListComponent implements OnInit {
 
 // for search
   isGradePrefix(grade) {
-    const filter = this.grade.toUpperCase();
+    const filter = this.db.grade.toUpperCase();
     return (grade.toUpperCase().indexOf(filter) > -1);
   }
   isFnPrefix(fn) {
-    const filter = this.fname.toUpperCase();
+    const filter = this.db.fname.toUpperCase();
     return (fn.toUpperCase().indexOf(filter) > -1);
   }
   isLnPrefix(ln) {
-    const filter = this.lname.toUpperCase();
+    const filter = this.db.lname.toUpperCase();
     return (ln.toUpperCase().indexOf(filter) > -1);
   }
   isPidExist(Pid) {
-    return (this.findedPatientForDiff.indexOf(Pid) > -1) || (!this.findByCategory) || (this.findByCategory === 'empty');
+    return (this.findedPatientForDiff.indexOf(Pid) > -1) || (!this.db.findByCategory) || (this.db.findByCategory === 'empty');
   }
 
+
+
 checkAndRoute(pat) {
+
+  this.db.filteredPatientList = this.db.allPatientList.filter(P => this.isGradePrefix(P.grade) &&
+                                                                  this.isFnPrefix(P.firstName) &&
+                                                                   this.isLnPrefix(P.lastName) &&
+                                                                   this.isPidExist(P.id));
   if (this.status === 'card') {
     this.router.navigate(['Pcard', pat]);
   } else if (this.status === 'plan') {
@@ -62,11 +70,11 @@ checkAndRoute(pat) {
 
 }
  public findPatientsForDiffi() {
-   if (this.findByCategory && this.findByCategory !== 'empty') {
+   if (this.db.findByCategory && this.db.findByCategory !== 'empty') {
      this.findedPatientForDiff = undefined;
-     console.log('cate' + this.findByCategory);
+     console.log('cate' + this.db.findByCategory);
      const findPat = firebase.functions().httpsCallable('getPatByDiffi');
-     findPat({ text: this.findByCategory }).then(res => {
+     findPat({ text: this.db.findByCategory }).then(res => {
        console.log(res);
        this.findedPatientForDiff = res.data;
 

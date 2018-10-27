@@ -15,7 +15,8 @@ export class DifficultComponent implements OnInit, OnChanges {
   @Input() index: string;
   @Input() allFathers: string;
  // @Output() choosed = new EventEmitter();
-  isLeave: boolean;
+  isLeave = true;
+  childrenAreOpen = false;
   isChoozen: boolean;
   childDifficults: Difficulty[] = [];
   newD = '';
@@ -38,14 +39,17 @@ export class DifficultComponent implements OnInit, OnChanges {
     if (this.status === 'area') {
       this.status = 'mipuy';
     }
+    this.getChildren();
+
   }
     ngOnChanges() {
 
       if (this.status === 'area') {
         this.status = 'mipuy';
       }
+      this.getChildren();
 
-   // this.isLeave = !(this.getChildren() > 0);
+
   }
 
   /**
@@ -75,12 +79,9 @@ export class DifficultComponent implements OnInit, OnChanges {
 
   updateDiffiStatus(checked: boolean) {
 
-
-    console.log(checked);
-	console.log(this.status);
     if (checked) {
       this.isChoozen = true;
-      this.getChildren();
+      this.childrenAreOpen = true;
     } else {
       this.isChoozen = false;
     }

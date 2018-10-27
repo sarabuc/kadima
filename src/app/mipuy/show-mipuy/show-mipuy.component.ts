@@ -139,5 +139,5 @@ return file.split('_D_')[0];
   showFileInBrouser(file) {
     this.sd.getAndDownloadFile(this.Pid + '/' + file, '',  'open');
   }
-
+ 
 }

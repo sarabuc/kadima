@@ -17,7 +17,7 @@ export class NewMipuyComponent implements OnInit {
   categoriesForFastMipuy = [];
   findedPatientForDiff = [];
 
-   mipuyModeClass = 'modal fade in show'; // when opened it is "modal fade in show"
+  mipuyModeClass = 'modal fade in show top'; // when opened it is "modal fade in show"
   fname = ''; // for search
   lname = ''; // for serach
   grade = ''; // for search
@@ -27,6 +27,7 @@ selectedcomm = '';
 showWho = 'all';
 comments: string[] = ['ניכר שיפור', 'לברר מול מורה', 'לדבר עם הורים', 'להעביר לאבחון', 'להעביר לתכנון טיפול'];
 Pid;
+patNow: Patient;
 selectedOptions: string[] = [];
   /****************    FOR FAST MIPUY    **************** */
   checkedFastMipuy = false;
@@ -35,6 +36,7 @@ selectedOptions: string[] = [];
   yesClass = 'btn my-button my-primary btn-sm';
   maybeClass = 'btn my-button  btn-sm';
   flagForFastMipuy = []; // flag [i] = true iff pat num i was changed
+
   constructor(public db: DbService, public sd: ShareDataService) {}
     ngOnInit() {
       // guard
@@ -78,7 +80,7 @@ selectedOptions: string[] = [];
 closeModal(str: string) {
   // console.log('*********************************************' + str + this.mipuyModeClass);
   if (str === 'finish') {
- this.mipuyModeClass = 'modal fade';
+    this.mipuyModeClass = 'modal fade top';
  // this.initDiffiForNewMipuy();
 
   }

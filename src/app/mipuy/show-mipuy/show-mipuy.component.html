@@ -2,7 +2,7 @@
     <div class="row d-flex justify-content-between">
         <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate}}</strong></h3> <!-- | date: 'MM/dd/yyyy'-->
         <a class="yellow-text" (click)="showplan.show()" *ngIf="planP && status != 'plan'">צפה בתכנון טיפול</a>
-        <a class="gray-text" *ngIf="!planP && status != 'plan'" [routerLink]="['/plan', Pid]">התחל תכנון טיפול</a>
+        <a class="yellow-text" *ngIf="!planP && status != 'plan'" [routerLink]="['/plan', Pid]">התחל תכנון טיפול</a>
 
     </div>
 
@@ -51,7 +51,10 @@
 <div mdbModal #basicModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+        <app-create-massage-for-user>
+        </app-create-massage-for-user>
+
+       <!--     <div class="modal-header">
                 <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
           <span aria-hidden="true">×</span>
         </button>
@@ -66,15 +69,15 @@
             </div>
             <div class="modal-footer">
                 <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="basicModal.hide();saveDateToRemainPlan()">שמור!</button>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
 
 
 
-<div mdbModal #addMipuyDetails="mdb-modal" [class]="mipuyModeClass" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto" *ngIf="status =='show'">
-    <div class="modal-dialog modal-fluid" role="document">
+<div mdbModal #addMipuyDetails="mdb-modal" [class]="mipuyModeClass" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto" >
+    <div class="modal-dialog modal-fluid" role="document" *ngIf="status !='plan'">
         <div class="modal-dialog cascading-modal" role="document">
 
             <div class="modal-content">
@@ -153,6 +156,8 @@
                         <div class="list-group-item  mb-1 mx-1">
                             <small class="purple-text">מספר שעות מאושרות </small>
                             <strong> {{planP.approvedAmountLesson}} </strong>
+                            <small class=" mr-3 purple-text gray-text">שעות שנותרו </small>
+                            <strong class="gray-text"> {{planP.hoursLeft}} </strong>
                         </div>
                         <div class="list-group-item  mb-1 mx-1">
                             <small class="purple-text">תאריך פקיעת תוקף אישור </small>
@@ -192,7 +197,6 @@
                         <div>
                             <a (click)="showFileInBrouser(file.file)" class="purple-text mx-2">הצג קובץ</a>
                             <a (click)="dawnloadFile(file.file, file.fileName)" class="purple-text mx-2">הורד קובץ</a>
-
                         </div>
                     </div>
                 </div>

@@ -168,7 +168,7 @@
                                התחל מיפוי </a> 
                                 <a type="button" class="btn btn-secondary btn-sm " mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom" style="text-decoration: underline;">
                                התחל טיפול חדש </a> -->
-                             <button type="button" class="btn btn-sm btn-outline-secondary" mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id;" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom">התחל מיפוי</button>
+                             <button type="button" class="btn btn-sm btn-outline-secondary" mdbWavesEffect #startMipuy (click)="form.show(); Pid= pat.id; patNow = pat" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף מיפוי" placement="bottom">התחל מיפוי</button>
                              <button type="button" class="btn btn-outline-secondary btn-sm" mdbWavesEffect #startMipuy  [routerLink]="['/plan', pat.id]" [disabled]="pat.haveDificult != 'yes'" mdbTooltip="הוסף טיפול" placement="bottom">התחל טיפול</button>
 
                             </td>
@@ -213,15 +213,14 @@
 
 
 <div mdbModal #form="mdb-modal" [class]="mipuyModeClass" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
-    <div class="modal-dialog modal-fluid" role="document">
-        <div class="modal-dialog cascading-modal" role="document">
+    <div class="modal-dialog modal-full-height modal-top" role="document">
 
             <div class="modal-content">
 
 
-                <div class="modal-header purple white-text">
+                <div class="modal-header purple white-text" *ngIf="patNow">
                     <h4 class="title">
-                        <i class="fa fa-pencil mr-1 ml-1"></i> עדכן קשיים</h4>
+                        <i class="fa fa-pencil mr-1 ml-1"></i>{{patNow.firstName}} {{patNow.lastName}} | <small>עדכן קשיים</small></h4>
                     <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide();init()">
                        <span aria-hidden="true">×</span>
                     </button>
@@ -234,7 +233,6 @@
                 </div>
             </div>
 
-        </div>
     </div>
 
 </div>

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+// import { checkServerIdentity } from 'tls';
 exports.getPatientListByDiffiInLastMipuy = functions.https.onCall((data, context) => __awaiter(this, void 0, void 0, function* () {
     const db = admin.firestore();
     const diffi = data.text;
@@ -133,17 +134,12 @@ exports.getMipuysForPatient = functions.https.onCall((data, context) => __awaite
     try {
         const db = admin.firestore();
         const Pid = data.text;
-        // const db = admin.firestore();
         const mipuys = yield db.collection('mipuy').where('Pid', '==', Pid).get();
         console.log('mipuys:' + mipuys.docs.length);
         if (mipuys.docs.length <= 0) {
             return 'no-mipuy';
         }
-        // const mipuys = mipuysT.docs.filter((item, pos) =>{
-        //   return mipuysT.docs.indexOf(item) === pos;
-        // });
         const allDiffi = yield db.collection('difficults').get();
-        //const mainAreas = await db.collection('difficults').where('Dfather', '==', 'null').get();
         const allMipuysForPatient = [];
         for (const doc of mipuys.docs) { // run on all mipuys for patient
             const mipuyD = doc.data().mipuyDate;
