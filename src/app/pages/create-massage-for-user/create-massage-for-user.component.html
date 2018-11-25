@@ -14,7 +14,7 @@
                     <i class="fa fa-close red-text" *ngIf="dateChoice != 'number'"></i>
                 </span>      
                 <span class="ui-inputgroup-addon">עוד</span>   
-                <input type="number" pInputText placeholder="הכנס מספר..." [(ngModel)]="numberForDate" (onFocus)="dateChoice= 'number'"> 
+                <input type="number" pInputText placeholder="הכנס מספר..." [(ngModel)]="numberForDate" (click)="dateChoice= 'number'" style="width: 128px"> 
                 <span class="ui-inputgroup-addon">ימים</span>      
             </div>
    <!-- <div class="ui-inputgroup">
@@ -30,14 +30,15 @@
                     <i class="fa fa-close red-text" *ngIf="dateChoice != 'picker'"></i>
                 </span>     
                     
-                <p-calendar [(ngModel)]="pickerDate" [locale]="hebrew" dateFormat="dd.mm.yy"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" (onFocus)="dateChoice='picker'" ></p-calendar>
+                <p-calendar [(ngModel)]="pickerDate" [locale]="sd.hebrew" dateFormat="dd.mm.yy"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" (onFocus)="dateChoice='picker'" ></p-calendar>
 
         </div>
     </div>
 
+    
+
         
     </div>
-    <hr class="yellow yellow-text">
 
     <div class="mx-4">
             <h6 class="yellow-text mt-2">בחר שעה </h6>
@@ -46,15 +47,14 @@
             <div *ngIf="otherHour">
 
     <div class="ui-inputgroup my-2">
-            <span class="ui-inputgroup-addon">
+          <!--  <span class="ui-inputgroup-addon">
                 <i class="fa fa-check green-text" *ngIf="hourChoice == 'mask'"></i>
                 <i class="fa fa-close red-text" *ngIf="hourChoice != 'mask'"></i>
-            </span>      
+            </span>-->      
             <span class="ui-inputgroup-addon">בשעה</span>   
-            <p-inputMask mask="a9:00" [(ngModel)]="maskForHour" placeholder="00:00" characterPattern="[0-2]" *ngIf="otherHour" dir="ltr" (onFocus)="hourChoice='mask'"></p-inputMask>
+            <p-inputMask mask="a9:00" [(ngModel)]="maskForHour" placeholder="00:00" characterPattern="[0-2]" *ngIf="otherHour" dir="ltr" (onFocus)="hourChoice='mask'" size="20px" ></p-inputMask>
             </div>
-
-        <div class="ui-inputgroup my-2">
+      <!--  <div class="ui-inputgroup my-2">
         
           
         
@@ -62,12 +62,11 @@
                     <i class="fa fa-check green-text" *ngIf="hourChoice == 'picker'"></i>
                     <i class="fa fa-close red-text" *ngIf="hourChoice != 'picker'"></i>
                 </span>     
-                 <p-calendar [(ngModel)]="pickerHour" [timeOnly]="true" (onFocus)="hourChoice='picker'"></p-calendar>
-        </div>
+                 <p-calendar [(ngModel)]="pickerHour" [timeOnly]="true" (onFocus)="hourChoice='picker'" dir="ltr" stepMinute="60"></p-calendar>
+        </div>-->
     </div>
 
     </div>
-    <hr class="yellow yellow-text">
 
     <div class="mx-4">
         <h6 class="yellow-text mt-2">הוסף הערה  </h6>
@@ -76,12 +75,18 @@
 
     <hr class="yellow yellow-text">
     <h6 class="yellow-text mt-2">ההודעה שתשלח:</h6>
-    <p class="whiteText">
-        <strong>
+    <p class="white-text">
+        <strong class="white-text">
         {{massage}}
         </strong>
-        <small *ngIf="comment">
-        {{comment}}
+        <small *ngIf="comment" class="white-text">
+      הערה:  {{comment}}
         </small>
     </p>
+
+
+
+       <button class="my-primary my-button my-btn-lg w-100" (click)="saveMassage() " style="width: 200px">שמור
+             <i class="fa fa-save mr-1 " ></i>
+        </button>
 </div>

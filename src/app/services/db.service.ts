@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable, Subject } from 'rxjs';
 import { map, filter, switchMap } from 'rxjs/operators';
-// import 'rxjs/add/operator/map';
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
 import { ShareDataService } from './share-data.service';
 
 export interface User {
@@ -51,6 +50,35 @@ export interface Patient {
   address?: string;
   morePhone?: string;
   mothersName?: string;
+  insertBy?: string;
+  insertTime?: Date;
+}
+export interface TreatGroup {
+Tid: string;
+grade1: string;
+grade2: string;
+area: string;
+startDate: string;
+aprovedHours: number;
+groupName: string; // entered by user
+groupCode: Date; // timestemp
+  [k: string]: any;
+  /* all patients in group are key in object like this: Pid: 'patient' and  
+  Pid_STATUS:
+  1) 'leave_FROM_date_TILL_date_R_reason' - L_F_(date)_T_(date)_R_(reason)
+  2) 'freeze_FROM_date_TILL_date_R_reason' - F_F_(date)_T_(date)_R_(reason)
+  3) 'currect_FROM_date - C_F_(date)*/
+  insertBy?: string;
+  insertTime?: Date;
+}
+
+export interface PatientInGroup {
+  Pid: string;
+  groupCode: Date;
+  status: string;
+  startDate: string;
+  outDate?: string;
+  reason?: string;
   insertBy?: string;
   insertTime?: Date;
 }
@@ -130,7 +158,7 @@ export interface Mipuy {
    [k: string]: any; // key loos like DIFNAME_THERPIST or DIFNAME_METHOD or DIFNAME and than the value
  }
  
- export interface TreatmentProgression {
+ /*export interface TreatmentProgression {
   Pid: string;
   // Tid: string;
   progressCode: string; // timestemp
@@ -140,12 +168,30 @@ export interface Mipuy {
   paysBy: string;
    insertBy?: string;
    insertTime?: Date;
+ }*/
+ export interface TestGrade {
+date: string;
+Dcode: string;
+Tid: string;
+className: string;
+testCode: string; // Dcode_GFP_date_GFP_className
+comment?: string;
+   insertBy?: string;
+   insertTime?: Date;
+
  }
-export interface TreatmentInfo { // key is Tid-treatmentNumber to example: 1234-519898195149
+ export interface AreaForTherapist {
+   code: string; // Dcode
+   id: string; // Tid
+   insertBy?: string;
+   insertTime?: Date;
+ }
+
+export interface TreatmentInfo {
    Pid: string;
    Tid: string;
-   progressionCode: string;
-   kind: string;
+   progressionCode: string; // plan doc id
+   area: string;
    treatmentNumber: string; // timestemp
    treatDate: Date;
    startTime: string;
@@ -153,6 +199,7 @@ export interface TreatmentInfo { // key is Tid-treatmentNumber to example: 1234-
    hours: string;
    description: string;
    comment: string;
+   progress?: number; // between 1 to 4
   insertBy?: string;
   insertTime?: Date;
  }
@@ -168,16 +215,45 @@ export interface MipuyDecideForPlan {
 export interface MassageForUser {
  userId: string;
  massage: string;
- date: Date;
-kind: string;
+ year: number;
+ month: number;
+  dateInMonth: number;
+ hour: number;
+kind?: string;
 comments: string;
   insertBy?: string;
   insertTime?: Date;
 }
-export interface aprovedPlanForTherpist {
+
+export interface GradeMassageForTherapist {
+Tmail?: string;
+Tname?: string;
+date: string;
+Pid: string;
+patName: string;
+area: string;
+grade: string;
+comment: string;
+insertBy?: string;
+insertTime?: string;
+}
+export interface AprovedPlanForTherpist {
   Tid: string;
   PlanDocId: string;
   Pid: string;
+  insertBy?: string;
+  insertTime?: Date;
+}
+
+export interface GradeForPatient {
+Dcode?: string;
+Pid: string;
+grade: string;
+comment?: string;
+testDate?: string;
+insertBy?: string;
+insertTime?: Date;
+testCode: string; // Dcode_GFP_testDate_GFP_class
 }
 
 
@@ -196,7 +272,6 @@ public difficultForPatientRef: AngularFirestoreCollection<PatientsDifficult>;
 public methodForTherapistRef: AngularFirestoreCollection<TherapistMethods>;
 public methodForDifficultyRef: AngularFirestoreCollection<MethodForDifficulty>;
 public planForPatientRef: AngularFirestoreCollection<PlanForPatient>;
-public treatmentProgressionRef: AngularFirestoreCollection<TreatmentProgression>;
 public treatmentInfoForProgressRef: AngularFirestoreCollection<TreatmentInfo>;
   public mipuyForPatientRef: AngularFirestoreCollection<Mipuy>;
   public patientsFileRef: AngularFirestoreCollection<PatientFile>;
@@ -216,6 +291,7 @@ public isBusy = false;
 public userNow: User;
 public isLoginV = false;
 public newMipuy: string[] = [];
+public limudyAreas: Difficulty[] = [];
 
 // for patient list filter
 public filteredPatientList = [];
@@ -280,11 +356,17 @@ public filteredPatientList = [];
      this.allMethodsRef = this.afs.collection('methods');
 
      // get all difficults ref
-     const limu = 'לימודי';
      this.allDifficultsRef = this.afs.collection('difficults');
     //  this.allDifficultsRef.valueChanges().subscribe(diffs => {
     //    this.allDifficultsList = diffs;
     //  });
+
+    // get limudiAreasForGrades
+     this.afs.collection<Difficulty>('difficults', ref => {
+       return ref.where('Dfather', '==' , 'לימודי');
+     }).valueChanges().subscribe(D => {
+       this.limudyAreas = D;
+     });
 
 
       this.allPatientsCommentRef = this.afs.collection('patientsComments');
@@ -301,66 +383,6 @@ public filteredPatientList = [];
      return this.isLoginV;
    }
 
-
-
-
-  /**
-   * getDifficultsByPatientId
-   */
-  public getDifficultsByPatientId(Pid: string) {
-
-  }
-  /**
-   * getMethodsByTherapistId
-   */
-  public getMethodsByTherapistId(Tid: string) {
-
-  }
-
-  /**
-   * getPatientsByDifficult
-   */
-  public getPatientsByDifficult(Dcode: string) {
-
-  }
-  /**
-   * getThrapistByMethod
-   */
-  public getThrapistByMethod(Mcode: string) {
-
-  }
-  /**
-   * getPatientsByCategory
-   */
-  public getPatientsByCategory(Ccode: string) {
-
-  }
-  /**
-   * getTherapistByCategory
-   */
-  public getTherapistByCategory(Ccode: string) {
-
-  }
-  /**
-   * getMethodsByDifficulty
-   */
-  public getMethodsByDifficulty(Dcode: string) {
-
-
-  }
-  /**
-   * getTableOfFreeTime
-   */
-  public getTableOfFreeTime(freeStr: string) {
-
-  }
-
-  /**
-   * getEmail
-   */
-  public getEmail() {
-
-  }
   /**
    * isTherapistExist
    */
@@ -387,8 +409,9 @@ public filteredPatientList = [];
     thera.insertBy = this.userNow.mail;
     thera.insertTime = new Date();
     this.allTherapistsRef.doc('' + thera.id).set(thera).then(res => {
+      return res;
     });
-    this.sd.createAlert('info', 'מטפל בשם' + thera.firstName + thera.lastName + 'נוסף בהצלחה', '');
+    this.sd.createAlert('success', 'מטפל בשם' + thera.firstName + thera.lastName + 'נוסף בהצלחה', '');
   }
 
   /**
@@ -398,6 +421,8 @@ public filteredPatientList = [];
     pati.insertBy = this.userNow.mail;
     pati.insertTime = new Date();
    this.allPatientsRef.doc('' + pati.id).set(pati).then(res => {
+     this.sd.createAlert('success', 'תלמיד בשם' + pati.firstName + pati.lastName + 'נוסף בהצלחה', '');
+return res;
    });
   }
 
@@ -408,7 +433,7 @@ public filteredPatientList = [];
     diffi.insertBy = this.userNow.mail;
     diffi.insertTime = new Date();
     this.allDifficultsRef.doc('' + diffi.code + '_' + diffi.Dfather).set(diffi).then(res => {
-
+return res;
     });
   }
 
@@ -418,7 +443,9 @@ public filteredPatientList = [];
 public addComment(com: PatientComment) {
   com.insertBy = this.userNow.mail;
   com.insertTime = new Date();
-  this.allPatientsCommentRef.add(com);
+  this.allPatientsCommentRef.add(com).then(res => {
+    return res;
+  });
 }
 
 /**
@@ -427,16 +454,53 @@ public addComment(com: PatientComment) {
 public addPatientDifficult(diffi: PatientsDifficult) {
   diffi.insertBy = this.userNow.mail;
   diffi.insertTime = new Date();
-  this.difficultForPatientRef.add(diffi);
+  this.difficultForPatientRef.add(diffi).then(res => {
+    return res;
+  });
 }
 
+/**
+ * addTherapistForArea
+ */
+public addTherapistForArea(TFA: AreaForTherapist) {
+  this.afs.collection('areaForTherapist').doc('' + TFA.id + TFA.code).set(TFA).then(res => {
+    return res;
+  });
+}
+
+/**
+ * addNewGroup
+ */
+public addNewGroup(group) {
+  console.log('in add g');
+  console.log(group);
+  this.afs.collection('groups').doc('' + group.groupCode).set(group).then(res => {
+    console.log(res);
+    return res;
+  }).catch(err => {
+console.error(err);
+return err;
+  });
+}
+
+/**
+ * addPatToGroup
+ */
+  public addPatToGroup(pat: PatientInGroup) {
+    this.afs.collection('patientInGroup').add(pat).then(res => {
+      return res;
+    });
+}
 /**
  * addTreatmentInfo
  */
 public addTreatmentInfo( treat: TreatmentInfo) {
   treat.insertBy = this.userNow.mail;
   treat.insertTime = new Date();
-  this.treatmentInfoForProgressRef.add(treat);
+  this.treatmentInfoForProgressRef.add(treat).then(res => {
+    this.sd.createAlert('success', 'שיעור הוסף בהצלחה', '');
+    return res;
+  });
 }
 
 /**
@@ -447,6 +511,7 @@ public addMethod(method: Method) {
   method.insertTime = new Date();
   this.allMethodsRef.add(method).then(res => {
     this.sd.createAlert('success', 'שיטה נוספה בהצלחה', '');
+    return res;
   });
 
 }
@@ -456,7 +521,9 @@ public addMethod(method: Method) {
   public addMethodForDifficult(methodForDifficult: MethodForDifficulty) {
     methodForDifficult.insertBy = this.userNow.mail;
     methodForDifficult.insertTime = new Date();
-    this.methodForDifficultyRef.doc('' + methodForDifficult.Dcode + '_' + methodForDifficult.Mcode).set(methodForDifficult);
+    this.methodForDifficultyRef.doc('' + methodForDifficult.Dcode + '_' + methodForDifficult.Mcode).set(methodForDifficult).then(res => {
+      return res;
+    });
   }
 /**
      * addMassageFor
@@ -472,7 +539,34 @@ public addMethod(method: Method) {
     insertBy: this.userNow.mail,
     insertTime: new Date()
   };
-  this.afs.collection('users').doc(this.userNow.id).collection('massages').add(M);
+  this.afs.collection('users').doc(this.userNow.id).collection('massages').add(M).then((result) => {
+    this.sd.createAlert('success', 'תזכורת נוספה בהצלחה', '');
+    return result;
+  }).catch((err) => {
+    this.sd.createAlert('error', 'ארעה שגיאה- נא נסה שוב', '');
+    return err;
+  });
+  }
+
+  /**
+     * addMassageFor
+     * user
+     */
+  addMassage(massage: MassageForUser) {
+  this.afs.collection('users').doc(this.userNow.id).collection('massages').add(massage).then(res => {
+    this.sd.createAlert('success', 'תזכורת הוספה בהצלחה', '');
+    return res;
+  }).catch(err => {
+this.sd.createAlert('error', 'שגיאה- נסה שוב או פנה למנהל המערכת', '');
+return err;
+  });
+  }
+
+  /**
+   * addGradeMassageForTherapists
+   */
+  public addGradeMassageForTherapists(massage) {
+    this.afs.collection('gradeMassageForTherapists').add(massage);
   }
 
 //   /**
@@ -488,7 +582,9 @@ public addMethod(method: Method) {
   addTherapistForMethod(theraForMethod: TherapistMethods) {
     theraForMethod.insertBy = this.userNow.mail;
     theraForMethod.insertTime = new Date();
-    this.methodForTherapistRef.doc('' + theraForMethod.Tid + '_' + theraForMethod.Mcode).set(theraForMethod);
+    this.methodForTherapistRef.doc('' + theraForMethod.Tid + '_' + theraForMethod.Mcode).set(theraForMethod).then(res => {
+      return res;
+    });
   }
 
 
@@ -500,6 +596,7 @@ public addMethod(method: Method) {
     plan.insertTime = new Date();
     this.getPlanForPatientRef(plan.Pid).doc(docName).set(plan).then(res => {
       this.sd.createAlert('success', 'תכנון עודכן בהצלחה', '');
+      return res;
     });
     }
 
@@ -508,7 +605,9 @@ public addMethod(method: Method) {
     this.afs.collection('therapist').doc(Tid).collection('patient').doc(planDoc).set({
       Tid: Tid, 
       Pid: Pid, 
-      planDocId: planDoc});
+      planDocId: planDoc}).then(res => {
+        return res;
+      });
 
     // const updataList = firebase.functions().httpsCallable('setPatientForTherapist');
     // updataList({ Tid: Tid, Pid: Pid }).then(res => {
@@ -518,7 +617,39 @@ public addMethod(method: Method) {
     //   console.log(err);
     // });
   }
-    
+   
+  
+  /**
+   * addTestGrade
+   */
+  public  addTestGrade(grade: GradeForPatient, option) {
+    this.afs.collection('grades').add(grade).then((result) => {
+      if (option === 'single') {
+        this.sd.createAlert('success', 'ציון מבחן נוסף בהצלחה', '');
+        return;
+      } else {
+        return result;
+      }
+    }).catch((err) => {
+      if (option === 'single') {
+      this.sd.createAlert('error', 'ארעה שגיאה- נסה שוב', '');
+      return;
+      } else {
+        return err;
+      }
+    });
+  }
+
+  /**
+   * addTest
+   */
+  public async addTest(test: TestGrade): Promise<any> {
+    this.afs.collection('test').doc(test.testCode).set(test).then(res => {
+      return res;
+    }).catch(err => {
+      return err;
+    });
+  }
 
   /**************************************************** */
   /*****************       update to db           ******* */
@@ -528,6 +659,7 @@ public addMethod(method: Method) {
    */
   public updateTherapist(th) {
     this.allTherapistsRef.doc('' + th.id).update(th).then(res => {
+      return res;
     });
     this.sd.createAlert('success', 'מטפל עודכן בהצלחה', '');
   }
@@ -538,11 +670,13 @@ public addMethod(method: Method) {
    */
   public updatePatient(pat) {
     this.allPatientsRef.doc('' + pat.id).update(pat).then(res => {
+      return res;
     });
      this.sd.createAlert('success', 'תלמיד עודכן בהצלחה', '');
   }
   updatePartOfPatient(pat_id, pat_part, part) {
     this.allPatientsRef.doc('' + pat_id + '/home' + part).update(pat_part).then(res => {
+      return res;
     });
   }
 
@@ -552,7 +686,9 @@ public addMethod(method: Method) {
    */
   public updateMipuyDecideForPlanOfPatient(mipuyDecideForPlan: MipuyDecideForPlan, Pid: string) {
     this.afs.collection('patientsData').doc(Pid).collection('mipuyDecideForPlan').doc(mipuyDecideForPlan.mipuy_id_in_db)
-    .set(mipuyDecideForPlan);
+    .set(mipuyDecideForPlan).then(res => {
+      return res;
+    });
   }
 
   /***************************************************************** */
@@ -563,7 +699,9 @@ public addMethod(method: Method) {
    * deleteTherapist
    */
   public deleteTherapist(th) {
-    this.allTherapistsRef.doc('' + th.id).delete();
+    this.allTherapistsRef.doc('' + th.id).delete().then(res => {
+      return res;
+    });
     this.sd.createAlert('success', 'מטפל נמחק בהצלחה', '');
   }
 
@@ -572,7 +710,9 @@ public addMethod(method: Method) {
    * deletePatient
    */
   public deletePatient(patID) {
-    this.allPatientsRef.doc('' + patID).delete();
+    this.allPatientsRef.doc('' + patID).delete().then(res => {
+      return res;
+    });
     this.sd.createAlert('success', 'תלמיד נמחק בהצלחה', '');
   }
 
@@ -645,8 +785,44 @@ return false; // ??????????????????????????????????????????????????
   }
 
 
+  getGradesForPidRef(Pid) {
+    return this.afs.collection<GradeForPatient>('grades', ref => {
+      return ref.where('Pid', '==', Pid);
+    });
+  }
+    getPatientsByClassRef(classToSearch) {
+      console.log(classToSearch);
+      return this.afs.collection<Patient>('patients', ref => {
+        return ref.where('grade', '==', classToSearch);
+      });
+    }
+  
+  getAreasByTherapistIDRef(Tid) {
+    return this.afs.collection<AreaForTherapist>('areaForTherapist', ref => {
+      return ref.where('id', '==', Tid);
+    });
+  }
 
 
+  getTherapistByAreaCodeRef(area) {
+    return this.afs.collection<AreaForTherapist>('areaForTherapist', ref => {
+      return ref.where('code', '==', area);
+    }); 
+  }
 
+  getPatsByDiffiCodeRef(Dcode) {
+    return this.afs.collection<PatientsDifficult>('patientDifficults', ref => {
+      return ref.where('Dcode', '==', Dcode);
+    }); 
+  }
 
+  getTeamsRef() {
+    return this.afs.collection<TreatGroup>('groups');
+}
+
+  getTeamPatByGroupCode(groupCode) {
+    return this.afs.collection<PatientInGroup>('patientInGroup', ref => {
+      return ref.where('groupCode', '==', groupCode);
+    });
+  }
 }

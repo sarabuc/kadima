@@ -1,3 +1,9 @@
+
+ <!--<p-blockUI [blocked]="db.isBusy">
+    <app-loader></app-loader>
+ </p-blockUI>-->
+ <ngx-loading [show]="db.isBusy"  ></ngx-loading>
+
 <mdb-navbar SideClass="navbar  navbar-dark purple fixed-top " *ngIf="db.isLogin()">
 
     <!-- Navbar brand  scrolling-navbar navbar-expand-lg class="collapse navbar-collapse" id="navbarSupportedContent"-->
@@ -27,9 +33,7 @@
                                 יציאה
                                 </a>
                 </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link" target="_blank"></a>
-                </li>
+               
                 <li class="nav-item mx-2" [routerLink]="'/contact'">
                     <a class="nav-link" target="_blank">צור קשר</a>
                 </li>
@@ -80,6 +84,7 @@
     margin-right: 2%;"> -->
             <p-messages [(value)]="sd.msgs" [sticky]="false"></p-messages>
             <!-- </div> -->
+          
             <router-outlet> </router-outlet>
         </div>
 
@@ -103,3 +108,5 @@
         </div>
     </div>
 </div>
+
+

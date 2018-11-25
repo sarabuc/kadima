@@ -10,30 +10,26 @@ import { ContactComponent } from './pages/contact/contact.component';
 
 import { NewTherapistComponent } from './therapist/new-therapist/new-therapist.component';
 import { NewPatientComponent } from './patient/new-patient/new-patient.component';
-import { NewTreatmentProgressComponent } from './treatment/new-treatment-progress/new-treatment-progress.component';
 import { NewTreatmentInfoComponent } from './treatment/new-treatment-info/new-treatment-info.component';
-// import { UpdatePlanForPatientComponent } from './patient/update-plan-for-patient/update-plan-for-patient.component';
-import { DifficultComponent } from './mipuy/difficult/difficult.component';
-
+import {ProgressManageComponent} from './pages/progress-manage/progress-manage.component'
 import { TherapistCardComponent } from './therapist/therapist-card/therapist-card.component';
-
+import { TeamsComponent } from './pages/teams/teams.component';
 import { TempComponent } from './parts/temp/temp.component';
 import { AddPatientsFromExelComponent } from './patient/add-patients-from-exel/add-patients-from-exel.component';
 import { TherapistListComponent } from './therapist/therapist-list/therapist-list.component';
-import { TimeTableToShowComponent } from './parts/time-table-to-show/time-table-to-show.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NewMipuyComponent } from './mipuy/new-mipuy/new-mipuy.component';
-import { DifficutForMipuyComponent } from './mipuy/difficut-for-mipuy/difficut-for-mipuy.component';
 import { PatientCardComponent } from './patient/patient-card/patient-card.component';
 import { PatientListComponent } from './patient/patient-list/patient-list.component';
 import { AddDiffiFromExelComponent } from './mipuy/add-diffi-from-exel/add-diffi-from-exel.component';
 import { DiffiAndMethodsComponent } from './mipuy/diffi-and-methods/diffi-and-methods.component';
 import { RegisterComponent } from './pages/login/register/register.component';
-
-
+import { AddGroupTreatComponent } from './pages/add-group-treat/add-group-treat.component';
+import { NewGradesComponent} from './pages/new-grades/new-grades.component';
+import { NewGroupComponent} from './pages/new-group/new-group.component';
 const appRoutes: Routes = [
   { path: '', redirectTo: /*'home'*/'login', pathMatch: 'full' },
-  { path: 'home', component: HomePageComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] },
   { path: 'about', component: AboutComponent },
   { path: 'Tcard/:id', component: TherapistCardComponent },
   { path: 'Tcards', component: TherapistListComponent },
@@ -50,13 +46,17 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'newMipuy', component: NewMipuyComponent},
   { path: 'Report', component: TempComponent },
-  { path: 'check-progress', component: TempComponent },
+  { path: 'progressManage', component: NewGradesComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'Treatment-planning/:status', component: PatientListComponent },
   { path: 'plan/:id', component: NewPlanForPatientComponent },
   { path: 'updatePlan/:id', component: NewPlanForPatientComponent },
   { path: 'diffiAndMethods', component: DiffiAndMethodsComponent },
+  { path: 'addTreatForGroup', component: AddGroupTreatComponent },
+  { path: 'addTestGrades', component: NewGradesComponent },
+  {path: 'newGroup', component: NewGroupComponent},
   { path: 'mipuy-exel', component: NewMipuyFromExelComponent },
+  {path: 'teams', component: TeamsComponent},
   { path: '**', redirectTo: 'login' }
 ];
 

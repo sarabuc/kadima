@@ -1,8 +1,9 @@
 <div class="dark-card  card" style="text-align: right">
     <div class="row d-flex justify-content-between">
-        <h3 class="yellow-text">מיפוי התבצע בתאריך <strong>{{mipuyDate}}</strong></h3> <!-- | date: 'MM/dd/yyyy'-->
-        <a class="yellow-text" (click)="showplan.show()" *ngIf="planP && status != 'plan'">צפה בתכנון טיפול</a>
-        <a class="yellow-text" *ngIf="!planP && status != 'plan'" [routerLink]="['/plan', Pid]">התחל תכנון טיפול</a>
+        <h3 class="yellow-text"> מיפוי ב {{mipuyDate}} | <small>{{hebrewDate}}</small></h3> <!-- | date: 'MM/dd/yyyy'-->
+
+        <a class="yellow-text" (click)="showplan.show()" *ngIf="planP && planP != 'empty' && status != 'plan'">צפה בתכנון טיפול</a>
+        <a class="yellow-text" *ngIf="planP == 'empty' && status != 'plan'" [routerLink]="['/plan', Pid]">התחל תכנון טיפול</a>
 
     </div>
 

@@ -12,12 +12,13 @@ import { DatePipe } from '@angular/common';
 export class ShowMipuyComponent implements OnInit, OnChanges{
   @Input() Pid: string;
   // diffiArr: PatientsDifficult[] = [];
-  @Input() mipuyDate: Date;
+  @Input() mipuyDate: string;
+  hebrewDate;
   @Input() mipuyData: any;
   @Input() status: string;
   @Input() planedDiffi: any[] = [];
   @Output() updateDiffForPlan = new EventEmitter();
-  planP: PlanForPatient;
+  planP: any;
 
   planFiles = [];
   currectArea = '';
@@ -60,6 +61,9 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
     }
     console.log(this.mipuyDecideForPlan);
     this.getPlanForPatient();
+    const tempD = this.mipuyDate.split('.');
+    console.log(tempD);
+    this.hebrewDate = this.sd.convertDateToHebrewDate(+tempD[0], +tempD[1], +tempD[2]);
   }
 
 
@@ -104,6 +108,7 @@ async  getPlanForPatient() {
     console.log('mipuy');
     plan_docName = mipuy.planForPatient;
     if (plan_docName === '') {
+      this.planP = 'empty';
       return;
     }
     this.db.getPlanForPatientRef(this.Pid).doc<PlanForPatient>(plan_docName).valueChanges().subscribe(plan => {
@@ -118,6 +123,7 @@ async  getPlanForPatient() {
         }
         if (this.planP[key] === 'file') { // this is a file
             this.planFiles.push({file: key, fileName: this.getFileName(key)});
+            console.log(this.planFiles);
         }
       });
       console.log(this.planedDiffi);
@@ -131,9 +137,11 @@ async  getPlanForPatient() {
     this.sd.routeTo('updatePlan', this.planP.mipuy_id_in_db + '_P_' + this.planP.date);
   }
   getFileName(file: string) {
-return file.split('_D_')[0];
+return file.split('_dot_')[0];
   }
   dawnloadFile(file: string, fileName: string) {
+    const re = /_dot_/gi;
+    fileName = fileName.replace(re, '.');
     this.sd.getAndDownloadFile( this.Pid + '/' + file, fileName, 'dawn');
   }
   showFileInBrouser(file) {

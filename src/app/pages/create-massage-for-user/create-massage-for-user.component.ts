@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DbService } from '../../services/db.service';
+import { ShareDataService } from '../../services/share-data.service';
 
 @Component({
   selector: 'app-create-massage-for-user',
@@ -23,11 +25,11 @@ pickerDate;
 
 selectedHour;
 maskForHour;
-pickerHour;
+pickerHour = '00:00';
 dates = ['מחר', 'עוד יומיים', 'שבוע הבא', 'עוד שבועיים', 'עוד חודש ', 'עוד חודשיים', 'עוד חצי שנה', 'אחר'];
 hours = ['8:00', '10:00', '12:00', '15:00', '20:00', 'אחר'];
  hebrew: any;
-  constructor() { }
+  constructor( private db: DbService, public sd: ShareDataService) { }
 
   onSelectedDate(event) {
     if (event === 'אחר') {
@@ -50,33 +52,75 @@ hours = ['8:00', '10:00', '12:00', '15:00', '20:00', 'אחר'];
  
 
     ngOnInit() {
-        this.hebrew = {
-            firstDayOfWeek: 0,
-            dayNames: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
-            dayNamesShort: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'שבת'],
-            dayNamesMin: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'שבת'],
-            monthNames: [ 'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר' ],
-            monthNamesShort: [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12' ],
-            today: 'היום',
-            clear: 'נקה'
-        };
+       
     }
 
 
     saveMassage() {
       // have to check date
+      let date = new Date();
       switch (this.selectedDate) {
         case 'other':
           if (this.dateChoice === 'number') {
+            date.setDate(date.getDate() + this.numberForDate);
 
           } else if (this.dateChoice === 'picker') {
-
+          date = this.pickerDate;
           }
 
           break;
       
-        default:
+         case 'מחר':
+          date.setDate(date.getDate() + 1);
+            break;
+            case 'עוד יומיים':
+            date.setDate(date.getDate() + 2);
+          break;
+            case 'עוד שבוע':
+            date.setDate(date.getDate() + 7);
+          break;
+            case 'עוד שבועיים':
+            date.setDate(date.getDate() + 14);
+          break;
+            case 'עוד חודש':
+            date.setMonth(date.getMonth() + 1);
+          break;
+            case 'עוד חודשיים':
+           date.setMonth(date.getMonth() + 2);
+          break;
+            case 'עוד חצי שנה':
+            date.setMonth(date.getMonth() + 6);
           break;
       }
+
+let hour = 0;
+      // get hour
+        switch (this.selectedHour) {
+        case 'other':
+          if (this.hourChoice === 'mask') {
+            hour = this.maskForHour.split(':');
+          }
+          break;
+      
+         default:
+          hour = this.selectedHour.split(':');
+            break;
     }
+
+
+
+    const massage = {
+      year : date.getFullYear(),
+      month: date.getMonth(), // gave month-1
+      dateInMonth: date.getDate(),
+      hour: hour,
+      userId: this.db.userNow.mail,
+      massage: this.massage,
+      comments: this.comment,
+      insertBy: this.db.userNow.mail,
+      insertTime: new Date()
+    };
+
+    this.db.addMassage(massage);
+  }
 }

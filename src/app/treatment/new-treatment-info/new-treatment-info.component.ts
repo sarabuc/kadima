@@ -15,13 +15,14 @@ export class NewTreatmentInfoComponent implements OnInit {
   theraPatientList = [];
   planToChoose = [];
   therapistListForPlan = [];
+  diffiListInPlan = [];
   @Input() Tid = ''; // therapist: Therapist;
   @Input() Pid = ''; // patient: Patient;
   Tname = '';
   Pname = '';
 
   val;
-  startTime = ''; endTime = ''; hours = ''; tDate: Date; discrib = ''; comment = ''; kind = '';
+  startTime = ''; endTime = ''; hours = ''; tDate: Date; discrib = ''; comment = ''; area = ''; progress;
   constructor(public sd: ShareDataService, public db: DbService) { }
 
   ngOnInit() {
@@ -42,15 +43,20 @@ const treat = {
   Pid: '' + this.Pid,
   Tid: '' + this.Tid,
   progressionCode: progressCode,
-  kind: this.kind,
-  treatmentNumber: new Date().toString(), // timestemp
+  area: this.area,
+  treatmentNumber: this.sd.convertDateToStringDD_MM_YYYY(new Date()), // timestemp
   treatDate: this.tDate,
   startTime: this.startTime,
   endTime: this.endTime,
   hours: this.hours,
   description: this.discrib,
-  comment: this.comment
+  comment: this.comment,
+  insertBy: this.db.userNow.mail,
+  insertTime : new Date()
 };
+if (this.progress) {
+  treat['progress'] =  this.progress;
+}
  const updatedHoursLeft = this.choosedPlan.hoursLeft - +this.hours;
   this.db.getPlanForPatientRef(this.Pid).doc<PlanForPatient>(this.getPlanDocId()).update({ hoursLeft: updatedHoursLeft})
 this.db.addTreatmentInfo(treat);
@@ -59,10 +65,10 @@ this.sd.createAlert('success', 'דיווח נשמר בהצלחה', '');
 this.cleanForm();
 }
   cleanForm() {
-    this.Tid = '';
+    // this.Tid = '';
     // this.Pid = '';
-    this.Tname = '';
-    this.Pname = '';
+    // this.Tname = '';
+    // this.Pname = '';
 
     this.startTime = '';
     this.endTime = '';
@@ -70,7 +76,7 @@ this.cleanForm();
     this.tDate = new Date();
     this.discrib = '';
     this.comment = '';
-    this.kind = '';
+    this.area = '';
   }
   getPlanDocId() {
    return this.choosedPlan.mipuy_id_in_db + '_P_' + this.choosedPlan.date;
@@ -85,8 +91,11 @@ this.cleanForm();
 // this.db.getPlanForPatientRef()
 this.db.getAllTherapistsRef().doc<Therapist>(this.db.userNow.id).collection('patient').valueChanges().subscribe(P => {
 this.theraPatientList = this.db.allPatientList.filter(pat => P.findIndex(item => item.Pid === pat.id) > -1);
-console.log(P);
-console.log(this.theraPatientList);
+  this.theraPatientList.forEach(plan => {
+    plan['date'] = plan.planDocId.split('_P_');
+    const tempD = plan['date'].split('.');
+    plan['hebrewDate'] = this.sd.convertDateToHebrewDate(tempD[0], tempD[1], tempD[2]);
+  });
 });
   }
 
@@ -102,6 +111,10 @@ console.log(this.theraPatientList);
                 return;
              }
           this.planToChoose = plans;
+          this.planToChoose.forEach(plan => {
+            const tempD = plan.date.split('.');
+            plan['hebrewDate'] = this.sd.convertDateToHebrewDate(tempD[0], tempD[1], tempD[2]);
+          });
           this.canGetPlan = true;
           this.canGetTherapist = false;
             this.canGetInfo = false;
@@ -132,7 +145,7 @@ console.log(this.theraPatientList);
     } else {
       this.choosedPlan = plan;
     this.canGetTherapist = true;
-  this.getTherapistsForPlan();
+  this.getTherapistsAndDiffiForPlan();
     }
   }
 
@@ -159,15 +172,19 @@ console.log(this.theraPatientList);
     this.canGetInfo = false;
     this.canGetPlan = true;
     this.canGetTherapist = false;
-    this.choosedPlan = undefined;
+    this.choosedPlan = {};
     this.cleanForm();
   }
 
 
-  getTherapistsForPlan() {
+  getTherapistsAndDiffiForPlan() {
+    this.therapistListForPlan = [];
+    this.diffiListInPlan = [];
     Object.keys(this.choosedPlan).forEach(key => {
+      if (this.choosedPlan[key] === 'yes') {
+        this.diffiListInPlan.push(key);
+      } else if (key.split('_')[1] === 'THERAPIST') {
  // check if this is a therapist
- if (key.split('_')[1] === 'THERAPIST') {
    this.therapistListForPlan.push(this.choosedPlan[key]);
    console.log(this.therapistListForPlan);
 

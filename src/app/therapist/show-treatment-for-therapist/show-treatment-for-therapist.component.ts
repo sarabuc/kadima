@@ -45,7 +45,7 @@ export class ShowTreatmentForTherapistComponent implements OnInit {
       }
     }
     if (this.kind) {
-      if (this.kind !== treat.kind) {
+      if (this.kind !== treat.area) {
         return false;
       }
     }

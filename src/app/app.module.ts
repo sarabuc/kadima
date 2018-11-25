@@ -1,3 +1,5 @@
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +17,15 @@ import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TagInputModule } from 'ngx-chips';
 import { CalendarModule } from 'primeng/calendar';
+import { TableModule } from 'primeng/table'; 
+import { DialogModule } from 'primeng/dialog';
+import { SliderModule } from 'primeng/slider';
+import { RatingModule } from 'primeng/rating';
+import {BlockUIModule} from 'primeng/blockui';
+import { DropdownModule } from 'primeng/dropdown';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { DataViewModule } from 'primeng/dataview';
+import { PanelModule } from 'primeng/panel';
 
 import {InplaceModule} from 'primeng/inplace';
 import {ListboxModule} from 'primeng/listbox';
@@ -36,6 +47,9 @@ import {GrowlModule} from 'primeng/growl';
 import { TreeModule } from 'primeng/tree';
 import { ButtonModule } from 'primeng/button';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import { polyfill as keyboardEventKeyPolyfill } from 'keyboardevent-key-polyfill';
+import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+
 /*material*/
 import {MatTreeModule} from '@angular/material/tree';
 import {
@@ -88,6 +102,7 @@ import { FreeTimeComponent } from './parts/free-time/free-time.component';
 import { DifficultComponent } from './mipuy/difficult/difficult.component';
 import { ShowDifficultiesComponent } from './mipuy/show-difficulties/show-difficulties.component';
 import { TherapistCardComponent } from './therapist/therapist-card/therapist-card.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 import { MethodsForTherapistComponent } from './therapist/methods-for-therapist/methods-for-therapist.component';
 import { TherapistProfileComponent } from './therapist/therapist-profile/therapist-profile.component';
@@ -120,12 +135,13 @@ import { ShowTreatmentForTherapistComponent } from './therapist/show-treatment-f
 
 /*services*/
 import { DbService } from './services/db.service';
-import { UserService } from './services/user.service';
+import { ProgressService } from './services/progress.service';
 import { ShareDataService } from './services/share-data.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
 
 
+import { HttpClientModule } from '@angular/common/http';  // replaces previous Http service
 
 import {  NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -134,6 +150,16 @@ import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-p
 import { ShowMethodsComponent } from './mipuy/show-methods/show-methods.component';
 import { NewMipuyFromExelComponent } from './new-mipuy-from-exel/new-mipuy-from-exel.component';
 import { CreateMassageForUserComponent } from './pages/create-massage-for-user/create-massage-for-user.component';
+import { NewMipuyGradesComponent } from './mipuy/new-mipuy-grades/new-mipuy-grades.component';
+import { GraedsForPatientComponent } from './mipuy/graeds-for-patient/graeds-for-patient.component';
+import { ReportsComponent } from './pages/reports/reports.component';
+import { SettingComponent } from './pages/setting/setting.component';
+import { LoaderComponent } from './pages/loader/loader.component';
+import { NewGradesComponent } from './pages/new-grades/new-grades.component';
+import { NewGroupComponent } from './pages/new-group/new-group.component';
+import { AddGroupTreatComponent } from './pages/add-group-treat/add-group-treat.component';
+import { TeamsComponent } from './pages/teams/teams.component';
+import { ProgressManageComponent } from './pages/progress-manage/progress-manage.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -147,6 +173,7 @@ const firebase = {
     messagingSenderId: '890519841483'
   };
 
+keyboardEventKeyPolyfill();
 
 @NgModule({
   declarations: [
@@ -194,10 +221,28 @@ const firebase = {
     RegisterComponent,
     ShowMethodsComponent,
     NewMipuyFromExelComponent,
-    CreateMassageForUserComponent
+    CreateMassageForUserComponent,
+    NewMipuyGradesComponent,
+    GraedsForPatientComponent,
+    ReportsComponent,
+    SettingComponent,
+    LoaderComponent,
+    NewGradesComponent,
+    NewGroupComponent,
+    AddGroupTreatComponent,
+    TeamsComponent,
+    ProgressManageComponent
    //  UpdatePlanForPatientComponent
   ],
   imports: [
+    HttpClientModule,
+    SelectButtonModule,
+    DropdownModule,
+    InputTextareaModule,
+    SliderModule,
+    RatingModule,
+     DialogModule,
+    TableModule,
     TagInputModule,
  CalendarModule,
     ToggleButtonModule,
@@ -243,6 +288,17 @@ const firebase = {
     AngularFireFunctionsModule,
     AngularFirestoreModule.enablePersistence(),
     MDBBootstrapModule.forRoot(),
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.circleSwish,
+      backdropBackgroundColour: 'rgba(0,0,0,0.75)',
+      backdropBorderRadius: '4px',
+      primaryColour: 'yellow',
+      secondaryColour: 'purple',
+      tertiaryColour: '#ffffff',
+      fullScreenBackdrop: true
+    }),
+ DataViewModule,
+    PanelModule,
     // JasperoAlertsModule,
    AccordionModule,
   FieldsetModule,
@@ -259,7 +315,8 @@ TreeTableModule,
     AutoCompleteModule,
     FileUploadModule,
     TriStateCheckboxModule,
-    InputSwitchModule
+    InputSwitchModule,
+    BlockUIModule
   ],
   providers: [MatDialog,
   MessageService,
@@ -268,7 +325,7 @@ TreeTableModule,
     AuthGuard,
     AuthService,
     MessageService,
-    UserService,
+    ProgressService,
     DatePipe],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]

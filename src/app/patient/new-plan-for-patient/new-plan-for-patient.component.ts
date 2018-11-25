@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { DbService, Patient, Mipuy, MipuyDecideForPlan, PlanForPatient } from '../../services/db.service';
 import { ShareDataService } from '../../services/share-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,7 +9,7 @@ import * as firebase from 'firebase';
   templateUrl: './new-plan-for-patient.component.html',
   styleUrls: ['./new-plan-for-patient.component.css']
 })
-export class NewPlanForPatientComponent implements OnInit {
+export class NewPlanForPatientComponent implements OnInit, OnChanges {
   PLAN: PlanForPatient;
   planedDiffi = [];
   planFiles = [];
@@ -57,6 +57,7 @@ export class NewPlanForPatientComponent implements OnInit {
       this.getPatientByID();
       this.getOneMipuyForPat(mipuyDate);
       this.db.getPlanForPatientRef(this.Pid).doc<PlanForPatient>(plan_doc).valueChanges().subscribe(plan => {
+        this.planFiles = [];
         this.PLAN = plan;
         Object.keys(plan).forEach(key => {
           // if (plan[key] === 'yes') { // this is a diffi was planed
@@ -65,7 +66,7 @@ export class NewPlanForPatientComponent implements OnInit {
           //   this.planedDiffi.push({ code: key, method: plan[Mkey], thera: plan[Tkey] });
           // }
           if (plan[key] === 'file') { // this is a file
-            this.planFiles.push({ file: key, fileName: key.split('_')[0] });
+            this.planFiles.push({ file: key, fileName: key.split('_dot_')[0] });
           }
         });
       });
@@ -99,6 +100,14 @@ export class NewPlanForPatientComponent implements OnInit {
    
   }
 
+  ngOnChanges() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
+  }
+
 
   getPatientByID() {
 
@@ -122,6 +131,10 @@ this.sd.routeTo('/Pcard', this.Pid);
         this.sd.routeTo('/Pcards', 'plan');
       }
       this.mipuyDates = M;
+      this.mipuyDates.forEach(plan => {
+        const tempD = plan.mipuyDate.split('.');
+        plan['hebrewDate'] = this.sd.convertDateToHebrewDate(+tempD[0], +tempD[1], +tempD[2]);
+      });
     });
 
     this.db.getAllTherapistsRef().valueChanges().subscribe(thera => this.allTherapists = thera);
@@ -167,7 +180,7 @@ this.sd.routeTo('/Pcard', this.Pid);
       console.log(res);
       this.chooesedMipuy = res.data;
         this.initDiffiForPlan();
-      this.showMipuy_V = false;
+     // this.showMipuy_V = false;
 
     }).catch(err => {
       this.chooesedMipuy = 'no internet';
@@ -188,10 +201,12 @@ this.sd.routeTo('/Pcard', this.Pid);
     for (const file of event.files) {
       this.uploadedFiles.push(file);
       const date = new Date();
-      const fileName = '' + file.name + '_D_' + date;
+      let fileName = '' + file.name + '_D_' + date;
+      const re = /\./gi;
+     fileName = fileName.replace(re, '_dot_');
       const path = `/${this.Pid}/${fileName}`;
       const iRef = storegRef.child(path);
-      this.PLAN[fileName] = 'file';
+      this.PLAN['' + fileName] = 'file';
         console.log(this.PLAN);
       iRef.put(file).then((snapshot) => {
         console.log(snapshot);
@@ -288,6 +303,9 @@ this.sd.routeTo('/Pcard', this.Pid);
   }
 
   deleteFile(file) {
+    console.log(file);
+    console.log(this.planFiles);
+    this.planFiles.splice(this.planFiles.findIndex(p => p.file === file), 1);
     this.sd.deleteFile('' + this.PLAN.Pid + '/' + file, file, this.PLAN.mipuy_id_in_db + '_P_' + this.PLAN.date, this.Pid);
   }
 

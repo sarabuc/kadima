@@ -95,4 +95,12 @@ export class AuthService {
   }
 
 
+  isLoggedIn() {
+    if (this.db.userNow) {
+      return true;
+    }
+    return false;
+  }
+
+
 }

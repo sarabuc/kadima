@@ -4,7 +4,7 @@ import { ShareDataService } from '../../services/share-data.service';
 import { AuthService } from '../../services/auth.service';
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import * as firebase from 'firebase';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -92,4 +92,23 @@ if (doc.password === value.password) {
         this.sd.createAlert('error', 'שגיאה. בדוק את הפרטים שהכנסת', '');
     });
   }
+
+
+ /*tryLogin(value) {
+   // this.db.tryLogin(value.email, value.password);
+   const data = {
+     email: value.email,
+     password: value.password
+   };
+   console.log(data);
+   const login = firebase.functions().httpsCallable('login');
+   login(data).then(res => {
+     console.log(res);
+    
+
+   }).catch(err => {
+     console.log(err);
+   });
+   
+  }*/
 }

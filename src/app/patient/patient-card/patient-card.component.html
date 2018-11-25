@@ -14,9 +14,7 @@
             <app-time-table-to-show [timeStr]="pat.strFreeTime"></app-time-table-to-show>
 
         </mat-tab>
-        <mat-tab label="ערוך  פרטי תלמיד ">
-            <app-update-patient [pat]="pat"></app-update-patient>
-        </mat-tab>
+        
 
         <mat-tab label="דיווח על טיפול שהתקים">
             <app-new-treatment-info [Pid]="Pid"></app-new-treatment-info>
@@ -27,6 +25,14 @@
         </mat-tab>
         <mat-tab label="מיפויים">
             <app-mipuy-for-patient [pat]="pat" [Pid]="Pid" [status]="'all'"></app-mipuy-for-patient>
+        </mat-tab>
+
+         <mat-tab label="ציונים">
+
+           <app-graeds-for-patient [pat]="pat" [Pid]="Pid" [status]="'all'"></app-graeds-for-patient>
+        </mat-tab>
+        <mat-tab label="ערוך  פרטי תלמיד ">
+            <app-update-patient [pat]="pat"></app-update-patient>
         </mat-tab>
     </mat-tab-group>
 </div>

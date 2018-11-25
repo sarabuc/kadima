@@ -75,7 +75,7 @@
                 <div>קשיים לטיפול</div>
             </ng-template>
 
-            <div class="row d-flex mt-1 mb-2 justify-content-around ">
+            <div class="row d-flex mt-1 mb-2 justify-content-around " *ngIf="status == 'new'">
                 <div class="col-md-5 col-sm-12 col-xs-12 col-lg-25  mb-2">
                     <button class="my-primary my-button my-btn-md w-100" (click)="showListOfMipuy()">בחר מתוך רשימת כל המיפויים</button>
                 </div>

@@ -36,10 +36,10 @@ export class HomePageComponent implements OnInit {
       route: 'addPatient', class: 'fa fa-plus-circle fa-4x yellow-text', text: 'הוספת תלמידים',
     class2: 'wow fadeInUp col-lg-2 col-md-2 col-sm-4 col-xs-6 mb-4 pt-1'},
     {
-      route: 'addTherapist', class: 'fa fa-user-plus fa-4x yellow-text', text: 'הוספת מטפל',
+      route: 'teams', class: 'fa fa-group fa-4x yellow-text', text: 'ניהול קבוצות ',
     class2: 'wow fadeInUp col-lg-2 col-md-2 col-sm-4 col-xs-6 mb-4 pt-1' },
     {
-      route: 'check-progress', class: 'fa fa-check fa-4x yellow-text', text: 'בדוק התקדמות',
+      route: 'progressManage', class: 'fa fa-check fa-4x yellow-text', text: 'ציונים והתקדמות',
     class2: 'wow fadeInUp col-lg-2 col-md-2 col-sm-6 col-xs-6 mb-4 pt-1' },
     {
 

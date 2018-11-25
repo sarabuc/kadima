@@ -60,7 +60,7 @@ have choose
             <div class="list-group mt-1 pt-2  w-90" >
                 <div *ngFor="let p of planToChoose ">
                     <a class="list-group-item link-botton " style="text-align:right" (click)="getPlanForAdmin(p)">
-                        <i class="fa fa-check mx-5"></i>{{p.date }}</a>
+                        <i class="fa fa-check mx-5"></i>{{p.date }} | <small>{{p.hebrewDate}}</small></a>
                         <!--| date: 'dd/MM/yyyy'-->
                 </div>
             </div>
@@ -72,14 +72,14 @@ have choose
           <div class="list-group mt-1 pt-2  w-90" >
                 <div *ngFor="let p of theraPatientList ">
                     <a class="list-group-item link-botton " style="text-align:right" (click)="getPlanForUser(p)" *ngIf ="p.Pid == Pid">
-                        <i class="fa fa-check mx-5"></i>{{p.planDocId }}</a>
+                        <i class="fa fa-check mx-5"></i>{{p.date }} | <small>{{p.hebrewDate}}</small></a>
                         <!--| date: 'dd/MM/yyyy'-->
                 </div>
             </div>
         </div>
 
         <div *ngIf="choosedPlan" style="text-align: right"> <h6 class="yellow-text">בהתאם לתכנון טיפול שהתבצע בתאריך {{choosedPlan.date}} 
-       <small> <a class="mx-4 link purlpe-text" click="rechoosePlan()">בחר מחדש</a></small></h6>
+       <small> <a class="mx-4 link purlpe-text" (click)="rechoosePlan()">בחר מחדש</a></small></h6>
         </div>
 <!--              END  PLAN                       -->
 
@@ -142,8 +142,8 @@ have choose
         <div class="col-md-3 col-sm-12 mb-1  form-group text-right">
             <mat-form-field class=" w-100">
 
-                <mat-select class="form-item form-item-select" name="kind" placeholder=" סוג שיעור" [(ngModel)]="kind">
-                    <mat-option [value]="area" *ngFor="let area of sd.treatmentArea">{{area}}</mat-option>
+                <mat-select class="form-item form-item-select" name="area" placeholder=" תחום שיעור" [(ngModel)]="area">
+                    <mat-option [value]="area" *ngFor="let area of diffiListInPlan">{{area}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
@@ -160,6 +160,19 @@ have choose
                 <textarea matInput class="form-item" name="comment" placeholder="הערות " [(ngModel)]="comment"></textarea>
             </mat-form-field>
         </div>
+
+        <div class="col-md-12 col-sm-12 mb-1 px-auto  text-right">
+        <h4 class="yellow-text">
+            <strong>
+            התקדמות אצל התלמיד
+        </strong>
+            <small>
+            יש לסמן את רמת ההתקדמות בתחום הנבחר בין 1 ל4
+            </small>
+        </h4>
+           <p-rating [ngModel]="progress" iconOnClass="pi pi-check-circle" iconOffClass="pi pi-times-circle"  stars="4" ></p-rating>
+        </div>
+
 
 
 

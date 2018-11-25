@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
-// import * as writeJsonFile from 'write-json-file';
-// import { AlertsService } from '@jaspero/ng2-alerts';
-// import { AlertType } from '@jaspero/ng-alerts';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import {Router, ActivatedRoute} from '@angular/router';
 import * as firebase from 'firebase';
 import * as hebrewDate from 'hebrew-date';
 // const hebrewDate = require('hebrew-date');
 import { MessageService } from 'primeng/components/common/messageservice';
 import { saveAs } from 'file-saver/FileSaver';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 @Injectable()
 export class ShareDataService {
   msgs = []; // for msgs
@@ -31,14 +33,41 @@ export class ShareDataService {
   public FundingFactors = ['הורים', 'מוסד לימודי', 'קופת חולים', 'קופת צדקה', 'ידידות טורונטו', 'יד אליעזר',
   'משרד החינוך שעות שילוב', 'משרד החינוך כיתת קידום', 'מחלקת רווחה', 'משרד הפריפריה', 'קרוב משפחה'];
 // public treatmentCategories;
+ public hebrew = {
+  firstDayOfWeek: 0,
+  dayNames: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
+  dayNamesShort: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'שבת'],
+  dayNamesMin: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'שבת'],
+  monthNames: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
+  monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+  today: 'היום',
+  clear: 'נקה'
+};
 
 
-
+  hebrewDays_all = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח',
+    'י"ט', 'כ', 'כ"א', 'כ"ב', 'כ"ג', 'כ"ד', 'כ"ה', 'כ"ו', 'כ"ז', 'כ"ח', 'כ"ט', 'ל',
+    'יא', 'יב', 'יג', 'יד', 'טו', 'טז', 'יז', 'יח', 'יט', 'כא', 'כב', 'כג', 'כד', 'כה', 'כו', 'כז', 'כח', 'כט'
+  ];
+  hebrewMonthes_all = ['תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר ב', 'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול',
+   'חשוון', 'סיוון', 'איר', 'אדר א', 'נסן', 'כסלו'];
+  hebrewYear_all = ['תשעח', 'תשעט', 'תשע"ח', 'תשע"ט', 'תשפ', 'תש"פ', 'תשעז', 'תשע"ז'];
+  hebrewDays = [ 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח',
+    'י"ט', 'כ', 'כ"א', 'כ"ב', 'כ"ג', 'כ"ד', 'כ"ה', 'כ"ו', 'כ"ז', 'כ"ח', 'כ"ט', 'ל'];
+  hebrewMonthes = [ 'תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר ב', 'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'];
+  hebrewMonthesInEnglish = ['Tishrei', 'Cheshvan', 'Kislev', 'Tevet', 'Shvat', 'Adar1', 'Adar2',
+  'Nisan', 'Iyyar', 'Sivan', 'Tamuz', 'Av', 'Elul'];
+  hebrewYear = ['תשעח', 'תשעט'];
+  hebrewYearStartFrom = 5778; // תשע"ח
+  classes = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט'];
 public daysName = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
 public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30' ];
-  constructor(/*private _alert: AlertsService*/ private router: Router, private messageService: MessageService, public datepipe: DatePipe) {
+
+  constructor(/*private _alert: AlertsService*/ private router: Router,
+     private messageService: MessageService, public datepipe: DatePipe, 
+    private http: HttpClient) {
+    this.convertHebrewToNormalDate(1, 2, 1);
     this.initFREE_ALL_TIME();
-    console.log(this.convertDateToHebrewDate(26, 10, 2018));
   }
 
 
@@ -138,8 +167,8 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
 
   }
 convertDateToHebrewDate(date, month, year) {
-  const Hdate =  hebrewDate(year, month, date);
-  console.log(Hdate);
+  const Hdate =  hebrewDate(+year, +month, +date);
+
   return this.getHebrewDate(Hdate.date) + ' ' + this.getHebrewMonth(Hdate.month) + ' ' + this.getHebrewYear(Hdate.year);
   // [a.slice(0, position), b, a.slice(position)].join('');
 }
@@ -152,19 +181,16 @@ convertDateToHebrewDate(date, month, year) {
     return ['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט'][num];
   }
   private getGimatryAsarot(num) {
-    console.log(num);
     return ['', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', ''][num];
   }
   private getGimatryMeot(num) {
-    console.log(num);
     return ['', 'ק', 'ר', 'ש', 'ת', 'תק', 'תר', 'תש', 'תת', 'תתק', ''][num];
   }
  private getHebrewMonth(month) {
-return ['', 'תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר ב', 'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'][month];
+   return this.hebrewMonthes[month - 1];
   }
 private  getHebrewDate(date) {
-return ['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח',
- 'י"ט', 'כ', 'כ"א', 'כ"ב', 'כ"ג', 'כ"ד', 'כ"ה', 'כ"ו', 'כ"ז', 'כ"ח', 'כ"ט', 'ל'][date];
+  return this.hebrewDays[date - 1];
   }
 public convertDateToString(date: Date) {
 
@@ -172,7 +198,14 @@ public convertDateToString(date: Date) {
 }
   public convertDateToStringDD_MM_YYYY(date: Date) {
   
-    return '' + date.getDate() + '.' + (date.getMonth() + 1 ) + '.' + date.getFullYear();
+    return '' + this.getDateDay(date.getDate()) + '.' + (date.getMonth() + 1 ) + '.' + date.getFullYear();
+  }
+
+  private getDateDay(num: number) {
+    if (num < 10) {
+      return '0' + num;
+    } 
+    return num;
   }
 
 public getCsvFile() {
@@ -189,22 +222,40 @@ this.getAndDownloadFile('exe/patientData.json', 'data.json', 'dawn');
 }
 
 
-deleteFile(filePath: string, fileName, planDocId, Pid) {
+async deleteFile(filePath: string, fileName, planDocId, Pid) {
+  console.log(fileName);
   // Create a reference to the file to delete
   const desertRef = firebase.storage().ref(filePath);
 
   // Delete the file
-  desertRef.delete().then(res => {
+  desertRef.delete().then(async(res) => {
     // File deleted successfully
     // have delete from plans collection
-    const object: any = {};
-    object[fileName] = firebase.firestore.FieldValue.delete();
-    firebase.firestore().collection('patientDate').doc(Pid).collection('plans').doc(planDocId).update(object);
+    // const object: any = {};
+   
+   // object[fileName] = firebase.firestore.FieldValue.delete();
+    const docRef = firebase.firestore().collection('patientDate').doc(Pid).collection('plans').doc(planDocId);
+    const tempD = await docRef.get();
+    const temp = tempD.data();
+    temp['' + fileName] = 'deleted';
+    console.log(temp);
+    docRef.update(temp).then(res2 => {
+     this.createAlert('success', 'קובץ נמחק בהצלחה', '');
+   });
+  //   const temp = await docRef.get();
+  //   console.log(temp.data());
+  // console.log(temp.data()[fileName]);
+
+  //   delete temp.data()[fileName];
+  //   console.log(temp.data();
+  //   docRef.set(temp.data());
+//     docRef.update({
+//     fileName: firebase.firestore.FieldValue.delete()
+ });
     
-      this.createAlert('success', 'קובץ נמחק בהצלחה', '');
-  }).catch(err => {
-    // Uh-oh, an error occurred!
-  });
+  // }).catch(err => {
+  //   // Uh-oh, an error occurred!
+  // });
 }
 
   getAndDownloadFile(path, fileName, option) {
@@ -220,6 +271,7 @@ deleteFile(filePath: string, fileName, planDocId, Pid) {
        const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
+       // a.target = '_blank'
         a.href = url;
         a.download = fileName;
         a.click();
@@ -302,4 +354,31 @@ deleteFile(filePath: string, fileName, planDocId, Pid) {
   //   }
   // });
   // }
+
+
+
+
+public async convertHebrewToNormalDate(day: number, month: number, year: number): Promise<any> {
+  // https://www.hebcal.com/converter/?cfg=json&hy=5749&hm=Kislev&hd=25&h2g=1
+
+  const Tyear = this.hebrewYearStartFrom + year;
+  const Tmonth = this.hebrewMonthesInEnglish[month];
+  const url = 'https://www.hebcal.com/converter/?cfg=json&hy=' + Tyear + '&hm=' + Tmonth + '&hd=' + day + '&h2g=1';
+  
+  const Dres = await this.http.get(url);
+  return Dres; /*
+  Dres.subscribe(res => {
+      console.log(res);
+      const Lday = (res as any).gd;
+      const Lmonth = (res as any).gm;
+      const Lyear = (res as any).gy;
+      return Promise.resolve('' + Lday + '.' + Lmonth + '.' + Lyear);
+    });*/
+ /* console.log(res);
+  const Lday = (res as any).gd;
+  const Lmonth = (res as any).gm;
+  const Lyear = (res as any).gy;
+  return Promise.resolve('' + Lday + '.' + Lmonth + '.' + Lyear);*/
+
+}
 }

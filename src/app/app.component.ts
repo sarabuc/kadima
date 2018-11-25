@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DbService } from './services/db.service';
-import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FirebaseUserModel } from './services/user.model';
 import { Router } from '@angular/router';
-
+// import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { ShareDataService } from './services/share-data.service';
 
@@ -17,13 +15,13 @@ import { ShareDataService } from './services/share-data.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit  {
-  user: FirebaseUserModel = new FirebaseUserModel();
+ /* user: FirebaseUserModel = new FirebaseUserModel();
   options = {
     overlay: false,
     overlayClickToClose: true,
     showCloseButton: false,
     duration: 3000
-  };
+  };*/
 
  code = 1234;
   fixed = false;
@@ -54,7 +52,7 @@ export class AppComponent implements OnInit  {
 
   constructor(
   public db: DbService,
-    public userService: UserService,
+   // public userService: UserService,
     public authService: AuthService,
     private route: ActivatedRoute,
     private location: Location,
@@ -80,7 +78,7 @@ export class AppComponent implements OnInit  {
     this.route.data.subscribe(routeData => {
       const data = routeData['data'];
       if (data) {
-        this.user = data;
+       // this.user = data;
      //   this.createForm(this.user.name);
       }
     });
@@ -88,7 +86,7 @@ export class AppComponent implements OnInit  {
 
   logout() {
     this.db.isLoginV = false;
-    this.sd.routeTo('/home');
+    this.sd.routeTo('/login');
     this.db.userNow = undefined;
     this.sd.createAlert('success', 'יצאת בהצלחה מחשבונך', '');
   }
