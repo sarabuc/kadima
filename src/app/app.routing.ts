@@ -27,6 +27,7 @@ import { RegisterComponent } from './pages/login/register/register.component';
 import { AddGroupTreatComponent } from './pages/add-group-treat/add-group-treat.component';
 import { NewGradesComponent} from './pages/new-grades/new-grades.component';
 import { NewGroupComponent} from './pages/new-group/new-group.component';
+import {NewGroupTreatmentComponent} from './treatment/new-group-treatment/new-group-treatment.component';
 const appRoutes: Routes = [
   { path: '', redirectTo: /*'home'*/'login', pathMatch: 'full' },
   { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] },
@@ -52,9 +53,11 @@ const appRoutes: Routes = [
   { path: 'plan/:id', component: NewPlanForPatientComponent },
   { path: 'updatePlan/:id', component: NewPlanForPatientComponent },
   { path: 'diffiAndMethods', component: DiffiAndMethodsComponent },
-  { path: 'addTreatForGroup', component: AddGroupTreatComponent },
   { path: 'addTestGrades', component: NewGradesComponent },
-  {path: 'newGroup', component: NewGroupComponent},
+    {path: 'newGroupTreat', component: NewGroupTreatmentComponent},
+    {path: 'newGroupTreat/:id', component: NewGroupTreatmentComponent},
+
+    { path: 'newGroup', component: NewGroupComponent },
   { path: 'mipuy-exel', component: NewMipuyFromExelComponent },
   {path: 'teams', component: TeamsComponent},
   { path: '**', redirectTo: 'login' }

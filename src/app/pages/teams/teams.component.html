@@ -50,6 +50,8 @@
             </div>
             <div class="ui-g-12 ui-md-2 search-icon pt-5">
                 <button class="btn purple" type="button"  (click)="selectTeam($event, team, showTeam)">הצג<i class="fa fa-search mr-1"></i></button>
+                <button class="btn purple" type="button"  (click)="addInfoTreat( team)">דיווח<i class="fa fa-plus mr-1"></i></button>
+
             </div>
         </div>
     </ng-template>
@@ -63,6 +65,8 @@
                   {{team.area}} - כתה {{team.grade1.split('-')[0]}}</div>
                   <hr class="ui-widget-content" style="border-top:0">
                 <button class="btn purple" type="button"  (click)="selectTeam($event, team, showTeam)">הצג<i class="fa fa-search mr-1"></i></button>
+                <button class="btn purple" type="button"  (click)="addInfoTreat(team)">דיווח<i class="fa fa-plus mr-1"></i></button>
+
               </p-panel>  
             </div>
       

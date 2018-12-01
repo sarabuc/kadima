@@ -58,6 +58,11 @@ groupCode: Date; // timestemp
   constructor(public db: DbService, public sd: ShareDataService) { }
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
 this.init();
   }
 
@@ -182,7 +187,7 @@ addTherapistForArea() {
     // check if have all needed props
     for (const key of Object.keys(this.GROUP)) {
       if (!this.GROUP[key]) {
-          this.sd.createAlert('error', 'שדה ' + key + ' לא תקין', '');
+          this.sd.createAlert('error', 'שדה ' + this.sd.dictionary[key] + ' לא תקין', '');
           this.db.isBusy = false;
           return;
       }
@@ -202,7 +207,7 @@ try {
     for (const pat of this.selectedPatForGroup) {
       const ob = {
         Pid: pat.Pid,
-        groupCode: this.GROUP.groupCode,
+        groupCode: '' + this.GROUP.groupCode,
         status: 'in',
         startDate: this.GROUP.startDate,
         insertBy: user,
@@ -260,7 +265,7 @@ try {
       startDate: this.sd.convertDateToStringDD_MM_YYYY(this.newDate),
       aprovedHours: 0,
       groupName: this.sd.convertDateToStringDD_MM_YYYY(this.newDate),  // entered by user
-      groupCode: this.newDate
+      groupCode: '' + this.newDate
     };
     this.showAreaForTherapist = false;
     this.showClasses = false;

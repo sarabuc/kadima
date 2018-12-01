@@ -44,9 +44,16 @@
              .ui-rating a {
                  color: yellow !important;
              }
-             
-             .ui-rating {
-                 font-size: 3em!important;
+             .purple-rating .ui-rating a {
+                 color: purple !important;
+             }
+
+             .large-rating .ui-rating {
+                 font-size: 3em !important;
+             }
+
+             .small-rating .ui-rating {
+                 font-size: 2em !important;
              }
              
              .ui-table .ui-table-thead>tr>th,

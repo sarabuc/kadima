@@ -1,15 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 /*import '../../../src/assets/js/jquery-validation/dist/jquery.validate.min.js';
 import '../../../src/assets/js/jquery-validation/dist/additional-methods.min.js';*/
-import * as steps from 'jquery.steps';
 import { ShareDataService } from '../../services/share-data.service';
 import { DbService } from '../../services/db.service';
-interface JQuery {
-  validator: any;
-}
 
-declare var $: any;
-declare var JQuery: any;
 // import * as $ from 'JQuery';
 // import 'jqueryui';
 @Component({
@@ -75,6 +69,13 @@ export class NewGradesComponent implements OnInit {
     });
   }
   ngOnInit() {
+   
+      // guard
+      if ((!this.db.isLogin()) || (!this.db.userNow)) {
+        // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+        this.sd.routeTo('login');
+      }
+
     for (let i = 1; i <= this.sd.hebrewDays.length; i++) {
       this.days.push({ label: this.sd.hebrewDays[i - 1], value: i });
     }

@@ -1,0 +1,638 @@
+<div class="card dark-card mx-3 my-3">
+<div claa="row d-flex">
+<h1 class="purple-text" style="text-align: right">
+דיווח טיפול קבוצתי
+|
+<small>מורה מדווח 
+{{db.userNow.name}}
+</small>
+</h1>
+ 
+</div>    
+ 
+
+
+<!--             THERAPIST           -->
+ <h5 class="yellow-text mt-2" style="text-align: right">  בחירת מטפל </h5>
+<p class ="yellow-text" *ngIf="!db.userNow.isAdmin">אין לך הרשאה לגשת למטפלים אחרים</p>
+    <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " >
+        <mat-form-field class="w-80">
+           <!-- <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="Tid" [matAutocomplete]="autoT">
+            <mat-error *ngIf="!Tid">חובה להכניס מספר זהות מטפל</mat-error>
+            <mat-autocomplete #autoT="matAutocomplete">
+                <mat-option *ngFor="let thera of allTherapistList" [value]="thera.id" label=" label">
+                    {{ thera.firstName }} {{thera.lastName}}
+                </mat-option>
+            </mat-autocomplete>-->
+            <mat-select matInput class="form-item white-text form-item-select" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="Tid" >
+                <mat-option *ngFor="let thera of allTherapistList" [value]="thera.id" label=" label">
+                    {{ thera.firstName }} {{thera.lastName}}
+                </mat-option>
+            </mat-select>
+             <mat-error *ngIf="!Tid">חובה להכניס מספר זהות מטפל</mat-error>
+
+        </mat-form-field>
+        <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="getGroupsForTherapist()" ><i class="fa fa-check"></i></button>
+
+    </div>
+
+
+
+<!--             GROUP           -->
+<div *ngIf="groupsForTherapist">
+    <h5 class="yellow-text mt-2" style="text-align: right">  בחירת קבוצה</h5>
+                <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group ">
+                    <mat-form-field class="w-80">
+                        <mat-select matInput class="form-item white-text form-item-select" type="text" name="groupCode" placeholder="קבוצה" [(ngModel)]="groupCode" >
+                            <mat-option *ngFor="let group of groupsForTherapist" [value]="group.groupCode">
+                                {{ group.groupName }} 
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!groupCode">חובה להכניס קבוצה</mat-error>
+
+                    </mat-form-field>
+                    <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="getGroupPats()" ><i class="fa fa-check"></i></button>
+
+                </div>
+</div>
+
+<div *ngIf="(patsForGroup && patsForGroup.length >0)">
+    <p-table [value]="patTable"[columns]="patsForGroup" #dt class="table-editable" rowExpandMode ="single" [paginator]="false" [rows]="15" selectionMode="single" dataKey="insertTime" [expandedRowKeys]="expandedRows" (onRowExpand)="onRowExpand()">
+        <ng-template pTemplate="caption">
+            <div class="row d-flex justify-content-around">
+                    <p>רשימת שיעורים לקבוצה 
+                    </p>
+                    <div>
+                        <button type="button"  class="btn btn-sm purple" (click)="addNewTreat(save)" >שיעור חדש<i class="fa fa-plus mr-1"></i></button>
+                        <!--<button type="button"   label="יצוא לאקסל" (click)="dt.exportCSV()" ><i class="fa fa-file-o mr-1"></i></button>-->
+                        <button type="button" class="btn btn-sm purple" (click)="getAllGroupLessons()" >כל השיעורים בקבוצה</button>
+                        <button type="button"  class="btn btn-sm purple" (click)="getLastMonth()" >שיעורים מהחודש האחרון</button>
+
+                    </div>
+            </div>    
+        </ng-template>  
+        <ng-template pTemplate="header">
+            
+            <tr style="word-wrap: break-word">
+            <th style="width: 3em"></th> <!-- empty for icon to get details-->
+                <th><b>תאריך</b></th>
+            <th *ngFor="let col of patsForGroup" style="word-wrap: break-word;">
+                    {{col.name}}
+                </th>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-treat let-i="rowIndex" let-columns="columns" let-expanded="expanded">
+            <tr>
+
+                <td>
+                    <a  [pRowToggler]="treat">
+                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-left'"></i>
+                    </a>
+                </td>
+                <td>
+                <b *ngIf="treat.date">{{treat.date}}</b>
+                </td>
+                <td *ngFor="let pat of patsForGroup" >
+                <i class="fa fa-check fa-4x purple-text" *ngIf="treat[pat.Pid].wasInLesson"></i>
+                <i class="fa fa-times fa-4x red-text" *ngIf="!treat[pat.Pid].wasInLesson"></i>
+
+                </td>
+            
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-treat let-columns="columns">
+            <tr>
+                <td [attr.colspan]="columns.length + 2">
+                    <div class="mx-3 my-3  row" style="text-align:right">
+                        <div class="col-12 d-flex justify-content-between">
+                            <h4 class="h4">פרטי טיפול </h4>
+                            <div>
+                                <button class="red mx-1" mat-mini-fab (click)="treatToDelete = treat;delete.show()">
+                                <i class="fa fa-close"></i>
+                                </button>
+                                <button class="green mx-1" mat-mini-fab (click)="treatToUpdate = treat;updateDate = false; edit.show()">
+                                <i class="fa fa-pencil"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="list-group px-2 py-3 mb-1  col-md-6 col-sm-12">
+
+                            <div class="list-group-item mb-1 mx-1">
+                                <small class="purple-text">תאריך </small>
+                                <strong> {{treat.date}} </strong>
+                            </div>
+                            <div class="list-group-item  mb-1 mx-1">
+                                <small class="purple-text">שעות </small>
+                                <strong> {{treat.startTime}} - {{treat.endTime}}</strong>
+                            </div>
+                            <div class="list-group-item  mb-1 mx-1">
+                                <small class="purple-text">מספר שיעורים</small>
+                                <strong> {{treat.hours}} </strong>
+                            </div>
+                        </div>
+                        <div class="list-group px-2 py-3 mb-1  col-md-6 col-sm-12">
+                            <div class="list-group-item  mb-1 mx-1">
+                                <small class="purple-text">מספר תלמידים </small>
+                                <strong> לא נספר</strong>
+                            </div>
+                            <div class="list-group-item  mb-1 mx-1">
+                                <small class="purple-text">מטרת השיעור </small>
+                                <strong> {{treat.subject}}</strong>
+                            </div>
+                            <div class="list-group-item  mb-1 mx-1">
+                                <small class="purple-text">שיטת טיפול</small>
+                                <strong> {{treat.method}}</strong>
+                            </div>
+
+                        </div>
+                        <div class="list-group px-2  mb-1  col-md-12 col-sm-12">
+                            <div class="list-group-item  mb-1 mx-1">
+                                <small class="purple-text">תיאור והערות </small>
+                                <strong> {{treat.comment}}</strong>
+                            </div>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+      
+        <div mdbModal #save="mdb-modal" class="modal  fade ground" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fluid modal-full-height" role="document" *ngIf="newTreat">
+                <div class="modal-content modal-show">
+                    <div class="modal-header">
+                        <h4 class="modal-title w-100" id="myModalLabel">
+                        הוספת דיווח על שיעור                       
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="save.hide()">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                          <div class="w-100 row" style="font-size:16px;padding:20px">
+                                <!--      DATE       -->
+                                <div class="col-md-12 col-sm-12">
+                                                                
+                                            <h5 class="purple-text mt-2" style="text-align: right"> תאריך שיעור
+                                                <small *ngIf="!showLoazy"> (עברי)</small>
+                                                <small *ngIf="showLoazy"> (לועזי)</small>
+                                                <small>
+                                                    <p-toggleButton [(ngModel)]="showLoazy" onLabel="בחר תאריך עברי" offLabel="בחר תאריך לועזי" onIcon="pi pi-calendar" offIcon="pi pi-calendar" [style]="{'width':'140px', 'font-size': '70%', 'margin-right': '0.5rem'}"></p-toggleButton>
+                                                </small>
+                                            </h5>
+
+                                                <div class="my-2 ml-auto" *ngIf="!showLoazy">
+                                                        <mat-form-field class=" w-25 mx-1">
+                                                            <input matInput class="form-item white-text" type="text" name="selectedDay" placeholder="  יום" [(ngModel)]="selectedDay" [matAutocomplete]="autoD">
+                                                            <mat-error *ngIf="!selectedDay">יש לבחור יום  בחודש  </mat-error>
+                                                            <mat-autocomplete #autoD="matAutocomplete">
+                                                                <mat-option *ngFor="let day of days" [value]="day.value">
+                                                                {{day.label}}
+                                                                </mat-option>
+                                                            </mat-autocomplete>
+
+                                                        </mat-form-field>
+
+                                                    
+                                                        <mat-form-field class=" w-25 mx-1">
+                                                            <input matInput class="form-item white-text" type="text" name="selectedMonth" placeholder="חודש" [(ngModel)]="selectedMonth" [matAutocomplete]="autoM">
+                                                            <mat-error *ngIf="!selectedMonth">יש לבחור חודש   </mat-error>
+                                                            <mat-autocomplete #autoM="matAutocomplete">
+                                                            <mat-option *ngFor="let month of monthes" [value]="month.value">
+                                                                {{month.label}}
+                                                                </mat-option>
+                                                            </mat-autocomplete>
+
+                                                        </mat-form-field>
+
+                                                    
+
+                                                        <mat-form-field class=" w-25 mx-1">
+                                                            <input matInput class="form-item white-text" type="text" name="selectedYear" placeholder=" שנה " [(ngModel)]="selectedYear" [matAutocomplete]="autoY">
+                                                            <mat-error *ngIf="!selectedYear">יש לבחור שנה     </mat-error>
+                                                            <mat-autocomplete #autoY="matAutocomplete">
+                                                            <mat-option *ngFor="let year of years" [value]="year.value">
+                                                                {{year.label}}
+                                                                </mat-option>
+                                                            </mat-autocomplete>
+
+                                                        </mat-form-field>
+
+
+                                                    
+                                                </div>
+                                                <div class=" my-2 ml-auto" *ngIf="showLoazy">
+                                                    <h6 class="white-text">לחץ לבחירת תאריך</h6>
+                                                    <p-calendar styleClass="form-item" [(ngModel)]="loazyDate" [locale]="sd.hebrew" dateFormat="dd.mm.yy"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" (onFocus)="dateChoice='picker'" ></p-calendar>
+
+                                                </div>
+
+
+                                </div>
+                                <!--       END DATE     -->
+                                <!--        SUBJECT METHOD AND COMMENTS       -->
+                            
+                                <div class="col-md-4 col-sm-6 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="text-align: right;margin-bottom: -1.5rem;"> שעת התחלה
+                                    </h5>
+                                    <form #formST="ngForm">
+                                        <mat-form-field class="w-100">
+                                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="newTreat.startTime" placeholder="00:00" [(ngModel)]="newTreat.startTime" required>
+
+                                        <mat-error *ngIf="!newTreat.startTime">חובה להכניס שעת התחלה </mat-error>
+                                        <mat-error *ngIf="!formST.valid"> שעה  אינה תקינה</mat-error>
+                                    </mat-form-field>
+                                    </form>
+
+
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> שעת סיום
+                                    </h5>
+                                    <form #formET="ngForm">
+                                        <mat-form-field class="w-100">
+                                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="newTreat.endTime" placeholder="00:00 " [(ngModel)]="newTreat.endTime" required>
+                                        <mat-error *ngIf="!newTreat.endTime">חובה להכניס שעת סיום </mat-error>
+                                        <mat-error *ngIf="!formET.valid"> שעה  אינה תקינה</mat-error>
+                                    </mat-form-field>
+                                    </form>
+
+                                </div>
+
+                                <div class="col-md-4 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> מספר שעות
+                                    </h5>
+                                    <mat-form-field class="w-100">
+                                    <input matInput class="form-item white-text" type="number" name="newTreat.hours" placeholder="0 " [(ngModel)]="newTreat.hours" required>
+                                    <mat-error *ngIf="!newTreat.hours">חובה להכניס מספר שעות </mat-error>
+                                </mat-form-field>
+
+
+                                </div>
+                                <div class="col-md-6 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> נושא שיעור
+                                    </h5>
+                                    <mat-form-field class="w-100">
+                                    <input matInput class="form-item white-text" type="text" name="newTreat.subject" placeholder=" נושא שיעור " [(ngModel)]="newTreat.subject" required>
+                                    <mat-error *ngIf="!newTreat.subject">חובה להכניס נושא שיעור </mat-error>
+                                </mat-form-field>
+
+                                </div>
+
+                                <div class="col-md-6 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> שיטת טיפול
+                                    </h5>
+                                    <mat-form-field class="w-100">
+                                    <input matInput class="form-item white-text" type="text" name="newTreat.method" placeholder=" שיטת טיפול " [(ngModel)]="newTreat.method" required>
+                                    <mat-error *ngIf="!newTreat.method">חובה להכניס שיטת טיפול </mat-error>
+                                </mat-form-field>
+
+
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> תיאור והערות
+                                    </h5>
+                                    <mat-form-field class="w-100">
+                                    <input matInput class="form-item white-text" type="text" name="newTreat.comment" placeholder=" תיאור והערות" [(ngModel)]="newTreat.comment" required>
+                                </mat-form-field>
+
+                                </div>
+                                <!--      END  SUBJECT METHOD AND COMMENTS     -->
+                    
+                                <p-table [value]="patsForGroup" #dt class="table-editable"   dataKey="index" [expandedRowKeys]="expandedRows" (onRowExpand)="onRowExpand()">
+                                    <ng-template pTemplate="caption">
+                                    <div class="row d-flex justify-content-around">
+                                        <p>נוכחות והתקדמות
+                                        </p>
+                                        <div>
+                                        <p-toggleButton [(ngModel)]="setAllNochechut_v" (onChange)="setAllNochecut('new')" onLabel="נקה הכל" offLabel="סמן הכל" onIcon="pi pi-times" offIcon="pi pi-check" [style]="{ 'margin-right': '-0.25rem', 'font-size': '1rem','font-weight': 'bold'}"></p-toggleButton>
+
+                                        </div>
+                                    </div>
+                                    </ng-template>  
+                                    <ng-template pTemplate="header">
+                                        
+                                        <tr style="word-wrap: break-word">
+                                        <th style="width: 3em"></th> <!-- empty for icon to get details-->
+                                            <th><b>שם תלמיד</b></th>
+                                            <th><b>האם נוכח</b><small> שדה חובה</small></th>
+                                            <th><b>התקדמות</b> <small> שדה בחירה</small></th>
+                                            <th><b>הערות </b><small> שדה בחירה</small></th>
+                                        
+                                            
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-pat let-i="rowIndex">
+                                        <tr>
+
+                                            <td>
+                                                <b>{{i}}</b>
+                                            </td>
+                                            <td>
+                                            {{pat.name}}
+                                            </td>
+
+                                            <td>
+                                            <p-toggleButton [(ngModel)]="newTreat[pat.Pid].wasInLesson" onLabel="נכח" offLabel="לא נכח" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'height':'50px', 'margin-right': '-0.25rem', 'font-size': '1rem','font-weight': 'bold','padding-top': '0.7rem'}"></p-toggleButton>
+                                            </td>
+
+                                            <td class="small-rating purple-rating">
+                                            <p-rating [(ngModel)]="newTreat[pat.Pid].progress" iconOnClass="pi pi-check-circle" iconOffClass="pi pi-times-circle"  stars="4" ></p-rating>
+                                            </td>
+                                        
+                                            <td  pEditableColumn>
+                                            <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" [(ngModel)]="newTreat[pat.Pid].comment" >
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{newTreat[pat.Pid].comment}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            
+                                            </td>
+                                        
+                                        </tr>
+                                    </ng-template>
+                                    
+                                
+                                </p-table>
+
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="saveNewTreat('stay', save) " mdbRippleRadius>שמור והשאר</button>
+                        <button type="button" class="btn btn-primary  waves-light" mdbRippleRadius (click)="saveNewTreat('close', save)" >שמור וצא</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+         <div mdbModal #edit="mdb-modal" class="modal  fade ground" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fluid modal-full-height" role="document" *ngIf="newTreat">
+                <div class="modal-content modal-show">
+                    <div class="modal-header">
+                        <h4 class="modal-title w-100" id="myModalLabel">
+                        עדכון דיווח שיעור                       
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="edit.hide()">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" *ngIf="treatToUpdate">
+                          <div class="w-100 row" style="font-size:16px;padding:20px">
+                                <!--      DATE       -->
+                                <h5 class="purple-text mt-2" style="text-align: right" *ngIf="!updateDate"> תאריך שיעור
+                                <a (click)="updateDate = true;">שנה</a>
+                                </h5>
+                                <div class="col-md-12 col-sm-12" *ngIf="updateDate">
+                                                                
+                                            <h5 class="purple-text mt-2" style="text-align: right"> תאריך שיעור
+                                                <small *ngIf="!showLoazy"> (עברי)</small>
+                                                <small *ngIf="showLoazy"> (לועזי)</small>
+                                                <small>
+                                                    <p-toggleButton [(ngModel)]="showLoazy" onLabel="בחר תאריך עברי" offLabel="בחר תאריך לועזי" onIcon="pi pi-calendar" offIcon="pi pi-calendar" [style]="{'width':'140px', 'font-size': '70%', 'margin-right': '0.5rem'}"></p-toggleButton>
+                                                </small>
+                                            </h5>
+
+                                                <div class="my-2 ml-auto" *ngIf="!showLoazy">
+                                                        <mat-form-field class=" w-25 mx-1">
+                                                            <input matInput class="form-item white-text" type="text" name="selectedDay" placeholder="  יום" [(ngModel)]="selectedDay" [matAutocomplete]="autoD">
+                                                            <mat-error *ngIf="!selectedDay">יש לבחור יום  בחודש  </mat-error>
+                                                            <mat-autocomplete #autoD="matAutocomplete">
+                                                                <mat-option *ngFor="let day of days" [value]="day.value">
+                                                                {{day.label}}
+                                                                </mat-option>
+                                                            </mat-autocomplete>
+
+                                                        </mat-form-field>
+
+                                                    
+                                                        <mat-form-field class=" w-25 mx-1">
+                                                            <input matInput class="form-item white-text" type="text" name="selectedMonth" placeholder="חודש" [(ngModel)]="selectedMonth" [matAutocomplete]="autoM">
+                                                            <mat-error *ngIf="!selectedMonth">יש לבחור חודש   </mat-error>
+                                                            <mat-autocomplete #autoM="matAutocomplete">
+                                                            <mat-option *ngFor="let month of monthes" [value]="month.value">
+                                                                {{month.label}}
+                                                                </mat-option>
+                                                            </mat-autocomplete>
+
+                                                        </mat-form-field>
+
+                                                    
+
+                                                        <mat-form-field class=" w-25 mx-1">
+                                                            <input matInput class="form-item white-text" type="text" name="selectedYear" placeholder=" שנה " [(ngModel)]="selectedYear" [matAutocomplete]="autoY">
+                                                            <mat-error *ngIf="!selectedYear">יש לבחור שנה     </mat-error>
+                                                            <mat-autocomplete #autoY="matAutocomplete">
+                                                            <mat-option *ngFor="let year of years" [value]="year.value">
+                                                                {{year.label}}
+                                                                </mat-option>
+                                                            </mat-autocomplete>
+
+                                                        </mat-form-field>
+
+
+                                                    
+                                                </div>
+                                                <div class=" my-2 ml-auto" *ngIf="showLoazy">
+                                                    <h6 class="white-text">לחץ לבחירת תאריך</h6>
+                                                    <p-calendar styleClass="form-item" [(ngModel)]="loazyDate" [locale]="sd.hebrew" dateFormat="dd.mm.yy"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" (onFocus)="dateChoice='picker'" ></p-calendar>
+
+                                                </div>
+
+
+                                </div>
+                                <!--       END DATE     -->
+                                <!--        SUBJECT METHOD AND COMMENTS       -->
+                            
+                                <div class="col-md-4 col-sm-6 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="text-align: right;margin-bottom: -1.5rem;"> שעת התחלה
+                                    </h5>
+                                    <form #formST="ngForm">
+                                        <mat-form-field class="w-100">
+                                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="treatToUpdate.startTime" placeholder="00:00" [(ngModel)]="treatToUpdate.startTime" >
+
+                                        <mat-error *ngIf="!treatToUpdate.startTime">חובה להכניס שעת התחלה </mat-error>
+                                        <mat-error *ngIf="!formST.valid"> שעה  אינה תקינה</mat-error>
+                                    </mat-form-field>
+                                    </form>
+
+
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> שעת סיום
+                                    </h5>
+                                    <form #formET="ngForm">
+                                        <mat-form-field class="w-100">
+                                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="treatToUpdate.endTime" placeholder="00:00 " [(ngModel)]="treatToUpdate.endTime" >
+                                        <mat-error *ngIf="!treatToUpdate.endTime">חובה להכניס שעת סיום </mat-error>
+                                        <mat-error *ngIf="!formET.valid"> שעה  אינה תקינה</mat-error>
+                                    </mat-form-field>
+                                    </form>
+
+                                </div>
+
+                                <div class="col-md-4 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> מספר שעות
+                                    </h5>
+                                    <mat-form-field class="w-100">
+                                    <input matInput class="form-item white-text" type="number" name="treatToUpdate.hours" placeholder="0 " [(ngModel)]="treatToUpdate.hours" >
+                                    <mat-error *ngIf="!treatToUpdate.hours">חובה להכניס מספר שעות </mat-error>
+                                </mat-form-field>
+
+
+                                </div>
+                                <div class="col-md-6 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> נושא שיעור
+                                    </h5>
+                                    <mat-form-field class="w-100">
+                                    <input matInput class="form-item white-text" type="text" name="treatToUpdate.subject" placeholder=" נושא שיעור " [(ngModel)]="treatToUpdate.subject" >
+                                    <mat-error *ngIf="!treatToUpdate.subject">חובה להכניס נושא שיעור </mat-error>
+                                </mat-form-field>
+
+                                </div>
+
+                                <div class="col-md-6 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> שיטת טיפול
+                                    </h5>
+                                    <mat-form-field class="w-100">
+                                    <input matInput class="form-item white-text" type="text" name="treatToUpdate.method" placeholder=" שיטת טיפול " [(ngModel)]="treatToUpdate.method" >
+                                    <mat-error *ngIf="!treatToUpdate.method">חובה להכניס שיטת טיפול </mat-error>
+                                </mat-form-field>
+
+
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 mb-2 px-2">
+                                    <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> תיאור והערות
+                                    </h5>
+                                    <mat-form-field class="w-100">
+                                    <input matInput class="form-item white-text" type="text" name="treatToUpdate.comment" placeholder=" תיאור והערות" [(ngModel)]="treatToUpdate.comment" >
+                                </mat-form-field>
+
+                                </div>
+                                <!--      END  SUBJECT METHOD AND COMMENTS     -->
+                    
+                                <p-table [value]="patsForGroup" #dt class="table-editable"   dataKey="index" [expandedRowKeys]="expandedRows" (onRowExpand)="onRowExpand()">
+                                    <ng-template pTemplate="caption">
+                                    <div class="row d-flex justify-content-around">
+                                        <p>נוכחות והתקדמות
+                                        </p>
+                                        <div>
+                                        <p-toggleButton [(ngModel)]="setAllNochechut_v" (onChange)="setAllNochecut('update')" onLabel="נקה הכל" offLabel="סמן הכל" onIcon="pi pi-times" offIcon="pi pi-check" [style]="{ 'margin-right': '-0.25rem', 'font-size': '1rem','font-weight': 'bold'}"></p-toggleButton>
+
+                                        </div>
+                                    </div>
+                                    </ng-template>  
+                                    <ng-template pTemplate="header">
+                                        
+                                        <tr style="word-wrap: break-word">
+                                        <th style="width: 3em"></th> <!-- empty for icon to get details-->
+                                            <th><b>שם תלמיד</b></th>
+                                            <th><b>האם נוכח</b><small> שדה חובה</small></th>
+                                            <th><b>התקדמות</b> <small> שדה בחירה</small></th>
+                                            <th><b>הערות </b><small> שדה בחירה</small></th>
+                                        
+                                            
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-pat let-i="rowIndex">
+                                        <tr>
+
+                                            <td>
+                                                <b>{{i}}</b>
+                                            </td>
+                                            <td>
+                                            {{pat.name}}
+                                            </td>
+
+                                            <td>
+                                            <p-toggleButton [(ngModel)]="treatToUpdate[pat.Pid].wasInLesson" onLabel="נכח" offLabel="לא נכח" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'height':'50px', 'margin-right': '-0.25rem', 'font-size': '1rem','font-weight': 'bold','padding-top': '0.7rem'}"></p-toggleButton>
+                                            </td>
+
+                                            <td class="small-rating purple-rating">
+                                            <p-rating [(ngModel)]="treatToUpdate[pat.Pid].progress" iconOnClass="pi pi-check-circle" iconOffClass="pi pi-times-circle"  stars="4" ></p-rating>
+                                            </td>
+                                        
+                                            <td  pEditableColumn>
+                                            <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input pInputText type="text" [(ngModel)]="treatToUpdate[pat.Pid].comment" >
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{treatToUpdate[pat.Pid].comment}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            
+                                            </td>
+                                        
+                                        </tr>
+                                    </ng-template>
+                                    
+                                
+                                </p-table>
+
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="updateTreat(edit) " mdbRippleRadius>עדכן </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        
+<div mdbModal #delete="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-danger " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead mr-2">האם אתה בטוח ?</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="delete.hide()">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                    <p>האם אתה בטוח שברצונך למחק שיעור זה לצמיתות ?</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a type="button" class="btn btn-primary-modal waves-light white-text" mdbRippleRadius (click)="delete.hide(); deleteTreat();">מחק
+          <i class="fa fa-delete ml-1"></i>
+        </a>
+                <a type="button" class="btn btn-outline-secondary-modal" data-dismiss="modal" (click)="delete.hide()" mdbRippleRadius>חזור</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

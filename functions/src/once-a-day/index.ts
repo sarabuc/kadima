@@ -5,20 +5,13 @@ import * as template from './template';
 
 const ejs = require('ejs');
 const db = admin.firestore();
-// import * as admin from 'firebase-admin';
-// admin.initializeApp(functions.config().firebase);
-//Initial function call:
-export const do_once_a_day = functions.https.onRequest((req, res) => {
-    //create database ref
-   // var dbRef = admin.database().ref('/challenges');
-    //do a bunch of stuff
 
-    //send back response 
-    //res.redirect(200);
+export const do_once_a_day = functions.https.onRequest((req, res) => {
+  
     res.send(200);
 });
 
-
+// only for limudy area
 export const do_once_a_week = functions.https.onRequest(async (req, res) => {
     const Msetting = await db.collection('manager').doc('setting').get();
     //get all groups
@@ -30,14 +23,18 @@ export const do_once_a_week = functions.https.onRequest(async (req, res) => {
     const firstDate = new Date();
     firstDate.setDate(firstDate.getDate() - 7);
     console.log(firstDate);
+const limudyArea = await db.collection('difficults').where('Dfather', '==', 'לימודי').get();
 const groups = await db.collection('groups').get();// where('isActive', '==', true).get();
 const lastGrades = await db.collection('gradeMassageForTherapists').where('insertTime', '>=', firstDate).get();
     console.log('last grades  ' + lastGrades.docs.length);
     console.log(lastGrades.docs);
 for (const group of groups.docs) {
+    const area = group.data().area;
+    if(limudyArea.docs.findIndex(A => A.data().code === area) < 0) {
+        continue;
+    }
     let comment = '';
     const code = group.data().groupCode;
-    const area = group.data().area;
     const therapist = await db.collection('therapist').doc('' + group.data().Tid).get();
     const patsInGroup = await db.collection('patientInGroup').where('groupCode', '==', code).get();
 
@@ -76,7 +73,7 @@ for (const group of groups.docs) {
     const mailOptions = {
         from: 'קדימה - ניהול מערכת לקידום תלמידים',
         to: email,
-        subject: ' ציונים שבועיים לקבוצת ' + ' ' + group.data().groupName,
+        subject: '- ציונים שבועיים לקבוצת ' + '"' + group.data().groupName + '"',
         html: renderedHtml
     };
     sendMail.sendMail(mailOptions);

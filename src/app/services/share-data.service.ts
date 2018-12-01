@@ -8,13 +8,20 @@ import * as hebrewDate from 'hebrew-date';
 // const hebrewDate = require('hebrew-date');
 import { MessageService } from 'primeng/components/common/messageservice';
 import { saveAs } from 'file-saver/FileSaver';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 @Injectable()
 export class ShareDataService {
+  dictionary;
   msgs = []; // for msgs
   alerts = []; // for  alerts
+  dateRegex: RegExp = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
+  timeRegex: RegExp = /^([0-1][0-9]|(2)[0-3])(:)([0-5][0-9])$/;  
+  // /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/;
+
+
   // for free time
   TPstatusForTime: string; /*newP, newT, updateP, updateT */
 
@@ -68,6 +75,7 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
     private http: HttpClient) {
     this.convertHebrewToNormalDate(1, 2, 1);
     this.initFREE_ALL_TIME();
+    this.INIT_dictionary();
   }
 
 
@@ -160,6 +168,7 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
    */
   public routeTo(path: string, param?: string) {
     if (param) {
+      console.log(param);
       this.router.navigate([path, param]);
     } else {
       this.router.navigate([path]);
@@ -381,4 +390,30 @@ public async convertHebrewToNormalDate(day: number, month: number, year: number)
   return Promise.resolve('' + Lday + '.' + Lmonth + '.' + Lyear);*/
 
 }
+
+
+
+
+  INIT_dictionary() {
+    this.dictionary = {
+date: 'תאריך',
+hours: 'שעות', 
+subject: 'נושא', 
+aprovedHours: 'שעות מאושרות', 
+name: 'שם', 
+firstName: 'שם פרטי', 
+lastName: 'שם משפחה', 
+comment: 'הערה', 
+method: 'שיטה', 
+index: 'אינדקס', 
+group: 'קבוצה', 
+area: 'תחום', 
+difficult: 'קושי',
+grade: 'כתה', 
+gradeOfTest: 'ציון מבחן',
+startTime:'שעת התחלה',
+endTime:'שעת סיום'
+
+    };
+  }
 }

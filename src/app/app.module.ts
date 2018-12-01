@@ -160,6 +160,7 @@ import { NewGroupComponent } from './pages/new-group/new-group.component';
 import { AddGroupTreatComponent } from './pages/add-group-treat/add-group-treat.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { ProgressManageComponent } from './pages/progress-manage/progress-manage.component';
+import { NewGroupTreatmentComponent } from './treatment/new-group-treatment/new-group-treatment.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -231,7 +232,8 @@ keyboardEventKeyPolyfill();
     NewGroupComponent,
     AddGroupTreatComponent,
     TeamsComponent,
-    ProgressManageComponent
+    ProgressManageComponent,
+    NewGroupTreatmentComponent
    //  UpdatePlanForPatientComponent
   ],
   imports: [

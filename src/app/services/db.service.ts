@@ -61,7 +61,7 @@ area: string;
 startDate: string;
 aprovedHours: number;
 groupName: string; // entered by user
-groupCode: Date; // timestemp
+groupCode: string; // timestemp
   [k: string]: any;
   /* all patients in group are key in object like this: Pid: 'patient' and  
   Pid_STATUS:
@@ -74,7 +74,7 @@ groupCode: Date; // timestemp
 
 export interface PatientInGroup {
   Pid: string;
-  groupCode: Date;
+  groupCode: string;
   status: string;
   startDate: string;
   outDate?: string;
@@ -199,9 +199,30 @@ export interface TreatmentInfo {
    hours: string;
    description: string;
    comment: string;
-   progress?: number; // between 1 to 4
+   progress?: number; // between 0 to 4
   insertBy?: string;
   insertTime?: Date;
+ }
+
+ export interface GroupTreatmentInfo {
+   groupCode: string;
+   Tid: string;
+   date: string;
+   startTime: string;
+   endTime: string;
+   hours: string;
+   subject: string;
+   method: string;
+   comment: string;
+  insertBy?: string;
+  insertTime?: string;
+    [pat: string]: any;
+
+ }
+ export interface PatInGroupLesson {
+   wasInLesson: boolean;
+   progress: number; // between 0 to 4
+   comment: string;
  }
 export interface MipuyDecideForPlan {
   Pid: string;
@@ -548,6 +569,18 @@ public addMethod(method: Method) {
   });
   }
 
+  public addGroupTreatmentInfo(info: GroupTreatmentInfo){
+    this.afs.collection('groupTreatmentInfo').doc('' + info.insertTime).set(info).then(res => {
+         this.sd.createAlert('success', 'שיעור נוסף בהצלחה', '');
+         this.isBusy = false;
+    return res;
+  }).catch((err) => {
+    this.sd.createAlert('error', 'ארעה שגיאה- נא נסה שוב', '');
+             this.isBusy = false;
+    return err; 
+    });
+  }
+
   /**
      * addMassageFor
      * user
@@ -691,6 +724,12 @@ return err;
     });
   }
 
+  updateGroupTreatmentInfo(treat:GroupTreatmentInfo) {
+    this.afs.collection('groupTreatmentInfo').doc('' + treat.insertTime)
+    .set(treat).then(res => {
+      return res;
+    });
+  }
   /***************************************************************** */
   /**************************************************** */
   /*****************       delete to db           ******* */
@@ -711,11 +750,21 @@ return err;
    */
   public deletePatient(patID) {
     this.allPatientsRef.doc('' + patID).delete().then(res => {
+          this.sd.createAlert('success', 'תלמיד נמחק בהצלחה', '');
       return res;
     });
-    this.sd.createAlert('success', 'תלמיד נמחק בהצלחה', '');
   }
-
+deleteGroupTreatmentInfo(treat) {
+   this.afs.collection('groupTreatmentInfo').doc('' + treat.insertTime).delete().then(res => {
+     console.log(res);
+         this.sd.createAlert('success', 'טיפול נמחק בהצלחה', '');
+      return res;
+    }).catch(err => {
+      console.error(err);
+          this.sd.createAlert('error', 'שגיאה. נסה שוב', '');
+      return err;
+    });
+}
   /***************************************************************** */
   isDiffiExist(code) {
 return false; // ??????????????????????????????????????????????????
@@ -752,7 +801,7 @@ return false; // ??????????????????????????????????????????????????
     return this.allMethodsRef; // .valueChanges();
   }
   getAllTherapistsRef() {
-    return this.allTherapistsRef;
+    return this.afs.collection<Therapist>('therapist');
   }
   getTreatmentCategoriesRef() {
     return this.treatmentCategoriesRef;
@@ -823,6 +872,26 @@ return false; // ??????????????????????????????????????????????????
   getTeamPatByGroupCode(groupCode) {
     return this.afs.collection<PatientInGroup>('patientInGroup', ref => {
       return ref.where('groupCode', '==', groupCode);
+    });
+  }
+
+  getGroupByGroupCodeRef(groupCode) {
+    return this.afs.collection<TreatGroup>('groups', ref => {
+      return ref.where('groupCode', '==', groupCode);
+    });
+  }
+  
+
+
+  getGroupByTidRef(Tid) {
+    return this.afs.collection<TreatGroup>('groups', ref => {
+      return ref.where('Tid', '==', Tid);
+    });
+  }
+
+  getGroupTreatmentInfoRefByGroupCode(code) {
+    return this.afs.collection<GroupTreatmentInfo>('groupTreatmentInfo', ref => {
+      return ref.where('groupCode', '==', code);
     });
   }
 }

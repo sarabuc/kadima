@@ -26,6 +26,11 @@ export class TeamsComponent implements OnInit {
   constructor(public db: DbService, public sd: ShareDataService) { }
 
   ngOnInit() {
+    // guard
+    if ((!this.db.isLogin()) || (!this.db.userNow)) {
+      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+      this.sd.routeTo('login');
+    }
    this.getTeams();
     this.sortOptions = [
       { label: ' לפי תאריך', value: 'startDate' },
@@ -80,5 +85,9 @@ getTeams() {
 
   addNewGroup() {
 this.sd.routeTo('newGroup');
+  }
+
+  addInfoTreat(team) {
+    this.sd.routeTo('newGroupTreat', '' + team.groupCode);
   }
 }

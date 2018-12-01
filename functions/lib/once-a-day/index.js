@@ -14,17 +14,10 @@ const admin = require("firebase-admin");
 const template = require("./template");
 const ejs = require('ejs');
 const db = admin.firestore();
-// import * as admin from 'firebase-admin';
-// admin.initializeApp(functions.config().firebase);
-//Initial function call:
 exports.do_once_a_day = functions.https.onRequest((req, res) => {
-    //create database ref
-    // var dbRef = admin.database().ref('/challenges');
-    //do a bunch of stuff
-    //send back response 
-    //res.redirect(200);
     res.send(200);
 });
+// only for limudy area
 exports.do_once_a_week = functions.https.onRequest((req, res) => __awaiter(this, void 0, void 0, function* () {
     const Msetting = yield db.collection('manager').doc('setting').get();
     //get all groups
@@ -35,14 +28,18 @@ exports.do_once_a_week = functions.https.onRequest((req, res) => __awaiter(this,
     const firstDate = new Date();
     firstDate.setDate(firstDate.getDate() - 7);
     console.log(firstDate);
+    const limudyArea = yield db.collection('difficults').where('Dfather', '==', 'לימודי').get();
     const groups = yield db.collection('groups').get(); // where('isActive', '==', true).get();
     const lastGrades = yield db.collection('gradeMassageForTherapists').where('insertTime', '>=', firstDate).get();
     console.log('last grades  ' + lastGrades.docs.length);
     console.log(lastGrades.docs);
     for (const group of groups.docs) {
+        const area = group.data().area;
+        if (limudyArea.docs.findIndex(A => A.data().code === area) < 0) {
+            continue;
+        }
         let comment = '';
         const code = group.data().groupCode;
-        const area = group.data().area;
         const therapist = yield db.collection('therapist').doc('' + group.data().Tid).get();
         const patsInGroup = yield db.collection('patientInGroup').where('groupCode', '==', code).get();
         let mailTo;
@@ -74,13 +71,14 @@ exports.do_once_a_week = functions.https.onRequest((req, res) => __awaiter(this,
             area: area,
             grade: ('' + group.data().grade1).split('-')[0],
             groupName: group.data().groupName,
-            comment: comment
+            comment: comment,
+            newDate: new Date()
         };
         const renderedHtml = ejs.render(html, data);
         const mailOptions = {
             from: 'קדימה - ניהול מערכת לקידום תלמידים',
             to: email,
-            subject: ' ציונים שבועיים לקבוצת' + ' ' + group.data().groupName,
+            subject: '- ציונים שבועיים לקבוצת ' + '"' + group.data().groupName + '"',
             html: renderedHtml
         };
         sendMail.sendMail(mailOptions);
