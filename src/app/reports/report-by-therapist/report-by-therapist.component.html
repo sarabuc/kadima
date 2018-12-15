@@ -1,0 +1,127 @@
+<button (click)="generatePdf()" class="btn btn-sm purple mr-auto">  צור PDF</button>
+    <!-- below block will be saved as pdf -->
+
+
+<div class="container-fluid card mx-2 my-2 px-4 py-2 w-100" id="html2Pdf">
+
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 mt-3 mb-3">
+            <h2 class="purple-text">ריכוז טיפולים/שיעורים למטפל </h2>
+             <span class="purple-text mx-2" *ngIf="groupOrPat=='group'">
+            לפי קבוצה 
+            </span>
+            <span class="purple-text mx-2" *ngIf="groupOrPat=='pat'">
+            לפי תלמיד יחיד
+            </span>
+        </div>
+            <div class="col-12" style="text-align: right">
+            נוצר על ידי {{createBy}}
+            <br>
+           בתאריך: {{createTime}}
+            </div>
+             <br>
+            <!--<div class="col-12" style="text-align: right">
+           
+                <span class="purple-text mx-2">מטפלים שנבחרו
+                </span>
+                <span *ngFor="let class of classes">{{class}}, </span>
+              <br>
+                <span class="purple-text mx-2" *ngIf="groupOrPat=='group'">
+                קבוצות שנבחרו
+                </span>
+                <span class="purple-text mx-2" *ngIf="groupOrPat=='pat'">
+                תלמידים שנבחרו
+                </span>
+                <span *ngFor="let area of areas">{{area.code}}, </span>
+            
+          </div>-->
+    </div>
+     <hr>
+    <div class="purple-border-top  my-3 py-3 row d-flex px-3 py-3" *ngFor="let thera of reportData">
+       <h2 class="purple-text my-3"> מטפל  {{thera.name}}</h2>
+       <hr>
+       <h5 class="purple-text my-3">מיומנות: {{thera.skill}}</h5>
+
+
+<!-- by patient-->
+             <div class="col-12 my-2"> <h3 class="purple-text mb-1 yellow"*ngIf="thera['pats'] && thera['pats'].length < 1">אין תלמידים למטפל</h3></div>
+
+            <div *ngFor="let pat of thera['pats']">
+            <h3 class="purple-text mb-1 yellow"*ngIf="pat['treats'] && pat['treats'].length < 1">אין טיפולים לתלמיד</h3>
+            <p-table [value]="pat['treats']" *ngIf="pat['treats'] && pat['treats'].length > 0" >
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">        
+                       <h6 class="purple-text my-3">{{pat.name}} <small>|כתה {{pat.grade}}</small></h6>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 40px"> </th>
+                        <th >תאריך טיפול </th>
+                        <th >בין שעות</th>
+                        <th >מספר שעות</th>
+                        <th >תחום </th>
+                        <th >תיאור </th>
+                        <th >הערות </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-T let-i=rowIndex>
+                    <tr>
+                        <td style="width: 40px">{{i+1}}</td>
+                        <td >{{T.date}}</td>
+                        <td >{{T.time}}</td>
+                        <td >{{T.hours}}</td>
+                        <td >{{T.area}}</td>
+                        <td >{{T.description}}</td>
+                        <td >{{T.comment}}</td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+            <hr class="yellow-text">
+            </div>
+
+
+<!--by group-->
+             <div class="col-12 my-2"> <h3 class="purple-text mb-1 yellow"*ngIf="thera['groups'] && thera['groups'].length < 1">אין קבוצות למטפל</h3></div>
+
+            <div *ngFor="let group of thera['groups']">
+            <h3 class="purple-text mb-1 yellow"*ngIf="group && group['treats'] && group['treats'].length < 1">אין טיפולים לתלמיד</h3>
+            <p-table [value]="group['treats']" *ngIf="group && group['treats'] && group['treats'].length > 0" >
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">        
+                       <h6 class="purple-text my-3">{{group.name}} <small>כיתות {{group.grade1}} {{group.grade2}}  תחום: {{group.area}}</small></h6>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 40px"> </th>
+                        <th >תאריך טיפול </th>
+                        <th >בין שעות</th>
+                        <th >מספר שעות</th>
+                        <th >נושא </th>
+                        <th >תיאור </th>
+                        <th >הערות </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-T let-i=rowIndex>
+                    <tr>
+                        <td style="width: 40px">{{i+1}}</td>
+                        <td >{{T.date}}</td>
+                        <td >{{T.time}}</td>
+                        <td >{{T.hours}}</td>
+                        <td >{{T.subject}}</td>
+                        <td >{{T.description}}</td>
+                        <td >{{T.comment}}</td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+            <hr class="yellow-text">
+            </div>
+
+
+    </div>
+</div>

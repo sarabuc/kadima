@@ -30,6 +30,10 @@ Pid;
 patNow: Patient;
 selectedOptions: string[] = [];
   /****************    FOR FAST MIPUY    **************** */
+  choooseFrom = [
+    { value: 'main', label: 'תחומיים ראשיים' },
+    { value: 'second', label: 'תחומים מרכזיים ' }];
+  selectedChoooseFrom;
   checkedFastMipuy = false;
   fastMipuyData: any[] = []; // first col = patient id. and other cols main areas mipuy- yes or no or maybe
   noClass = 'btn btn-outline-secondary btn-sm' ;
@@ -44,20 +48,10 @@ selectedOptions: string[] = [];
         // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
         this.sd.routeTo('login');
       }
-      
       this.patientsForMipuy = this.db.allPatientList;
-    this.initFastMipuyData();
+    // this.initFastMipuyData();
   }
-  search(event) {
-
-  }
-  changeFastMipty(Pid: string, mainDiff: string, status: string) {
-    // status= yes or maybe - to check in futere or no
-
-  }
-  searchSugges(event) {
-
-  }
+ 
   saveComments() {
     this.selectedOptions.forEach(element => {
       const com = {
@@ -66,7 +60,6 @@ selectedOptions: string[] = [];
         commentDate: new Date()
       };
       this.db.addComment(com);
-
     });
     this.selectedOptions = [];
   }
@@ -123,7 +116,7 @@ closeModal(str: string) {
 
     this.fastMipuyData.forEach(pat => {
       let flag = false;
-      this.db.treatmentCategories.forEach(diff => {
+      this.categoriesForFastMipuy.forEach(diff => {
         if (pat[diff.code] === 'yes') {
           flag = true;
           const newDiff: PatientsDifficult = {
@@ -147,36 +140,59 @@ closeModal(str: string) {
           console.log(newDiff);
         }
       });
+      
       if (flag) {
         this.db.mipuyForPatientRef.doc('' + pat.Pid + '_' + date).set({ Pid: '' + pat.Pid, mipuyDate: date, planForPatient: '' });
+        this.db.getAdminMassagesRef().doc('PFM' +  pat.Pid + '_' + date).set({
+          massage: 'לתלמיד בעל מ.ז : ' + this.Pid + ' עודכן מיפוי קשיים אך לא תוכנן טיפול',
+          time: new Date(),
+          userId: this.db.userNow.userName,
+          status: 'planForMipuy',
+          insertBy: this.db.userNow.userName,
+          insertTime: new Date()
+        });
       }
     });
     this.sd.createAlert('success', 'מיפוי הוסף בהצלחה', '');
     this.initFastMipuyData();
   }
 
+ 
   initFastMipuyData() {
     this.fastMipuyData = [];
     this.flagForFastMipuy = [];
     this.patientsForMipuy.forEach(pat => {
       const patData: { [k: string]: any } = {};
       patData['Pid'] = pat.id;
-      this.db.treatmentCategories.forEach(diffi => {
-        patData[diffi.code] = 'no';
-      });
+      this.categoriesForFastMipuy.forEach(diffi => {
+         patData[diffi.code] = 'no';
+       });
+      // this.db.treatmentCategories.forEach(diffi => {
+      //   patData[diffi.code] = 'no';
+      // });
+      // this.db.secondCategories.forEach(diffi => {
+      //   patData[diffi.code] = 'no';
+      // });
       this.fastMipuyData.push(patData);
       this.flagForFastMipuy.push(false);
     });
   }
 
   saveCategories(values: any[]) {
-     const allCat = this.db.treatmentCategories;
+    let allCat = [];
+    this.categoriesForFastMipuy = [];
+    if (this.selectedChoooseFrom === 'main') {
+      allCat = this.db.treatmentCategories;
+    } else if (this.selectedChoooseFrom === 'second') {
+        allCat = this.db.secondCategories;
+    }
     for(let i = 0; i < values.length; i++ ) {
       if (values[i].selected) {
         this.categoriesForFastMipuy.push(allCat[i]);
       }
     }
     console.log(this.categoriesForFastMipuy);
+    this.initFastMipuyData();
   }
 
   public findPatientsForDiffi() {
@@ -193,6 +209,16 @@ closeModal(str: string) {
       });
     }
 
+  }
+
+
+  onSelectedChoooseFrom(event) {
+    this.selectedChoooseFrom = event.value.value;
+    if (this.selectedChoooseFrom === 'second') {
+     this.db.getSecondCategories(false);
+    // this.initFastMipuyData();
+   }
+   
   }
 }
 

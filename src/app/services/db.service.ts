@@ -33,6 +33,7 @@ export interface Therapist {
   comment: string;
   insertBy?: string;
   insertTime?: Date;
+  [k: string]: any;
 }
 export interface Patient {
   id: string;
@@ -50,6 +51,15 @@ export interface Patient {
   address?: string;
   morePhone?: string;
   mothersName?: string;
+  insertBy?: string;
+  insertTime?: Date;
+  [k: string]: any;
+}
+export interface ClassGrade{
+className: string;
+teacherName: string;
+teacherId: string;
+comment: string;
   insertBy?: string;
   insertTime?: Date;
 }
@@ -125,6 +135,7 @@ export interface Mipuy {
    Dcode: string;
    mipuyDate: string;
    status: string; // yes or maybe or not-relevant
+   degree?: number;
    insertBy?: string;
    insertTime?: Date;
  }
@@ -156,7 +167,8 @@ export interface Mipuy {
    mipuy_id_in_db: string;
    date: string;
    [k: string]: any; // key loos like DIFNAME_THERPIST or DIFNAME_METHOD or DIFNAME and than the value
- }
+ // more fields: wastTreatInPast, treatInPastBy,treatInPastStopDate, treatInPastHowLong, treatInPastWhyStop, 
+  }
  
  /*export interface TreatmentProgression {
   Pid: string;
@@ -234,14 +246,16 @@ export interface MipuyDecideForPlan {
 }
 
 export interface MassageForUser {
+  status?: string; // users// planForMipuy //  speciel // .....
  userId: string;
  massage: string;
- year: number;
- month: number;
-  dateInMonth: number;
- hour: number;
+ time: Date;
+ year?: number;
+ month?: number;
+  dateInMonth?: number;
+ hour?: number;
 kind?: string;
-comments: string;
+comments?: string;
   insertBy?: string;
   insertTime?: Date;
 }
@@ -308,12 +322,14 @@ public allPatientList: Patient[] = [];
 public allTherapistList: Therapist[] = [];
 public mipuyForPatientList: Mipuy[] = [];
 public treatmentCategories: Difficulty[] = [];
+public secondCategories: any[] = [];
 public isBusy = false;
 public userNow: User;
 public isLoginV = false;
-public newMipuy: string[] = [];
+  public newMipuy: {[k: string]: any} = {};
+  public isSecond: { [k: string]: any } = {};
 public limudyAreas: Difficulty[] = [];
-
+public DB: firebase.firestore.Firestore;
 // for patient list filter
 public filteredPatientList = [];
   fname = '';
@@ -324,6 +340,7 @@ public filteredPatientList = [];
 // end for patient list filter
 
   constructor(public afs: AngularFirestore , private sd: ShareDataService) {
+    this.DB = firebase.firestore();
     // get all users
     this.allUsersRef = this.afs.collection('users');
     this.allUsersRef.valueChanges().subscribe(users => {
@@ -351,6 +368,7 @@ public filteredPatientList = [];
      this.treatmentCategoriesRef.valueChanges().subscribe(areas => {
        this.treatmentCategories = areas;
      });
+     this.getSecondCategories(true);
      // get all patients id
      this.allPatientsRef = this.afs.collection('patients');
      this.allPatientsRef.valueChanges().subscribe(pats => {
@@ -553,7 +571,7 @@ public addMethod(method: Method) {
   addMassageForUser(date: Date, massage: string, kind: string, comment: string){
      const M = {
     userId: this.userNow.id,
-    date: date,
+    time: date,
     massage: massage,
     kind: kind,
     comments: comment,
@@ -586,7 +604,7 @@ public addMethod(method: Method) {
      * user
      */
   addMassage(massage: MassageForUser) {
-  this.afs.collection('users').doc(this.userNow.id).collection('massages').add(massage).then(res => {
+  this.afs.collection('users').doc(this.userNow.userName).collection('massages').add(massage).then(res => {
     this.sd.createAlert('success', 'תזכורת הוספה בהצלחה', '');
     return res;
   }).catch(err => {
@@ -806,6 +824,35 @@ return false; // ??????????????????????????????????????????????????
   getTreatmentCategoriesRef() {
     return this.treatmentCategoriesRef;
   }
+  getSecondCategories(option) {
+    if (option) {
+    this.isBusy = true;
+    const sref = this.afs.collection('difficults', ref => {
+      return ref.where('allFathers', '==', 'second');
+    });
+    sref.valueChanges().subscribe(seconds => {
+      this.secondCategories = seconds;
+      this.secondCategories.forEach(cat => this.isSecond[cat.code] = true);
+      this.isBusy = false;
+    });
+  }
+    // if (option || this.secondCategories.length < 1) {
+    //   // opion = true =>force get categories
+    //   this.isBusy = true;
+    //   const getSecond = firebase.functions().httpsCallable('getSecondCategories');
+    //   getSecond({ text: '' }).then(res => {
+    //     console.log(res);
+    //  this.secondCategories = res.data;
+    //  for (const dif of this.secondCategories) {
+    //    this.isSecond[dif.code] = true;
+    //  }
+    //     this.isBusy = false;
+    //   }).catch(err => {
+    //     console.log(err);
+    //     this.isBusy = false;
+    //   });
+    // }
+  }
   getMethodForDiffiRefByDcode(Dcode) {
     return this.afs.collection('methodForDifficult', ref => {
       return ref.where('Dcode', '==', Dcode);
@@ -894,4 +941,17 @@ return false; // ??????????????????????????????????????????????????
       return ref.where('groupCode', '==', code);
     });
   }
+
+
+  getPatByTidRef(Tid) {
+   return this.afs.collection('therapist').doc(Tid).collection('patient');
+
+  }
+getUserMassagesRef(userName) {
+   return this.afs.collection('users').doc(userName).collection('massages');
+}
+getAdminMassagesRef() {
+   return this.afs.collection('setting/admin/massages');
+}
+  
 }

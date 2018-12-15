@@ -1,4 +1,4 @@
-03<div>
+<div>
     <div>
         <div class="row d-flex mx-3 px-3">
             <h1 class="h1-responsive mt-3 purple-text mb-3"> מיפוי חדש
@@ -111,8 +111,8 @@
                                 <div>אפשרויות </div>
                             </th>
                             <div *ngIf="checkedFastMipuy">
-                                <th class=" white-text" *ngFor="let diffi of categoriesForFastMipuy" style="width:130px">{{diffi.description}}
-                                    <div>{{diffi.description}} </div>
+                                <th class=" white-text" *ngFor="let diffi of categoriesForFastMipuy" style="width:130px">{{diffi.code}}
+                                    <div>{{diffi.code}} </div>
                                 </th>
                             </div>
                         </tr>
@@ -215,7 +215,7 @@
 <div mdbModal #form="mdb-modal" [class]="mipuyModeClass" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
     <div class="modal-dialog modal-full-height modal-top" role="document">
 
-            <div class="modal-content">
+            <div class="modal-content" style="display: table;">
 
 
                 <div class="modal-header purple white-text" *ngIf="patNow">
@@ -286,9 +286,25 @@
                 </button>
             </div>
             <div class="modal-body">
+            <div *ngIf="checkedFastMipuy">
+             <p-selectButton [options]="choooseFrom"  (onChange)="onSelectedChoooseFrom($event)">
+                <ng-template let-item>
+                    <div style="padding: .5em 1em">
+                    <span class="purple-text bold" style="">{{item.label}}</span>
+                    </div>
+                </ng-template>
+            </p-selectButton>
+            </div>
+
                 <mat-selection-list #cats>
-                    <div *ngIf="checkedFastMipuy">
+                    <div *ngIf="checkedFastMipuy && selectedChoooseFrom=='main'">
                         <mat-list-option *ngFor="let cat of db.treatmentCategories">
+                            {{cat.code}}
+                        </mat-list-option>
+                    </div>
+       
+                    <div *ngIf="checkedFastMipuy && selectedChoooseFrom=='second'">
+                        <mat-list-option *ngFor="let cat of db.secondCategories">
                             {{cat.code}}
                         </mat-list-option>
                     </div>

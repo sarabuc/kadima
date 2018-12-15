@@ -198,38 +198,36 @@
 
                                                 <div class="my-2 ml-auto" *ngIf="!showLoazy">
                                                         <mat-form-field class=" w-25 mx-1">
-                                                            <input matInput class="form-item white-text" type="text" name="selectedDay" placeholder="  יום" [(ngModel)]="selectedDay" [matAutocomplete]="autoD">
-                                                            <mat-error *ngIf="!selectedDay">יש לבחור יום  בחודש  </mat-error>
-                                                            <mat-autocomplete #autoD="matAutocomplete">
+                                                            <mat-select matInput class="form-item white-text form-item-select" type="text" name="selectedDay" placeholder=" יום" [(ngModel)]="selectedDay" >
                                                                 <mat-option *ngFor="let day of days" [value]="day.value">
-                                                                {{day.label}}
+                                                                       {{day.label}}
                                                                 </mat-option>
-                                                            </mat-autocomplete>
-
+                                                            </mat-select>
+                                                            <mat-error *ngIf="!selectedDay">יש לבחור יום  בחודש  </mat-error>
+                                                           
                                                         </mat-form-field>
 
                                                     
                                                         <mat-form-field class=" w-25 mx-1">
-                                                            <input matInput class="form-item white-text" type="text" name="selectedMonth" placeholder="חודש" [(ngModel)]="selectedMonth" [matAutocomplete]="autoM">
-                                                            <mat-error *ngIf="!selectedMonth">יש לבחור חודש   </mat-error>
-                                                            <mat-autocomplete #autoM="matAutocomplete">
-                                                            <mat-option *ngFor="let month of monthes" [value]="month.value">
+                                                            <mat-select matInput class="form-item white-text form-item-select" type="text" name="selectedMonth" placeholder=" חודש" [(ngModel)]="selectedMonth" >
+                                                                <mat-option *ngFor="let month of monthes" [value]="month.value">
                                                                 {{month.label}}
                                                                 </mat-option>
-                                                            </mat-autocomplete>
-
+                                                             </mat-select>
+                                                            <mat-error *ngIf="!selectedMonth">יש לבחור חודש   </mat-error>
+                                                           
                                                         </mat-form-field>
 
                                                     
 
                                                         <mat-form-field class=" w-25 mx-1">
-                                                            <input matInput class="form-item white-text" type="text" name="selectedYear" placeholder=" שנה " [(ngModel)]="selectedYear" [matAutocomplete]="autoY">
-                                                            <mat-error *ngIf="!selectedYear">יש לבחור שנה     </mat-error>
-                                                            <mat-autocomplete #autoY="matAutocomplete">
-                                                            <mat-option *ngFor="let year of years" [value]="year.value">
+                                                            <mat-select matInput class="form-item white-text form-item-select" type="text" name="selectedYear" placeholder=" שנה" [(ngModel)]="selectedYear" >
+                                                                <mat-option *ngFor="let year of years" [value]="year.value">
                                                                 {{year.label}}
                                                                 </mat-option>
-                                                            </mat-autocomplete>
+                                                            </mat-select>
+                                                            <mat-error *ngIf="!selectedYear">יש לבחור שנה     </mat-error>
+                                                           
 
                                                         </mat-form-field>
 

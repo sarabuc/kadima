@@ -49,7 +49,8 @@ export class PatientListComponent implements OnInit {
     return (ln.toUpperCase().indexOf(filter) > -1);
   }
   isPidExist(Pid) {
-    return (this.findedPatientForDiff.indexOf(Pid) > -1) || (!this.db.findByCategory) || (this.db.findByCategory === 'empty');
+    return (!this.db.findByCategory) || (this.db.findByCategory === 'empty') ||
+     (this.findedPatientForDiff.findIndex(P => P.data().Pid ===  Pid) > -1);
   }
 
 
@@ -69,7 +70,7 @@ checkAndRoute(pat) {
   }
 
 }
- public findPatientsForDiffi() {
+ public findPatientsForDiffi2() {
    if (this.db.findByCategory && this.db.findByCategory !== 'empty') {
      this.findedPatientForDiff = undefined;
      console.log('cate' + this.db.findByCategory);
@@ -84,4 +85,19 @@ checkAndRoute(pat) {
    }
    
 }
+
+/**
+ * findPatientsForDiffi
+ */
+async  findPatientsForDiffi() {
+  this.db.isBusy = true;
+  const db = firebase.firestore();
+  const chooseddiffiForPatient = await db.collection('patientDifficults')
+    .where('Dcode', '==', this.db.findByCategory).orderBy('mipuyDate', 'desc').get(); 
+   this.findedPatientForDiff = chooseddiffiForPatient.docs.filter((value, index, self) => 
+                      self.findIndex(D => D.data().Pid === value.data().Pid) === index);
+  this.db.isBusy = false;
+    // const index2 = '12.10.2017'.split('.').reverse().join().localeCompare('11.11.2017'.split('.').reverse().join());//returned -1
+  }
+   
 }

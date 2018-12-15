@@ -11,7 +11,7 @@
         <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" placeholder="לפי  כתה " name="grade" [(ngModel)]="db.grade">
         <mat-select class="form-item w-25" name="findByCategory" placeholder="סנן לפי קושי" (selectionChange)="findPatientsForDiffi()" [(ngModel)]="db.findByCategory">
             <mat-option value="empty" class="gray">ללא סינון</mat-option>
-            <mat-option value="{{cat.code}}" *ngFor="let cat of db.treatmentCategories">{{cat.code}}</mat-option>
+            <mat-option value="{{cat.code}}" *ngFor="let cat of db.secondCategories">{{cat.code}}</mat-option>
         </mat-select>
 
     </div>

@@ -12,6 +12,8 @@ import { saveAs } from 'file-saver/FileSaver';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
+
 @Injectable()
 export class ShareDataService {
   dictionary;
@@ -67,8 +69,35 @@ export class ShareDataService {
   hebrewYear = ['תשעח', 'תשעט'];
   hebrewYearStartFrom = 5778; // תשע"ח
   classes = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט'];
+  allClasses;
 public daysName = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
 public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30' ];
+
+
+  // FOR REPORTS
+  areasForReport;
+  allAreaFForReport;
+  classesForReport;
+  allClassesFForReport;
+  dateFromForReport;
+  dateToForReport;
+  allDateForReport;
+
+  groupOrPatForReport;
+  allTherapistFForReport;
+  allPatientFForReport;
+  allGroupFForReport;
+  selectedTidForRport;
+  selectedPatForReport;
+  selectedGroupForReport;
+  allGroupsForTherapistForReport;
+  allPatsFotTherapistForReport;
+  // END FOR REPORTS
+
+
+  // FOR MAILS
+  amountMailsInShortStatus;
+  // END FOR MAILS
 
   constructor(/*private _alert: AlertsService*/ private router: Router,
      private messageService: MessageService, public datepipe: DatePipe, 
@@ -76,6 +105,7 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
     this.convertHebrewToNormalDate(1, 2, 1);
     this.initFREE_ALL_TIME();
     this.INIT_dictionary();
+    this.INIT_ALL_CLASSES();
   }
 
 
@@ -415,5 +445,13 @@ startTime:'שעת התחלה',
 endTime:'שעת סיום'
 
     };
+  }
+
+  INIT_ALL_CLASSES() {
+    this.allClasses = [];
+    for (const cl of this.classes) {
+      this.allClasses.push('' + cl + '-1');
+      this.allClasses.push('' + cl + '-2');
+    }
   }
 }

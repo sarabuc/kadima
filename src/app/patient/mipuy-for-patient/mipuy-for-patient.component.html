@@ -77,26 +77,17 @@
 
     <div mdbModal #form="mdb-modal" [class]="mipuyModeClass" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
         <div class="modal-dialog modal-full-height modal-top" role="document">
-
-                <div class="modal-content">
-
-
+                <div class="modal-content" style="display: table;">
                     <div class="modal-header purple white-text">
                         <h4 class="title">
                             <i class="fa fa-pencil mr-1 ml-1"></i>{{pat.firstName}} {{pat.lastName}} | <small>עדכן קשיים</small></h4>
                         <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide();init();">
-                       <span aria-hidden="true">×</span>
-                    </button>
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
-
                     <div class="modal-body mb-0">
-
                         <app-show-difficulties (finishedMipuy)="closeModal($event)" #showDif [status]="'mipuy'" [Pid]="Pid"></app-show-difficulties>
-
                     </div>
                 </div>
-
-           
         </div>
-
     </div>

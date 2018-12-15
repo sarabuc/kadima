@@ -46,9 +46,9 @@ mipuyForPatientRef: any;
 getAllMipuysForPat() {
   this.allMipuy = undefined;
   console.log('get mipuy');
-  const mipuyForPatient = firebase.functions().httpsCallable('getMipuysForPatient');
+  const mipuyForPatient = firebase.functions().httpsCallable('getMipuysForPatientBySecondAreas');
   mipuyForPatient({ text: this.Pid }).then(res => {
-    // console.log(res);
+     console.log(res);
     // for (const mipuy of res.data) {
     //   mipuy.mipuyDate = this.sd.converrSecondsToDateTime(mipuy.mipuyDate._seconds);
     // }

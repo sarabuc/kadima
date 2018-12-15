@@ -1,0 +1,301 @@
+<div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100">
+
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 mt-3 mb-3">
+            <h2 class="nice-text"> יצירת קבוצה חדשה</h2>
+        </div>
+
+    <p-selectButton [options]="startWith"  (onChange)="onSelectedStartWith($event)">
+        <ng-template let-item>
+            <div style="padding: .5em 1em">
+            <span class="purple-text bold big-font" style="">{{item.label}}</span>
+            </div>
+        </ng-template>
+    </p-selectButton>
+
+        <!--            START WITH THERAPIST         -->
+                <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " *ngIf="selectedStartWith == 'therapist'">
+                    <mat-form-field class="w-80">
+                        <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="GROUP.Tid" [matAutocomplete]="autoT">
+                        <mat-error *ngIf="!GROUP.Tid">חובה להכניס מספר זהות מטפל</mat-error>
+                        <mat-autocomplete #autoT="matAutocomplete">
+                            <mat-option *ngFor="let thera of db.allTherapistList" [value]="thera.id">
+                                {{ thera.firstName }} {{thera.lastName}}
+                            </mat-option>
+                        </mat-autocomplete>
+
+                    </mat-form-field>
+                    <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="getAreasForTherapist()" ><i class="fa fa-check"></i></button>
+
+                </div>
+
+        <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " *ngIf="selectedStartWith == 'therapist'&& showAreaForTherapist">
+            <mat-form-field class=" w-80">
+                <input matInput class="form-item white-text" type="text" name="selectedArea" placeholder=" תחום" [(ngModel)]="GROUP.area" [matAutocomplete]="autoA">
+                <mat-error *ngIf="!GROUP.area">חובה להכניס תחום ליצירת קבוצה</mat-error>
+                <mat-autocomplete #autoA="matAutocomplete">
+                    <mat-option *ngFor="let area of areas" [value]="area.code">
+                        {{ area.code }} 
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+            <button class="yellow lighten-2 mx-3 mb-3 align-self-end" mat-mini-fab (click)="showClasses= true" ><i class="fa fa-check"></i></button>
+            <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="addAreaForTherapist(); demoBasic.show()" ><i class="fa fa-plus"></i></button>
+
+        </div>
+        <!--        END START WITH THERAPIST         -->
+
+
+
+        <!--            START WITH AREA         -->
+        <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " *ngIf="selectedStartWith == 'area'">
+            <mat-form-field class=" w-80">
+                <input matInput class="form-item white-text" type="text" name="selectedArea" placeholder=" תחום" [(ngModel)]="GROUP.area" [matAutocomplete]="autoA">
+                <mat-error *ngIf="!GROUP.area">חובה להכניס תחום ליצירת קבוצה</mat-error>
+                <mat-autocomplete #autoA="matAutocomplete">
+                    <mat-option *ngFor="let area of db.secondCategories" [value]="area.code">
+                        {{ area.code }} 
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+            <button class="yellow lighten-2 mx-3 mb-3 align-self-end" mat-mini-fab (click)="getTherapistForArea()" ><i class="fa fa-check"></i></button>
+
+        </div>
+
+
+        <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " *ngIf="selectedStartWith == 'area' && showTherapistForArea">
+                    <mat-form-field class="w-80">
+                        <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="GROUP.Tid" [matAutocomplete]="autoT">
+                        <mat-error *ngIf="!GROUP.Tid">חובה להכניס מספר זהות מטפל</mat-error>
+                        <mat-autocomplete #autoT="matAutocomplete">
+                            <mat-option *ngFor="let thera of therapists" [value]="thera.id">
+                                {{ thera.firstName }} {{thera.lastName}}
+                            </mat-option>
+                        </mat-autocomplete>
+
+                    </mat-form-field>
+                <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="showClasses= true" ><i class="fa fa-check"></i></button>
+                <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="addTherapistForArea(); demoBasic.show()" ><i class="fa fa-plus"></i></button>
+
+
+        </div>
+
+        
+        <!--        END START WITH AREA         -->
+
+
+
+        <!--     SELECT   CLASS     -->
+        <div class=" ml-auto my-3" *ngIf="showClasses">
+
+            <h5 class="yellow-text mt-2" style="text-align: right"> בחר שכבת גיל </h5>
+            <p-selectButton [options]="sd.classes" (onChange)="onSelectedClass($event)">
+                    <ng-template let-item>
+                        <div style="padding: .5em 1em">
+                        <span class="purple-text bold big-font" style="">כתה  {{item}}</span>
+                        </div>
+                    </ng-template>
+                </p-selectButton>
+        </div>
+        <!--  END   SELECT   CLASS     -->
+
+
+
+        <!--       SELECT PATIENT OF CLASS       -->
+
+<hr class="yellow-text my-4">
+
+<p-table [value]="patsTable" #dt class="table-editable" sortMode="multiple" [paginator]="false" [rows]="15" selectionMode="multiple"  (onRowSelect)="onRowSelect($event)" [(selection)]="selectedPatForGroup" *ngIf="patsTable && patsTable.length >0">
+    <ng-template pTemplate="header">
+        <tr>
+            <td style="width:50px">
+            </td>
+            <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'firstName', 'contains')"  style="width: -webkit-fill-available; " placeholder="לפי שם פרטי">
+            </td>
+            <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'lastName', 'contains')"  style="width: -webkit-fill-available; " placeholder="לפי שם משפחה">
+            </td>
+            <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'grade', 'contains')"  style="width: -webkit-fill-available; " placeholder="לפי כתה ">
+            </td>
+            <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'mipuyDate', 'contains')"  style="width: -webkit-fill-available; " placeholder="לפי תאריך מיפוי ">
+            </td>
+            <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'degreeOfDiffi', 'contains')"  style="width: -webkit-fill-available; " placeholder="לפי דרגת קושי ">
+            </td>
+            
+            <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'comment', 'contains')"  style="width: -webkit-fill-available; " placeholder="מצא לפי הערות">
+            </td>
+        </tr>
+        <tr>
+             <th style="width:50px"> 
+               </th>
+            <th [pSortableColumn]="'firstName'">שם פרטי
+               <p-sortIcon [field]="'testDate'"></p-sortIcon>
+               </th>
+            <th [pSortableColumn]="'lastName'">שם משפחה
+               <p-sortIcon [field]="'Dcode'"></p-sortIcon>
+               </th>
+            <th [pSortableColumn]="'grade'">כתה
+               <p-sortIcon [field]="'grade'"></p-sortIcon>
+               </th>
+                 <th [pSortableColumn]="'mipuyDate'">תאריך מיפוי
+               <p-sortIcon [field]="'mipuyDate'"></p-sortIcon>
+               </th>
+                 <th [pSortableColumn]="'degreeOfDiffi'">דרגת קושי
+               <p-sortIcon [field]="'degreeOfDiffi'"></p-sortIcon>
+               </th>
+            <th>הערות</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pat let-i="rowIndex">
+        <tr [pSelectableRow]="pat" [pSelectableRowIndex]="rowIndex">
+            <td><!--i class="fa fa-times red-text fa-lg" *ngIf="pat.status =='grade' "></i-->
+            <strong >{{i+1}}</strong>
+            </td>
+
+            <td>{{pat.firstName}}</td>
+            <td>{{pat.lastName}}</td>
+            <td>{{pat.grade}}</td>
+            <td>{{pat.mipuyDate}}</td>
+            <td>{{pat.degreeOfDiffi}}</td>
+
+           
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="pat.comment" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{pat.comment}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <ul>
+            <li *ngFor="let pat of selectedPatForGroup" style="text-align: right">
+                {{pat.firstName + ' ' + pat.lastName + ' | כתה ' + pat.grade + '. '}}
+            </li>
+        </ul>
+    </ng-template>
+</p-table>
+
+
+        <!--     END  SELECT PATIENT OF CLASS       -->
+
+   <button class=" btn btn-lg purple my-3" (click)="save.show()" *ngIf="selectedPatForGroup.length > 0">  שמור קבוצה חדשה  </button>
+
+
+
+<h4 class="yellow-text my-5 ml-auto" style="text-align: center" *ngIf="patsTable && patsTable.length <1" >אין תלמידים מתאימים בשכבה שנבחרה</h4>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+ <div mdbModal #demoBasic="mdb-modal" class="modal  fade ground" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-show">
+                    <div class="modal-header">
+                        <h4 class="modal-title w-100" id="myModalLabel">
+                        עדכן תחום התמחות למטפל
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="demoBasic.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                    </div>
+                    <div class="modal-body">
+                         <div class="row w-100 mb-3 mx-2">
+                    <div class="col-4">
+                        <label for="year">מקצוע / תחום:</label>
+                    </div>
+                    <div class="col-8" dir="ltr">
+                    <p-autoComplete [(ngModel)]="newTFA.code" [ngModelOptions]="{standalone: true}" [suggestions]="mainDiffi" field="code" (completeMethod)="searchAr($event)" [dropdown]="true" [style]="{'text-align':'right'}"></p-autoComplete>
+
+                    </div>
+                </div>
+                <div class="row w-100 mb-3 mx-2">
+                    <div class="col-4 ">
+                        <label for="brand">מטפל</label>
+                    </div>
+                    <div class="col-8" dir="ltr">
+                    <p-autoComplete [(ngModel)]="newTFA.id" [ngModelOptions]="{standalone: true}" [suggestions]="thForSearch" field="id" (completeMethod)="searchTh($event)" [dropdown]="true" [style]="{'text-align':'right'}"></p-autoComplete>
+
+                    </div>
+                </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm waves-light" data-dismiss="modal" (click)="saveNewTFA('clean', demoBasic); " mdbRippleRadius>שמור והוסף</button>
+                        <button type="button" class="btn btn-primary btn-sm waves-light" mdbRippleRadius (click)="saveNewTFA('close', demoBasic)" >שמור וסגור</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        
+ <div mdbModal #save="mdb-modal" class="modal  fade ground" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content modal-show">
+                    <div class="modal-header">
+                        <h4 class="modal-title w-100" id="myModalLabel">
+                        שמירת קבוצה חדשה                      
+                    </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="save.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                    </div>
+                    <div class="modal-body">
+                         <div class="row w-100 mb-3 mx-2">
+
+                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                            <div class="input-group-append">
+                                <span class="input-group-text purple lighten-3 black-text" id="basic-addon12">שם הקבוצה</span>
+                            </div>
+                            <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס שם לקבוצה "
+                                [(ngModel)]="GROUP.groupName" aria-describedby="basic-addon12">
+                            
+                            </div>
+
+                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                            <div class="input-group-append">
+                                <span class="input-group-text purple lighten-2 black-text" id="basic-addon12">כמות שעות מאושרות</span>
+                            </div>
+                            <input type="number" class="form-control mt-0 purple-border px-2" placeholder=" הכנס כמות שעות"
+                              [(ngModel)]="GROUP.aprovedHours"  aria-describedby="basic-addon12">
+                            
+                            </div>
+
+                        </div>
+                
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="saveNewGroup('stay');save.hide() " mdbRippleRadius>שמור והשאר</button>
+                        <button type="button" class="btn btn-primary  waves-light" mdbRippleRadius (click)="saveNewGroup('leave'); save.hide()" >שמור וצא</button>
+                    </div>
+                </div>
+            </div>
+        </div>

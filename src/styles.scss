@@ -1,4 +1,12 @@
              @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+             .purple-border-top {
+                 border-top: 10px solid purple !important;
+                 border-radius: 10px !important;
+                 border-bottom: 1px solid purple !important;
+                 border-right: 1px solid purple !important;
+                 border-left: 1px solid purple !important;
+             }
+             
              .ui-table .ui-table-tbody>tr.ui-state-highlight {
                  background-color: purple !important;
              }
@@ -44,14 +52,15 @@
              .ui-rating a {
                  color: yellow !important;
              }
+             
              .purple-rating .ui-rating a {
                  color: purple !important;
              }
-
+             
              .large-rating .ui-rating {
                  font-size: 3em !important;
              }
-
+             
              .small-rating .ui-rating {
                  font-size: 2em !important;
              }

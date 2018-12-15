@@ -1,0 +1,46 @@
+<div *ngIf="status == 'short'" class="list-group px-2 py-3 mb-3  col-12">
+    <div class="list-group-item mb-1 mx-1" *ngFor="let mail of allList; let i = index"><small class="purple-text">{{mail.date}} </small> <strong>  {{mail.massage}} </strong></div>
+</div>
+{{status}}
+<div class="card mt-1 mr-3 ml-3 px-4 py-3 " >
+      <h3 >הודעות</h3>
+        <div class="row d-flex justify-content-end">
+            <button class=" my-button my-btn-lg my-2"  (click)="showM.show()">הוסף הודעה  חדשה
+              <i class="fa fa-plus mr-2"></i>
+            </button>
+        </div>
+
+
+  <div class="list-group px-2 py-3 mb-3  col-12">
+      <div class="col-12 my-2"> <h3 class="purple-text mb-1 yellow" *ngIf="allList && allList.length < 1">אין הודעות  </h3></div>
+
+      <div class="list-group-item mb-1 mx-1 col-12" *ngFor="let mail of allList">
+            <div class="col-1" > 
+              <i class="fa fa-star purple-text mx-1"></i> 
+              <i class="fa fa-delete purple-text mx-1"></i>
+            </div> 
+            <div class="col-8"><strong>  {{mail.massage}} </strong></div>
+            <div class="col-3"><small class="purple-text">{{mail.date}} </small></div>
+            <div class="col-12" *ngIf="mail.comment && mail.comment!=''">{{mail.comment}}</div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div mdbModal #showM="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" style="overflow-y: auto">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+<app-create-massage-for-user></app-create-massage-for-user>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+<button (click)="generatePdf()" class="btn btn-sm purple mr-auto">  צור PDF</button>
+    <!-- below block will be saved as pdf -->
+
+
+<div class="container-fluid card mx-2 my-2 px-4 py-2 w-100" id="html2Pdf">
+
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 mt-3 mb-3">
+            <h2 class="purple-text"> קשיי תלמידים לפי כתה  </h2>
+        </div>
+            <div class="col-12" style="text-align: right">
+            נוצר על ידי {{createBy}}
+            <br>
+           בתאריך: {{createTime}}
+            </div>
+             <br>
+            <div class="col-12" style="text-align: right">
+           
+            <span class="purple-text mx-2">כיתות שנבחרו
+            </span>
+            <span *ngFor="let class of classes">{{class}}, </span>
+           <br>
+            <span class="purple-text mx-2">
+            תחומים שנבחרו
+            </span>
+            <span *ngFor="let area of areas">{{area.code}}, </span>
+            
+        </div>
+    </div>
+     <hr>
+    <div class="purple-border-top  my-3 py-3 row d-flex px-3 py-3" *ngFor="let class of classesReport">
+       <h2 class="purple-text my-3"> כתה  {{class.className}}</h2>
+       <hr>
+       <h5 class="purple-text my-3"> מחנך הכתה  {{class.teacherName}}</h5>
+
+
+            <p-table [value]="class['patsInfo']">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 40px"> </th>
+
+                        <th >שם תלמיד</th>
+                        <th >מספר זהות</th>
+                        <th style="width: 40px"> קשיים</th>
+                        <th *ngFor="let area of areas" >{{area.code}}</th>
+                        <th >הערות </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-pat let-i=rowIndex>
+                    <tr>
+                        <td style="width: 40px">{{i+1}}</td>
+                        <td >{{pat.lastName}} {{pat.firstName}}</td>
+                        <td >{{pat.Pid}}</td>
+                        <td style="width: 40px"><p class="purple-text" *ngIf="pat.haveDifficult== 'yes'">כן</p>
+                        <p class="purple-text" *ngIf="pat.haveDifficult== 'no'">לא</p>
+                        <p class="purple-text" *ngIf="pat.haveDifficult== 'maybe'">לא נבדק</p></td>
+                        <td  *ngFor="let area of areas" >
+                          <div *ngIf="pat[area.code] == 1" class="red lighten-3 black-text">
+                            קל
+                          </div>
+                          <div *ngIf="pat[area.code] == 2" class="red lighten-2 black-text">
+                            בינוני
+                          </div>
+                          <div *ngIf="pat[area.code] == 3" class="red lighten-1 black-text">
+                            קשה
+                          </div>
+                          <div *ngIf="pat[area.code] == 4" class="red black-text">
+                            קשה מאוד
+                          </div>
+                        </td>
+                        <td >{{pat.comment}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+
+    </div>
+</div>

@@ -1,31 +1,32 @@
-<div class="mx-3 my-3  row" style="text-align:right">
-    <div class="col-12 d-flex justify-content-between">
+<div class="mx-3 my-3  " style="text-align:right">
+    <div class="row col-12 d-flex justify-content-between">
         <h3 class="h3">פרטים אישיים</h3>
         <div>
             <button class="red mx-1" *ngIf="status=='card'" mat-mini-fab (click)="style.show()"><i class="fa fa-close"></i></button>
             <button class="green mx-1" *ngIf="status=='card'" mat-mini-fab (click)="editPatient()"><i class="fa fa-pencil"></i></button>
-			<button class="yello mx-1" mat-mini-fab (click)="printPatientDetails()"><i class="fa fa-print"></i></button>
+			<button class="yello mx-1" mat-mini-fab (click)="generatePdf()"><i class="fa fa-print"></i></button>
         </div>
     </div>
-    <div class="list-group px-2 py-3 mb-3  col-md-6 col-sm-12">
+  <div id="html2Pdf" class="row">
+        <div class="list-group px-2 py-3 mb-3  col-md-6 col-sm-12">
 
-        <div class="list-group-item mb-1 mx-1"><small class="purple-text">תעודת זהות</small> <strong>  {{pat.id}} </strong></div>
-        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">שם</small> <strong>  {{pat.firstName}} {{pat.lastName}}</strong></div>
-        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">טלפון האב</small> <strong>  {{pat.fathersPhone}}</strong></div>
-        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">טלפון האם</small> <strong>  {{pat.mothersPhone}} </strong></div>
-		<div class="list-group-item  mb-1 mx-1" *ngIf="pat.morePhone&& pat.morePhone!=''"><small class="purple-text">טלפון נוסף</small> <strong>  {{pat.morePhone}} </strong></div>
+            <div class="list-group-item mb-1 mx-1"><small class="purple-text">תעודת זהות</small> <strong>  {{pat.id}} </strong></div>
+            <div class="list-group-item  mb-1 mx-1"><small class="purple-text">שם</small> <strong>  {{pat.firstName}} {{pat.lastName}}</strong></div>
+            <div class="list-group-item  mb-1 mx-1"><small class="purple-text">טלפון האב</small> <strong>  {{pat.fathersPhone}}</strong></div>
+            <div class="list-group-item  mb-1 mx-1"><small class="purple-text">טלפון האם</small> <strong>  {{pat.mothersPhone}} </strong></div>
+            <div class="list-group-item  mb-1 mx-1" *ngIf="pat.morePhone&& pat.morePhone!=''"><small class="purple-text">טלפון נוסף</small> <strong>  {{pat.morePhone}} </strong></div>
 
-    </div>
-    <div class="list-group px-2 py-3 mb-3  col-md-6 col-sm-12">
-			<div class="list-group-item  mb-1 mx-1" *ngIf="pat.address&& pat.address!=''"><small class="purple-text">כתובת </small> <strong>  {{pat.address}} </strong></div>
-
-        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">תאריך לידה</small> <strong>  {{pat.birthDate}}</strong></div>
-        <div class="list-group-item mb-1 mx-1"><small class="purple-text">כתה</small> <strong>  {{pat.grade}} </strong></div>
-        <div class="list-group-item  mb-1 mx-1"><small class="purple-text">שם האב</small> <strong>  {{pat.fathersName}} </strong></div>
-		<div class="list-group-item  mb-1 mx-1" *ngIf="pat.mothersName&& pat.mothersName!=''"><small class="purple-text">שם האם </small> <strong>  {{pat.mothersName}} </strong></div>      
-	  <div class="list-group-item mb-1 mx-1">
-            <small class="purple-text">קופת חולים</small>
-            <strong> {{pat.kupatCholim}} </strong>
+        </div>
+        <div class="list-group px-2 py-3 mb-3  col-md-6 col-sm-12">
+            <div class="list-group-item  mb-1 mx-1" *ngIf="pat.address&& pat.address!=''"><small class="purple-text">כתובת </small> <strong>  {{pat.address}} </strong></div>
+            <div class="list-group-item  mb-1 mx-1"><small class="purple-text">תאריך לידה</small> <strong>  {{pat.birthDate}}</strong></div>
+            <div class="list-group-item mb-1 mx-1"><small class="purple-text">כתה</small> <strong>  {{pat.grade}} </strong></div>
+            <div class="list-group-item  mb-1 mx-1"><small class="purple-text">שם האב</small> <strong>  {{pat.fathersName}} </strong></div>
+            <div class="list-group-item  mb-1 mx-1" *ngIf="pat.mothersName&& pat.mothersName!=''"><small class="purple-text">שם האם </small> <strong>  {{pat.mothersName}} </strong></div>      
+            <div class="list-group-item mb-1 mx-1">
+                <small class="purple-text">קופת חולים</small>
+                <strong> {{pat.kupatCholim}} </strong>
+            </div>
         </div>
     </div>
 </div>

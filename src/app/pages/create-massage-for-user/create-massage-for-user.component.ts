@@ -98,29 +98,35 @@ let hour = 0;
         switch (this.selectedHour) {
         case 'other':
           if (this.hourChoice === 'mask') {
-            hour = this.maskForHour.split(':');
+            hour = this.maskForHour.split(':')[0];
+            date.setHours(hour);
           }
           break;
       
          default:
-          hour = this.selectedHour.split(':');
+          hour = this.selectedHour.split(':')[0];
+          date.setHours(hour);
+
             break;
     }
 
 
 
     const massage = {
+      status: 'users',
+      time: date,
       year : date.getFullYear(),
       month: date.getMonth(), // gave month-1
       dateInMonth: date.getDate(),
       hour: hour,
       userId: this.db.userNow.mail,
-      massage: this.massage,
+      massage: this.massage? this.massage: 'הודעת משתמש',
       comments: this.comment,
       insertBy: this.db.userNow.mail,
       insertTime: new Date()
     };
 
     this.db.addMassage(massage);
+    this.sd.createAlert('success', 'הודעה נוספה בהצלחה', '');
   }
 }

@@ -8,9 +8,9 @@ import { ShareDataService } from '../../services/share-data.service';
   styleUrls: ['./new-treatment-info.component.scss']
 })
 export class NewTreatmentInfoComponent implements OnInit {
-  canGetInfo = false;
-  canGetPlan = false;
-  canGetTherapist = false;
+  canGetInfo;
+  canGetPlan;
+  canGetTherapist;
   choosedPlan;
   theraPatientList = [];
   planToChoose = [];
@@ -33,6 +33,9 @@ export class NewTreatmentInfoComponent implements OnInit {
     } else if (!this.db.userNow.isAdmin) {
       this.getPatientListForThera();
     }
+    this.canGetPlan = false;
+    this.canGetTherapist = false;
+    this.canGetInfo = false;
     if (this.Pid) {
       this.canGetPlan = true;
     }
@@ -63,6 +66,8 @@ this.db.addTreatmentInfo(treat);
 this.sd.createAlert('success', 'דיווח נשמר בהצלחה', '');
 // this.sd.routeTo('/home');
 this.cleanForm();
+this.canGetInfo = true;
+this.canGetTherapist = true;
 }
   cleanForm() {
     // this.Tid = '';
@@ -70,13 +75,13 @@ this.cleanForm();
     // this.Tname = '';
     // this.Pname = '';
 
-    this.startTime = '';
-    this.endTime = '';
-    this.hours = '';
+    this.startTime = null;
+    this.endTime = null;
+    this.hours = null;
     this.tDate = new Date();
-    this.discrib = '';
-    this.comment = '';
-    this.area = '';
+    this.discrib = null;
+    this.comment = null;
+    this.area = null;
   }
   getPlanDocId() {
    return this.choosedPlan.mipuy_id_in_db + '_P_' + this.choosedPlan.date;
@@ -116,6 +121,7 @@ this.theraPatientList = this.db.allPatientList.filter(pat => P.findIndex(item =>
             plan['hebrewDate'] = this.sd.convertDateToHebrewDate(tempD[0], tempD[1], tempD[2]);
           });
           this.canGetPlan = true;
+          console.log('choosePlanForAdmin');
           this.canGetTherapist = false;
             this.canGetInfo = false;
             this.cleanForm();

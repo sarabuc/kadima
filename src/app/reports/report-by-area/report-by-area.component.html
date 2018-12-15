@@ -1,0 +1,62 @@
+<button (click)="generatePdf()" class="btn btn-sm purple mr-auto">  צור PDF</button>
+    <!-- below block will be saved as pdf -->
+
+
+<div class="container-fluid card mx-2 my-2 px-4 py-2 w-100" id="html2Pdf">
+
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 mt-3 mb-3">
+            <h2 class="purple-text">  תלמידים לפי תחומי קושי  </h2>
+        </div>
+            <div class="col-12" style="text-align: right">
+            נוצר על ידי {{createBy}}
+            <br>
+           בתאריך: {{createTime}}
+            </div>
+             <br>
+            <div class="col-12" style="text-align: right">
+           
+            <span class="purple-text mx-2">כיתות שנבחרו
+            </span>
+            <span *ngFor="let class of classes">{{class}}, </span>
+           <br>
+            <span class="purple-text mx-2">
+            תחומים שנבחרו
+            </span>
+            <span *ngFor="let area of areas">{{area.code}}, </span>
+            
+        </div>
+    </div>
+     <hr>
+    <div class="purple-border-top  my-3 py-3 row d-flex px-3 py-3" *ngFor="let area of areasReport">
+       <h2 class="purple-text my-3"> תחום  {{area.code}}</h2>
+       <hr>
+       <h5 class="purple-text my-3"> תת תחום בתוך   {{area.father}}</h5>
+
+             <div class="col-12 my-2"> <h3 class="purple-text mb-1 yellow"*ngIf="area['patsInfo'].length < 1">אין תלמידים בתחום</h3></div>
+
+            <p-table [value]="area['patsInfo']" *ngIf="area['patsInfo'].length > 0">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 40px"> </th>
+                        <th >כתה </th>
+
+                        <th >שם תלמיד</th>
+                        <th >מספר זהות</th>
+                        
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-pat let-i=rowIndex>
+                    <tr>
+                        <td style="width: 40px">{{i+1}}</td>
+                        <td >{{pat.data().grade}}</td>
+                        <td >{{pat.data().lastName}} {{pat.data().firstName}}</td>
+                        <td >{{pat.data().id}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+
+    </div>
+</div>

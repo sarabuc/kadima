@@ -1,0 +1,148 @@
+   
+
+
+
+
+
+
+
+
+
+
+    
+    <div class="card white-text mt-1 mr-3 ml-3 px-4 py-3 dark-card" style="" >
+
+        <div class="row d-flex justify-content-end">
+            <button class=" my-button my-btn-lg" (click)="showDialogToAdd(); addform.show()">  עדכן ציונים לתלמיד
+            <i class="fa fa-file mr-2"></i>
+            </button>
+          
+        </div>
+        <div class="row d-flex justify-content-around">
+            <div class="col-12 mt-3 mb-3">
+                <h2 class="nice-text mb-3"> ציונים לתלמיד</h2>
+              
+                <div *ngIf="!allGrades" class="center">
+                    <mat-card class="center">
+                        <h4 class="center">טוען...</h4>
+                        <mat-spinner class="center"></mat-spinner>
+
+                    </mat-card>
+                </div>
+                        <!-- <div *ngIf="allGrades.length < 1">לא קימים ציונים עבור תלמיד זה</div>
+                            <div *ngIf="allGrades == 'no internet'">שגיאה בקליטת נתונים. נא בדוק את חיבור האינטרנט שלך</div>
+                            <div *ngIf="allGrades && allGrades[0]">-->
+                   
+
+                    <p-table [value]="allGrades" #dt sortMode="multiple" [paginator]="false" [rows]="15" selectionMode="single"  (onRowSelect)="onRowSelect($event)">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'testDate', 'contains')"  style="width: -webkit-fill-available; " placeholder="סנן לפי תאריך..">
+                                </td>
+                                <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'Dcode', 'contains')"  style="width: -webkit-fill-available; " placeholder="סנן לפי מקצוע..">
+                                </td>
+                                <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                                <div  [style]="{'width':'85%', 'height': '60px'}">
+                                         <p>{{textForGradeFilter}}</p>
+                                       <p-slider [style]="{'width':'100%','margin-top':'8px', 'color':'purple', 'margin-top': '0'}" [(ngModel)]="gradeFilter" [min]="0" [max]="100" (onChange)="onGradeChange($event, dt)"></p-slider>
+                                </div>
+                                </td>
+                                
+                                <td style="padding-right: 0.5rem; padding-left: 0.5rem;">
+                                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'comment', 'contains')"  style="width: -webkit-fill-available; " placeholder="סנן לפי הערות..">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th [pSortableColumn]="'testDate'">תאריך
+                                <p-sortIcon [field]="'testDate'"></p-sortIcon>
+                                </th>
+                                <th [pSortableColumn]="'Dcode'">מקצוע
+                                <p-sortIcon [field]="'Dcode'"></p-sortIcon>
+                                </th>
+                                <th [pSortableColumn]="'grade'">ציון
+                                <p-sortIcon [field]="'grade'"></p-sortIcon>
+                                </th>
+                                <th>הערות</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-test>
+                            <tr>
+                                <td>{{test.testDate}}</td>
+                                <td>{{test.Dcode}}</td>
+                                <td>{{test.grade}}</td>
+                                <td>{{test.comment}}</td>
+                            </tr>
+                        </ng-template>
+                       
+                    </p-table>
+
+
+
+
+                <!-- </div>-->
+
+           </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div mdbModal #addform="mdb-modal" class="modal fade ground" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+        <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header purple white-text">
+                        <h4 class="title" style="text-align: center">
+                            <i class="fa fa-plus mr-1 ml-1"></i>הוסף ציונים</h4>
+                        <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="addform.hide();init();">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mb-0">
+                        <div class="row" *ngIf="selectedGrade">
+                            <div class="col-4 mb-4">
+                                <label >תאריך מבחן:</label>
+                            </div>
+                            <div class="col-8 mb-4">
+                                <p-calendar [(ngModel)]="selectedGrade['testDate']" [locale]="sd.hebrew" dateFormat="dd.mm.yy"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" ></p-calendar>
+                            </div>
+                            <div class="col-4 mb-4">
+                                <label >מקצוע / תחום:</label>
+                            </div>
+                            <div class="col-8 mb-4" dir="ltr">
+                                <p-autoComplete [(ngModel)]="selectedGrade['Dcode']"  [suggestions]="mainDiffi" field="code" (completeMethod)="search($event)" [dropdown]="true" [style]="{'text-align':'right'}"></p-autoComplete>
+                            </div>
+                            <div class="col-4 mb-4">
+                                <label >ציון</label>
+                            </div>
+                            <div class="col-8 mb-4">
+                                <input pInputText type="number" id="grade" [(ngModel)]="selectedGrade['grade']"  class="ui-autocomplete-input w-80 mr-5"/>
+                            </div>
+                            <div class="col-4 mb-4">
+                                <label >הערות</label>
+                            </div>
+                            <div class="col-8 mb-4">
+                                <input pInputText id="comment" [(ngModel)]="selectedGrade['comment']"  class="ui-autocomplete-input w-80 mr-5"/>
+                            </div>
+                         </div>
+                    </div>
+                     <div class="modal-footer">
+                            <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="saveNew('clean', addform); ">שמור והוסף</button>
+                            <button type="button" mdbBtn color="primary" class="btn  btn-outline purple waves-light" mdbWavesEffect (click)="saveNew('close', addform)">שמור וסגור </button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+ 

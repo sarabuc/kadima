@@ -43,6 +43,7 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
     
     this.mipuyDecideForPlan.mipuy_id_in_db = '' + this.Pid + '_' + this.mipuyDate;
     this.mipuyDecideForPlan.Pid =  this.Pid ;
+    this.db.getSecondCategories(false);
   }
   ngOnChanges() {
     console.log(this.planedDiffi);

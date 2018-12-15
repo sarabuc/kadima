@@ -1,5 +1,4 @@
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,7 +48,7 @@ import { ButtonModule } from 'primeng/button';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { polyfill as keyboardEventKeyPolyfill } from 'keyboardevent-key-polyfill';
 import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
-
+// import {MailModule} from '../app/mail/mail.module';
 /*material*/
 import {MatTreeModule} from '@angular/material/tree';
 import {
@@ -129,6 +128,8 @@ import { ShowMipuyComponent } from './mipuy/show-mipuy/show-mipuy.component';
 import { ShowTreatmentInfoComponent } from './treatment/show-treatment-info/show-treatment-info.component';
 import { ShowTreatmentForPatientComponent } from './patient/show-treatment-for-patient/show-treatment-for-patient.component';
 import { ShowTreatmentForTherapistComponent } from './therapist/show-treatment-for-therapist/show-treatment-for-therapist.component';
+// import { SampleModule } from 'angular-pdf-generator';
+import { ExportAsModule } from 'ngx-export-as';
 
 
 
@@ -148,19 +149,22 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
 // import { UpdatePlanForPatientComponent } from './patient/update-plan-for-patient/update-plan-for-patient.component';
 import { ShowMethodsComponent } from './mipuy/show-methods/show-methods.component';
-import { NewMipuyFromExelComponent } from './new-mipuy-from-exel/new-mipuy-from-exel.component';
+import { NewMipuyFromExelComponent } from './mipuy/new-mipuy-from-exel/new-mipuy-from-exel.component';
 import { CreateMassageForUserComponent } from './pages/create-massage-for-user/create-massage-for-user.component';
 import { NewMipuyGradesComponent } from './mipuy/new-mipuy-grades/new-mipuy-grades.component';
-import { GraedsForPatientComponent } from './mipuy/graeds-for-patient/graeds-for-patient.component';
-import { ReportsComponent } from './pages/reports/reports.component';
+import { GraedsForPatientComponent } from './patient/graeds-for-patient/graeds-for-patient.component';
+import { ReportsComponent } from './reports/reports.component';
 import { SettingComponent } from './pages/setting/setting.component';
 import { LoaderComponent } from './pages/loader/loader.component';
 import { NewGradesComponent } from './pages/new-grades/new-grades.component';
-import { NewGroupComponent } from './pages/new-group/new-group.component';
-import { AddGroupTreatComponent } from './pages/add-group-treat/add-group-treat.component';
-import { TeamsComponent } from './pages/teams/teams.component';
+import { NewGroupComponent } from './teams/new-group/new-group.component';
+import { TeamsComponent } from './teams/teams/teams.component';
 import { ProgressManageComponent } from './pages/progress-manage/progress-manage.component';
 import { NewGroupTreatmentComponent } from './treatment/new-group-treatment/new-group-treatment.component';
+import { MailBoxComponent } from './mail/mail-box/mail-box.component';
+import { ReportByClassComponent } from './reports/report-by-class/report-by-class.component';
+import { ReportByAreaComponent } from './reports/report-by-area/report-by-area.component';
+import { ReportByTherapistComponent } from './reports/report-by-therapist/report-by-therapist.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -230,13 +234,19 @@ keyboardEventKeyPolyfill();
     LoaderComponent,
     NewGradesComponent,
     NewGroupComponent,
-    AddGroupTreatComponent,
     TeamsComponent,
     ProgressManageComponent,
-    NewGroupTreatmentComponent
+    NewGroupTreatmentComponent,
+    MailBoxComponent,
+    ReportByClassComponent,
+    ReportByAreaComponent,
+    ReportByTherapistComponent
    //  UpdatePlanForPatientComponent
   ],
   imports: [
+    ExportAsModule,
+    // SampleModule,
+   // MailModule,
     HttpClientModule,
     SelectButtonModule,
     DropdownModule,

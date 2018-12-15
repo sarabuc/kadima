@@ -13,7 +13,8 @@ have choose
 3. get info
 -->
 
-
+{{canGetInfo}}
+{{canGetTherapist}}
 <div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100">
 
     <div class="row d-flex justify-content-around">
@@ -105,7 +106,6 @@ have choose
 
 
 <!--                    GET INFO                       -->
-
 <div #info *ngIf="canGetInfo" class="row d-flex">
         <div class="col-md-3 col-sm-12 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
@@ -124,14 +124,14 @@ have choose
         </div>
         <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput class="form-item back-translate form-item-inputmask" type="text" name="startTime" [(ngModel)]="startTime" placeholder="שעת התחלה" required>
+                <input matInput pInputText [pKeyFilter]="sd.timeRegex" class="form-item back-translate form-item-inputmask" type="text" name="startTime" [(ngModel)]="startTime" placeholder="שעת התחלה" required>
 
                 <mat-error *ngIf="!startTime">חובה להכניס שעת התחלה </mat-error>
             </mat-form-field>
         </div>
         <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput class="form-item back-translate form-item-inputmask" type="text" name="endTime" [(ngModel)]="endTime" placeholder="שעת סיום" required>
+                <input matInput pInputText [pKeyFilter]="sd.timeRegex" class="form-item back-translate form-item-inputmask" type="text" name="endTime" [(ngModel)]="endTime" placeholder="שעת סיום" required>
 
                 <mat-error *ngIf="!endTime">חובה להכניס שעת סיום </mat-error>
             </mat-form-field>
@@ -186,7 +186,7 @@ have choose
                 </button>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2 mb-2 mx-2">
-                <button class="my-primary my-button my-btn-lg w-100" (click)="saveNewtreatment() " style="width: 200px">שמור
+                <button class="my-primary my-button my-btn-lg w-100" (click)="saveNewtreatment()" style="width: 200px">שמור
                     <i class="fa fa-save mr-1 " [disabled]="!(Pid&&Tid&&startTime&&tDate&&discrib&&hours)"></i>
                 </button>
             </div>

@@ -27,7 +27,7 @@ export class HomePageComponent implements OnInit {
       route: 'newTreatmentInfo', class: 'fa fa-calendar-check-o fa-4x accent-3 amber-text',
      text: 'דווח  טיפול', sub: 'דוח על טיפול שהתקים'},
     { route: 'newMipuy', class: 'fa fa-plus-square fa-4x accent-3 amber-text', text: 'מיפוי חדש', sub: 'הוסף מיפוי חדש לתלמידים קימים'},
-    { route: 'Report', class: 'fa fa-file-text fa-4x accent-3 amber-text', text: 'דוחות', sub: 'הנפק דוחות וסיכומים הדרושים לך'}
+    { route: 'reports', class: 'fa fa-file-text fa-4x accent-3 amber-text', text: 'דוחות', sub: 'הנפק דוחות וסיכומים הדרושים לך'}
   ];
   features2 = [
     { route: 'Tcards', class: 'fa fa-id-card-o fa-4x yellow-text', text: 'כרטיס מטפל',

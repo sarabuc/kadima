@@ -173,6 +173,7 @@ treatToDelete;
   }
 
   saveNewTreat(option, modal) {
+  
     console.log('savenew');
 
     // date
@@ -248,6 +249,7 @@ this.newTreat['insertTime'] = '' + new Date();
         console.log(this.newTreat);
 
       this.clearNewTreat();
+      this.db.isBusy = false;
       
     }
 

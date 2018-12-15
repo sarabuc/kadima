@@ -176,7 +176,7 @@ this.sd.routeTo('/Pcard', this.Pid);
     this.chooesedMipuy = undefined;
     console.log('get mipuy');
     const mipuyForPatient = firebase.functions().httpsCallable('getOneMipuyByDateAndId');
-    mipuyForPatient({ text: '' + this.Pid + '_' + selectedDate }).then(res => {
+    mipuyForPatient({ text: '' + this.Pid, date: selectedDate }).then(res => {
       console.log(res);
       this.chooesedMipuy = res.data;
         this.initDiffiForPlan();
@@ -244,6 +244,7 @@ this.sd.routeTo('/Pcard', this.Pid);
       const planDocName = '' + this.PLAN.mipuy_id_in_db + '_P_' + this.PLAN.date;
       // update mipuy
       this.db.mipuyForPatientRef.doc(this.PLAN.mipuy_id_in_db).update({ 'planForPatient': planDocName });
+    this.db.getAdminMassagesRef().doc('PFM' + this.PLAN.mipuy_id_in_db).delete();
       for (const dif of this.diffiForPlan) {
         this.PLAN[dif.Dcode] = dif.value;
         if (dif.value === 'yes' && dif.method !== '') {
@@ -256,6 +257,7 @@ this.sd.routeTo('/Pcard', this.Pid);
         }
       }
       this.db.addPlanForPatient(this.PLAN, planDocName);
+      this.sd.createAlert('success', 'עודכן בהצלחה', '');
       this.sd.routeTo('updatePlan', planDocName);
     // } else if (this.status === 'update') {
      

@@ -5,15 +5,15 @@ import { AuthGuard } from './services/auth.guard';
 import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-plan-for-patient.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { AboutComponent } from './pages/about/about.component';
-import { NewMipuyFromExelComponent } from './new-mipuy-from-exel/new-mipuy-from-exel.component';
+import { NewMipuyFromExelComponent } from './mipuy/new-mipuy-from-exel/new-mipuy-from-exel.component';
 import { ContactComponent } from './pages/contact/contact.component';
-
+import {MailBoxComponent} from './mail/mail-box/mail-box.component';
 import { NewTherapistComponent } from './therapist/new-therapist/new-therapist.component';
 import { NewPatientComponent } from './patient/new-patient/new-patient.component';
 import { NewTreatmentInfoComponent } from './treatment/new-treatment-info/new-treatment-info.component';
 import {ProgressManageComponent} from './pages/progress-manage/progress-manage.component'
 import { TherapistCardComponent } from './therapist/therapist-card/therapist-card.component';
-import { TeamsComponent } from './pages/teams/teams.component';
+import { TeamsComponent } from './teams/teams/teams.component';
 import { TempComponent } from './parts/temp/temp.component';
 import { AddPatientsFromExelComponent } from './patient/add-patients-from-exel/add-patients-from-exel.component';
 import { TherapistListComponent } from './therapist/therapist-list/therapist-list.component';
@@ -24,10 +24,13 @@ import { PatientListComponent } from './patient/patient-list/patient-list.compon
 import { AddDiffiFromExelComponent } from './mipuy/add-diffi-from-exel/add-diffi-from-exel.component';
 import { DiffiAndMethodsComponent } from './mipuy/diffi-and-methods/diffi-and-methods.component';
 import { RegisterComponent } from './pages/login/register/register.component';
-import { AddGroupTreatComponent } from './pages/add-group-treat/add-group-treat.component';
 import { NewGradesComponent} from './pages/new-grades/new-grades.component';
-import { NewGroupComponent} from './pages/new-group/new-group.component';
+import { NewGroupComponent} from './teams/new-group/new-group.component';
 import {NewGroupTreatmentComponent} from './treatment/new-group-treatment/new-group-treatment.component';
+import { ReportsComponent } from './reports/reports.component';
+import {ReportByAreaComponent} from './reports/report-by-area/report-by-area.component';
+import {ReportByClassComponent} from './reports/report-by-class/report-by-class.component';
+import {ReportByTherapistComponent} from './reports/report-by-therapist/report-by-therapist.component';
 const appRoutes: Routes = [
   { path: '', redirectTo: /*'home'*/'login', pathMatch: 'full' },
   { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] },
@@ -46,7 +49,7 @@ const appRoutes: Routes = [
  { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent },
   { path: 'newMipuy', component: NewMipuyComponent},
-  { path: 'Report', component: TempComponent },
+  { path: 'reports', component: ReportsComponent },
   { path: 'progressManage', component: NewGradesComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'Treatment-planning/:status', component: PatientListComponent },
@@ -56,6 +59,11 @@ const appRoutes: Routes = [
   { path: 'addTestGrades', component: NewGradesComponent },
     {path: 'newGroupTreat', component: NewGroupTreatmentComponent},
     {path: 'newGroupTreat/:id', component: NewGroupTreatmentComponent},
+  { path: 'reportByArea', component: ReportByAreaComponent },
+  { path: 'reportByClass', component: ReportByClassComponent },
+  { path: 'reportByTherapist', component: ReportByTherapistComponent },
+  { path: 'reportByPatient', component: TempComponent },
+  { path: 'mails', component: MailBoxComponent },
 
     { path: 'newGroup', component: NewGroupComponent },
   { path: 'mipuy-exel', component: NewMipuyFromExelComponent },

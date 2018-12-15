@@ -1,32 +1,39 @@
+
 <div class="pr-3 pl-3 border-top pt-1">
-    <div class="" (mouseleave)="goHover = false" (mouseenter)="goHover = true">
+    <div class=""><!-- (mouseleave)="goHover = false" (mouseenter)="goHover = true">-->
         <div [class]="dificlass">
       <small>  
       <i class="fa fa-plus ml-1 grey-text" (click)="childrenAreOpen = true" *ngIf="!childrenAreOpen && !isLeave"></i>
       <i class="fa fa-plus ml-1 white-text"  *ngIf="isLeave"></i>
       <i class="fa fa-minus ml-1 grey-text" (click)="childrenAreOpen = false" *ngIf="childrenAreOpen && !isLeave"></i>
       </small>
-            <p-checkbox #diffi value="{{describtion}}" label="{{describtion}}" (onChange)="updateDiffiStatus(diffi.checked)"></p-checkbox>
-            <!-- <mat-checkbox #diffi (change)="updateDiffiStatus(diffi.checked)">{{describtion}}</mat-checkbox> -->
+            <p-checkbox #diffi value="{{code}}" label="{{code}}" (onChange)="updateDiffiStatus(diffi.checked)"></p-checkbox>
+            <p-selectButton [options]="degrees"  (onChange)="onSelectedDegree($event)" *ngIf="diffi.checked && isLeave" >
+                    <ng-template let-item style="background-color: green">
+                        <div >
+                        <span   [style]="item.class">{{item.label}}</span>
+                        </div>
+                    </ng-template>
+                </p-selectButton>
         </div>
-        <div class="" *ngIf="goHover && status == 'show'">
+       <!-- <div class="" *ngIf="goHover && status == 'show'">
             <button class="btn my-button btn-sm" (click)="addDiffEnable=true"> הוסף קושי</button>
             <form class="form-inline md-form mt-2 ml-2 mr-2">
                 <div class="w-100 md-form" *ngIf="addDiffEnable">
                     <input class="form-control my-0" type="text" name="newD" placeholder="תיאור קושי" [(ngModel)]="newD" required>
                     <button class="btn btn-sm purple ml-2 px-1" (click)="addDiffi();addDiffEnable = false" [disabled]="!newD">
-                      <!-- <i class="fa fa-check"></i> -->
+                    
                       שמור
                     </button>
 
                     <mat-error *ngIf="!newD">חובה להכניס תאור קושי </mat-error>
                     <button class="btn btn-sm purple ml-2 px-1" (click)="addDiffEnable = false">
-                      <!--i class="fa fa-close"></i-->חזור
+                     
                     </button>
                 </div>
             </form>
 
-        </div>
+        </div>-->
     </div>
     <div class="mr-8" *ngIf=" childrenAreOpen">
         <!-- children -->

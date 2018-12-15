@@ -24,6 +24,13 @@ export class DifficultComponent implements OnInit, OnChanges {
   addTreEnable = false;
   addDiffEnable = false;
   dificlass = '';
+  degrees = [
+    { value: 1, label: 'קל', class: 'font-weight:100'},
+    { value: 2, label: 'בינוני', class: 'font-weight:300' },
+    { value: 3, label: 'קשה', class: 'font-weight:500' },
+    { value: 4, label: 'קשה מאוד', class: 'font-weight:700' }];
+
+
   constructor(public db: DbService, private sd: ShareDataService, private afs: AngularFirestore) {
 
 
@@ -78,21 +85,20 @@ export class DifficultComponent implements OnInit, OnChanges {
   }
 
   updateDiffiStatus(checked: boolean) {
-
+console.log(this);
     if (checked) {
       this.isChoozen = true;
       this.childrenAreOpen = true;
     } else {
       this.isChoozen = false;
     }
-	console.log(this.status === 'mipuy');
     if (this.status === 'mipuy' && checked) {
       console.log('**********************************************');
-      this.db.newMipuy.push(this.code);
+      this.db.newMipuy[this.code] = 1;
       this.dificlass = 'line-selected';
       console.log(this.db.newMipuy);
     } else if (this.status === 'mipuy' && !checked) {
-      this.db.newMipuy.splice(this.db.newMipuy.indexOf(this.code), 1);
+     delete this.db.newMipuy[this.code];
       this.dificlass = '';
     }
   }
@@ -120,5 +126,11 @@ export class DifficultComponent implements OnInit, OnChanges {
       this.dificlass = '';
     }
      return this.isChoozen;
+  }
+
+
+  onSelectedDegree(event) {
+    //  console.log(event);
+    this.db.newMipuy[this.code] = event.value.value;
   }
 }

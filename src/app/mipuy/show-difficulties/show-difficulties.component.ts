@@ -16,7 +16,7 @@ export class ShowDifficultiesComponent implements OnInit, OnChanges {
   @Output() finishedMipuy = new EventEmitter();
   @ViewChild(DifficultComponent) diff: DifficultComponent;
   areaForMipuy: string;
-  diffiArr: string[] = [];
+  diffis: { [k: string]: any } = {};
   constructor(public sd: ShareDataService, public db: DbService) { }
 
   ngOnInit() {
@@ -26,7 +26,7 @@ export class ShowDifficultiesComponent implements OnInit, OnChanges {
       this.sd.routeTo('login');
     }
     
-  this.db.newMipuy = [];
+  this.db.newMipuy = {};
   }
 
 ngOnChanges(changes) {
@@ -42,7 +42,7 @@ return null;
 }
 
   init() {
-    this.db.newMipuy = [];
+    this.db.newMipuy = {};
     this.diff.isChoozen = false;
   }
 
@@ -50,7 +50,7 @@ return null;
     if (status === 'show') {
       return;
     }
-    this.diffiArr = this.db.newMipuy;
+    this.diffis = this.db.newMipuy;
     let date ;
     this.finishedMipuy.emit('finish');
     if (this.status === 'mipuy') {
@@ -64,7 +64,9 @@ return null;
     }//
 
 console.log('date' + date);
-   if (this.diffiArr.length > 0 && this.status === 'mipuy') {
+    this.db.isBusy = true;
+    const diffiArr = Object.keys(this.diffis);
+    if (diffiArr.length > 0 && this.status === 'mipuy') {
      console.log('date' + date);
      const docName = '' + this.Pid + '_' + date;
      const mipuy = {
@@ -73,6 +75,14 @@ console.log('date' + date);
         planForPatient: ''
      };
       this.db.mipuyForPatientRef.doc(docName).set(mipuy);
+      this.db.getAdminMassagesRef().doc('PFM' + docName).set({
+massage: 'לתלמיד בעל מ.ז : ' + this.Pid + ' עודכן מיפוי קשיים אך לא תוכנן טיפול',
+time: new Date(),
+userId: this.db.userNow.userName,
+status: 'planForMipuy', 
+insertBy: this.db.userNow.userName,
+insertTime: new Date()
+      });
     }
 
     let diffi: PatientsDifficult;
@@ -81,17 +91,21 @@ console.log('date' + date);
         Dcode: '',
         Pid: '' +  this.Pid,
         mipuyDate: date,
-        status: 'yes'
+        status: 'yes',
+        degree: 1
       };
 
-      this.diffiArr.forEach(dif => {
+      diffiArr.forEach(dif => {
 
         diffi.Dcode = dif;
+        diffi.degree = this.diffis[dif];
         this.db.addPatientDifficult(diffi);
       });
       this.sd.createAlert('success', 'מיפוי הוסף בהצלחה', '');
     this.sd.createMessage('warn', 'יש לרענו את הדף כדי לצפות בכל המיפויים  ', 'שים לב');
-    this.db.newMipuy = [];
+    this.db.newMipuy = {};
+    this.db.isBusy = false;
+
 
   }
 

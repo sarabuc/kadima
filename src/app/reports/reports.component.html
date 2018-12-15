@@ -1,0 +1,145 @@
+<div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100">
+
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 mt-3 mb-3">
+            <h2 class="nice-text"> יצירת דוחות </h2>
+        </div>
+
+          <p-selectButton [options]="startWith"  (onChange)="onSelectedStartWith($event)">
+              <ng-template let-item>
+                  <div style="padding: .5em 1em">
+                  <span class="purple-text bold big-font" style="">{{item.label}}</span>
+                  </div>
+              </ng-template>
+          </p-selectButton>
+        </div>
+          <div class="card px-3 py-3 mx-1 my-1">
+
+            <!--          CLASS   OR   AREA          -->
+            <div *ngIf="selectedStartWith == 'class' || selectedStartWith == 'area'">
+            <div class="purple-border-top  my-3 py-3 row d-flex px-3 py-3">
+              <h5 class="purple-text mb-1 ml-5">בחר כיתות לדו"ח</h5>
+                <p-toggleButton [(ngModel)]="getAllClasses" offLabel="כל הכיתות" onLabel="כיתות לפי בחירה"  [style]="{'width':'140px', 'font-size': '70%', 'margin-right': '0.5rem'}"></p-toggleButton>
+                <p-toggleButton [(ngModel)]="byMachzor" offLabel=" לפי שכבת גיל" onLabel="לפי כתה "  [style]="{'width':'140px', 'font-size': '70%', 'margin-right': '0.5rem'}" (onChange)="onChangeByMachzor($event)" *ngIf="!getAllClasses"></p-toggleButton>
+             <div class="col-12 my-2"> <h3 class="purple-text mb-1 yellow" *ngIf="getAllClasses">כל הכיתות נבחרו</h3></div>
+
+                 <p-selectButton #selectedClass [options]="classes"  (onChange)="onSelectedClass($event)" multiple="multiple" *ngIf="!getAllClasses">
+                    <ng-template let-item>
+                        <div style="padding: .5em 1em">
+                        <span class="purple-text " style="">כתה  {{item.label}}</span>
+                        </div>
+                    </ng-template>
+                </p-selectButton>
+              </div>
+             <div class="purple-border-top  my-3 py-3 row d-flex px-3 py-3">
+              <h5 class="purple-text mb-1 ml-5">בחר תחומים לדו"ח</h5>
+                <p-toggleButton [(ngModel)]="getAllAreas" offLabel="כל התחומים" onLabel="תחומים לפי בחירה"  [style]="{'width':'140px', 'font-size': '70%', 'margin-right': '0.5rem'}"></p-toggleButton>
+                <p-selectButton #selectedArea [options]="db.secondCategories"  (onChange)="onSelectedArea($event)" multiple="multiple" *ngIf="!getAllAreas">
+                    <ng-template let-item>
+                        <div style="padding: .5em 1em">
+                        <span class="purple-text " style="">{{item.code}}</span>
+                        </div>
+                    </ng-template>
+                </p-selectButton>
+              <div class="col-12 my-2">   <h3 class="purple-text mb-1 yellow" *ngIf="getAllAreas">כל התחומים נבחרו</h3></div>
+
+                </div>
+            </div>
+             <button class="btn w-100 purple ml-2 px-1" (click)="createReportForClassOrArea()" *ngIf="selectedStartWith == 'area' || selectedStartWith == 'class'">
+              צור דו"ח
+            </button>
+            <!--        END  CLASS  OR    AREA           -->
+
+
+            
+
+
+            <!--          THERAPIST             -->
+            <div *ngIf="selectedStartWith == 'therapist'">
+            <div class="purple-border-top  my-3 py-3 row d-flex px-3 py-3">
+              <h5 class="purple-text mb-1 ml-5">בחר מטפל לדו"ח</h5>
+                <p-toggleButton [(ngModel)]="getAllTherapist" offLabel="כל המטפלים" onLabel="מטפל לפי בחירה"  [style]="{'width':'140px', 'font-size': '70%', 'margin-right': '0.5rem'}"></p-toggleButton>
+                 <div class="col-12 my-2"><h3 class="purple-text mb-1 yellow" *ngIf="getAllTherapist">כל המטפלים נבחרו</h3></div>
+                <p class ="yellow-text" *ngIf="!db.userNow.isAdmin">אין לך הרשאה לגשת למטפלים אחרים</p>
+                    <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " *ngIf="!getAllTherapist">
+                        <mat-form-field class="w-100">
+                            <mat-select matInput class="form-item white-text form-item-select" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="Tid" >
+                                <mat-option *ngFor="let thera of allTherapistList" [value]="thera.id" label=" label">
+                                    {{ thera.firstName }} {{thera.lastName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!Tid">חובה להכניס מספר זהות מטפל</mat-error>
+
+                        </mat-form-field>
+                      
+                    </div>
+              </div>
+              <!--    GROUP OR PAT  -->
+             <div class="purple-border-top  my-3 py-3 row d-flex px-3 py-3">
+             <div class="col-12 mb-4">
+              <p-selectButton [options]="groupOrPat"  (onChange)="onSelectedGroupOrPat($event)" >
+                    <ng-template let-item>
+                        <div style="padding: .5em 1em">
+                        <span class="purple-text " style="">{{item.label}}</span>
+                        </div>
+                    </ng-template>
+                </p-selectButton>
+                </div>
+                <!--GROUP -->
+
+                <h5 class="purple-text mb-1 ml-5" *ngIf="selectedGroupOrPat == 'group' && !getAllTherapist">בחר קבוצה לדו"ח</h5>
+                <p-toggleButton [(ngModel)]="getAllGroups" offLabel=" כל הקבוצות " onLabel="בחר קבוצה "  [style]="{'width':'140px', 'font-size': '70%', 'margin-right': '0.5rem'}"  *ngIf="!getAllTherapist && selectedGroupOrPat == 'group'"></p-toggleButton>
+                <div class="col-12 my-2"><h3 class="purple-text mb-1 yellow" *ngIf="getAllGroups">כל הקבוצות נבחרו</h3></div>
+
+                        <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group "*ngIf="selectedGroupOrPat == 'group' && groupsForTherapist && !getAllGroups && !getAllTherapist">
+                            <mat-form-field class="w-100">
+                                <mat-select matInput class="form-item white-text form-item-select" type="text" name="selectedGroup" placeholder="קבוצה" [(ngModel)]="selectedGroup" >
+                                    <mat-option *ngFor="let group of groupsForTherapist" [value]="group">
+                                        {{ group.groupName }} 
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="!selectedGroup">חובה לבחור קבוצה</mat-error>
+
+                            </mat-form-field>
+                        </div>
+
+                        <div *ngIf="selectedGroupOrPat == 'group' && groupsForTherapist&& groupsForTherapist.length < 1 && !getAllGroups && !getAllTherapist" class="col-12 my-2">
+                        <h3 class="purple-text mb-1 yellow" >אין קבוצות למטפל</h3>
+                        </div>
+                      <!--PAT-->
+
+                    <h5 class="purple-text mb-1 ml-5" *ngIf="selectedGroupOrPat == 'pat' && !getAllTherapist" >בחר תלמיד לדו"ח</h5>
+                    <p-toggleButton [(ngModel)]="getAllPats" offLabel=" כל התלמידים " onLabel="בחר תלמיד "  [style]="{'width':'140px', 'font-size': '70%', 'margin-right': '0.5rem'}"  *ngIf="!getAllTherapist && selectedGroupOrPat == 'pat'"></p-toggleButton>
+                    <div class="col-12 my-2"><h3 class="purple-text mb-1 yellow" *ngIf="getAllPats">כל התלמידים נבחרו</h3></div>
+                        <div *ngIf="selectedGroupOrPat == 'pat' && patForTherapist && !getAllPats && !getAllTherapist" class="row col-md-12 col-sm-12 mb-1 px-auto form-group ">
+                                    <mat-form-field class="w-100">
+                                        <mat-select matInput class="form-item white-text form-item-select" type="text" name="selectedPat" placeholder="תלמיד" [(ngModel)]="selectedPat" >
+                                            <mat-option *ngFor="let pat of patForTherapist" [value]="pat">
+                                                {{ pat.Pid }} 
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="!selectedPat">חובה לבחור תלמיד</mat-error>
+
+                                    </mat-form-field>
+                       </div>
+                       <div *ngIf="patForTherapist&& patForTherapist.length < 1 && !getAllGroups && !getAllTherapist" class="col-12 my-2">
+                        <h3 class="purple-text mb-1 yellow" >אין תלמידים למטפל</h3>
+                        </div>
+                </div>
+            </div>
+             <button class="btn w-100 purple ml-2 px-1" (click)="createReportForTherapist()" *ngIf="selectedStartWith == 'therapist'">
+              צור דו"ח
+            </button>
+            <!--          END  THERAPIST             -->
+
+
+            <!--          PATIENT             -->
+            <button class="btn w-100 purple ml-2 px-1" (click)="createReportForPatient()" *ngIf="selectedStartWith == 'pat'">
+              צור דו"ח
+            </button>
+            <!--          END  PATIENT             -->
+
+          </div>
+     
+  </div>
+
