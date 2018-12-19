@@ -124,7 +124,7 @@ this.sd.routeTo('/Pcard', this.Pid);
 
   init() {
     this.optionsForParentConfirm = ['יש אישור', 'אין אישור', 'לא נבדק עדין'];
-    this.db.getMipuyForPatient(this.Pid).subscribe(M => {
+    this.db.getMipuyForPatient(this.Pid).valueChanges().subscribe(M => {
       if (M.length < 1) {
         this.sd.createAlert('error', 'לא הוגדר מיפוי לתלמיד זה', '');
      //   this.sd.routeTo('/Pcard', this.Pid);
@@ -262,6 +262,21 @@ this.sd.routeTo('/Pcard', this.Pid);
     // } else if (this.status === 'update') {
      
     // }
+    if (this.PLAN.haveDueDate && this.PLAN.dueDate) {
+      // have to update due date
+      const dateToRemember = new Date(this.PLAN.dueDate);
+      dateToRemember.setDate(dateToRemember.getDate() - 14);
+      const M = {
+        massage: 'לתלמיד בעל מ.ז : ' + this.Pid + 'מתקרב תאריך פקיעת תוקף טיפול - בתאריך ' + this.PLAN.dueDate,
+        time: dateToRemember,
+        userId: this.db.userNow.userName,
+        status: 'dueDate',
+        insertBy: this.db.userNow.userName,
+        insertTime: new Date()
+      };
+      console.log(M);
+      this.db.getAdminMassagesRef().doc(M.insertBy + M.insertTime).set(M);
+    }
   }
   cretaNewConnections() {
     this.diffiForPlan.forEach(dif => {

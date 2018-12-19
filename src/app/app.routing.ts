@@ -31,6 +31,7 @@ import { ReportsComponent } from './reports/reports.component';
 import {ReportByAreaComponent} from './reports/report-by-area/report-by-area.component';
 import {ReportByClassComponent} from './reports/report-by-class/report-by-class.component';
 import {ReportByTherapistComponent} from './reports/report-by-therapist/report-by-therapist.component';
+import { SettingComponent } from './pages/setting/setting.component';
 const appRoutes: Routes = [
   { path: '', redirectTo: /*'home'*/'login', pathMatch: 'full' },
   { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] },
@@ -50,7 +51,11 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'newMipuy', component: NewMipuyComponent},
   { path: 'reports', component: ReportsComponent },
-  { path: 'progressManage', component: NewGradesComponent },
+  { path: 'newGrades', component: NewGradesComponent },
+  { path: 'progress/:id', component: ProgressManageComponent },
+  { path: 'patList/:status', component: PatientListComponent },
+  { path: 'setting', component: SettingComponent },
+
   { path: 'contact', component: ContactComponent },
   { path: 'Treatment-planning/:status', component: PatientListComponent },
   { path: 'plan/:id', component: NewPlanForPatientComponent },

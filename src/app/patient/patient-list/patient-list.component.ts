@@ -56,35 +56,37 @@ export class PatientListComponent implements OnInit {
 
 
 checkAndRoute(pat) {
-
+  console.log(this.status); 
   this.db.filteredPatientList = this.db.allPatientList.filter(P => this.isGradePrefix(P.grade) &&
                                                                   this.isFnPrefix(P.firstName) &&
                                                                    this.isLnPrefix(P.lastName) &&
-                                                                   this.isPidExist(P.id));
+                                                                     this.isPidExist(P.id));
   if (this.status === 'card') {
     this.router.navigate(['Pcard', pat]);
   } else if (this.status === 'plan') {
     this.router.navigate(['plan', pat]);
+  } else if (this.status === 'progress') {
+    this.router.navigate(['progress', pat]);
   } else {
     this.router.navigate(['/home']);
   }
 
 }
- public findPatientsForDiffi2() {
-   if (this.db.findByCategory && this.db.findByCategory !== 'empty') {
-     this.findedPatientForDiff = undefined;
-     console.log('cate' + this.db.findByCategory);
-     const findPat = firebase.functions().httpsCallable('getPatByDiffi');
-     findPat({ text: this.db.findByCategory }).then(res => {
-       console.log(res);
-       this.findedPatientForDiff = res.data;
+//  public findPatientsForDiffi2() {
+//    if (this.db.findByCategory && this.db.findByCategory !== 'empty') {
+//      this.findedPatientForDiff = undefined;
+//      console.log('cate' + this.db.findByCategory);
+//      const findPat = firebase.functions().httpsCallable('getPatByDiffi');
+//      findPat({ text: this.db.findByCategory }).then(res => {
+//        console.log(res);
+//        this.findedPatientForDiff = res.data;
 
-     }).catch(err => {
-       console.log(err);
-     });
-   }
+//      }).catch(err => {
+//        console.log(err);
+//      });
+//    }
    
-}
+// }
 
 /**
  * findPatientsForDiffi

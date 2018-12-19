@@ -84,6 +84,7 @@ if (doc.password === value.password) {
       this.db.isLoginV = true;
       this.router.navigate(['/home']);
       this.db.userNow = doc;
+      this.db.getDataByLogin();
     } else {
           this.sd.createAlert('error', 'סיסמא שגויה', '');
     }

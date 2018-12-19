@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DbService } from '../../services/db.service';
 import { ShareDataService } from '../../services/share-data.service';
 import * as firebase from 'firebase';
+import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas';
 @Component({
   selector: 'app-report-by-therapist',
   templateUrl: './report-by-therapist.component.html',
@@ -213,4 +215,62 @@ this.sd.createAlert('error', 'שגיאה, נסה שוב', '');
 
     
   }
+
+
+
+
+  
+  generatePdf() {
+    // const pdf = new jsPDF('p', 'pt', 'a4');
+    // pdf.addHTML(document.getElementById('html2Pdf'), function () {
+    //   pdf.save('Test.pdf');
+    // });
+    try {
+      this.db.isBusy = true;
+    const div = document.getElementById('html2Pdf');
+    const options = { background: 'white', height: div.clientHeight, width: div.clientWidth };
+
+    html2canvas(div, options).then((canvas) => {
+      // Initialize JSPDF
+      const doc = new jsPDF('l', 'mm', 'a4');
+      // Converting canvas to Image
+      const imgWidth = 297;
+      const pageHeight = 210;
+      const imgData = canvas.toDataURL('image/PNG');
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+      // Add image Canvas to PDF
+      // doc.addImage(imgData, 'PNG', 20, 20, 180, 150);
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      const pdfOutput = doc.output();
+      // using ArrayBuffer will allow you to put image inside PDF
+      const buffer = new ArrayBuffer(pdfOutput.length);
+      const array = new Uint8Array(buffer);
+      for (let i = 0; i < pdfOutput.length; i++) {
+        array[i] = pdfOutput.charCodeAt(i);
+      }
+
+      // Name of pdf
+      const fileName = 'דוח לפי כתה.pdf';
+
+      // Make file
+      doc.save(fileName);
+ this.db.isBusy = false;
+    });
+  } catch (err) {
+    this.db.isBusy = false;
+    this.sd.createAlert('error', 'ארעה שגיאה. בדוק את הנתונים ונסה שוב', '');
+  }
+
+}
 }

@@ -104,7 +104,11 @@ let hour = 0;
           break;
       
          default:
+            if (this.selectedHour) {
           hour = this.selectedHour.split(':')[0];
+            } else {
+              hour = 0;
+            }
           date.setHours(hour);
 
             break;
@@ -120,7 +124,7 @@ let hour = 0;
       dateInMonth: date.getDate(),
       hour: hour,
       userId: this.db.userNow.mail,
-      massage: this.massage? this.massage: 'הודעת משתמש',
+      massage: this.massage ? this.massage : 'הודעת משתמש',
       comments: this.comment,
       insertBy: this.db.userNow.mail,
       insertTime: new Date()
@@ -128,5 +132,17 @@ let hour = 0;
 
     this.db.addMassage(massage);
     this.sd.createAlert('success', 'הודעה נוספה בהצלחה', '');
+    this.cleanForm();
+  }
+  cleanForm() {
+    this.date = null;
+    this.comment = null;
+    this.hour = null;
+
+    this.dateChoice = null; // number or picker
+    this.hourChoice = null; // mask or picker
+
+    this.otherDate = false;
+    this.otherHour = false;
   }
 }

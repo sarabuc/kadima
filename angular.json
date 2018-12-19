@@ -31,8 +31,7 @@
                             "node_modules/primeicons/primeicons.css",
                             "node_modules/primeng/resources/themes/omega/theme.css",
                             "node_modules/primeng/resources/primeng.min.css",
-                            "node_modules/jquery-ui-dist/jquery-ui.min.css",
-                            "node_modules/jquery.steps/dist/jquery-steps.css"
+
 
                         ],
                         "scripts": [
@@ -41,9 +40,7 @@
                             "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/jquery-ui-dist/jquery-ui.js",
                             "node_modules/jquery.steps/dist/jquery-steps.js",
-                            "src/assets/js/jquery/jquery.min.js",
-                            "src/assets/js/jquery-validation/dist/jquery.validate.min.js",
-                            "src/assets/js/jquery-validation/dist/additional-methods.min.js",
+
                             {
                                 "input": "node_modules/document-register-element/build/document-register-element.js"
                             }

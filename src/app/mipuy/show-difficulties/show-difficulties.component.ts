@@ -75,14 +75,15 @@ console.log('date' + date);
         planForPatient: ''
      };
       this.db.mipuyForPatientRef.doc(docName).set(mipuy);
-      this.db.getAdminMassagesRef().doc('PFM' + docName).set({
-massage: 'לתלמיד בעל מ.ז : ' + this.Pid + ' עודכן מיפוי קשיים אך לא תוכנן טיפול',
-time: new Date(),
-userId: this.db.userNow.userName,
-status: 'planForMipuy', 
-insertBy: this.db.userNow.userName,
-insertTime: new Date()
-      });
+      const M = {
+        massage: 'לתלמיד בעל מ.ז : ' + this.Pid + ' עודכן מיפוי קשיים אך לא תוכנן טיפול',
+        time: new Date(),
+        userId: this.db.userNow.mail,
+        status: 'planForMipuy',
+        insertBy: this.db.userNow.name,
+        insertTime: new Date()
+      };
+      this.db.getAdminMassagesRef().doc('PFM' + docName).set(M);
     }
 
     let diffi: PatientsDifficult;

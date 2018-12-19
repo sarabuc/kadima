@@ -143,14 +143,15 @@ closeModal(str: string) {
       
       if (flag) {
         this.db.mipuyForPatientRef.doc('' + pat.Pid + '_' + date).set({ Pid: '' + pat.Pid, mipuyDate: date, planForPatient: '' });
-        this.db.getAdminMassagesRef().doc('PFM' +  pat.Pid + '_' + date).set({
+        const M = {
           massage: 'לתלמיד בעל מ.ז : ' + this.Pid + ' עודכן מיפוי קשיים אך לא תוכנן טיפול',
           time: new Date(),
-          userId: this.db.userNow.userName,
+          userId: this.db.userNow.mail,
           status: 'planForMipuy',
           insertBy: this.db.userNow.userName,
           insertTime: new Date()
-        });
+        };
+        this.db.getAdminMassagesRef().doc('PFM' + pat.Pid + '_' + date).set(M);
       }
     });
     this.sd.createAlert('success', 'מיפוי הוסף בהצלחה', '');

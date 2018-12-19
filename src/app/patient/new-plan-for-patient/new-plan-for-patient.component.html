@@ -54,14 +54,16 @@
                         יש תאריך תפוגת תוקף
                     </mat-slide-toggle>
                     <br>
-                    <mat-form-field *ngIf="haveDueDate" class=" w-80">
+                    <p-calendar [(ngModel)]="PLAN.dueDate" *ngIf="PLAN.haveDueDate" [locale]="sd.hebrew" dateFormat="dd.mm.yy"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"    [inline]="true"></p-calendar>
+
+                    <!--<mat-form-field *ngIf="PLAN.haveDueDate" class=" w-80">
 
                         <input type="text" class="form-item form-item-date " matInput [matDatepicker]="birthdate" placeholder="תאריך תפוגה" name="birthDate" [(ngModel)]="PLAN.dueDate">
 
                         <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
                         <mat-datepicker #birthdate></mat-datepicker>
 
-                    </mat-form-field>
+                    </mat-form-field>-->
                 </div>
             </div>
 

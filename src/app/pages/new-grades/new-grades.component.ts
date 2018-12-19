@@ -182,7 +182,9 @@ export class NewGradesComponent implements OnInit {
           comment: grade.comment ? grade.comment : '',
           insertBy: userMail,
           insertTime: timestmp,
-          testCode: code
+          testCode: code,
+          testDate: this.loazyDate,
+          Dcode: this.testAreaCode,
         };
         try {
           this.db.addTestGrade(temp, 'multy');

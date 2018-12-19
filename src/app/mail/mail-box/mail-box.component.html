@@ -1,7 +1,7 @@
 <div *ngIf="status == 'short'" class="list-group px-2 py-3 mb-3  col-12">
     <div class="list-group-item mb-1 mx-1" *ngFor="let mail of allList; let i = index"><small class="purple-text">{{mail.date}} </small> <strong>  {{mail.massage}} </strong></div>
 </div>
-{{status}}
+
 <div class="card mt-1 mr-3 ml-3 px-4 py-3 " >
       <h3 >הודעות</h3>
         <div class="row d-flex justify-content-end">
@@ -11,17 +11,17 @@
         </div>
 
 
-  <div class="list-group px-2 py-3 mb-3  col-12">
-      <div class="col-12 my-2"> <h3 class="purple-text mb-1 yellow" *ngIf="allList && allList.length < 1">אין הודעות  </h3></div>
+  <div class="list-group  py-3 mb-3  col-12">
+      <div class="col-12 my-2" style="text-align-right"> <h3 class="purple-text mb-1 yellow" *ngIf="allList && allList.length < 1">אין הודעות  </h3></div>
 
-      <div class="list-group-item mb-1 mx-1 col-12" *ngFor="let mail of allList">
-            <div class="col-1" > 
-              <i class="fa fa-star purple-text mx-1"></i> 
-              <i class="fa fa-delete purple-text mx-1"></i>
+      <div class="list-group-item mb-1 mx-1 row" *ngFor="let mail of allList">
+            <div class="col-md-2 col-sm-4" > 
+              <i class="fa fa-star purple-text mx-1 fa-lg"></i> 
+              <i class="fa fa-trash purple-text mx-1 fa-lg" (click)="delete.show(); massageToDelete = mail"></i>
             </div> 
-            <div class="col-8"><strong>  {{mail.massage}} </strong></div>
-            <div class="col-3"><small class="purple-text">{{mail.date}} </small></div>
-            <div class="col-12" *ngIf="mail.comment && mail.comment!=''">{{mail.comment}}</div>
+            <div class="col-md-7 col-sm-8" style="text-align-right"><strong>  {{mail.massage}} </strong></div>
+            <div class="col-md-3 col-sm-4" style="text-align-right"><strong>{{mail.time.toDate() | date: 'dd/MM/yyyy hh:mm'}} </strong></div>
+            <div class="col-md-12 col-sm-8" *ngIf="mail.comments && mail.comments!=''" style="text-align-right">{{mail.comments}}</div>
       </div>
   </div>
 </div>
@@ -41,6 +41,35 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
 <app-create-massage-for-user></app-create-massage-for-user>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div mdbModal #delete="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-danger " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead mr-2">האם אתה בטוח ?</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="delete.hide()">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                    <p>האם אתה בטוח שברצונך למחק הודעה זו לצמיתות ?</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a type="button" class="btn btn-primary-modal waves-light white-text" mdbRippleRadius (click)="delete.hide(); deleteMail();">מחק
+                    <i class="fa fa-delete ml-1"></i>
+                </a>
+                <a type="button" class="btn btn-outline-secondary-modal" data-dismiss="modal" (click)="delete.hide()" mdbRippleRadius>חזור</a>
+            </div>
         </div>
     </div>
 </div>

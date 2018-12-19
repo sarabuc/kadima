@@ -25,7 +25,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DataViewModule } from 'primeng/dataview';
 import { PanelModule } from 'primeng/panel';
-
+import { ChartModule } from 'primeng/chart';
 import {InplaceModule} from 'primeng/inplace';
 import {ListboxModule} from 'primeng/listbox';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
@@ -165,6 +165,7 @@ import { MailBoxComponent } from './mail/mail-box/mail-box.component';
 import { ReportByClassComponent } from './reports/report-by-class/report-by-class.component';
 import { ReportByAreaComponent } from './reports/report-by-area/report-by-area.component';
 import { ReportByTherapistComponent } from './reports/report-by-therapist/report-by-therapist.component';
+import { GradesForClassComponent } from './pages/grades-for-class/grades-for-class.component';
 /*
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';*/
@@ -240,10 +241,12 @@ keyboardEventKeyPolyfill();
     MailBoxComponent,
     ReportByClassComponent,
     ReportByAreaComponent,
-    ReportByTherapistComponent
+    ReportByTherapistComponent,
+    GradesForClassComponent
    //  UpdatePlanForPatientComponent
   ],
   imports: [
+    ChartModule,
     ExportAsModule,
     // SampleModule,
    // MailModule,

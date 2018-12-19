@@ -12,7 +12,8 @@ export class ReportsComponent implements OnInit {
     { value: 'area', label: 'תלמידים לפי תחום' },
     { value: 'therapist', label: 'דוח שיעורי מטפל' },
     { value: 'patient', label: 'דוח לפי תלמיד' },
-    { value: 'class', label: 'דוח לפי כתה' }];
+    { value: 'classGrades', label: 'דוח  ציונים בכתה' },
+    { value: 'class', label: 'קשיי תלמיד לפי כתה' }];
 
   selectedStartWith;
 

@@ -25,7 +25,7 @@ export class AppComponent implements OnInit  {
 
  code = 1234;
   fixed = false;
-  mode = 'over';
+  mode = 'side';
   modeIndex = 0;
   /* get mode() {
        return ['side',

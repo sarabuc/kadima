@@ -281,11 +281,11 @@ export interface AprovedPlanForTherpist {
 }
 
 export interface GradeForPatient {
-Dcode?: string;
+Dcode: string;
 Pid: string;
 grade: string;
 comment?: string;
-testDate?: string;
+testDate: string;
 insertBy?: string;
 insertTime?: Date;
 testCode: string; // Dcode_GFP_testDate_GFP_class
@@ -342,25 +342,22 @@ public filteredPatientList = [];
   constructor(public afs: AngularFirestore , private sd: ShareDataService) {
     this.DB = firebase.firestore();
     // get all users
-    this.allUsersRef = this.afs.collection('users');
-    this.allUsersRef.valueChanges().subscribe(users => {
-      users.forEach(user => {
-        this.userNameList.push(user.id);
-      });
-    });
-
-    this.getDataByLogin();
+     this.allUsersRef = this.afs.collection('users');
+    
    }
 
    getDataByLogin() {
-     this.userNow = {
-       id: '312547870',
-       mail: 'sm5800810',
-       isAdmin: true,
-       name: 'sara',
-       userName: 'saraer',
-       password: '1234'
-     };
+     if (!this.userNow) {
+       return;
+     }
+    //  this.userNow = {
+    //    id: '312547870',
+    //    mail: 'sm5800810',
+    //    isAdmin: true,
+    //    name: 'sara',
+    //    userName: 'saraer',
+    //    password: '1234'
+    //  };
      // get main diffis areas
      this.treatmentCategoriesRef = this.afs.collection('difficults', ref => {
        return ref.where('Dfather', '==', 'null');
@@ -384,21 +381,13 @@ public filteredPatientList = [];
      });
      // get all therapist id
      this.allTherapistsRef = this.afs.collection('therapist');
-     this.allTherapistsRef.valueChanges().subscribe(theras => {
-       theras.forEach(th => {
-         this.therapistIDList.push(th.id);
-         this.allTherapistList.push(th);
-       });
-     });
 
      // get all methods
      this.allMethodsRef = this.afs.collection('methods');
 
      // get all difficults ref
      this.allDifficultsRef = this.afs.collection('difficults');
-    //  this.allDifficultsRef.valueChanges().subscribe(diffs => {
-    //    this.allDifficultsList = diffs;
-    //  });
+    
 
     // get limudiAreasForGrades
      this.afs.collection<Difficulty>('difficults', ref => {
@@ -440,7 +429,13 @@ public filteredPatientList = [];
 
   /**************************************************** */
   /*****************       add to db           ******* */
-
+/**
+ * addUser
+ */
+public addUser(user) {
+  this.allUsersRef.doc(user.mail).set(user);
+  this.sd.createAlert('success', 'משתמש הוסף בהצלחה', '');
+}
   /**
    * addTherapist
    */
@@ -578,7 +573,7 @@ public addMethod(method: Method) {
     insertBy: this.userNow.mail,
     insertTime: new Date()
   };
-  this.afs.collection('users').doc(this.userNow.id).collection('massages').add(M).then((result) => {
+  this.afs.collection('users').doc(this.userNow.mail).collection('massages').doc(M.insertBy + M.insertTime).set(M).then((result) => {
     this.sd.createAlert('success', 'תזכורת נוספה בהצלחה', '');
     return result;
   }).catch((err) => {
@@ -587,7 +582,7 @@ public addMethod(method: Method) {
   });
   }
 
-  public addGroupTreatmentInfo(info: GroupTreatmentInfo){
+  public addGroupTreatmentInfo(info: GroupTreatmentInfo) {
     this.afs.collection('groupTreatmentInfo').doc('' + info.insertTime).set(info).then(res => {
          this.sd.createAlert('success', 'שיעור נוסף בהצלחה', '');
          this.isBusy = false;
@@ -604,7 +599,8 @@ public addMethod(method: Method) {
      * user
      */
   addMassage(massage: MassageForUser) {
-  this.afs.collection('users').doc(this.userNow.userName).collection('massages').add(massage).then(res => {
+  this.afs.collection('users').doc(this.userNow.mail).collection('massages').doc(massage.insertBy + massage.insertTime)
+    .set(massage).then(res => {
     this.sd.createAlert('success', 'תזכורת הוספה בהצלחה', '');
     return res;
   }).catch(err => {
@@ -748,10 +744,31 @@ return err;
       return res;
     });
   }
+  /**
+   * updateAdminMassage
+   */
+  public updateAdminMassage(massageId, newMsg) {
+    this.afs.collection('setting').doc('admin').collection('massages').doc(massageId).update(newMsg);
+   // this.sd.createAlert('success', 'הודעה נמחקה בהצלחה', '');
+  }
   /***************************************************************** */
   /**************************************************** */
   /*****************       delete to db           ******* */
 
+  /**
+   * deleteAdminMassage
+   */
+  public deleteAdminMassage(massageId) {
+    this.afs.collection('setting').doc('admin').collection('massages').doc(massageId).delete();
+    this.sd.createAlert('success', 'הודעה נמחקה בהצלחה', '');
+  }
+  /**
+   * deleteUserMassage
+   */
+  public deleteUserMassage(massageId) {
+    this.afs.collection('users').doc(this.userNow.mail).collection('massages').doc(massageId).delete();
+    this.sd.createAlert('success', 'הודעה נמחקה בהצלחה', '');
+  }
   /**
    * deleteTherapist
    */
@@ -789,12 +806,12 @@ return false; // ??????????????????????????????????????????????????
   }
 
 
-  getMipuyForPatient(Pid: string): Observable<Mipuy[]> {
+  getMipuyForPatient(Pid: string) {
    // this.isBusy = true;
     this.mipuyForPatientRef = this.afs.collection('mipuy', ref => {
       return ref.where('Pid', '==', Pid).orderBy('mipuyDate', 'desc');
     });
-    return this.mipuyForPatientRef.valueChanges();
+    return this.mipuyForPatientRef;
   }
 
 
@@ -815,8 +832,8 @@ return false; // ??????????????????????????????????????????????????
     }
     return '';
   }
-  getAllMethodsRef()/*: Observable<Method[]>*/ {
-    return this.allMethodsRef; // .valueChanges();
+  getAllMethodsRef() {
+    return this.allMethodsRef;
   }
   getAllTherapistsRef() {
     return this.afs.collection<Therapist>('therapist');
@@ -947,11 +964,29 @@ return false; // ??????????????????????????????????????????????????
    return this.afs.collection('therapist').doc(Tid).collection('patient');
 
   }
-getUserMassagesRef(userName) {
-   return this.afs.collection('users').doc(userName).collection('massages');
+getUserMassagesRef(userMail) {
+  return this.afs.collection('users').doc(userMail).collection('massages', ref => {
+    return ref.where('time', '<=', new Date());
+  });
 }
 getAdminMassagesRef() {
    return this.afs.collection('setting/admin/massages');
 }
+
+getTreatInfoRef(Pid) {
+  return this.afs.collection('treatmentInfo', ref => {
+    return ref.where('Pid', '==', Pid);
+});
+}
+  getGroupTreatInfoRef(Pid) {
+    return this.afs.collection('groupTreatmentInfo', ref => {
+      return ref.where('Pid', '==', Pid);
+    });
+  }
+  getAdminMassagesEveryYearRef() {
+     return this.afs.collection('setting/admin/massages', ref => {
+      return ref.where('status', '==', 'every_year');
+    });
+  }
   
 }

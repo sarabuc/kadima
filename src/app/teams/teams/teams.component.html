@@ -1,9 +1,9 @@
   <div class="card mt-1 mr-3 ml-3 px-4 py-3 " style="" >
       <h3 >קבוצות לימוד במערכת</h3>
         <div class="row d-flex justify-content-end">
-            <button class=" my-button my-btn-lg my-2"  (click)="addNewGroup()">הוסף קבוצה חדשה
-        <i class="fa fa-plus mr-2"></i>
-      </button>
+            <button class=" my-button my-btn-lg my-2"  (click)="addNewGroup()" *ngIf="db.userNow.isAdmin">הוסף קבוצה חדשה
+                <i class="fa fa-plus mr-2"></i>
+            </button>
        
         </div>
  <p-dataView #dv [value]="teams" [paginator]="true" [rows]="20" paginatorPosition="both" filterBy="groupName"

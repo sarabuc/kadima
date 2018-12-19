@@ -1,15 +1,16 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
 import { DbService, Patient, GradeForPatient } from '../../services/db.service';
 import { ShareDataService } from '../../services/share-data.service';
-
+// RxJs 6.x+ import paths
+import { filter, startWith, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-graeds-for-patient',
   templateUrl: './graeds-for-patient.component.html',
   styleUrls: ['./graeds-for-patient.component.css']
 })
-export class GraedsForPatientComponent implements OnInit, OnChanges {
-
-  constructor(private db: DbService, public sd: ShareDataService) { }
+export class GraedsForPatientComponent implements OnInit, OnChanges, OnDestroy {
+  private ngUnsubscribe = new Subject();
   @Input() pat: Patient;
   @Input() Pid: string;
   @Input() status: string;
@@ -23,13 +24,16 @@ export class GraedsForPatientComponent implements OnInit, OnChanges {
   gradeFilter;
   yearTimeout: any;
   textForGradeFilter = 'ציונים מעל:0';
+  constructor(private db: DbService, public sd: ShareDataService) { }
+ 
   ngOnInit() {
   }
 
   ngOnChanges() {
-    this.db.getGradesForPidRef(this.Pid).valueChanges().subscribe(grades => {
+   this.db.getGradesForPidRef(this.Pid).valueChanges().subscribe(grades => {
       this.allGrades = grades;
       console.log(this.allGrades);
+      
     // this.sortByTestDate();
     });
   }
@@ -157,5 +161,13 @@ this.selectedGrade = {
     this.yearTimeout = setTimeout(() => {
       dt.filter(event.value, 'grade', 'gt');
     }, 250);
+  }
+
+
+
+  ngOnDestroy() {
+    console.log('on destroy');
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
