@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { DbService, Patient, Mipuy, MipuyDecideForPlan, PlanForPatient } from '../../services/db.service';
+import { DbService, Patient, Mipuy, PlanForPatient } from '../../services/db.service';
 import { ShareDataService } from '../../services/share-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
@@ -46,6 +46,7 @@ export class NewPlanForPatientComponent implements OnInit, OnChanges {
       // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
       this.sd.routeTo('login');
     }
+    this.db.isBusy = true;
     const id = <string>this.route.snapshot.params['id'];
     if (id.includes('_P_')) {// if true its update plan
       this.status = 'update';
@@ -60,11 +61,7 @@ export class NewPlanForPatientComponent implements OnInit, OnChanges {
         this.planFiles = [];
         this.PLAN = plan;
         Object.keys(plan).forEach(key => {
-          // if (plan[key] === 'yes') { // this is a diffi was planed
-          //   const Tkey = key + '_THERAPIST';
-          //   const Mkey = key + '_METHOD';
-          //   this.planedDiffi.push({ code: key, method: plan[Mkey], thera: plan[Tkey] });
-          // }
+         
           if (plan[key] === 'file') { // this is a file
             this.planFiles.push({ file: key, fileName: key.split('_dot_')[0] });
           }
@@ -97,7 +94,7 @@ export class NewPlanForPatientComponent implements OnInit, OnChanges {
       }
     }
     
-   
+   this.db.isBusy = false;
   }
 
   ngOnChanges() {
@@ -130,14 +127,14 @@ this.sd.routeTo('/Pcard', this.Pid);
      //   this.sd.routeTo('/Pcard', this.Pid);
         this.sd.routeTo('/Pcards', 'plan');
       }
-      this.mipuyDates = M;
+      this.mipuyDates = M.filter(m => m.planForPatient === '');
       this.mipuyDates.forEach(plan => {
         const tempD = plan.mipuyDate.split('.');
         plan['hebrewDate'] = this.sd.convertDateToHebrewDate(+tempD[0], +tempD[1], +tempD[2]);
       });
     });
 
-    this.db.getAllTherapistsRef().valueChanges().subscribe(thera => this.allTherapists = thera);
+    // this.db.getAllTherapistsRef().valueChanges().subscribe(thera => this.allTherapists = thera);
     this.db.getAllMethodsRef().valueChanges().subscribe(methods => this.allMethods = methods);
   }
   initDiffiForPlan() {

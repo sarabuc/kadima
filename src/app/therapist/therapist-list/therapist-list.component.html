@@ -17,7 +17,9 @@
 
     <div class="list-group mt-3 pt-2 ">
         <div *ngFor="let t of  allT">
-            <a *ngIf="isFnPrefix(t.firstName)&&isLnPrefix(t.lastName)" class="list-group-item link-botton " style="text-align:right" [routerLink]="['/Tcard', t.id]"><i class="fa fa-user mx-5"></i>{{t.firstName}}  {{t.lastName}}</a>
+            <a *ngIf="isFnPrefix(t.firstName)&&isLnPrefix(t.lastName)" class="list-group-item link-botton " style="text-align:right"
+                [routerLink]="['/Tcard', t.id]">
+                <i class="fa fa-user mx-5"></i>{{t.firstName}} {{t.lastName}}</a>
         </div>
     </div>
 </div>

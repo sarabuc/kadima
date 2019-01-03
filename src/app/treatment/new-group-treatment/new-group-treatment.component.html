@@ -250,21 +250,19 @@
                                     </h5>
                                     <form #formST="ngForm">
                                         <mat-form-field class="w-100">
-                                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="newTreat.startTime" placeholder="00:00" [(ngModel)]="newTreat.startTime" required>
+                                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="newTreat.startTime"  [(ngModel)]="newTreat.startTime" required>
 
                                         <mat-error *ngIf="!newTreat.startTime">חובה להכניס שעת התחלה </mat-error>
                                         <mat-error *ngIf="!formST.valid"> שעה  אינה תקינה</mat-error>
                                     </mat-form-field>
                                     </form>
-
-
                                 </div>
                                 <div class="col-md-4 col-sm-12 mb-2 px-2">
                                     <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> שעת סיום
                                     </h5>
                                     <form #formET="ngForm">
                                         <mat-form-field class="w-100">
-                                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="newTreat.endTime" placeholder="00:00 " [(ngModel)]="newTreat.endTime" required>
+                                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="newTreat.endTime"  [(ngModel)]="newTreat.endTime" required>
                                         <mat-error *ngIf="!newTreat.endTime">חובה להכניס שעת סיום </mat-error>
                                         <mat-error *ngIf="!formET.valid"> שעה  אינה תקינה</mat-error>
                                     </mat-form-field>
@@ -276,7 +274,7 @@
                                     <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> מספר שעות
                                     </h5>
                                     <mat-form-field class="w-100">
-                                    <input matInput class="form-item white-text" type="number" name="newTreat.hours" placeholder="0 " [(ngModel)]="newTreat.hours" required>
+                                    <input matInput class="form-item white-text" type="number" name="newTreat.hours"  [(ngModel)]="newTreat.hours" required>
                                     <mat-error *ngIf="!newTreat.hours">חובה להכניס מספר שעות </mat-error>
                                 </mat-form-field>
 
@@ -286,7 +284,7 @@
                                     <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> נושא שיעור
                                     </h5>
                                     <mat-form-field class="w-100">
-                                    <input matInput class="form-item white-text" type="text" name="newTreat.subject" placeholder=" נושא שיעור " [(ngModel)]="newTreat.subject" required>
+                                    <input matInput class="form-item white-text" type="text" name="newTreat.subject"  [(ngModel)]="newTreat.subject" required>
                                     <mat-error *ngIf="!newTreat.subject">חובה להכניס נושא שיעור </mat-error>
                                 </mat-form-field>
 
@@ -296,7 +294,7 @@
                                     <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> שיטת טיפול
                                     </h5>
                                     <mat-form-field class="w-100">
-                                    <input matInput class="form-item white-text" type="text" name="newTreat.method" placeholder=" שיטת טיפול " [(ngModel)]="newTreat.method" required>
+                                    <input matInput class="form-item white-text" type="text" name="newTreat.method"[(ngModel)]="newTreat.method" required>
                                     <mat-error *ngIf="!newTreat.method">חובה להכניס שיטת טיפול </mat-error>
                                 </mat-form-field>
 
@@ -307,7 +305,7 @@
                                     <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> תיאור והערות
                                     </h5>
                                     <mat-form-field class="w-100">
-                                    <input matInput class="form-item white-text" type="text" name="newTreat.comment" placeholder=" תיאור והערות" [(ngModel)]="newTreat.comment" required>
+                                    <input matInput class="form-item white-text" type="text" name="newTreat.comment"  [(ngModel)]="newTreat.comment" required>
                                 </mat-form-field>
 
                                 </div>
@@ -402,6 +400,7 @@
                                 <h5 class="purple-text mt-2" style="text-align: right" *ngIf="!updateDate"> תאריך שיעור
                                 <a (click)="updateDate = true;">שנה</a>
                                 </h5>
+                                <hr>
                                 <div class="col-md-12 col-sm-12" *ngIf="updateDate">
                                                                 
                                             <h5 class="purple-text mt-2" style="text-align: right"> תאריך שיעור

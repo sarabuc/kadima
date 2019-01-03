@@ -8,9 +8,9 @@ import { Therapist, DbService } from '../../services/db.service';
   styleUrls: ['./therapist-list.component.scss']
 })
 export class TherapistListComponent implements OnInit {
-fname = '';
-lname = '';
-allT: Therapist[];
+  fname = '';
+  lname = '';
+  allT: Therapist[];
   constructor(public sd: ShareDataService, public db: DbService) { }
 
   ngOnInit() {

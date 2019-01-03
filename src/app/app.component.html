@@ -1,52 +1,55 @@
-
- <!--<p-blockUI [blocked]="db.isBusy">
+<!--<p-blockUI [blocked]="db.isBusy">
     <app-loader></app-loader>
  </p-blockUI>-->
- <ngx-loading [show]="db.isBusy"  ></ngx-loading>
+<ngx-loading [show]="db.isBusy"></ngx-loading>
 
 <mdb-navbar SideClass="navbar  navbar-dark purple fixed-top " *ngIf="db.isLogin()">
 
     <!-- Navbar brand  scrolling-navbar navbar-expand-lg class="collapse navbar-collapse" id="navbarSupportedContent"-->
-   <logo class="w-100">
-   <div class="row d-flex justify-content-between">
-   <div>
-    <a class="white-text" (click)="start.toggle(undefined, 'mouse')" mdbTooltip="תפריט" placement="bottom"><i class="fa fa-navicon fa-2x"></i></a>
+    <logo class="w-100">
+        <div class="row d-flex justify-content-between">
+            <div>
+                <a class="white-text" *ngIf="db.userNow.isAdmin" (click)="start.toggle(undefined, 'mouse')" mdbTooltip="תפריט" placement="bottom">
+                    <i class="fa fa-navicon fa-2x"></i>
+                </a>
 
-        <a class="navbar-brand" [routerLink]="'/home'">
-            <h2><strong>קדימה    </strong></h2>
-        </a>
-   <!-- <links>-->
-   </div>
-        <div style="display: -webkit-inline-box;" class="mt-2">
-            <ul class="navbar-nav nav-flex-icons mr-auto">
-            
-                <li class="nav-item mx-2">
+                <a class="navbar-brand" [routerLink]="'/home'">
+                    <h2>
+                        <strong>קדימה </strong>
+                    </h2>
+                </a>
+                <!-- <links>-->
+            </div>
+            <div style="display: -webkit-inline-box;" class="mt-2">
+                <ul class="navbar-nav nav-flex-icons mr-auto">
 
-                    <a class="nav-link " target="_blank" >
-                                {{db.userNow.name}}
-                                <i class="fa fa-user"></i>
-                                </a>
-                </li>
+                    <li class="nav-item mx-2">
 
-                <li class="nav-item mx-2">
-                    <a class="nav-link border border-light rounded mx-2" (click)="logout()" target="_blank">
-                                יציאה
-                                </a>
-                </li>
-               
-                <li class="nav-item mx-2" [routerLink]="'/contact'">
-                    <a class="nav-link" target="_blank">צור קשר</a>
-                </li>
-                 <li class="nav-item mx-2">
-                    <a class="nav-link" target="_blank">
-                    <i class="fa fa-envelope" (click)="showM.show()" ></i>
-                    </a>
-                </li>
-            </ul>
+                        <a class="nav-link " target="_blank">
+                            {{db.userNow.name}}
+                            <i class="fa fa-user"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item mx-2">
+                        <a class="nav-link border border-light rounded mx-2" (click)="logout(start)" target="_blank">
+                            יציאה
+                        </a>
+                    </li>
+
+                    <li class="nav-item mx-2" [routerLink]="'/contact'">
+                        <a class="nav-link" target="_blank">צור קשר</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" target="_blank">
+                            <i class="fa fa-envelope" (click)="showM.show()"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        </div>
-            </logo>
- <!--   </links>-->
+    </logo>
+    <!--   </links>-->
 </mdb-navbar>
 
 
@@ -62,9 +65,12 @@
 <mat-sidenav-container fullscreen class="pb-1 pt-3" style="">
 
     <mat-sidenav #start [mode]="mode " [fixedInViewport]="fixed " position="start " class="yellow">
-        <button mat-button class="mt-1 mb-3 " (click)="start.close( 'mouse') ">הסתר תפריט</button>
-        <div class="list-group mt-3 pt-2 ">
-            <a *ngFor="let option of menuOptions " class="list-group-item link-botton px-4" [routerLink]="option.router " style="text-align: right"><i [class]="option.icon"></i>{{option.option}}</a>
+        <div *ngIf="db.userNow&&db.userNow.isAdmin">
+            <button mat-button class="mt-1 mb-3 " (click)="start.close( 'mouse') ">הסתר תפריט</button>
+            <div class="list-group mt-3 pt-2 ">
+                <a *ngFor="let option of menuOptions " class="list-group-item link-botton px-4" [routerLink]="option.router " style="text-align: right">
+                    <i [class]="option.icon"></i>{{option.option}}</a>
+            </div>
         </div>
 
 
@@ -84,7 +90,7 @@
     margin-right: 2%;"> -->
             <p-messages [(value)]="sd.msgs" [sticky]="false"></p-messages>
             <!-- </div> -->
-          
+
             <router-outlet> </router-outlet>
         </div>
 
@@ -104,9 +110,7 @@
 <div mdbModal #showM="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-<app-create-massage-for-user></app-create-massage-for-user>
+            <app-create-massage-for-user></app-create-massage-for-user>
         </div>
     </div>
 </div>
-
-

@@ -7,7 +7,9 @@
 </div>
 <div class="card  mx-2 my-2 px-3 py-3 " *ngIf="!readData">
 
-    <h3 class="purple-text h3 mt-2 mb-2">{{thera.firstName}} {{thera.lastName}} | <small>{{thera.skill}}</small></h3>
+    <h3 class="purple-text h3 mt-2 mb-2">{{thera.firstName}} {{thera.lastName}} |
+        <small>{{thera.skill}}</small>
+    </h3>
     <mat-tab-group class="demo-tab-group" mat-stretch-tabs dynamicHeight [(selectedIndex)]="sd.activeTabIndex">
         <mat-tab label="פרטים אישיים">
             <app-therapist-profile [thera]="thera"></app-therapist-profile>

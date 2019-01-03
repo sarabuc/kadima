@@ -111,8 +111,7 @@ closeModal(str: string) {
     this.flagForFastMipuy[i] = true;
   }
   saveFastMipuy() {
-    const t_date = new Date();
-    const date = '' + t_date.getDate() + '/' + (t_date.getMonth() + 1) + '/' + t_date.getFullYear();
+    const date = this.sd.convertDateToStringDD_MM_YYYY(new Date());
 
     this.fastMipuyData.forEach(pat => {
       let flag = false;
@@ -140,15 +139,15 @@ closeModal(str: string) {
           console.log(newDiff);
         }
       });
-      
+      console.log('flag' + flag);
       if (flag) {
         this.db.mipuyForPatientRef.doc('' + pat.Pid + '_' + date).set({ Pid: '' + pat.Pid, mipuyDate: date, planForPatient: '' });
         const M = {
-          massage: 'לתלמיד בעל מ.ז : ' + this.Pid + ' עודכן מיפוי קשיים אך לא תוכנן טיפול',
+          massage: 'לתלמיד בעל מ.ז : ' + pat.Pid + ' עודכן מיפוי קשיים אך לא תוכנן טיפול',
           time: new Date(),
           userId: this.db.userNow.mail,
           status: 'planForMipuy',
-          insertBy: this.db.userNow.userName,
+          insertBy: this.db.userNow.mail,
           insertTime: new Date()
         };
         this.db.getAdminMassagesRef().doc('PFM' + pat.Pid + '_' + date).set(M);

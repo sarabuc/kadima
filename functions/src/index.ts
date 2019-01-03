@@ -18,6 +18,6 @@ export const getSecondCategories = getFromFirebase.getSecondCategories;
 export const sendMail3 = sendMail_Noti.sendWelcomeEmailFunc2;
 export const onceADay = massages.do_once_a_day;
 export const onceAWeek = massages.do_once_a_week;
-//export const MLFunc = ML.MLFunction;
+export const MLsendDate = ML.sendData;
 export const login = auth.login;
 export const getMipuysForPatientBySecondAreas = getFromFirebase.getMipuysForPatientBySecond;

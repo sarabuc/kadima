@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "kadima-fa119"
+    "default": "kadima-fa119",
+    "kadima": "kadima1-fa119"
   }
 }

@@ -31,33 +31,46 @@ export class PatientListComponent implements OnInit {
       this.router.navigate(['/home']);
       this.sd.createAlert('error', 'שגיאה בהעברת נתונים, נא נסה שוב', '');
   }
-    this.patientList = this.db.allPatientList;
+  this.getPatList();
+   // this.patientList = this.db.allPatientList;
 
 }
 
 // for search
   isGradePrefix(grade) {
-    const filter = this.db.grade.toUpperCase();
-    return (grade.toUpperCase().indexOf(filter) > -1);
+    if (grade) {
+      const filter = this.db.grade.toUpperCase();
+      return (grade.toUpperCase().indexOf(filter) > -1);
+    }
+    return false;
   }
   isFnPrefix(fn) {
+    if (fn) {
     const filter = this.db.fname.toUpperCase();
     return (fn.toUpperCase().indexOf(filter) > -1);
+    }
+    return false;
   }
   isLnPrefix(ln) {
+    if(ln) {
     const filter = this.db.lname.toUpperCase();
     return (ln.toUpperCase().indexOf(filter) > -1);
+    }
+    return false;
   }
   isPidExist(Pid) {
+    if(Pid) {
     return (!this.db.findByCategory) || (this.db.findByCategory === 'empty') ||
      (this.findedPatientForDiff.findIndex(P => P.data().Pid ===  Pid) > -1);
+    }
+    return false;
   }
 
 
 
 checkAndRoute(pat) {
-  console.log(this.status); 
-  this.db.filteredPatientList = this.db.allPatientList.filter(P => this.isGradePrefix(P.grade) &&
+  console.log(this.status);
+  this.db.filteredPatientList = this.patientList.filter(P => this.isGradePrefix(P.grade) &&
                                                                   this.isFnPrefix(P.firstName) &&
                                                                    this.isLnPrefix(P.lastName) &&
                                                                      this.isPidExist(P.id));
@@ -101,5 +114,13 @@ async  findPatientsForDiffi() {
   this.db.isBusy = false;
     // const index2 = '12.10.2017'.split('.').reverse().join().localeCompare('11.11.2017'.split('.').reverse().join());//returned -1
   }
-   
+   getPatList() {
+     if (this.db.userNow.isAdmin) {
+       this.patientList = this.db.allPatientList;
+     } else {
+       this.db.getPatByTidRef(this.db.userNow.id).valueChanges().subscribe(pats => {
+this.patientList = this.db.allPatientList.filter(P => pats.findIndex(pat => pat.Pid === P.id) > -1);
+       });
+     }
+   }
 }

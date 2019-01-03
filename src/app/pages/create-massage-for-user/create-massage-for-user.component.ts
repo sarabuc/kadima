@@ -127,7 +127,7 @@ let hour = 0;
       massage: this.massage ? this.massage : 'הודעת משתמש',
       comments: this.comment,
       insertBy: this.db.userNow.mail,
-      insertTime: new Date()
+      insertTime: '' + new Date()
     };
 
     this.db.addMassage(massage);

@@ -48,6 +48,22 @@ export class HomePageComponent implements OnInit {
    ];
 
 
+   featuresUser = [
+    { route: 'Pcards/card', class: 'fa fa-id-card fa-4x  accent-3 amber-text', text: 'כרטיס תלמיד', sub: 'כל הפרטים על התלמיד שלך'},
+    {
+      route: 'newTreatmentInfo', class: 'fa fa-calendar-check-o fa-4x accent-3 amber-text',
+     text: 'דווח  טיפול', sub: 'דוח על טיפול שהתקים'},
+  
+    { route: 'temp', class: 'fa fa-id-calender fa-4x accent-3 amber-text', text: 'שיבוץ שעות ',
+     sub: 'מערכת ולוח זמנים '
+    },
+   {
+      route: 'teams', class: 'fa fa-group fa-4x accent-3 amber-text', text: ' קבוצות '
+      , sub: 'דוח על טיפול קבוצתי '
+     },
+    
+   ];
+
   constructor(public db: DbService, public sd: ShareDataService) {
 
   }

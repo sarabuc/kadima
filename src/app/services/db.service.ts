@@ -80,6 +80,9 @@ groupCode: string; // timestemp
   3) 'currect_FROM_date - C_F_(date)*/
   insertBy?: string;
   insertTime?: Date;
+  startTime: string;
+  endTime: string;
+  hours: string;
 }
 
 export interface PatientInGroup {
@@ -190,7 +193,6 @@ testCode: string; // Dcode_GFP_date_GFP_className
 comment?: string;
    insertBy?: string;
    insertTime?: Date;
-
  }
  export interface AreaForTherapist {
    code: string; // Dcode
@@ -205,7 +207,7 @@ export interface TreatmentInfo {
    progressionCode: string; // plan doc id
    area: string;
    treatmentNumber: string; // timestemp
-   treatDate: Date;
+   treatDate: string;
    startTime: string;
    endTime: string;
    hours: string;
@@ -257,7 +259,8 @@ export interface MassageForUser {
 kind?: string;
 comments?: string;
   insertBy?: string;
-  insertTime?: Date;
+  insertTime?: string;
+  docId?: string;
 }
 
 export interface GradeMassageForTherapist {
@@ -343,7 +346,9 @@ public filteredPatientList = [];
     this.DB = firebase.firestore();
     // get all users
      this.allUsersRef = this.afs.collection('users');
-    
+     //funcs use once in 
+    //this.updateGroupPatsForTherapist();
+    //this.updateDocIdForAdminMassage();
    }
 
    getDataByLogin() {
@@ -368,19 +373,10 @@ public filteredPatientList = [];
      this.getSecondCategories(true);
      // get all patients id
      this.allPatientsRef = this.afs.collection('patients');
-     this.allPatientsRef.valueChanges().subscribe(pats => {
-       this.allPatientList = pats;
-       this.allPatientList.sort((a, b) => {
-         return a.grade.localeCompare(b.grade) || a.lastName.localeCompare(b.lastName) || a.firstName.localeCompare(b.firstName);
-       });
-        this.filteredPatientList = this.allPatientList;
-       pats.forEach(pat => {
-         this.patientIDList.push(pat.id);
-
-       });
-     });
+     
      // get all therapist id
      this.allTherapistsRef = this.afs.collection('therapist');
+     this.getPatAndTheraForUser();
 
      // get all methods
      this.allMethodsRef = this.afs.collection('methods');
@@ -405,7 +401,32 @@ public filteredPatientList = [];
      this.methodForTherapistRef = this.afs.collection('methodForThertapist');
      this.methodForDifficultyRef = this.afs.collection('methodForDifficult');
    }
-
+  getPatAndTheraForUser() {
+    if (this.userNow.isAdmin) {
+      this.allPatientsRef.valueChanges().subscribe(pats => {
+        this.allPatientList = pats;
+        this.allPatientList.sort((a, b) => {
+          return a.grade.localeCompare(b.grade) || a.lastName.localeCompare(b.lastName) || a.firstName.localeCompare(b.firstName);
+        });
+        this.filteredPatientList = this.allPatientList;
+      });
+      this.allTherapistsRef.valueChanges().subscribe(thera => {
+        this.allTherapistList = thera;
+      });
+    } else {
+      this.allPatientsRef.valueChanges().subscribe(allpats => {
+this.getPatByTidRef(this.userNow.id).valueChanges().subscribe(pat => {
+this.allPatientList = allpats.filter(P => pat.findIndex(P1 => P1.Pid === P.id) > -1);
+console.log(this.allPatientList);
+});
+    });
+    this.allTherapistsRef.doc<Therapist>('' + this.userNow.id).valueChanges().subscribe(T => {
+this.allTherapistList = [];
+this.allTherapistList.push(T);
+    });
+  }
+    }
+  
    isLogin() {
 	  // return true;
      return this.isLoginV;
@@ -435,6 +456,13 @@ public filteredPatientList = [];
 public addUser(user) {
   this.allUsersRef.doc(user.mail).set(user);
   this.sd.createAlert('success', 'משתמש הוסף בהצלחה', '');
+}
+
+/**
+ * addTreatForML
+ */
+public addTreatForML(data) {
+  this.afs.collection('ML_data').add(data);
 }
   /**
    * addTherapist
@@ -506,7 +534,6 @@ public addTherapistForArea(TFA: AreaForTherapist) {
  * addNewGroup
  */
 public addNewGroup(group) {
-  console.log('in add g');
   console.log(group);
   this.afs.collection('groups').doc('' + group.groupCode).set(group).then(res => {
     console.log(res);
@@ -655,14 +682,15 @@ return err;
       planDocId: planDoc}).then(res => {
         return res;
       });
+  }
 
-    // const updataList = firebase.functions().httpsCallable('setPatientForTherapist');
-    // updataList({ Tid: Tid, Pid: Pid }).then(res => {
-    //   console.log(res);
-    // }).catch(err => {
-    //   this.sd.createAlert('error', 'ארעה שגיאה במהלך השמירה יתכן וחלק מהנתונים לא נשמרו', '');
-    //   console.log(err);
-    // });
+  addAprovedGroupPatForTherapist(Tid, groupCode, Pid) {
+    this.afs.collection('therapist').doc(Tid).collection('patient').doc('' + Pid + '_G_' + groupCode).set({
+      Tid: Tid, 
+      Pid: Pid, 
+      groupCode: groupCode}).then(res => {
+        return res;
+      });
   }
    
   
@@ -701,6 +729,18 @@ return err;
   /**************************************************** */
   /*****************       update to db           ******* */
 
+  /**
+ * updateGroup
+ */
+public updateGroup(group) {
+  this.afs.collection('groups').doc('' + group.groupCode).set(group).then(res => {
+    console.log(res);
+    return res;
+  }).catch(err => {
+console.error(err);
+return err;
+  });
+}
   /**
    * updateTherapist
    */
@@ -748,7 +788,8 @@ return err;
    * updateAdminMassage
    */
   public updateAdminMassage(massageId, newMsg) {
-    this.afs.collection('setting').doc('admin').collection('massages').doc(massageId).update(newMsg);
+    newMsg['docId'] = massageId;
+    this.afs.collection('setting').doc('admin').collection('massages').doc(massageId).set(newMsg);
    // this.sd.createAlert('success', 'הודעה נמחקה בהצלחה', '');
   }
   /***************************************************************** */
@@ -974,12 +1015,12 @@ getAdminMassagesRef() {
 }
 
 getTreatInfoRef(Pid) {
-  return this.afs.collection('treatmentInfo', ref => {
+  return this.afs.collection<TreatmentInfo>('treatmentInfo', ref => {
     return ref.where('Pid', '==', Pid);
 });
 }
-  getGroupTreatInfoRef(Pid) {
-    return this.afs.collection('groupTreatmentInfo', ref => {
+  getGroupTreatInfoRef(Pid: string) {
+    return this.afs.collection<GroupTreatmentInfo>('groupTreatmentInfo', ref => {
       return ref.where('Pid', '==', Pid);
     });
   }
@@ -987,6 +1028,59 @@ getTreatInfoRef(Pid) {
      return this.afs.collection('setting/admin/massages', ref => {
       return ref.where('status', '==', 'every_year');
     });
+  }
+
+getGroupTreatInfoForProgressRef(Pid) {
+  const key = Pid + '.progress';
+   return this.afs.collection<GroupTreatmentInfo>('groupTreatmentInfo', ref => {
+      return ref.where(`${Pid}.progress`, '>', 0);
+    });
+}
+
+  
+   updateGradeUp() {
+  //   const nextGrade = {};
+  //   const grades = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט'];
+  //   for (let i = 0; i < grades.length - 1 ; i++) {
+  //     const grade = grades[i];
+  //     nextGrade[grade + '-1'] = grades[i + 1] + '-1';
+  //     nextGrade[grade + '-2'] = grades[i + 1] + '-2';
+  //   }
+  //   nextGrade['ט-1'] = 'סים';
+  //   nextGrade['ט-2'] = 'סים';
+  //   nextGrade['סים'] = 'סים';
+  //   console.log(this.allPatientList);
+  //   for (const pat of this.allPatientList) {
+  //    // console.log(pat);
+  //     pat.grade = nextGrade[pat.graed];
+  //     console.log('uoddated');
+  //     console.log(pat);
+  //     // this.allPatientsRef.doc(pat.id).update({grade: nextGrade[pat.graed]});
+  //   }
+   }
+
+  async updateGroupPatsForTherapist() {
+    console.log('group');
+   const groups = await this.DB.collection('groups').get();
+   for (const group of groups.docs) {
+const code = group.data().groupCode;
+const Tid = group.data().Tid;
+    console.log('group  5555555');
+
+     const pats = await this.DB.collection('patientInGroup').where('groupCode', '==', code).get();
+     for (const pat of pats.docs) {
+this.addAprovedGroupPatForTherapist(Tid, code, pat.data().Pid);
+console.log(Tid + '--' +  code + '--' +  pat.data().Pid);
+     }
+
+   }
+  }
+
+  async updateDocIdForAdminMassage() {
+   const M = await this.DB.collection('setting').doc('admin').collection('massages').get()
+   for(const mass of M.docs) {
+     this.updateAdminMassage(mass.id, mass.data());
+   }
   }
   
 }

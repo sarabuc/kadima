@@ -38,7 +38,7 @@ export class TherapistCardComponent implements OnInit {
     this.readData = true;
     const TDoc = this.db.allTherapistsRef.doc<Therapist>('' + this.Tid).valueChanges().subscribe(T => {
       this.thera = T;
-     // console.log(T);
+      // console.log(T);
       this.readData = false;
     });
 

@@ -34,18 +34,27 @@ export const getMipuysForPatient = functions.https.onCall(async (data, context) 
             // mipuyDetails['sort'] = diffDetailsForPat;
            
             const filterdArray = await diffDetailsForPat.filter(diff => diffDetailsForPat.findIndex(D => D.data().Dfather === diff.data().code) < 0);
-         //   mipuyDetails['filtered'] = filterdArray;
+           // mipuyDetails['filtered'] = filterdArray;
             for (const diff of filterdArray) {
-                const fathers = diff.data().allFathers.split('*');
-                if(!fathers[1]) {
-                    console.log('error');
-                    continue;
+                if(diff.data().allFathers === 'second') {
+                    if (!mipuyDetails[diff.data().code]) {
+                        mipuyDetails[diff.data().code] = [];
+                    }
+                    mipuyDetails[diff.data().code].push(diff.data().code);
+
+                } else {
+                    const fathers = diff.data().allFathers.split('*');
+                    if (!fathers[1]) {
+                        console.log('error father');
+                        continue;
+                    }
+                    if (!mipuyDetails[fathers[1]]) {
+                        mipuyDetails[fathers[1]] = [];
+                    }
+                    mipuyDetails[fathers[1]].push(diff.data().code);
+
                 }
-                if (!mipuyDetails[fathers[1]]) {
-                    mipuyDetails[fathers[1]] = [];
-                }
-                mipuyDetails[fathers[1]].push(diff.data().code);
-            }
+             }
             allMipuysForPatient.push(mipuyDetails);
 
         }
@@ -68,23 +77,30 @@ export const getOneMipuysForPatient = functions.https.onCall(async (data, contex
             console.log('mipuy date' + mipuyD);
             const mipuyDetails: { [k: string]: any } = {};
             mipuyDetails['mipuyDate'] = mipuyD;
-            const diffiForPatient = await db.collection('patientDifficults').where('Pid', '==', Pid).where('mipuyDate', '==', mipuyD).where('status', '==', 'yes').get();
-            const diffDetailsForPat = await allDiffi.docs.filter(D => diffiForPatient.docs.findIndex(D_P => D_P.data().Dcode === D.data().code) > -1);
-           
 
-            const filterdArray = await diffDetailsForPat.filter(diff => diffDetailsForPat.findIndex(D => D.data().Dfather === diff.data().code) < 0);
-            for (const diff of filterdArray) {
+        const diffiForPatient = await db.collection('patientDifficults').where('Pid', '==', Pid).where('mipuyDate', '==', mipuyD).where('status', '==', 'yes').get();
+        const diffDetailsForPat = await allDiffi.docs.filter(D => diffiForPatient.docs.findIndex(D_P => D_P.data().Dcode === D.data().code) > -1);
+        const filterdArray = await diffDetailsForPat.filter(diff => diffDetailsForPat.findIndex(D => D.data().Dfather === diff.data().code) < 0);
+        for (const diff of filterdArray) {
+            if (diff.data().allFathers === 'second') {
+                if (!mipuyDetails[diff.data().code]) {
+                    mipuyDetails[diff.data().code] = [];
+                }
+                mipuyDetails[diff.data().code].push(diff.data().code);
+
+            } else {
                 const fathers = diff.data().allFathers.split('*');
                 if (!fathers[1]) {
-                    console.log('error');
+                    console.log('error father');
                     continue;
                 }
                 if (!mipuyDetails[fathers[1]]) {
                     mipuyDetails[fathers[1]] = [];
                 }
                 mipuyDetails[fathers[1]].push(diff.data().code);
-            }
 
+            }
+        }
         
         return mipuyDetails;
     } catch (err) {

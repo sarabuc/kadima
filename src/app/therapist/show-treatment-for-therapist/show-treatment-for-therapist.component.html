@@ -22,7 +22,8 @@
 
         <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput class="form-item white-text" type="text" name="kind" placeholder=" סנן לפי סוג טיפול" [(ngModel)]="kind" [matAutocomplete]="autoKind">
+                <input matInput class="form-item white-text" type="text" name="kind" placeholder=" סנן לפי סוג טיפול" [(ngModel)]="kind"
+                    [matAutocomplete]="autoKind">
 
                 <mat-autocomplete #autoKind="matAutocomplete">
                     <mat-option *ngFor="let treat of treatments" [value]="treat.kind">
@@ -35,7 +36,8 @@
 
         <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput class="form-item white-text" type="text" name="treatDate" placeholder=" סנן לפי תאריך" [(ngModel)]="treatDate" [matAutocomplete]="autoDate">
+                <input matInput class="form-item white-text" type="text" name="treatDate" placeholder=" סנן לפי תאריך" [(ngModel)]="treatDate"
+                    [matAutocomplete]="autoDate">
 
                 <mat-autocomplete #autoDate="matAutocomplete">
                     <mat-option *ngFor="let treat of treatments" [value]="treat.treatDate.toDate()| date: 'dd/MM/yyyy'">

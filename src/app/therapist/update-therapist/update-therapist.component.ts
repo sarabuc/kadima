@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./update-therapist.component.scss']
 })
 export class UpdateTherapistComponent implements OnInit {
-   Tid: string;
+  Tid: string;
   @Input() th: Therapist; /*= {
     id: '',
     firstName: '',
@@ -31,9 +31,9 @@ export class UpdateTherapistComponent implements OnInit {
   strFreeTime: string;*/
   showMoreOptions = false;
   Tstatus = 'update';
-  
+
   constructor(public sd: ShareDataService, public db: DbService, private router: Router) {
-    
+
   }
 
   ngOnInit() {
@@ -46,11 +46,11 @@ export class UpdateTherapistComponent implements OnInit {
     // init
     console.log(this.th);
     this.Tid = this.th.id;
-   // this.getTherapistByID(this.Tid);
+    // this.getTherapistByID(this.Tid);
   }
 
   cleanForm() {
-    
+
     this.th.firstName = '';
     this.th.lastName = '';
     this.th.mail = '';
@@ -62,16 +62,16 @@ export class UpdateTherapistComponent implements OnInit {
   }
   updateTherapist() {
     this.db.updateTherapist(this.th);
-   this.sd.activeTabIndex = 0;
+    this.sd.activeTabIndex = 0;
   }
 
   getTherapistByID(id) {
-this.db.isBusy = true;
-this.db.allTherapistsRef.doc<Therapist>('' + id).valueChanges().subscribe(therapist => {
-this.th = therapist;
-this.db.isBusy = false;
-console.log(this.th);
-});
+    this.db.isBusy = true;
+    this.db.allTherapistsRef.doc<Therapist>('' + id).valueChanges().subscribe(therapist => {
+      this.th = therapist;
+      this.db.isBusy = false;
+      console.log(this.th);
+    });
   }
 
 }

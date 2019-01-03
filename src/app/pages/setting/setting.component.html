@@ -1,194 +1,220 @@
-<div class="card  mx-2 my-2 px-3 py-3 " >
+<div class="card  mx-2 my-2 px-3 py-3 ">
 
     <h3 class="purple-text h3 mt-2 mb-2">הגדרות מנהל</h3>
     <mat-tab-group class="demo-tab-group" mat-stretch-tabs dynamicHeight [(selectedIndedivx)]="sd.activeTabIndex">
         <mat-tab label="רשימת משתמשים ">
-                    <div class="card mt-1 mr-3 ml-3 px-4 py-3 " style="" >
-                        <h3 > משתמשים במערכת</h3>
-                           
-                        <p-dataView #dv [value]="allUsers" [paginator]="true" [rows]="20" paginatorPosition="both" filterBy="name"
-                            [sortField]="sortField" [sortOrder]="sortOrder">
-                            <p-header>
-                                <div class="ui-helper-clearfix" dir="ltr">
-                                    <div class="ui-g">
-                                        <div class="ui-g-12 ui-md-5">
-                                            <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder=" מיון לפי" (onChange)="onSortChange($event)" [autoWidth]="false" [style]="{'min-width':'15em'}"></p-dropdown>
-                                        </div>
-                                        <div class="ui-g-6 ui-md-4 filter-container">
-                                            <div style="position:relative">
-                                                <input type="search" pInputText placeholder="חיפוש לפי שם" (keyup)="dv.filter($event.target.value)" style="text-align: right; padding-right: 0.1rem">
-                                            </div>
-                                        </div>
-                                        <div class="ui-g-6 ui-md-3" style="text-align:right">
-                                            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-                                        </div>
+            <div class="card mt-1 mr-3 ml-3 px-4 py-3 " style="">
+                <h3> משתמשים במערכת</h3>
+
+                <p-dataView #dv [value]="allUsers" [paginator]="true" [rows]="20" paginatorPosition="both" filterBy="name" [sortField]="sortField"
+                    [sortOrder]="sortOrder">
+                    <p-header>
+                        <div class="ui-helper-clearfix" dir="ltr">
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-5">
+                                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder=" מיון לפי" (onChange)="onSortChange($event)" [autoWidth]="false"
+                                        [style]="{'min-width':'15em'}"></p-dropdown>
+                                </div>
+                                <div class="ui-g-6 ui-md-4 filter-container">
+                                    <div style="position:relative">
+                                        <input type="search" pInputText placeholder="חיפוש לפי שם" (keyup)="dv.filter($event.target.value)" style="text-align: right; padding-right: 0.1rem">
                                     </div>
                                 </div>
-                            </p-header>
-                            <ng-template let-user pTemplate="listItem">
-                                <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-                                    <div class="ui-g-12 ui-md-2" style="text-align:center">
-                                    <i class="fa fa-user fa-4x mt-5 purple-text"></i>
-                                    </div>
-                                    <div class="ui-g-12 ui-md-8 car-details">
-                                        <div class="ui-g text-right">
-                                            <div class="ui-g-6 ui-sm-6"><strong>שם </strong></div>
-                                            <div class="ui-g-6 ui-sm-6"><b>{{user.name}}</b></div>
-
-                                            <div class="ui-g-6 ui-sm-6">שם משתמש</div>
-                                            <div class="ui-g-6 ui-sm-6"><b>{{user.userName}}</b></div>
-
-                                            <div class="ui-g-6 ui-sm-6">כתובת מייל </div>
-                                            <div class="ui-g-6 ui-sm-6"><b>{{user.mail}}</b></div>
-
-                                            <div class="ui-g-6 ui-sm-6">סיסמא  </div>
-                                            <div class="ui-g-6 ui-sm-6"><b>אין אפשרות לצפות בסיסמא</b></div>
-
-                                        
-                                        </div>
-                                    </div>
-                                    <div class="ui-g-12 ui-md-2 search-icon pt-5">
-                                    
-                                    </div>
+                                <div class="ui-g-6 ui-md-3" style="text-align:right">
+                                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
                                 </div>
-                            </ng-template>
-                            <div  class="row d-flex justify-content-around">
-                                <ng-template let-user pTemplate="gridItem">
-                                
-                                    <div class="col-lg-3 col-md-6 col-sm-12" style="padding:.5em">
-                                        <p-panel [header]="user.name" [style]="{'text-align':'center'}">
-                                            <i class="fa fa-user fa-4x mt-4 purple-text"></i>
-                                            <div class="car-detail">
-                                           
-                                            כתובת מייל:
-                                            {{user.mail}}</div>
-                                            <hr class="ui-widget-content" style="border-top:0">
-                                            
-                                        </p-panel>  
-                                    </div>
-                                
-                                </ng-template>
                             </div>
-                        </p-dataView>
+                        </div>
+                    </p-header>
+                    <ng-template let-user pTemplate="listItem">
+                        <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+                            <div class="ui-g-12 ui-md-2" style="text-align:center">
+                                <i class="fa fa-user fa-4x mt-5 purple-text"></i>
+                            </div>
+                            <div class="ui-g-12 ui-md-8 car-details">
+                                <div class="ui-g text-right">
+                                    <div class="ui-g-6 ui-sm-6">
+                                        <strong>שם </strong>
+                                    </div>
+                                    <div class="ui-g-6 ui-sm-6">
+                                        <b>{{user.name}}</b>
+                                    </div>
+
+                                    <div class="ui-g-6 ui-sm-6">
+                                        <strong>מספר זהות </strong>
+                                    </div>
+                                    <div class="ui-g-6 ui-sm-6">
+                                        <b>{{user.id}}</b>
+                                    </div>
+
+                                    <div class="ui-g-6 ui-sm-6">שם משתמש</div>
+                                    <div class="ui-g-6 ui-sm-6">
+                                        <b>{{user.userName}}</b>
+                                    </div>
+
+                                    <div class="ui-g-6 ui-sm-6">כתובת מייל </div>
+                                    <div class="ui-g-6 ui-sm-6">
+                                        <b>{{user.mail}}</b>
+                                    </div>
+
+                                    <div class="ui-g-6 ui-sm-6">סיסמא </div>
+                                    <div class="ui-g-6 ui-sm-6">
+                                        <b>אין אפשרות לצפות בסיסמא</b>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-2 search-icon pt-5">
+
+                            </div>
+                        </div>
+                    </ng-template>
+                    <div class="row d-flex justify-content-around">
+                        <ng-template let-user pTemplate="gridItem">
+
+                            <div class="col-lg-3 col-md-6 col-sm-12" style="padding:.5em">
+                                <p-panel [header]="user.name" [style]="{'text-align':'center'}">
+                                    <i class="fa fa-user fa-4x mt-4 purple-text"></i>
+                                    <div class="car-detail">
+
+                                        כתובת מייל: {{user.mail}}
+                                    </div>
+                                    <hr class="ui-widget-content" style="border-top:0">
+
+                                </p-panel>
+                            </div>
+
+                        </ng-template>
                     </div>
+                </p-dataView>
+            </div>
 
         </mat-tab>
-        
+
 
         <mat-tab label=" משתמש חדש">
-           
-                        <div class="row w-100 mb-3 mx-2">
 
-                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
-                                <div class="input-group-append">
-                                    <span class="input-group-text purple lighten-3 black-text" id="basic-addon12" style="width: 110px">שם </span>
-                                </div>
-                                <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס שם  "
-                                [(ngModel)]="newUser.name" >
-                            
-                            </div>
-                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
-                                <div class="input-group-append">
-                                    <span class="input-group-text purple lighten-3 black-text" style="width: 110px" >שם משתמש </span>
-                                </div>
-                                <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס שם משתמש  "
-                                [(ngModel)]="newUser.userName" >
-                            
-                            </div>
-                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+            <div class="row w-100 mb-3 mx-2">
+
+                <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                    <div class="input-group-append">
+                        <span class="input-group-text purple lighten-3 black-text" id="basic-addon12" style="width: 110px">שם </span>
+                    </div>
+                    <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס שם  " [(ngModel)]="newUser.name">
+
+                </div>
+                <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                    <div class="input-group-append">
+                        <span class="input-group-text purple lighten-3 black-text" style="width: 110px">שם משתמש - כתובת מייל</span>
+                    </div>
+                    <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס שם משתמש  " [(ngModel)]="newUser.userName">
+
+                </div>
+                <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                    <div class="input-group-append">
+                        <span class="input-group-text purple lighten-3 black-text" style="width: 110px"> מספר זהות </span>
+                    </div>
+                    <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס מ.ז מטפל  " [(ngModel)]="newUser.id">
+
+                </div>
+                <!--<div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
                                 <div class="input-group-append">
                                     <span class="input-group-text purple lighten-3 black-text" style="width: 110px"> מייל </span>
                                 </div>
                                 <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס מייל  "
                                 [(ngModel)]="newUser.mail" >
                             
-                            </div>
-                             <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
-                                <div class="input-group-append">
-                                    <span class="input-group-text purple lighten-3 black-text" style="width: 110px">סיסמא</span>
-                                </div>
-                                <input type="password" class="form-control mt-0 purple-border px-2" placeholder="הכנס סיסמת משתמש  "
-                                [(ngModel)]="newUser.password" >
-                            
-                            </div>
-                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
-                                <div class="input-group-append">
-                                    <span class="input-group-text purple lighten-3 black-text" style="width: 110px">חזור על סיסמא</span>
-                                </div>
-                                <input type="password" class="form-control mt-0 purple-border px-2" placeholder="הכנס שוב סוסמת משתמש  "
-                                [(ngModel)]="newUser.resentPass" >
-                            
-                            </div>
+                            </div>-->
+                <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                    <div class="input-group-append">
+                        <span class="input-group-text purple lighten-3 black-text" style="width: 110px">סיסמא</span>
+                    </div>
+                    <input type="password" class="form-control mt-0 purple-border px-2" placeholder="הכנס סיסמת משתמש  " [(ngModel)]="newUser.password">
 
-                           <hr class="ui-widget-content" style="border-top:0">
-                            <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="saveNewUser()" mdbRippleRadius>שמור </button>
+                </div>
+                <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                    <div class="input-group-append">
+                        <span class="input-group-text purple lighten-3 black-text" style="width: 110px">חזור על סיסמא</span>
+                    </div>
+                    <input type="password" class="form-control mt-0 purple-border px-2" placeholder="הכנס שוב סוסמת משתמש  " [(ngModel)]="newUser.resentPass">
+
+                </div>
+
+                <hr class="ui-widget-content" style="border-top:0">
+                <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="saveNewUser()" mdbRippleRadius>שמור </button>
 
 
-                        </div>
+            </div>
         </mat-tab>
         <mat-tab label="תזכורות והתרעות למנהל">
             <div class="list-group  py-3 mb-3  col-12">
-                <div class="col-12 my-2" style="text-align-right"> <h3 class="purple-text mb-1 yellow" *ngIf="allList && allList.length < 1">אין הודעות  </h3></div>
+                <div class="col-12 my-2" style="text-align-right">
+                    <h3 class="purple-text mb-1 yellow" *ngIf="allMsgs && allMsgs.length < 1">אין הודעות </h3>
+                </div>
 
                 <div class="list-group-item mb-1 mx-1 row" *ngFor="let mail of allMsgs">
-                        <div class="col-md-2 col-sm-4" > 
-                        <i class="fa fa-envelope purple-text mx-1 fa-2x"></i> 
+                    <div class="col-md-2 col-sm-4">
+                        <i class="fa fa-envelope purple-text mx-1 fa-2x"></i>
                         <i class="fa fa-trash purple-text mx-1 fa-2x link" (click)="delete.show(); massageToDelete = mail"></i>
-                        </div> 
-                        <div class="col-md-7 col-sm-8" style="text-align-right"><strong>  {{mail.massage}} </strong></div>
-                        <div class="col-md-3 col-sm-4" style="text-align-right"><strong>{{mail.time.toDate() | date: 'dd/MM/yyyy hh:mm'}} </strong></div>
-                        <div class="col-md-12 col-sm-8" *ngIf="mail.comments && mail.comments!=''" style="text-align-right">{{mail.comments}}</div>
+                    </div>
+                    <div class="col-md-7 col-sm-8" style="text-align-right">
+                        <strong> {{mail.massage}} </strong>
+                    </div>
+                    <div class="col-md-3 col-sm-4" style="text-align-right">
+                        <strong>{{mail.time.toDate() | date: 'dd/MM/yyyy hh:mm'}} </strong>
+                    </div>
+                    <div class="col-md-12 col-sm-8" *ngIf="mail.comments && mail.comments!=''" style="text-align-right">{{mail.comments}}</div>
                 </div>
             </div>
         </mat-tab>
         <mat-tab label="תזכורת חדשה">
-                        <div class="row w-100 mb-3 mx-2">
-                                <h4 class="purple-text">יצירת הודעה שנתית חדשה</h4>
-                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
-                                <div class="input-group-append">
-                                    <span class="input-group-text purple lighten-3 black-text" style="width: 150px">תוכן הודעה </span>
-                                </div>
-                                <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס תוכן הודעה  "
-                                [(ngModel)]="newMsg.massage" >
-                            
-                            </div>
-                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
-                                <div class="input-group-append">
-                                    <span class="input-group-text purple lighten-3 black-text" style="width: 150px">תאריך  </span>
-                                </div>
-                                <input  #date type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס תאריך שנתי להודעה   "
-                                [(ngModel)]="newMsg.date" >
-                            <!--pInputText [pKeyFilter]="sd.dateRegex"-->
-                            </div>
-                            <p-calendar [(ngModel)]="newMsg.date"  [locale]="sd.hebrew" dateFormat="dd.mm.yy"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"    [inline]="true"></p-calendar>
+            <div class="row w-100 mb-3 mx-2">
+                <h4 class="purple-text">יצירת הודעה שנתית חדשה</h4>
+                <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                    <div class="input-group-append">
+                        <span class="input-group-text purple lighten-3 black-text" style="width: 150px">תוכן הודעה </span>
+                    </div>
+                    <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס תוכן הודעה  " [(ngModel)]="newMsg.massage">
 
-                            
-                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
-                                <div class="input-group-append">
-                                    <span class="input-group-text purple lighten-3 black-text" style="width: 150px">שעה</span>
-                                </div>
-                                <input  #hour type="text" class="form-control mt-0 purple-border px-2" placeholder=" הכנס שעה -שעות עגולות בלבד   "
-                                [(ngModel)]="newMsg.hour" >
-                            
-                            </div> <!--pInputText [pKeyFilter]="sd.hourRegex"-->
-                            <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
-                                <div class="input-group-append">
-                                    <span class="input-group-text purple lighten-3 black-text" style="width: 150px"> הערות</span>
-                                </div>
-                                <input  type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס הערות   "
-                                [(ngModel)]="newMsg.comment" >
-                            
-                            </div>
-                            <hr class="ui-widget-content" style="border-top:0">
-                            <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="saveNewMsg(date, hour)" mdbRippleRadius>שמור </button>
+                </div>
+                <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                    <div class="input-group-append">
+                        <span class="input-group-text purple lighten-3 black-text" style="width: 150px">תאריך </span>
+                    </div>
+                    <input #date type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס תאריך שנתי להודעה בתבנית dd.mm.yyyy   "
+                        [(ngModel)]="newMsg.date">
+                    <!--pInputText [pKeyFilter]="sd.dateRegex"-->
+                </div>
+                <p-calendar [(ngModel)]="newMsg.date" [locale]="sd.hebrew" dateFormat="dd.mm.yy" [monthNavigator]="true" [yearNavigator]="true"
+                    yearRange="2000:2030" [inline]="true"></p-calendar>
 
-                        </div>
+
+                <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                    <div class="input-group-append">
+                        <span class="input-group-text purple lighten-3 black-text" style="width: 150px">שעה</span>
+                    </div>
+                    <input #hour type="text" class="form-control mt-0 purple-border px-2" placeholder=" הכנס שעה -שעות עגולות בלבד   " [(ngModel)]="newMsg.hour">
+
+                </div>
+                <!--pInputText [pKeyFilter]="sd.hourRegex"-->
+                <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
+                    <div class="input-group-append">
+                        <span class="input-group-text purple lighten-3 black-text" style="width: 150px"> הערות</span>
+                    </div>
+                    <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס הערות   " [(ngModel)]="newMsg.comment">
+
+                </div>
+                <hr class="ui-widget-content" style="border-top:0">
+                <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="saveNewMsg(date, hour)" mdbRippleRadius>שמור </button>
+
+            </div>
         </mat-tab>
         <mat-tab label="הגדרות שונות">
-            
+
         </mat-tab>
 
-        
+
     </mat-tab-group>
 </div>
 
@@ -206,13 +232,14 @@
 
 
 
-<div mdbModal #delete="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div mdbModal #delete="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-notify modal-danger " role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <p class="heading lead mr-2">האם אתה בטוח ?</p>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="delete.hide()">
-                <span aria-hidden="true" class="white-text">×</span>
+                    <span aria-hidden="true" class="white-text">×</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -230,5 +257,3 @@
         </div>
     </div>
 </div>
-
-

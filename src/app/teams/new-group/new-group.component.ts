@@ -14,8 +14,8 @@ export class NewGroupComponent implements OnInit {
   GROUP: TreatGroup; 
 
   newTFA = {
-    id:  {id: '' },
-    code: {code: ''}
+    id:  null,
+    code: null
   };
 
 
@@ -88,7 +88,7 @@ onRowSelect(event) {
   getTherapistForArea() {
     this.db.isBusy = true;
     this.db.getTherapistByAreaCodeRef(this.GROUP.area).valueChanges().subscribe(thera => {
-      this.therapists = thera;
+      this.therapists = this.db.allTherapistList.filter(T => thera.findIndex(th => T.id === th.id) > -1);
       this.showTherapistForArea = true;
       this.GROUP.Tid = null;
       this.db.isBusy = false;
@@ -97,44 +97,37 @@ onRowSelect(event) {
 
 // copy to functions
   async getAllstudesHaveDiffucult(area, grades: string[]) {
-   // console.log('in get pat');
    
     const patTable: any[] = [];
     const db = firebase.firestore();
     const patForDiffi = await db.collection('patientDifficults').where('Dcode', '==', area ).get();
-    // console.log(patForDiffi.docs);
     let allClassesPats = [];
     for (const grade of grades) {
-     // console.log(grade);
 
-      const class1 = await db.collection('patients').where('haveDificult', '==', 'yes').where('grade', '==', grade).get();
-     // console.log(class1);
-
-      allClassesPats = allClassesPats.concat(class1.docs);
-     // console.log(allClassesPats);
+      const class1 = await this.db.allPatientList.filter(P => P.grade === grade && 
+                                                            patForDiffi.docs.findIndex(P_D => P_D.data().Pid === P.id) > -1);
+      allClassesPats = allClassesPats.concat(class1);
 
     }
     
     
     for (const patC of allClassesPats) {
-     // console.log(patC.data());
-
-      const patDi = await patForDiffi.docs.find(patD => ((patD as any).data().Pid === (patC as any).data().id));
-      if (patDi) {
+      const patDi = patForDiffi.docs.find(P => P.data().Pid === patC.id);
+     
         const ob = {
-          Pid: patC.data().id,
-          firstName: patC.data().firstName,
-          lastName: patC.data().lastName,
-          grade: patC.data().grade,
+          Pid: patC.id,
+          firstName: patC.firstName,
+          lastName: patC.lastName,
+          grade: patC.grade,
           mipuyDate: (patDi as any).data().mipuyDate,
           degreeOfDiffi: (patDi as any).data().degreeOfDiffi ? (patDi as any).data().degreeOfDiffi : 'לא הוכנס',
           comment: '',
           addToGroup: true
         };
         patTable.push(ob);
-      //  console.log(patTable);
+       console.log(patTable);
 
-      }
+      
     }
 
     return patTable;
@@ -143,23 +136,27 @@ onRowSelect(event) {
 
 addAreaForTherapist() {
 
-this.newTFA.id.id = this.GROUP.Tid;
+this.newTFA.id = this.GROUP.Tid;
 this.newTFA.code = null;
 }
 
 
 addTherapistForArea() {
-  this.newTFA.code.code = this.GROUP.area;
+  this.newTFA.code = this.GROUP.area;
   this.newTFA.id = null;
 }
 
 
   async searchTh(event) {
+    console.log(event);
+    console.log(this.thForSearch);
     this.thForSearch = await this.db.allTherapistList.filter(item => 
       (item.firstName + ' ' + item.lastName).toLowerCase().includes(event.query.toLowerCase()));
   }
 
   async searchAr(event) {
+    console.log(event);
+
     this.mainDiffi = await this.db.secondCategories.filter(item => item.code.toLowerCase().includes(event.query.toLowerCase()));
   }
   async saveNewGroup(option) {
@@ -179,10 +176,8 @@ try {
     // add group datails
     this.GROUP.insertBy = user;
     this.GROUP.insertTime = time;
-  console.log('GET HERE 1');
 
     await this.db.addNewGroup(this.GROUP);
-  console.log('GET HERE 2');
 
     // add patients in group
     for (const pat of this.selectedPatForGroup) {
@@ -196,7 +191,7 @@ try {
       };
      await this.db.addPatToGroup(ob);
       console.log('GET HERE 3');
-
+      this.db.addAprovedGroupPatForTherapist(pat.Pid, this.GROUP.groupCode, this.GROUP.Tid);
     }
     this.db.isBusy = false;
     this.sd.createAlert('success', 'קבוצה נוספה בהצלחה', '');
@@ -216,7 +211,8 @@ try {
 
 
   saveNewTFA(option, dialog) {
-    if ((!this.newTFA.id.id) || (!this.newTFA.code.code)) {
+    console.log(this.newTFA);
+    if ((!this.newTFA.id) || (!this.newTFA.code)) {
      this.sd.createAlert('error', 'חסרים פרטים הכרחיים', '');
      return;
     }
@@ -228,8 +224,8 @@ try {
     };
     console.log(newTFA);
     this.db.addTherapistForArea(newTFA);
-    this.newTFA.id.id = '';
-    this.newTFA.code.code = '';
+    this.newTFA.id = null;
+    this.newTFA.code = null;
     
      if (option === 'close') {
       dialog.hide();
@@ -246,7 +242,10 @@ try {
       startDate: this.sd.convertDateToStringDD_MM_YYYY(this.newDate),
       aprovedHours: 0,
       groupName: this.sd.convertDateToStringDD_MM_YYYY(this.newDate),  // entered by user
-      groupCode: '' + this.newDate
+      groupCode: '' + this.newDate,
+      startTime: '00:00',
+      endTime: '00:00', 
+      hours: '0'
     };
     this.showAreaForTherapist = false;
     this.showClasses = false;

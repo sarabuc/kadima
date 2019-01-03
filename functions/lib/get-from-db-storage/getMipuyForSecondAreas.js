@@ -41,17 +41,25 @@ exports.getMipuysForPatient = functions.https.onCall((data, context) => __awaite
             // const fathersWasEntered = [];
             // mipuyDetails['sort'] = diffDetailsForPat;
             const filterdArray = yield diffDetailsForPat.filter(diff => diffDetailsForPat.findIndex(D => D.data().Dfather === diff.data().code) < 0);
-            //   mipuyDetails['filtered'] = filterdArray;
+            // mipuyDetails['filtered'] = filterdArray;
             for (const diff of filterdArray) {
-                const fathers = diff.data().allFathers.split('*');
-                if (!fathers[1]) {
-                    console.log('error');
-                    continue;
+                if (diff.data().allFathers === 'second') {
+                    if (!mipuyDetails[diff.data().code]) {
+                        mipuyDetails[diff.data().code] = [];
+                    }
+                    mipuyDetails[diff.data().code].push(diff.data().code);
                 }
-                if (!mipuyDetails[fathers[1]]) {
-                    mipuyDetails[fathers[1]] = [];
+                else {
+                    const fathers = diff.data().allFathers.split('*');
+                    if (!fathers[1]) {
+                        console.log('error father');
+                        continue;
+                    }
+                    if (!mipuyDetails[fathers[1]]) {
+                        mipuyDetails[fathers[1]] = [];
+                    }
+                    mipuyDetails[fathers[1]].push(diff.data().code);
                 }
-                mipuyDetails[fathers[1]].push(diff.data().code);
             }
             allMipuysForPatient.push(mipuyDetails);
         }
@@ -74,15 +82,23 @@ exports.getOneMipuysForPatient = functions.https.onCall((data, context) => __awa
         const diffDetailsForPat = yield allDiffi.docs.filter(D => diffiForPatient.docs.findIndex(D_P => D_P.data().Dcode === D.data().code) > -1);
         const filterdArray = yield diffDetailsForPat.filter(diff => diffDetailsForPat.findIndex(D => D.data().Dfather === diff.data().code) < 0);
         for (const diff of filterdArray) {
-            const fathers = diff.data().allFathers.split('*');
-            if (!fathers[1]) {
-                console.log('error');
-                continue;
+            if (diff.data().allFathers === 'second') {
+                if (!mipuyDetails[diff.data().code]) {
+                    mipuyDetails[diff.data().code] = [];
+                }
+                mipuyDetails[diff.data().code].push(diff.data().code);
             }
-            if (!mipuyDetails[fathers[1]]) {
-                mipuyDetails[fathers[1]] = [];
+            else {
+                const fathers = diff.data().allFathers.split('*');
+                if (!fathers[1]) {
+                    console.log('error father');
+                    continue;
+                }
+                if (!mipuyDetails[fathers[1]]) {
+                    mipuyDetails[fathers[1]] = [];
+                }
+                mipuyDetails[fathers[1]].push(diff.data().code);
             }
-            mipuyDetails[fathers[1]].push(diff.data().code);
         }
         return mipuyDetails;
     }

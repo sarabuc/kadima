@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import {Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
 import * as hebrewDate from 'hebrew-date';
 // const hebrewDate = require('hebrew-date');
@@ -16,44 +16,43 @@ const httpOptions = {
 
 @Injectable()
 export class ShareDataService {
+  useML = true;
   dictionary;
   msgs = []; // for msgs
   alerts = []; // for  alerts
-  dateRegex: RegExp = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
-  timeRegex: RegExp = /^([0-1][0-9]|(2)[0-3])(:)([0-5][0-9])$/;  
-    hourRegex: RegExp = /^([0-1][0-9]|(2)[0-3])(:00)$/;  
-
-  // /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/;
+  dateRegex: RegExp = /^([0-2][0-9]|(3)[0-1])(.)(((0)[0-9])|((1)[0-2]))(.)\d{4}$/;
+  timeRegex: RegExp = /^([0-1][0-9]|(2)[0-3])(:)([0-5][0-9])$/;
+  hourRegex: RegExp = /^([0-1][0-9]|(2)[0-3])(:00)$/;
 
 
   // for free time
   TPstatusForTime: string; /*newP, newT, updateP, updateT */
 
-// for therapist and patient card
+  // for therapist and patient card
   activeTabIndex = 0;
-// const for enter free all the time - with '-' between hours and # betwwen days
+  // const for enter free all the time - with '-' between hours and # betwwen days
   FREE_ALL_TIME = '';
   daysWithoutFriday = 5;
   hours = 12;
   fridayHours = 4;
- public dergeeForTherapist = ['ללא דרגה', 'מורה בכיר', 'תואר ראשון', 'תואר שני'];
- public kindOfTherapist = ['מלמד', 'הורה', 'תרפיסט', 'מפקח', 'מנהל', 'פסיכולוג', 'פסיכיאטר', 'מורה מקדם',
-'מטפל רגשי', 'חונך', 'רופא משפחה', 'מומחה להתפתחות הילד', 'נוירולוג'];
- public treatmentArea = ['לימודי', 'התפתחותי', 'התנהגותי', 'מוטורי', 'תקשורתי'];
- public kupotCholim = ['ללא', 'מכבי', 'כללית', 'מאוחדת', 'לאומית'];
+  public dergeeForTherapist = ['ללא דרגה', 'מורה בכיר', 'תואר ראשון', 'תואר שני'];
+  public kindOfTherapist = ['מלמד', 'הורה', 'תרפיסט', 'מפקח', 'מנהל', 'פסיכולוג', 'פסיכיאטר', 'מורה מקדם',
+    'מטפל רגשי', 'חונך', 'רופא משפחה', 'מומחה להתפתחות הילד', 'נוירולוג'];
+  public treatmentArea = ['לימודי', 'התפתחותי', 'התנהגותי', 'מוטורי', 'תקשורתי'];
+  public kupotCholim = ['ללא', 'מכבי', 'כללית', 'מאוחדת', 'לאומית'];
   public FundingFactors = ['הורים', 'מוסד לימודי', 'קופת חולים', 'קופת צדקה', 'ידידות טורונטו', 'יד אליעזר',
-  'משרד החינוך שעות שילוב', 'משרד החינוך כיתת קידום', 'מחלקת רווחה', 'משרד הפריפריה', 'קרוב משפחה'];
-// public treatmentCategories;
- public hebrew = {
-  firstDayOfWeek: 0,
-  dayNames: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
-  dayNamesShort: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'שבת'],
-  dayNamesMin: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'שבת'],
-  monthNames: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
-  monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-  today: 'היום',
-  clear: 'נקה'
-};
+    'משרד החינוך שעות שילוב', 'משרד החינוך כיתת קידום', 'מחלקת רווחה', 'משרד הפריפריה', 'קרוב משפחה'];
+  // public treatmentCategories;
+  public hebrew = {
+    firstDayOfWeek: 0,
+    dayNames: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
+    dayNamesShort: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'שבת'],
+    dayNamesMin: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'שבת'],
+    monthNames: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
+    monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+    today: 'היום',
+    clear: 'נקה'
+  };
 
 
   hebrewDays_all = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח',
@@ -61,19 +60,19 @@ export class ShareDataService {
     'יא', 'יב', 'יג', 'יד', 'טו', 'טז', 'יז', 'יח', 'יט', 'כא', 'כב', 'כג', 'כד', 'כה', 'כו', 'כז', 'כח', 'כט'
   ];
   hebrewMonthes_all = ['תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר ב', 'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול',
-   'חשוון', 'סיוון', 'איר', 'אדר א', 'נסן', 'כסלו'];
+    'חשוון', 'סיוון', 'איר', 'אדר א', 'נסן', 'כסלו'];
   hebrewYear_all = ['תשעח', 'תשעט', 'תשע"ח', 'תשע"ט', 'תשפ', 'תש"פ', 'תשעז', 'תשע"ז'];
-  hebrewDays = [ 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח',
+  hebrewDays = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'י"א', 'י"ב', 'י"ג', 'י"ד', 'ט"ו', 'ט"ז', 'י"ז', 'י"ח',
     'י"ט', 'כ', 'כ"א', 'כ"ב', 'כ"ג', 'כ"ד', 'כ"ה', 'כ"ו', 'כ"ז', 'כ"ח', 'כ"ט', 'ל'];
-  hebrewMonthes = [ 'תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר ב', 'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'];
+  hebrewMonthes = ['תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר ב', 'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'];
   hebrewMonthesInEnglish = ['Tishrei', 'Cheshvan', 'Kislev', 'Tevet', 'Shvat', 'Adar1', 'Adar2',
-  'Nisan', 'Iyyar', 'Sivan', 'Tamuz', 'Av', 'Elul'];
+    'Nisan', 'Iyyar', 'Sivan', 'Tamuz', 'Av', 'Elul'];
   hebrewYear = ['תשעח', 'תשעט'];
   hebrewYearStartFrom = 5778; // תשע"ח
   classes = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט'];
   allClasses;
-public daysName = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
-public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30' ];
+  public daysName = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
+  public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30'];
 
 
   // FOR REPORTS
@@ -102,7 +101,7 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
   // END FOR MAILS
 
   constructor(/*private _alert: AlertsService*/ private router: Router,
-     private messageService: MessageService, public datepipe: DatePipe, 
+    private messageService: MessageService, public datepipe: DatePipe,
     private http: HttpClient) {
     this.convertHebrewToNormalDate(1, 2, 1);
     this.initFREE_ALL_TIME();
@@ -113,13 +112,13 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
 
   /****************************************************************** */
   /***************             alert             **************** */
-   public createAlert(type, message, tytle) {
-     this.alerts.push({ severity: type, summary: tytle, detail: message });
-     setTimeout(() => {
-       if (this.alerts[0]) {
-         this.alerts.splice(0, 1);
-       }
-  }  , 3000 );
+  public createAlert(type, message, tytle) {
+    this.alerts.push({ severity: type, summary: tytle, detail: message });
+    setTimeout(() => {
+      if (this.alerts[0]) {
+        this.alerts.splice(0, 1);
+      }
+    }, 3000);
   }
   public createMessage(type, message, tytle) {
     this.msgs.push({ severity: type, summary: tytle, detail: message });
@@ -133,14 +132,14 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
       this.FREE_ALL_TIME = this.FREE_ALL_TIME + '#';
     }
 
-   for (let j = 0; j < this.fridayHours; j++) {
+    for (let j = 0; j < this.fridayHours; j++) {
       this.FREE_ALL_TIME = this.FREE_ALL_TIME + '1-';
     }
   }
 
 
   parseTimeToStr(table: boolean[][]) {
-     let str = '';
+    let str = '';
     for (let i = 0; i < table.length - 1; i++) {
       for (let j = 0; j < table[i].length; j++) {
         if (table[i][j]) {
@@ -154,7 +153,7 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
 
     for (let j = 0; j < this.fridayHours; j++) {
       if (table[table.length - 1][j]) {
-       str = str + '1-';
+        str = str + '1-';
       } else {
         str = str + '0-';
       }
@@ -207,16 +206,16 @@ public hourInDayName = ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:
     }
 
   }
-convertDateToHebrewDate(date, month, year) {
-  const Hdate =  hebrewDate(+year, +month, +date);
+  convertDateToHebrewDate(date, month, year) {
+    const Hdate = hebrewDate(+year, +month, +date);
 
-  return this.getHebrewDate(Hdate.date) + ' ' + this.getHebrewMonth(Hdate.month) + ' ' + this.getHebrewYear(Hdate.year);
-  // [a.slice(0, position), b, a.slice(position)].join('');
-}
+    return this.getHebrewDate(Hdate.date) + ' ' + this.getHebrewMonth(Hdate.month) + ' ' + this.getHebrewYear(Hdate.year);
+    // [a.slice(0, position), b, a.slice(position)].join('');
+  }
 
- private getHebrewYear(year) {
-   const yearS = '' + year;
-   return this.getGimatryMeot(yearS[1]) + this.getGimatryAsarot(yearS[2]) + this.getGimatryYechidot(yearS[3]);
+  private getHebrewYear(year) {
+    const yearS = '' + year;
+    return this.getGimatryMeot(yearS[1]) + this.getGimatryAsarot(yearS[2]) + this.getGimatryYechidot(yearS[3]);
   }
   private getGimatryYechidot(num) {
     return ['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט'][num];
@@ -227,77 +226,77 @@ convertDateToHebrewDate(date, month, year) {
   private getGimatryMeot(num) {
     return ['', 'ק', 'ר', 'ש', 'ת', 'תק', 'תר', 'תש', 'תת', 'תתק', ''][num];
   }
- private getHebrewMonth(month) {
-   return this.hebrewMonthes[month - 1];
+  private getHebrewMonth(month) {
+    return this.hebrewMonthes[month - 1];
   }
-private  getHebrewDate(date) {
-  return this.hebrewDays[date - 1];
+  private getHebrewDate(date) {
+    return this.hebrewDays[date - 1];
   }
-public convertDateToString(date: Date) {
+  public convertDateToString(date: Date) {
 
- return this.datepipe.transform(date, 'dd-MM-yyyy');
-}
+    return this.datepipe.transform(date, 'dd-MM-yyyy');
+  }
   public convertDateToStringDD_MM_YYYY(date: Date) {
-  
-    return '' + this.getDateDay(date.getDate()) + '.' + (date.getMonth() + 1 ) + '.' + date.getFullYear();
+
+    return '' + this.getDateDay(date.getDate()) + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
   }
 
   private getDateDay(num: number) {
     if (num < 10) {
       return '0' + num;
-    } 
+    }
     return num;
   }
 
-public getCsvFile() {
-  const mipuyForPatient = firebase.functions().httpsCallable('im_ex');
-  mipuyForPatient({ text: '' }).then(res => {
-    console.log(res);
- if (res.data === 'success') {
-this.getAndDownloadFile('exe/patientData.json', 'data.json', 'dawn');
- }
+  public getCsvFile() {
+    const mipuyForPatient = firebase.functions().httpsCallable('im_ex');
+    mipuyForPatient({ text: '' }).then(res => {
+      console.log(res);
+      if (res.data === 'success') {
+        this.getAndDownloadFile('exe/patientData.json', 'data.json', 'dawn');
+      }
 
-  }).catch(err => {
-    console.log(err);
-  });
-}
+    }).catch(err => {
+      console.log(err);
+    });
+  }
 
 
-async deleteFile(filePath: string, fileName, planDocId, Pid) {
-  console.log(fileName);
-  // Create a reference to the file to delete
-  const desertRef = firebase.storage().ref(filePath);
+  async deleteFile(filePath: string, fileName, planDocId, Pid) {
+    console.log(fileName);
+    // Create a reference to the file to delete
+    const desertRef = firebase.storage().ref(filePath);
 
-  // Delete the file
-  desertRef.delete().then(async(res) => {
-    // File deleted successfully
-    // have delete from plans collection
-    // const object: any = {};
-   
-   // object[fileName] = firebase.firestore.FieldValue.delete();
-    const docRef = firebase.firestore().collection('patientDate').doc(Pid).collection('plans').doc(planDocId);
-    const tempD = await docRef.get();
-    const temp = tempD.data();
-    temp['' + fileName] = 'deleted';
-    console.log(temp);
-    docRef.update(temp).then(res2 => {
-     this.createAlert('success', 'קובץ נמחק בהצלחה', '');
-   });
-  //   const temp = await docRef.get();
-  //   console.log(temp.data());
-  // console.log(temp.data()[fileName]);
+    // Delete the file
+    desertRef.delete().then(async (res) => {
+      // File deleted successfully
+      // have delete from plans collection
+      // const object: any = {};
 
-  //   delete temp.data()[fileName];
-  //   console.log(temp.data();
-  //   docRef.set(temp.data());
-//     docRef.update({
-//     fileName: firebase.firestore.FieldValue.delete()
- });
-    
-  // }).catch(err => {
-  //   // Uh-oh, an error occurred!
-  // });
-}
+      // object[fileName] = firebase.firestore.FieldValue.delete();
+      const docRef = firebase.firestore().collection('patientDate').doc(Pid).collection('plans').doc(planDocId);
+      const tempD = await docRef.get();
+      const temp = tempD.data();
+      temp['' + fileName] = 'deleted';
+      console.log(temp);
+      docRef.update(temp).then(res2 => {
+        this.createAlert('success', 'קובץ נמחק בהצלחה', '');
+      });
+      //   const temp = await docRef.get();
+      //   console.log(temp.data());
+      // console.log(temp.data()[fileName]);
+
+      //   delete temp.data()[fileName];
+      //   console.log(temp.data();
+      //   docRef.set(temp.data());
+      //     docRef.update({
+      //     fileName: firebase.firestore.FieldValue.delete()
+    });
+
+    // }).catch(err => {
+    //   // Uh-oh, an error occurred!
+    // });
+  }
 
   getAndDownloadFile(path, fileName, option) {
 
@@ -309,14 +308,14 @@ async deleteFile(filePath: string, fileName, planDocId, Pid) {
       console.log(url);
       if (option === 'open') {
         console.log('open');
-       const a = document.createElement('a');
+        const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-       // a.target = '_blank'
+        // a.target = '_blank'
         a.href = url;
         a.download = fileName;
         a.click();
-         //  window.open(url, '_blank');
+        //  window.open(url, '_blank');
       } else if (option === 'dawn') {
         const xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
@@ -328,7 +327,7 @@ async deleteFile(filePath: string, fileName, planDocId, Pid) {
         xhr.open('GET', url);
         xhr.send();
       }
-     
+
     }).catch(error => {
       console.log(error);
       switch (error.code) {
@@ -352,12 +351,12 @@ async deleteFile(filePath: string, fileName, planDocId, Pid) {
   }
 
 
-   converrSecondsToDateTime(secs) {
+  converrSecondsToDateTime(secs) {
     const t = new Date(); // Epoch
-     t.setTime(secs * 1000);
+    t.setTime(secs * 1000);
     return t;
-}
-// getFile() {
+  }
+  // getFile() {
 
   //   const storageRef = firebase.storage();
   //     // Create a reference to the file we want to download
@@ -399,15 +398,15 @@ async deleteFile(filePath: string, fileName, planDocId, Pid) {
 
 
 
-public async convertHebrewToNormalDate(day: number, month: number, year: number): Promise<any> {
-  // https://www.hebcal.com/converter/?cfg=json&hy=5749&hm=Kislev&hd=25&h2g=1
+  public async convertHebrewToNormalDate(day: number, month: number, year: number): Promise<any> {
+    // https://www.hebcal.com/converter/?cfg=json&hy=5749&hm=Kislev&hd=25&h2g=1
 
-  const Tyear = this.hebrewYearStartFrom + year;
-  const Tmonth = this.hebrewMonthesInEnglish[month];
-  const url = 'https://www.hebcal.com/converter/?cfg=json&hy=' + Tyear + '&hm=' + Tmonth + '&hd=' + day + '&h2g=1';
-  
-  const Dres = await this.http.get(url);
-  return Dres; /*
+    const Tyear = this.hebrewYearStartFrom + year;
+    const Tmonth = this.hebrewMonthesInEnglish[month];
+    const url = 'https://www.hebcal.com/converter/?cfg=json&hy=' + Tyear + '&hm=' + Tmonth + '&hd=' + day + '&h2g=1';
+
+    const Dres = await this.http.get(url);
+    return Dres; /*
   Dres.subscribe(res => {
       console.log(res);
       const Lday = (res as any).gd;
@@ -415,36 +414,36 @@ public async convertHebrewToNormalDate(day: number, month: number, year: number)
       const Lyear = (res as any).gy;
       return Promise.resolve('' + Lday + '.' + Lmonth + '.' + Lyear);
     });*/
- /* console.log(res);
-  const Lday = (res as any).gd;
-  const Lmonth = (res as any).gm;
-  const Lyear = (res as any).gy;
-  return Promise.resolve('' + Lday + '.' + Lmonth + '.' + Lyear);*/
+    /* console.log(res);
+     const Lday = (res as any).gd;
+     const Lmonth = (res as any).gm;
+     const Lyear = (res as any).gy;
+     return Promise.resolve('' + Lday + '.' + Lmonth + '.' + Lyear);*/
 
-}
+  }
 
 
 
 
   INIT_dictionary() {
     this.dictionary = {
-date: 'תאריך',
-hours: 'שעות', 
-subject: 'נושא', 
-aprovedHours: 'שעות מאושרות', 
-name: 'שם', 
-firstName: 'שם פרטי', 
-lastName: 'שם משפחה', 
-comment: 'הערה', 
-method: 'שיטה', 
-index: 'אינדקס', 
-group: 'קבוצה', 
-area: 'תחום', 
-difficult: 'קושי',
-grade: 'כתה', 
-gradeOfTest: 'ציון מבחן',
-startTime:'שעת התחלה',
-endTime:'שעת סיום'
+      date: 'תאריך',
+      hours: 'שעות',
+      subject: 'נושא',
+      aprovedHours: 'שעות מאושרות',
+      name: 'שם',
+      firstName: 'שם פרטי',
+      lastName: 'שם משפחה',
+      comment: 'הערה',
+      method: 'שיטה',
+      index: 'אינדקס',
+      group: 'קבוצה',
+      area: 'תחום',
+      difficult: 'קושי',
+      grade: 'כתה',
+      gradeOfTest: 'ציון מבחן',
+      startTime: 'שעת התחלה',
+      endTime: 'שעת סיום'
 
     };
   }

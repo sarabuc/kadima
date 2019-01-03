@@ -109,14 +109,14 @@
 
             </div>
 
-            <div class="row d-flex mt-5 mb-4 justify-content-end ">
+           <!-- <div class="row d-flex mt-5 mb-4 justify-content-end ">
                 <div class="col-md-4 col-sm-12">
                     <button class="my-primary my-button my-btn-lg w-100" *ngIf="thereIsDiffs" (click)="saveMethodsAndTherapist()">
                     שמור
                         <i class="fa fa-save mr-1 "></i>
                     </button>
                 </div>
-            </div>
+            </div>-->
 
             <mat-card-actions>
                 <button mat-button matStepperPrevious type="button"> הקודם</button>
@@ -143,48 +143,44 @@
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <div *ngIf="dontHelpPlanning">
-                                <input matInput class="form-item white-text" type="text" name="method" placeholder=" שיטת טיפול" [(ngModel)]="dif.method" [matAutocomplete]="autoMH">
-                                <mat-autocomplete #autoMH="matAutocomplete">
-                                    <mat-option *ngFor="let method of filterMethodForDiff(dif.Dcode)" [value]="method.Mcode">
+                             <input matInput class="form-item form-item-select" name="method" placeholder="שיטת טיפול" [(ngModel)]="dif.method">
+                              <!--  <mat-option *ngFor="let method of filterMethodForDiff(dif.Dcode)" [value]="method.Mcode">
                                         {{ method.Mcode }}
-                                    </mat-option>
-                                </mat-autocomplete>
-
+                                </mat-option>                       
+                             </mat-select>-->
+                              
                             </div>
                             <div *ngIf="!dontHelpPlanning">
-                                <input matInput class="form-item white-text" type="text" name="method" placeholder=" שיטת טיפול" [(ngModel)]="dif.method" [matAutocomplete]="autoM">
-                                <mat-autocomplete #autoM="matAutocomplete">
-                                    <mat-option *ngFor="let method of allMethods" [value]="method.code">
+                            <input matInput class="form-item form-item-select" name="method" placeholder="שיטת טיפול" [(ngModel)]="dif.method">
+                            <!--    <mat-option *ngFor="let method of allMethods" [value]="method.code">
                                         {{ method.code }}
-                                    </mat-option>
-                                </mat-autocomplete>
+                                    </mat-option>                  
+                             </mat-select>-->
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-10">
                             <div *ngIf="dontHelpPlanning">
-                                <input matInput class="form-item white-text" type="text" name="therapist" placeholder=" מטפל" [(ngModel)]="dif.therapist" [matAutocomplete]="autoTH">
-                                <mat-autocomplete #autoTH="matAutocomplete">
-                                    <mat-option *ngFor="let thera of filterMethodForTherapist(diffiForPlan[i].method)" [value]="thera.Tid">
+                            <mat-select class="form-item form-item-select" name="therapist" placeholder="מטפל" [(ngModel)]="dif.therapist">
+                               <mat-option *ngFor="let thera of filterMethodForTherapist(diffiForPlan[i].method)" [value]="thera.Tid">
                                         {{ thera.Tid }} {{thera.lastName}}
-                                    </mat-option>
-                                </mat-autocomplete>
+                                    </mat-option>                 
+                             </mat-select>
+                              
                             </div>
                             <div *ngIf="!dontHelpPlanning">
-                                <input matInput class="form-item white-text" type="text" name="therapist" placeholder=" מטפל" [(ngModel)]="dif.therapist" [matAutocomplete]="autoT">
-                                <mat-autocomplete #autoT="matAutocomplete">
-                                    <mat-option *ngFor="let thera of allTherapists" [value]="thera.id">
+                            <mat-select class="form-item form-item-select" name="therapist" placeholder="מטפל" [(ngModel)]="dif.therapist">
+                               <mat-option *ngFor="let thera of db.allTherapistList" [value]="thera.id">
                                         {{ thera.firstName }} {{thera.lastName}}
-                                    </mat-option>
-                                </mat-autocomplete>
+                                    </mat-option>                 
+                             </mat-select>
+                               
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-md-1 col-sm-2">
-                        <i class="fa fa-save fa-lg purple-text" (click)="" ></i>
-                    </div> -->
+                    
                 </div>
             </div>
-            <div class="row d-flex mt-5 mb-4 justify-content-end ">
+           <!-- <div class="row d-flex mt-5 mb-4 justify-content-end ">
                 <div class="col-md-4 col-sm-12">
                     <button class="my-primary my-button my-btn-lg w-100" *ngIf="helpPlanning&&thereIsDiffs" (click)="saveMethodsAndTherapist()"> שמור
                         <i class="fa fa-save mr-1 "></i>
@@ -193,7 +189,7 @@
                         <i class="fa fa-save mr-1 "></i>
                     </button>
                 </div>
-            </div>
+            </div>-->
 
             <mat-card-actions>
                 <button mat-button matStepperPrevious type="button">הקודם</button>
@@ -235,7 +231,17 @@
                 <h3 class="purple-text pt-4">האם אתה בטוח שסימת את תכנון הטיפול?</h3>
 
                 <mat-divider></mat-divider>
-                <button type="button" #btnn class="btn purple" (click)="finishPlan()" [disabled]="!chooesedMipuy">שמור וסיים</button>
+               <!-- <button type="button" #btnn class="btn purple" (click)="finishPlan()" [disabled]="!chooesedMipuy">שמור וסיים</button>
+             -->  <div class="row d-flex mt-5 mb-4 justify-content-end ">
+                <div class="col-md-4 col-sm-12">
+                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="helpPlanning&&thereIsDiffs" (click)="finishPlan()" [disabled]="!chooesedMipuy"> שמור וסיים
+                        <i class="fa fa-save mr-1 "></i>
+                    </button>
+                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="!helpPlanning&&thereIsDiffs" (click)="beforeSave.show()"  [disabled]="!chooesedMipuy"> שמור וסיים
+                        <i class="fa fa-save mr-1 "></i>
+                    </button>
+                </div>
+            </div>
                 <br>
                 <br>
                 <br>
@@ -263,8 +269,8 @@
                 האם ברצונך לעדכן קשרים חדשים בין קשיים לשיטות טיפול ו/או מטפלים?
             </div>
             <div class="modal-footer">
-                <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist()">שמירה בלבד</button>
-                <button type="button" mdbBtn color="primary" class="btn  purple waves-light" mdbWavesEffect (click)="beforeSave.hide();saveMethodsAndTherapist(); cretaNewConnections()">שמירה ועדכון</button>
+                <button type="button" mdbBtn color="primary" class="btn purple waves-light" mdbWavesEffect (click)="beforeSave.hide();finishPlan()">שמירה בלבד</button>
+                <button type="button" mdbBtn color="primary" class="btn  purple waves-light" mdbWavesEffect (click)="beforeSave.hide();finishPlan(); cretaNewConnections()">שמירה ועדכון</button>
             </div>
         </div>
     </div>

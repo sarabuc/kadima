@@ -3,7 +3,20 @@
 
     <div class="mask rgba-white-strong">
 
-        <div class="row mb-4 mt-5 ">
+     <div class="row mb-4 mt-5 " *ngIf="!db.userNow.isAdmin">
+
+            <div *ngFor="let feat of featuresUser" routerLink="/{{feat.route}}" class="col-lg-3 col-md-3 col-sm-6 mb-4 pr-3 pt-1">
+                <div class="view overlay  pt-3 wow fadeInUp" style="border-radius:5%" data-wow-delay="0.5s">
+                    <i [class]="feat.class"></i>
+                    <h4 class="my-4 font-weight-bold purple-text">{{feat.text}}</h4>
+                    <p class="purple-text">{{feat.sub}}</p>
+                    <div class="mask flex-center rgba-purple-light">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4 mt-5 " *ngIf="db.userNow.isAdmin">
 
             <div *ngFor="let feat of features1" routerLink="/{{feat.route}}" class="col-lg-3 col-md-3 col-sm-6 mb-4 pr-3 pt-1">
                 <div class="view overlay  pt-3 wow fadeInUp" style="border-radius:5%" data-wow-delay="0.5s">

@@ -47,14 +47,13 @@
              <div class="col-12 my-2"> <h3 class="purple-text mb-1 yellow"*ngIf="thera['pats'] && thera['pats'].length < 1">אין תלמידים למטפל</h3></div>
 
             <div *ngFor="let pat of thera['pats']">
-            <h3 class="purple-text mb-1 yellow"*ngIf="pat['treats'] && pat['treats'].length < 1">אין טיפולים לתלמיד</h3>
-            <p-table [value]="pat['treats']" *ngIf="pat['treats'] && pat['treats'].length > 0" >
+            <p-table [value]="pat['treats']"  >
                 <ng-template pTemplate="caption">
                   <div style="text-align: right">        
                        <h6 class="purple-text my-3">{{pat.name}} <small>|כתה {{pat.grade}}</small></h6>
                   </div>
                 </ng-template>
-                <ng-template pTemplate="header">
+                <ng-template pTemplate="header" *ngIf="pat['treats'] && pat['treats'].length > 0">
                     <tr>
                         <th style="width: 40px"> </th>
                         <th >תאריך טיפול </th>
@@ -79,6 +78,8 @@
                     </tr>
                 </ng-template>
             </p-table>
+            <h3 class="purple-text mb-1 yellow"*ngIf="pat['treats'] && pat['treats'].length < 1">אין טיפולים לתלמיד</h3>
+
             <hr class="yellow-text">
             </div>
 

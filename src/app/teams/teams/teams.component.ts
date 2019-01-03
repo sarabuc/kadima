@@ -51,7 +51,7 @@ export class TeamsComponent implements OnInit {
      );
    });
    // this.displayDialog = true;
-    event.preventDefault(); //??
+    event.preventDefault();
     dialog.show();
     this.db.isBusy = false;
   }
@@ -77,7 +77,14 @@ export class TeamsComponent implements OnInit {
 getTeams() {
   this.db.isBusy = true;
   this.db.getTeamsRef().valueChanges().subscribe(teams => {
-    this.teams = teams;
+    if (this.db.userNow.isAdmin) {
+      this.teams = teams;
+    } else {
+      console.log(teams);
+      console.log(this.db.userNow.id);
+      this.teams = teams.filter(T => T.Tid === '' + this.db.userNow.id);
+
+    }
     this.db.isBusy = false;
   });
 }

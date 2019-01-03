@@ -20,11 +20,11 @@ export class NewGroupTreatmentComponent implements OnInit {
   patsForGroup: any[] = [];
   newTreat: GroupTreatmentInfo;
   enableNewTreat = false;
-expandedRows = [];
-setAllNochechut_v = false;
-treatToUpdate;
-updateDate = false;
-treatToDelete;
+  expandedRows = [];
+  setAllNochechut_v = false;
+  treatToUpdate;
+  updateDate = false;
+  treatToDelete;
 
 
 
@@ -135,15 +135,16 @@ treatToDelete;
 
 
   clearNewTreat() {
+    console.log(this.GROUP);
     this.newTreat = {
-      groupCode:this.groupCode,
+      groupCode: this.groupCode,
       Tid: this.Tid,
       date: null,
-      subject: null,
+      subject: this.GROUP.area,
       method: null,
-      startTime: null,
-      endTime: null,
-      hours: null,
+      startTime: this.GROUP.startTime,
+      endTime: this.GROUP.endTime,
+      hours: this.GROUP.hours,
       comment: null
     };
     for (const pat of this.patsForGroup) {
@@ -192,13 +193,12 @@ treatToDelete;
             const Lyear = (date as any).gy;
             this.newTreat['date'] = '' + Lday + '.' + Lmonth + '.' + Lyear;
             console.log(this.loazyDate);
-            if(this.checkTraetInfo(this.newTreat)) {
+            if (this.checkTraetInfo(this.newTreat)) {
               this.saveAfterCheck(option, modal);
             } else {
               this.db.isBusy = false;
               return;
             }
-           
           });
       });
     }
@@ -224,19 +224,7 @@ treatToDelete;
   saveAfterCheck(option, modal) {
     console.log(this.newTreat);
   this.addTreatLine();
-//   const newTreat = {
-// groupCode: this.groupCode,
-// Tid: this.Tid,
-// insertBy: this.db.userNow.mail,
-// insertTime: new Date(),
-// subject: this.newTreat.subject,
-// comment: this.newTreat.comment,
-// method: this.newTreat.method,
-// startTime: this.newTreat.startTime,
-// endTime: this.newTreat.endTime,
-// hours: this.newTreat.hours,
-// date: this.newTreat.date
-//   };
+
 
 this.newTreat['insertBy'] = this.db.userNow.mail;
 this.newTreat['insertTime'] = '' + new Date();
@@ -246,8 +234,26 @@ this.newTreat['insertTime'] = '' + new Date();
       modal.hide();
     }
     this.db.addGroupTreatmentInfo(this.newTreat);
-        console.log(this.newTreat);
-
+    for (const key of Object.keys(this.newTreat)) {
+      // check if is a pat have progress
+      if(this.newTreat[key]['progress'] && this.newTreat[key]['progress'] > 0) {
+        if(this.sd.useML) {
+          const data = {
+            progress: this.newTreat[key]['progress'], 
+            Pid: key, 
+            birth_year: this.patsForGroup.find(P => P.id === key).birthDate, 
+            diffi: this.newTreat.subject, 
+            method: this.monthes, 
+            insertBy:  this.db.userNow.mail, 
+            insertTime: new Date()
+          }
+          this.db.addTreatForML(data);
+      }
+    }
+  }
+// update remain aproved hours for group
+this.GROUP.aprovedHours = this.GROUP.aprovedHours - +this.newTreat.hours;
+this.db.updateGroup(this.GROUP);
       this.clearNewTreat();
       this.db.isBusy = false;
       
@@ -255,11 +261,10 @@ this.newTreat['insertTime'] = '' + new Date();
 
 
     onRowExpand() {
-      console.log(this.expandedRows);
     }
 
     setAllNochecut(option) {
-      if(option === 'new'){
+      if (option === 'new') {
        for (const pat of this.patsForGroup) {
           this.newTreat[pat.Pid].wasInLesson = this.setAllNochechut_v;
         } 
@@ -291,7 +296,7 @@ this.newTreat['insertTime'] = '' + new Date();
       this.db.isBusy = true;
       this.db.getGroupTreatmentInfoRefByGroupCode(this.groupCode).valueChanges().subscribe(info => {
         this.patTable = info.filter(treat => this.checkIfIsOneMonth(month, year, treat.date));
-       for(const pat of this.patTable) {
+       for (const pat of this.patTable) {
          console.log(pat.date);
        }
       this.db.isBusy = false;
@@ -299,7 +304,7 @@ this.newTreat['insertTime'] = '' + new Date();
     }
 
     updateTreat(modal) {
-      if(this.updateDate) {
+      if (this.updateDate) {
          if (!this.showLoazy) {
       if (!(this.selectedDay && this.selectedMonth && this.selectedYear)) {
         this.sd.createAlert('error', 'שגיאה בתאריך טיפול - בדוק פרטים ונסה שנית', '');
@@ -375,9 +380,9 @@ this.newTreat['insertTime'] = '' + new Date();
       console.log(year);
       console.log(dateToCheck);
 
-      try{
+      try {
 const temp = dateToCheck.split('.');
-if(temp[1] === month && temp[2] === year) {
+if (temp[1] === month && temp[2] === year) {
   return true;
 }
 return false;
@@ -394,7 +399,7 @@ return false;
       console.log(this.groupCode);
       this.db.isBusy = true;
       this.db.getGroupByGroupCodeRef(this.groupCode).valueChanges().subscribe(groups => {
-        console.log(groups)
+        console.log(groups);
         this.Tid = groups[0].Tid;
         this.groupsForTherapist = groups;
         this.GROUP = groups[0];
@@ -413,9 +418,9 @@ return false;
          this.sd.createAlert('error', 'שעת סיום לא תקנית', '');
          return false;
       }
-      for(const key of Object.keys(treat)) {
+      for (const key of Object.keys(treat)) {
         if (!treat[key]) {
-          if(key === 'comment') {
+          if (key === 'comment') {
             continue;
           }
           this.sd.createAlert('error', 'חסרים פרטים:' + this.sd.dictionary[key], '');

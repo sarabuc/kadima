@@ -15,15 +15,12 @@
 
         <!--            START WITH THERAPIST         -->
                 <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " *ngIf="selectedStartWith == 'therapist'">
-                    <mat-form-field class="w-80">
-                        <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="GROUP.Tid" [matAutocomplete]="autoT">
-                        <mat-error *ngIf="!GROUP.Tid">חובה להכניס מספר זהות מטפל</mat-error>
-                        <mat-autocomplete #autoT="matAutocomplete">
-                            <mat-option *ngFor="let thera of db.allTherapistList" [value]="thera.id">
-                                {{ thera.firstName }} {{thera.lastName}}
-                            </mat-option>
-                        </mat-autocomplete>
+                    <mat-form-field class=" w-80 mr-auto ml-auto ">
 
+                        <mat-select class="form-item form-item-select" name="Tid" placeholder="מטפל" [(ngModel)]="GROUP.Tid">
+                            <mat-option value="thera.id" *ngFor="let thera of db.allTherapistList">{{ thera.firstName }} {{thera.lastName}}</mat-option>
+                        </mat-select>
+                         <mat-error *ngIf="!GROUP.Tid">חובה להכניס מספר זהות מטפל</mat-error>
                     </mat-form-field>
                     <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="getAreasForTherapist()" ><i class="fa fa-check"></i></button>
 
@@ -31,13 +28,11 @@
 
         <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " *ngIf="selectedStartWith == 'therapist'&& showAreaForTherapist">
             <mat-form-field class=" w-80">
-                <input matInput class="form-item white-text" type="text" name="selectedArea" placeholder=" תחום" [(ngModel)]="GROUP.area" [matAutocomplete]="autoA">
-                <mat-error *ngIf="!GROUP.area">חובה להכניס תחום ליצירת קבוצה</mat-error>
-                <mat-autocomplete #autoA="matAutocomplete">
-                    <mat-option *ngFor="let area of areas" [value]="area.code">
+            <mat-select class="form-item form-item-select" name="selectedArea" placeholder="תחום" [(ngModel)]="GROUP.area">
+                <mat-option *ngFor="let area of areas" [value]="area.code">
                         {{ area.code }} 
-                    </mat-option>
-                </mat-autocomplete>
+                    </mat-option>                </mat-select>
+                <mat-error *ngIf="!GROUP.area">חובה להכניס תחום ליצירת קבוצה</mat-error>
 
             </mat-form-field>
             <button class="yellow lighten-2 mx-3 mb-3 align-self-end" mat-mini-fab (click)="showClasses= true" ><i class="fa fa-check"></i></button>
@@ -51,14 +46,12 @@
         <!--            START WITH AREA         -->
         <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " *ngIf="selectedStartWith == 'area'">
             <mat-form-field class=" w-80">
-                <input matInput class="form-item white-text" type="text" name="selectedArea" placeholder=" תחום" [(ngModel)]="GROUP.area" [matAutocomplete]="autoA">
+                        <mat-select class="form-item form-item-select" name="selectedArea" placeholder="תחום" [(ngModel)]="GROUP.area">
+                            <mat-option *ngFor="let area of db.secondCategories" [value]="area.code">
+                                {{ area.code }} 
+                            </mat-option>                      
+                      </mat-select>
                 <mat-error *ngIf="!GROUP.area">חובה להכניס תחום ליצירת קבוצה</mat-error>
-                <mat-autocomplete #autoA="matAutocomplete">
-                    <mat-option *ngFor="let area of db.secondCategories" [value]="area.code">
-                        {{ area.code }} 
-                    </mat-option>
-                </mat-autocomplete>
-
             </mat-form-field>
             <button class="yellow lighten-2 mx-3 mb-3 align-self-end" mat-mini-fab (click)="getTherapistForArea()" ><i class="fa fa-check"></i></button>
 
@@ -67,23 +60,54 @@
 
         <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " *ngIf="selectedStartWith == 'area' && showTherapistForArea">
                     <mat-form-field class="w-80">
-                        <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="GROUP.Tid" [matAutocomplete]="autoT">
-                        <mat-error *ngIf="!GROUP.Tid">חובה להכניס מספר זהות מטפל</mat-error>
-                        <mat-autocomplete #autoT="matAutocomplete">
+                         <mat-select class="form-item form-item-select" name="Tid" placeholder="מטפל" [(ngModel)]="GROUP.Tid">
                             <mat-option *ngFor="let thera of therapists" [value]="thera.id">
                                 {{ thera.firstName }} {{thera.lastName}}
                             </mat-option>
-                        </mat-autocomplete>
+                        </mat-select>
+                        <mat-error *ngIf="!GROUP.Tid">חובה להכניס מספר זהות מטפל</mat-error>
 
                     </mat-form-field>
                 <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="showClasses= true" ><i class="fa fa-check"></i></button>
                 <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="addTherapistForArea(); demoBasic.show()" ><i class="fa fa-plus"></i></button>
-
-
         </div>
 
         
         <!--        END START WITH AREA         -->
+        <div class="col-md-4 col-sm-6 mb-2 px-2" *ngIf="showClasses">
+            <h5 class="purple-text mt-2" style="text-align: right;margin-bottom: -1.5rem;"> שעת התחלה
+            </h5>
+            <form #formST="ngForm">
+                <mat-form-field class="w-100">
+                <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="startTime" [(ngModel)]="GROUP.startTime" required>
+
+                <mat-error *ngIf="!GROUP.startTime">חובה להכניס שעת התחלה </mat-error>
+                <mat-error *ngIf="!formST.valid"> שעה  אינה תקינה</mat-error>
+            </mat-form-field>
+            </form>
+
+        </div>
+         <div class="col-md-4 col-sm-12 mb-2 px-2" *ngIf="showClasses">
+            <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> שעת סיום
+            </h5>
+            <form #formET="ngForm">
+                <mat-form-field class="w-100">
+                <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" class="form-item white-text" type="text" name="endTime"  [(ngModel)]="GROUP.endTime" required>
+                <mat-error *ngIf="!GROUP.endTime">חובה להכניס שעת סיום </mat-error>
+                <mat-error *ngIf="!formET.valid"> שעה  אינה תקינה</mat-error>
+            </mat-form-field>
+            </form>
+
+        </div>
+
+        <div class="col-md-4 col-sm-12 mb-2 px-2" *ngIf="showClasses">
+            <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> מספר שעות
+            </h5>
+            <mat-form-field class="w-100">
+            <input matInput class="form-item white-text" type="number" name="hours" [(ngModel)]="GROUP.hours" required>
+            <mat-error *ngIf="!GROUP.hours">חובה להכניס מספר שעות </mat-error>
+        </mat-form-field>
+        </div>
 
 
 
@@ -101,7 +125,7 @@
         </div>
         <!--  END   SELECT   CLASS     -->
 
-
+        
 
         <!--       SELECT PATIENT OF CLASS       -->
 
@@ -226,6 +250,8 @@
                         <label for="year">מקצוע / תחום:</label>
                     </div>
                     <div class="col-8" dir="ltr">
+
+
                     <p-autoComplete [(ngModel)]="newTFA.code" [ngModelOptions]="{standalone: true}" [suggestions]="mainDiffi" field="code" (completeMethod)="searchAr($event)" [dropdown]="true" [style]="{'text-align':'right'}"></p-autoComplete>
 
                     </div>

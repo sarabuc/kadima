@@ -35,7 +35,7 @@ export class AppComponent implements OnInit  {
 
   menuOptions = [
     { option: ' כרטיס מטופל', icon: 'fa fa-address-card ml-4 purple-text', router: '/Pcards/card', admin: false },
-    { option: ' כרטיס מטפל', icon: 'fa fa-id-card-o ml-4 purple-text', router: '/Tcards', admin: true },
+    { option: ' כרטיס מטפל', icon: 'fa fa-id-card-o ml-4 purple-text', router: '/Tcards', admin: false },
     { option: 'הוספת תלמיד', icon: 'fa fa-plus ml-4 purple-text', router: '/addPatient', admin: true },
     { option: 'הוספת מורה', icon: 'fa fa-plus ml-4 purple-text', router: '/addTherapist', admin: true },
     { option: 'דיווח על שיעור', icon: 'fa fa-calendar-check-o ml-4 purple-text', router: '/newTreatmentInfo', admin: false },
@@ -84,7 +84,8 @@ export class AppComponent implements OnInit  {
     });
   }
 
-  logout() {
+  logout(sidenav) {
+    sidenav.close( 'mouse')
     this.db.isLoginV = false;
     this.sd.routeTo('/login');
     this.db.userNow = undefined;

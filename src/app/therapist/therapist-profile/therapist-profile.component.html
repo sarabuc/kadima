@@ -3,11 +3,11 @@
         <h3 class="h3">פרטים אישיים</h3>
         <div>
             <button class="red mx-1" mat-mini-fab (click)="style.show()">
-        <i class="fa fa-close"></i>
-      </button>
+                <i class="fa fa-close"></i>
+            </button>
             <button class="green mx-1" mat-mini-fab (click)="editTherapist()">
-        <i class="fa fa-pencil"></i>
-      </button>
+                <i class="fa fa-pencil"></i>
+            </button>
         </div>
     </div>
     <div class="list-group px-2 py-3 mb-1  col-md-6 col-sm-12">
@@ -88,14 +88,15 @@
 
 
 
-<div mdbModal #style="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div mdbModal #style="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-notify modal-danger " role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <p class="heading lead mr-2">האם אתה בטוח ?</p>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="style.hide()">
-          <span aria-hidden="true" class="white-text">×</span>
-        </button>
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="text-center">
@@ -105,8 +106,8 @@
             </div>
             <div class="modal-footer justify-content-center">
                 <a type="button" class="btn btn-primary-modal waves-light white-text" mdbRippleRadius (click)="style.hide(); deleteTherapist();">מחק
-          <i class="fa fa-delete ml-1"></i>
-        </a>
+                    <i class="fa fa-delete ml-1"></i>
+                </a>
                 <a type="button" class="btn btn-outline-secondary-modal" data-dismiss="modal" (click)="style.hide()" mdbRippleRadius>חזור</a>
             </div>
         </div>

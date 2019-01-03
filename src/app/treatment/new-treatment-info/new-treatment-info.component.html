@@ -13,28 +13,43 @@ have choose
 3. get info
 -->
 
-{{canGetInfo}}
-{{canGetTherapist}}
+
 <div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100">
 
     <div class="row d-flex justify-content-around">
         <div class="col-12 mt-3 mb-3">
-            <h2 class="nice-text"> דיווח על שיעור</h2>
+            <h2 class="nice-text"> דיווח על שיעור </h2>
         </div>
 
-       <!--              PATIENT                    -->
-        <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="this.db.userNow.isAdmin">
+        <div class="row  px-5 d-flex justify-content-around  py-2 grey lighten-3 my-2" *ngIf="this.db.userNow && this.db.userNow.isAdmin">
+            <i class="fa fa-search fa-2x purple-text mr-1 align-self-center"></i>
+            <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" placeholder="לפי שם פרטי " name="fname"
+                [(ngModel)]="fname">
+            <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" placeholder="לפי שם משפחה " name="lname"
+                [(ngModel)]="lname">
+            <input type="text" class="form-item white-text align-self-center mr-2 ml-2 my-2" placeholder="לפי  כתה " name="grade" [(ngModel)]="grade">
+            <!--<mat-select class="form-item w-25" name="findByCategory" placeholder="סנן לפי מטפל" (selectionChange)="filterT()" [(ngModel)]="Tid">
+                    <mat-option value="empty" class="gray">ללא סינון</mat-option>
+                </mat-select>-->
+
+        </div>
+
+        <!--              PATIENT                    -->
+        <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="this.db.userNow && this.db.userNow.isAdmin">
             <mat-form-field class=" w-80">
-                <input matInput class="form-item white-text" type="text" name="Pid" placeholder=" תלמיד" [(ngModel)]="Pid" [matAutocomplete]="autoP">
+                <mat-select matInput class="form-item white-text form-item-select" type="text" name="Pid" placeholder=" תלמיד" [(ngModel)]="Pid">
+                    <div *ngFor="let pat of patientList">
+                        <mat-option [value]="pat.id" *ngIf="isFnPrefix(pat.firstName)&&isLnPrefix(pat.lastName)&&isGradePrefix(pat.grade)">
+                            {{pat.firstName}} {{pat.lastName}} | כתה {{pat.grade}}
+                        </mat-option>
+                    </div>
+                </mat-select>
                 <mat-error *ngIf="!Pid">חובה להכניס מספר זהות תלמיד</mat-error>
-                <mat-autocomplete #autoP="matAutocomplete">
-                    <mat-option *ngFor="let pat of db.allPatientList" [value]="pat.id">
-                        {{ pat.firstName }} {{ pat.lastName }}
-                    </mat-option>
-                </mat-autocomplete>
 
             </mat-form-field>
-            <button class="yellow lighten-2 mx-3 mb-3 align-self-end" mat-mini-fab (click)="choosePlanForAdmin()" ><i class="fa fa-check"></i></button>
+            <button class="yellow lighten-2 mx-3 mb-3 align-self-end" mat-mini-fab (click)="choosePlanForAdmin()">
+                <i class="fa fa-check"></i>
+            </button>
 
         </div>
 
@@ -49,73 +64,124 @@ have choose
                 </mat-autocomplete>
 
             </mat-form-field>
-            <button class="yellow lighten-2 mx-3 mb-3 align-self-end" mat-mini-fab (click)="choosePlanForUser()"><i class="fa fa-check"></i></button>
+            <button class="yellow lighten-2 mx-3 mb-3 align-self-end" mat-mini-fab (click)="choosePlanForUser()">
+                <i class="fa fa-check"></i>
+            </button>
 
         </div>
 
- <!--               END PATIENT                    -->
+        <!--               END PATIENT                    -->
 
-<!--                PLAN                       -->
-        <div class="col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="this.db.userNow.isAdmin && canGetPlan && !choosedPlan">
-        <h4 class="yellow-text">בחר תאריך תכנון טיפול</h4>
-            <div class="list-group mt-1 pt-2  w-90" >
+        <!--                PLAN                       -->
+        <div class="col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="this.db.userNow && canGetPlan && !choosedPlan">
+            <h4 class="yellow-text">בחר תאריך תכנון טיפול</h4>
+            <div class="list-group mt-1 pt-2  w-90">
                 <div *ngFor="let p of planToChoose ">
                     <a class="list-group-item link-botton " style="text-align:right" (click)="getPlanForAdmin(p)">
-                        <i class="fa fa-check mx-5"></i>{{p.date }} | <small>{{p.hebrewDate}}</small></a>
-                        <!--| date: 'dd/MM/yyyy'-->
+                        <i class="fa fa-check mx-5"></i>{{p.date }} |
+                        <small>{{p.hebrewDate}}</small>
+                    </a>
+                    <!--| date: 'dd/MM/yyyy'-->
                 </div>
             </div>
         </div>
 
-        <div class="col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="!this.db.userNow.isAdmin && canGetPlan && !choosedPlan">
+        <!-- <div class="col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="!this.db.userNow.isAdmin && canGetPlan && !choosedPlan">
                 <h4 class="yellow-text">בחר תאריך תכנון טיפול</h4>
 
           <div class="list-group mt-1 pt-2  w-90" >
                 <div *ngFor="let p of theraPatientList ">
                     <a class="list-group-item link-botton " style="text-align:right" (click)="getPlanForUser(p)" *ngIf ="p.Pid == Pid">
                         <i class="fa fa-check mx-5"></i>{{p.date }} | <small>{{p.hebrewDate}}</small></a>
-                        <!--| date: 'dd/MM/yyyy'-->
                 </div>
             </div>
+        </div>-->
+
+        <div *ngIf="choosedPlan" style="text-align: right">
+            <h6 class="yellow-text">בהתאם לתכנון טיפול שהתבצע בתאריך {{choosedPlan.date}}
+                <small>
+                    <a class="mx-4 link purlpe-text" (click)="rechoosePlan()">בחר מחדש</a>
+                </small>
+            </h6>
         </div>
-
-        <div *ngIf="choosedPlan" style="text-align: right"> <h6 class="yellow-text">בהתאם לתכנון טיפול שהתבצע בתאריך {{choosedPlan.date}} 
-       <small> <a class="mx-4 link purlpe-text" (click)="rechoosePlan()">בחר מחדש</a></small></h6>
-        </div>
-<!--              END  PLAN                       -->
+        <!--              END  PLAN                       -->
 
 
-<!--                THERAPIST                       -->
-                <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="this.db.userNow.isAdmin && canGetTherapist">
-                    <mat-form-field class="w-80">
-                        <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="Tid" [matAutocomplete]="autoT">
-                        <mat-error *ngIf="!Tid">חובה להכניס מספר זהות מטפל</mat-error>
-                        <mat-autocomplete #autoT="matAutocomplete">
-                            <mat-option *ngFor="let thera of filterTherapistForPlanFromAllTherapist()" [value]="thera.id">
-                                {{ thera.firstName }} {{thera.lastName}}
-                            </mat-option>
-                        </mat-autocomplete>
+        <!--                THERAPIST                       -->
+        <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="this.db.userNow && canGetTherapist">
+            <mat-form-field class="w-80">
+                <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="Tid" [matAutocomplete]="autoT">
+                <mat-error *ngIf="!Tid">חובה להכניס מספר זהות מטפל</mat-error>
+                <mat-autocomplete #autoT="matAutocomplete">
+                    <mat-option *ngFor="let thera of filterTherapistForPlanFromAllTherapist()" [value]="thera.id">
+                        {{ thera.firstName }} {{thera.lastName}}
+                    </mat-option>
+                </mat-autocomplete>
 
-                    </mat-form-field>
-                <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="canGetInfoForAdmin()" ><i class="fa fa-check"></i></button>
-
-                </div>
-
-<!--              END  THERAPIST                       -->
-
-
-
-<!--                    GET INFO                       -->
-<div #info *ngIf="canGetInfo" class="row d-flex">
-        <div class="col-md-3 col-sm-12 mb-1 px-auto form-group text-right">
-            <mat-form-field class=" w-100">
-
-                <input type="text" class="form-item form-item-date " matInput [matDatepicker]="date" placeholder="תאריך " name="tDate" [(ngModel)]="tDate" required>
-                <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
-                <mat-datepicker #date></mat-datepicker>
-                <mat-error *ngIf="!tDate">חובה להכניס תאריך </mat-error>
             </mat-form-field>
+            <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="canGetInfoForAdmin()">
+                <i class="fa fa-check"></i>
+            </button>
+
         </div>
+
+        <!--              END  THERAPIST                       -->
+
+
+
+        <!--                    GET INFO                       -->
+        <div #info *ngIf="canGetInfo" class="row d-flex">
+            <div class="col-md-3 col-sm-6 mb-1 px-2 form-group text-right">
+                <div class=" w-80">
+                    <h6 class="white-text">לחץ לבחירת תאריך</h6>
+                    <p-calendar styleClass="form-item" [(ngModel)]="tDate" [locale]="sd.hebrew" dateFormat="dd.mm.yy" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="2000:2030" (onFocus)="dateChoice='picker'"></p-calendar>
+
+                    <!-- <input type="text" class="form-item form-item-date " matInput [matDatepicker]="date" placeholder="תאריך " name="tDate" [(ngModel)]="tDate" required>
+                <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                <mat-datepicker #date></mat-datepicker>-->
+                    <mat-error *ngIf="!tDate">חובה להכניס תאריך </mat-error>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2 px-2">
+
+                <form #formST="ngForm">
+                    <mat-form-field class="w-80">
+                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" placeholder="שעת התחלה" class="form-item white-text"
+                            type="text" name="startTime" [(ngModel)]="startTime" required>
+
+                        <mat-error *ngIf="!startTime">חובה להכניס שעת התחלה </mat-error>
+                        <mat-error *ngIf="!formST.valid"> שעה אינה תקינה</mat-error>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2 px-2">
+
+                <form #formET="ngForm">
+                    <mat-form-field class="w-80">
+                        <input matInput pInputText [pKeyFilter]="sd.timeRegex" [pValidateOnly]="true" placeholder="שעת סיום" class="form-item white-text"
+                            type="text" name="endTime" [(ngModel)]="endTime" required>
+                        <mat-error *ngIf="!endTime">חובה להכניס שעת סיום </mat-error>
+                        <mat-error *ngIf="!formET.valid"> שעה אינה תקינה</mat-error>
+                    </mat-form-field>
+                </form>
+
+            </div>
+
+            <div class="col-md-3 col-sm-6 mb-2 px-2">
+
+                <mat-form-field class="w-80">
+                    <input matInput class="form-item white-text" type="number" placeholder="מספר שעות " name="hours" [(ngModel)]="hours" required>
+                    <mat-error *ngIf="!hours">חובה להכניס מספר שעות </mat-error>
+                </mat-form-field>
+
+
+            </div>
+
+
+
+
+            <!--
         <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
                 <input matInput class="form-item" type="number" name="hours" placeholder="מספר שעות " [(ngModel)]="hours" required>
@@ -124,78 +190,83 @@ have choose
         </div>
         <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput pInputText [pKeyFilter]="sd.timeRegex" class="form-item back-translate form-item-inputmask" type="text" name="startTime" [(ngModel)]="startTime" placeholder="שעת התחלה" required>
+                <input  pInputText [pKeyFilter]="sd.timeRegex" class="form-item back-translate form-item-inputmask" type="text" name="startTime" [(ngModel)]="startTime" placeholder="שעת התחלה" required>
 
                 <mat-error *ngIf="!startTime">חובה להכניס שעת התחלה </mat-error>
             </mat-form-field>
         </div>
         <div class="col-md-3 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput pInputText [pKeyFilter]="sd.timeRegex" class="form-item back-translate form-item-inputmask" type="text" name="endTime" [(ngModel)]="endTime" placeholder="שעת סיום" required>
+                <input  pInputText [pKeyFilter]="sd.timeRegex" class="form-item back-translate form-item-inputmask" type="text" name="endTime" [(ngModel)]="endTime" placeholder="שעת סיום" required>
 
                 <mat-error *ngIf="!endTime">חובה להכניס שעת סיום </mat-error>
             </mat-form-field>
-        </div>
+        </div>-->
 
 
 
-        <div class="col-md-3 col-sm-12 mb-1  form-group text-right">
-            <mat-form-field class=" w-100">
+            <div class="col-md-3 col-sm-12 mb-1  form-group text-right">
+                <mat-form-field class=" w-100">
 
-                <mat-select class="form-item form-item-select" name="area" placeholder=" תחום שיעור" [(ngModel)]="area">
-                    <mat-option [value]="area" *ngFor="let area of diffiListInPlan">{{area}}</mat-option>
-                </mat-select>
-            </mat-form-field>
+                    <mat-select class="form-item form-item-select" name="area" placeholder=" תחום שיעור" [(ngModel)]="area">
+                        <mat-option [value]="area" *ngFor="let area of diffiListInPlan">{{area}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-        </div>
-
-        <div class="col-md-8 col-sm-12 mb-1 px-auto form-group text-right">
-            <mat-form-field class=" w-100">
-                <input matInput class="form-item" type="text" name="discrib" placeholder="נושא שיעור " [(ngModel)]="discrib" required>
-                <mat-error *ngIf="!discrib">חובה להכניס נושא שיעור</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="col-md-12 col-sm-12 mb-1 px-auto form-group text-right">
-            <mat-form-field class=" w-100">
-                <textarea matInput class="form-item" name="comment" placeholder="הערות " [(ngModel)]="comment"></textarea>
-            </mat-form-field>
-        </div>
-
-        <div class="col-md-12 col-sm-12 mb-1 px-auto  text-right">
-        <h4 class="yellow-text">
-            <strong>
-            התקדמות אצל התלמיד
-        </strong>
-            <small>
-            יש לסמן את רמת ההתקדמות בתחום הנבחר בין 1 ל4
-            </small>
-        </h4>
-            <div class="large-rating">
-           <p-rating [ngModel]="progress" iconOnClass="pi pi-check-circle" iconOffClass="pi pi-times-circle"  stars="4" ></p-rating>
-           </div>
-        </div>
-
-
-
-
-
-        <div class="col-12 row d-flex mt-5 mb-4 justify-content-end ">
-            <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2  mb-2 mx-2" >
-                <button class="my-primary my-button my-btn-lg w-100" (click)="cleanForm()" style="width: 200px">אפס שדות
-                <i class="fa fa-times mr-1 "></i>
-                </button>
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2 mb-2 mx-2">
-                <button class="my-primary my-button my-btn-lg w-100" (click)="saveNewtreatment()" style="width: 200px">שמור
-                    <i class="fa fa-save mr-1 " [disabled]="!(Pid&&Tid&&startTime&&tDate&&discrib&&hours)"></i>
-                </button>
             </div>
 
+            <div class="col-md-8 col-sm-12 mb-1 px-auto form-group text-right">
+                <mat-form-field class=" w-100">
+                    <input matInput class="form-item" type="text" name="discrib" placeholder="נושא שיעור " [(ngModel)]="discrib" required>
+                    <mat-error *ngIf="!discrib">חובה להכניס נושא שיעור</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12 col-sm-12 mb-1 px-auto form-group text-right">
+                <mat-form-field class=" w-100">
+                    <textarea matInput class="form-item" name="comment" placeholder="הערות " [(ngModel)]="comment"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-12 col-sm-12 mb-1 px-auto  text-right">
+                <h4 class="yellow-text">
+                    <strong>
+                        התקדמות אצל התלמיד
+                    </strong>
+                    <small>
+                        יש לסמן את רמת ההתקדמות בתחום הנבחר בין 1 ל4
+                    </small>
+                </h4>
+                <div class="large-rating">
+                    <p-rating [(ngModel)]="progress" iconOnClass="pi pi-check-circle" iconOffClass="pi pi-times-circle" stars="4"></p-rating>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="col-12 row d-flex mt-5 mb-4 justify-content-end ">
+                <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2  mb-2 mx-2">
+                    <button class="my-primary my-button my-btn-lg w-100" (click)="cleanForm()" style="width: 200px">אפס שדות
+                        <i class="fa fa-times mr-1 "></i>
+                    </button>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2 mb-2 mx-2">
+                    <button class="my-primary my-button my-btn-lg w-100" (click)="saveNewtreatment('stay')" style="width: 200px">שמור והוסף
+                        <i class="fa fa-save mr-1 " [disabled]="!(Pid&&Tid&&startTime&&tDate&&discrib&&hours)"></i>
+                    </button>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2 mb-2 mx-2">
+                    <button class="my-primary my-button my-btn-lg w-100" (click)="saveNewtreatment('out')" style="width: 200px">שמור וצא
+                        <i class="fa fa-save mr-1 " [disabled]="!(Pid&&Tid&&startTime&&tDate&&discrib&&hours)"></i>
+                    </button>
+                </div>
+
+            </div>
+
         </div>
+
 
     </div>
-
-
-</div>
 
 </div>

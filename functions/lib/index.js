@@ -5,6 +5,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const getFromFirebase = require("./get-from-db-storage");
 const sendMail_Noti = require("./sendMailAndNoti");
+const ML = require("./ML");
 const massages = require("./massages");
 const auth = require("./auth");
 // admin.initializeApp(functions.config().firebase);
@@ -16,7 +17,7 @@ exports.getSecondCategories = getFromFirebase.getSecondCategories;
 exports.sendMail3 = sendMail_Noti.sendWelcomeEmailFunc2;
 exports.onceADay = massages.do_once_a_day;
 exports.onceAWeek = massages.do_once_a_week;
-//export const MLFunc = ML.MLFunction;
+exports.MLsendDate = ML.sendData;
 exports.login = auth.login;
 exports.getMipuysForPatientBySecondAreas = getFromFirebase.getMipuysForPatientBySecond;
 //# sourceMappingURL=index.js.map

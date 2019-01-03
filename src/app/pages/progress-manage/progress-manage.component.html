@@ -1,20 +1,31 @@
-  <div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100">
+  <div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100 py-4">
 
     <div class="row d-flex justify-content-around">
         <div class="col-12 mt-3 mb-3">
             <h2 class="nice-text"> התקדמות תלמיד </h2>
         </div>
-        <div class="col-12 mb-3 card row">
-            <div class="col-sm-12 col-md-12"><h5 class="purple-text">מבחנים</h5></div>
+        <div class="col-12 mb-3 card row pb-5">
+            <div class="col-sm-12 col-md-12" *ngIf="allGrades.length > 0"><h5 class="purple-text">מבחנים</h5></div>
             <div *ngFor="let area of allGrades; let i=index" class="col-md-6 col-sm-12">
                 <p-chart type="line" [data]="area" [options]="optionsForGrades[i]"></p-chart>
             </div>
         </div>
-         <div class="col-12 mb-3 card">
+        <!-- <div class="col-12 mb-3 card">
             <h5 class="purple-text">מיפויים</h5>
-        </div>
+             <div *ngFor="let mipuy of allMipuy; let i=index" class="col-md-6 col-sm-12">
+                <p-chart type="line" [data]="mipuy" [options]="optionsForMipuy[i]"></p-chart>
+            </div>
+        </div>-->
          <div class="col-12 mb-3 card">
-            <h5 class="purple-text">טיפולים</h5>
+            <h5 class="purple-text" *ngIf="treatInfo.length > 0 ||groupInfo.length >0 ">טיפולים</h5>
+             <h6 class="purple-text" *ngIf="treatInfo.length > 0">יחידניים</h6>
+             <div *ngFor="let treat of treatInfo; let i=index" class="col-md-6 col-sm-12">
+                <p-chart type="line" [data]="treat" [options]="optionsForTreatInfo[i]"></p-chart>
+            </div>
+             <h6 class="purple-text" *ngIf="groupInfo.length >0 ">קבוצתיים</h6>
+             <div *ngFor="let treat of groupInfo; let i=index" class="col-md-6 col-sm-12">
+                <p-chart type="line" [data]="treat" [options]="optionsForGroupInfo[i]"></p-chart>
+            </div>
         </div>
     </div>
   </div>

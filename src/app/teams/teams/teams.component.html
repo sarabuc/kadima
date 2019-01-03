@@ -1,78 +1,99 @@
-  <div class="card mt-1 mr-3 ml-3 px-4 py-3 " style="" >
-      <h3 >קבוצות לימוד במערכת</h3>
-        <div class="row d-flex justify-content-end">
-            <button class=" my-button my-btn-lg my-2"  (click)="addNewGroup()" *ngIf="db.userNow.isAdmin">הוסף קבוצה חדשה
-                <i class="fa fa-plus mr-2"></i>
-            </button>
-       
-        </div>
- <p-dataView #dv [value]="teams" [paginator]="true" [rows]="20" paginatorPosition="both" filterBy="groupName"
-    [sortField]="sortField" [sortOrder]="sortOrder">
-    <p-header>
-        <div class="ui-helper-clearfix" dir="ltr">
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-5">
-                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder=" מיון לפי" (onChange)="onSortChange($event)" [autoWidth]="false" [style]="{'min-width':'15em'}"></p-dropdown>
-                </div>
-                <div class="ui-g-6 ui-md-4 filter-container">
-                    <div style="position:relative">
-                        <input type="search" pInputText placeholder="חיפוש לפי שם הקבוצה " (keyup)="dv.filter($event.target.value)" style="text-align: right; padding-right: 0.1rem">
+<div class="card mt-1 mr-3 ml-3 px-4 py-3 " style="">
+    <h3>קבוצות לימוד במערכת</h3>
+    <div class="row d-flex justify-content-end">
+        <button class=" my-button my-btn-lg my-2" (click)="addNewGroup()" *ngIf="db.userNow.isAdmin">הוסף קבוצה חדשה
+            <i class="fa fa-plus mr-2"></i>
+        </button>
+
+    </div>
+    <p-dataView #dv [value]="teams" [paginator]="true" [rows]="20" paginatorPosition="both" filterBy="groupName" [sortField]="sortField"
+        [sortOrder]="sortOrder">
+        <p-header>
+            <div class="ui-helper-clearfix" dir="ltr">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-5">
+                        <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder=" מיון לפי" (onChange)="onSortChange($event)" [autoWidth]="false"
+                            [style]="{'min-width':'15em'}"></p-dropdown>
+                    </div>
+                    <div class="ui-g-6 ui-md-4 filter-container">
+                        <div style="position:relative">
+                            <input type="search" pInputText placeholder="חיפוש לפי שם הקבוצה " (keyup)="dv.filter($event.target.value)" style="text-align: right; padding-right: 0.1rem">
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-md-3" style="text-align:right">
+                        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
                     </div>
                 </div>
-                <div class="ui-g-6 ui-md-3" style="text-align:right">
-                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+            </div>
+        </p-header>
+        <ng-template let-team pTemplate="listItem">
+            <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+                <div class="ui-g-12 ui-md-2" style="text-align:center">
+                    <i class="fa fa-group fa-4x mt-5 purple-text"></i>
+                </div>
+                <div class="ui-g-12 ui-md-8 car-details">
+                    <div class="ui-g text-right">
+                        <div class="ui-g-6 ui-sm-6">
+                            <strong>שם הקבוצה</strong>
+                        </div>
+                        <div class="ui-g-6 ui-sm-6">
+                            <b>{{team.groupName}}</b>
+                        </div>
+
+                        <div class="ui-g-6 ui-sm-6">תאריך</div>
+                        <div class="ui-g-6 ui-sm-6">
+                            <b>{{team.startDate}}</b>
+                        </div>
+
+                        <div class="ui-g-6 ui-sm-6">שם מטפל</div>
+                        <div class="ui-g-6 ui-sm-6">
+                            <b>{{team.Tid}}</b>
+                        </div>
+
+                        <div class="ui-g-6 ui-sm-6">כתה/ שכבה </div>
+                        <div class="ui-g-6 ui-sm-6">
+                            <b>{{team.grade1.split('-')[0]}}</b>
+                        </div>
+
+                        <div class="ui-g-6 ui-sm-6">תחום </div>
+                        <div class="ui-g-6 ui-sm-6">
+                            <b>{{team.area}}</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-2 search-icon pt-5">
+                    <button class="btn purple" type="button" (click)="selectTeam($event, team, showTeam)">פרטי קבוצה
+                        <i class="fa fa-search mr-1"></i>
+                    </button>
+                    <button class="btn purple" type="button" (click)="addInfoTreat( team)">שיעורים
+                        <i class="fa fa-plus mr-1"></i>
+                    </button>
+
                 </div>
             </div>
-        </div>
-    </p-header>
-    <ng-template let-team pTemplate="listItem">
-        <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-            <div class="ui-g-12 ui-md-2" style="text-align:center">
-               <i class="fa fa-group fa-4x mt-5 purple-text"></i>
-            </div>
-            <div class="ui-g-12 ui-md-8 car-details">
-                <div class="ui-g text-right">
-                    <div class="ui-g-6 ui-sm-6"><strong>שם הקבוצה</strong></div>
-                    <div class="ui-g-6 ui-sm-6"><b>{{team.groupName}}</b></div>
+        </ng-template>
+        <div class="row d-flex justify-content-around">
+            <ng-template let-team pTemplate="gridItem">
 
-                    <div class="ui-g-6 ui-sm-6">תאריך</div>
-                    <div class="ui-g-6 ui-sm-6"><b>{{team.startDate}}</b></div>
+                <div class="col-lg-3 col-md-6 col-sm-12" style="padding:.5em">
+                    <p-panel [header]="team.groupName" [style]="{'text-align':'center'}">
+                        <i class="fa fa-group fa-4x mt-4 purple-text"></i>
+                        <div class="car-detail">
+                            {{team.area}} - כתה {{team.grade1.split('-')[0]}}</div>
+                        <hr class="ui-widget-content" style="border-top:0">
+                        <button class="btn purple" type="button" (click)="selectTeam($event, team, showTeam)">פרטי קבוצה
+                            <i class="fa fa-search mr-1"></i>
+                        </button>
+                        <button class="btn purple" type="button" (click)="addInfoTreat(team)">שיעורים
+                            <i class="fa fa-plus mr-1"></i>
+                        </button>
 
-                    <div class="ui-g-6 ui-sm-6">שם מטפל</div>
-                    <div class="ui-g-6 ui-sm-6"><b>{{team.Tid}}</b></div>
-
-                    <div class="ui-g-6 ui-sm-6">כתה/ שכבה </div>
-                    <div class="ui-g-6 ui-sm-6"><b>{{team.grade1.split('-')[0]}}</b></div>
-
-                     <div class="ui-g-6 ui-sm-6">תחום </div>
-                    <div class="ui-g-6 ui-sm-6"><b>{{team.area}}</b></div>
+                    </p-panel>
                 </div>
-            </div>
-            <div class="ui-g-12 ui-md-2 search-icon pt-5">
-                <button class="btn purple" type="button"  (click)="selectTeam($event, team, showTeam)">פרטי קבוצה<i class="fa fa-search mr-1"></i></button>
-                <button class="btn purple" type="button"  (click)="addInfoTreat( team)">שיעורים- צפיה והוספה<i class="fa fa-plus mr-1"></i></button>
 
-            </div>
+            </ng-template>
         </div>
-    </ng-template>
-     <div  class="row d-flex justify-content-around">
-    <ng-template let-team pTemplate="gridItem">
-       
-          <div class="col-lg-3 col-md-6 col-sm-12" style="padding:.5em">
-              <p-panel [header]="team.groupName" [style]="{'text-align':'center'}">
-                <i class="fa fa-group fa-4x mt-4 purple-text"></i>
-                  <div class="car-detail">
-                  {{team.area}} - כתה {{team.grade1.split('-')[0]}}</div>
-                  <hr class="ui-widget-content" style="border-top:0">
-                <button class="btn purple" type="button"  (click)="selectTeam($event, team, showTeam)">פרטי קבוצה<i class="fa fa-search mr-1"></i></button>
-                <button class="btn purple" type="button"  (click)="addInfoTreat(team)">שיעורים- צפיה והוספה<i class="fa fa-plus mr-1"></i></button>
-
-              </p-panel>  
-            </div>
-      
-    </ng-template>
-      </div>
-</p-dataView>
+    </p-dataView>
 </div>
 
 <!--
@@ -115,61 +136,62 @@
 
 
 
-       
- <div mdbModal #showTeam="mdb-modal" class="modal  fade ground" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content modal-show">
-                    <div class="modal-header">
-                        <h4 class="modal-title w-100" id="myModalLabel">
-                        פרטי קבוצה                       
-                    </h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showTeam.hide()">
+
+<div mdbModal #showTeam="mdb-modal" class="modal  fade ground" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-show">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel">
+                    פרטי קבוצה
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showTeam.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
-                    </div>
-                    <div class="modal-body">
-                         <div class="row w-100 mb-3 mx-2">
-                      <div class="ui-g" *ngIf="selectedTeam">
-                              <div class="ui-g-12 mb-3" style="text-align:center">
-                                    <i class="fa fa-group fa-4x mt-4 purple-text"></i>
-                              </div>
-                              <div class="ui-g-4">שם הקבוצה </div>
-                              <div class="ui-g-8">{{selectedTeam.groupName}}</div>
-
-                              <div class="ui-g-4">תאריך </div>
-                              <div class="ui-g-8">{{selectedTeam.startDate}}</div>
-
-                              <div class="ui-g-4">מטפל</div>
-                              <div class="ui-g-8" *ngIf="selectedTherapist">{{selectedTherapist.firstName}} {{selectedTherapist.lastName}}</div>
-
-                              <div class="ui-g-4">תחום</div>
-                              <div class="ui-g-8">{{selectedTeam.area}}</div>
-                            
-                            <div class="ui-g-4">כתה/שכבה</div>
-                              <div class="ui-g-8">{{selectedTeam.grade1.split('-')[0]}}</div>
-
-                              <div class="ui-g-4">שעות מאושרות שנותרו</div>
-                              <div class="ui-g-8">{{selectedTeam.aprovedHours}}</div>
-
-                              <div class="ui-g-4">תלמידים בקבוצה</div>
-                              <div class="ui-g-8">
-                              <ul>
-                                  <li *ngFor="let pat of selectedPatForGroup" style="text-align: right">
-                                      {{pat.firstName + ' ' + pat.lastName + ' | כתה ' + pat.grade + '. '}}
-                                  </li>
-                              </ul>
-                              </div>
-                            </div>
-                            
-                            
-
+            </div>
+            <div class="modal-body">
+                <div class="row w-100 mb-3 mx-2">
+                    <div class="ui-g" *ngIf="selectedTeam">
+                        <div class="ui-g-12 mb-3" style="text-align:center">
+                            <i class="fa fa-group fa-4x mt-4 purple-text"></i>
                         </div>
-                
+                        <div class="ui-g-4">שם הקבוצה </div>
+                        <div class="ui-g-8">{{selectedTeam.groupName}}</div>
 
+                        <div class="ui-g-4">תאריך </div>
+                        <div class="ui-g-8">{{selectedTeam.startDate}}</div>
+
+                        <div class="ui-g-4">מטפל</div>
+                        <div class="ui-g-8" *ngIf="selectedTherapist">{{selectedTherapist.firstName}} {{selectedTherapist.lastName}}</div>
+
+                        <div class="ui-g-4">תחום</div>
+                        <div class="ui-g-8">{{selectedTeam.area}}</div>
+
+                        <div class="ui-g-4">כתה/שכבה</div>
+                        <div class="ui-g-8">{{selectedTeam.grade1.split('-')[0]}}</div>
+
+                        <div class="ui-g-4">שעות מאושרות שנותרו</div>
+                        <div class="ui-g-8">{{selectedTeam.aprovedHours}}</div>
+
+                        <div class="ui-g-4">תלמידים בקבוצה</div>
+                        <div class="ui-g-8">
+                            <ul>
+                                <li *ngFor="let pat of selectedPatForGroup" style="text-align: right">
+                                    {{pat.firstName + ' ' + pat.lastName + ' | כתה ' + pat.grade + '. '}}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="showTeam.hide() " mdbRippleRadius>סגור </button>
-                    </div>
+
+
+
                 </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="showTeam.hide() " mdbRippleRadius>סגור </button>
             </div>
         </div>
+    </div>
+</div>
