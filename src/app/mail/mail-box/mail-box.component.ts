@@ -132,4 +132,12 @@ export class MailBoxComponent implements OnInit {
     const admin = await f.collection('setting').doc('admin').collection('massages').get();
     console.log(admin);
   }
+  routeToPatCard(msg) {
+    console.log(msg);
+    if(msg.status == 'planForMipuy') {
+      const msgParts = msg.massage.split('לתלמיד בעל מ.ז : ')[1];
+      const Pid = msgParts.split(' עודכן')[0];
+      this.sd.routeTo('Pcard', Pid);
+    }
+  }
 }

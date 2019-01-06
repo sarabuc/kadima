@@ -17,13 +17,7 @@
 <p class ="yellow-text" *ngIf="!db.userNow.isAdmin">אין לך הרשאה לגשת למטפלים אחרים</p>
     <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group " >
         <mat-form-field class="w-80">
-           <!-- <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="Tid" [matAutocomplete]="autoT">
-            <mat-error *ngIf="!Tid">חובה להכניס מספר זהות מטפל</mat-error>
-            <mat-autocomplete #autoT="matAutocomplete">
-                <mat-option *ngFor="let thera of allTherapistList" [value]="thera.id" label=" label">
-                    {{ thera.firstName }} {{thera.lastName}}
-                </mat-option>
-            </mat-autocomplete>-->
+          
             <mat-select matInput class="form-item white-text form-item-select" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="Tid" >
                 <mat-option *ngFor="let thera of allTherapistList" [value]="thera.id" label=" label">
                     {{ thera.firstName }} {{thera.lastName}}

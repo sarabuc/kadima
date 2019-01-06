@@ -16,8 +16,9 @@
 
       <div class="list-group-item mb-1 mx-1 row" *ngFor="let mail of allList">
             <div class="col-md-2 col-sm-4" > 
-              <i class="fa fa-star purple-text mx-1 fa-lg"></i> 
-              <i class="fa fa-trash purple-text mx-1 fa-lg" (click)="delete.show(); massageToDelete = mail"></i>
+                <i class="fa fa-trash purple-text mx-1 fa-lg" (click)="delete.show(); massageToDelete = mail"></i>
+                <i class="fa fa-user purple-text mx-1 fa-lg link" (click)="routeToPatCard(mail)" *ngIf="mail.status=='planForMipuy'"></i>
+
             </div> 
             <div class="col-md-7 col-sm-8" style="text-align-right"><strong>  {{mail.massage}} </strong></div>
             <div class="col-md-3 col-sm-4" style="text-align-right"><strong>{{mail.time.toDate() | date: 'dd/MM/yyyy hh:mm'}} </strong></div>

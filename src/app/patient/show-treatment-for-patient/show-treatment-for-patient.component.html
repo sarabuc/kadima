@@ -8,13 +8,12 @@
 
         <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" סנן לפי מטפל" [(ngModel)]="Tid" [matAutocomplete]="autoT">
+                <mat-select  class="form-item white-text form-item-select" type="text" name="Tid" placeholder=" סנן לפי מטפל" [(ngModel)]="Tid" >
 
-                <mat-autocomplete #autoT="matAutocomplete">
                     <mat-option *ngFor="let treat of treatments" [value]="treat.Tid">
                         {{ db.findTherapistNameById(treat.Tid)}}
                     </mat-option>
-                </mat-autocomplete>
+                </mat-select>
 
             </mat-form-field>
         </div>
@@ -22,26 +21,24 @@
 
         <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput class="form-item white-text" type="text" name="kind" placeholder=" סנן לפי סוג טיפול" [(ngModel)]="kind" [matAutocomplete]="autoKind">
+                <mat-select  class="form-item white-text form-item-select" type="text" name="kind" placeholder=" סנן לפי סוג טיפול" [(ngModel)]="kind" >
 
-                <mat-autocomplete #autoKind="matAutocomplete">
                     <mat-option *ngFor="let treat of treatments" [value]="treat.kind">
                         {{ treat.kind }}
                     </mat-option>
-                </mat-autocomplete>
+                </mat-select>
 
             </mat-form-field>
         </div>
 
         <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
             <mat-form-field class=" w-100">
-                <input matInput class="form-item white-text" type="text" name="treatDate" placeholder=" סנן לפי תאריך" [(ngModel)]="treatDate" [matAutocomplete]="autoDate">
+                <mat-select  class="form-item white-text form-item-select" type="text" name="treatDate" placeholder=" סנן לפי תאריך" [(ngModel)]="treatDate" >
 
-                <mat-autocomplete #autoDate="matAutocomplete">
                     <mat-option *ngFor="let treat of treatments" [value]="treat.treatDate">
                         {{ treat.treatDate }} <!--.toDate()| date: 'dd/MM/yyyy'-->
                     </mat-option>
-                </mat-autocomplete>
+                </mat-select>
 
             </mat-form-field>
         </div>

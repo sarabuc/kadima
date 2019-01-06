@@ -155,8 +155,9 @@
 
                 <div class="list-group-item mb-1 mx-1 row" *ngFor="let mail of allMsgs">
                     <div class="col-md-2 col-sm-4">
-                        <i class="fa fa-envelope purple-text mx-1 fa-2x"></i>
                         <i class="fa fa-trash purple-text mx-1 fa-2x link" (click)="delete.show(); massageToDelete = mail"></i>
+                        <i class="fa fa-user purple-text mx-1 fa-2x" (click)="routeToPatCard(mail)" *ngIf="mail.status=='planForMipuy'"></i>
+
                     </div>
                     <div class="col-md-7 col-sm-8" style="text-align-right">
                         <strong> {{mail.massage}} </strong>

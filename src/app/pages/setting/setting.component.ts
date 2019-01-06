@@ -162,5 +162,13 @@ export class SettingComponent implements OnInit {
     }
 
   }
+  routeToPatCard(msg) {
+    console.log(msg);
+    if(msg.status == 'planForMipuy') {
+      const msgParts = msg.massage.split('לתלמיד בעל מ.ז : ')[1];
+      const Pid = msgParts.split(' עודכן')[0];
+      this.sd.routeTo('Pcard', Pid);
+    }
+  }
 
 }

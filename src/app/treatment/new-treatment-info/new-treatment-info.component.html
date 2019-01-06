@@ -55,13 +55,12 @@ have choose
 
         <div class="col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="!this.db.userNow.isAdmin">
             <mat-form-field class=" w-100">
-                <input matInput class="form-item white-text" type="text" name="Pid" placeholder=" תלמיד" [(ngModel)]="Pid" [matAutocomplete]="autoP">
-                <mat-error *ngIf="!Pid">חובה להכניס מספר זהות תלמיד</mat-error>
-                <mat-autocomplete #autoP="matAutocomplete">
+                <mat-select  class="form-item white-text form-item-select" type="text" name="Pid" placeholder=" תלמיד" [(ngModel)]="Pid" >
                     <mat-option *ngFor="let pat of theraPatientList" [value]="pat.id">
                         {{ pat.firstName }} {{ pat.lastName }}
                     </mat-option>
-                </mat-autocomplete>
+                </mat-select>
+                <mat-error *ngIf="!Pid">חובה להכניס מספר זהות תלמיד</mat-error>
 
             </mat-form-field>
             <button class="yellow lighten-2 mx-3 mb-3 align-self-end" mat-mini-fab (click)="choosePlanForUser()">
@@ -110,13 +109,12 @@ have choose
         <!--                THERAPIST                       -->
         <div class="row col-md-12 col-sm-12 mb-1 px-auto form-group text-right" *ngIf="this.db.userNow && canGetTherapist">
             <mat-form-field class="w-80">
-                <input matInput class="form-item white-text" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="Tid" [matAutocomplete]="autoT">
-                <mat-error *ngIf="!Tid">חובה להכניס מספר זהות מטפל</mat-error>
-                <mat-autocomplete #autoT="matAutocomplete">
+                <mat-select  class="form-item white-text form-item-select" type="text" name="Tid" placeholder=" מטפל" [(ngModel)]="Tid">
                     <mat-option *ngFor="let thera of filterTherapistForPlanFromAllTherapist()" [value]="thera.id">
                         {{ thera.firstName }} {{thera.lastName}}
                     </mat-option>
-                </mat-autocomplete>
+                </mat-select>
+                <mat-error *ngIf="!Tid">חובה להכניס מספר זהות מטפל</mat-error>
 
             </mat-form-field>
             <button class="yellow mx-3 mb-3 align-self-end" mat-mini-fab (click)="canGetInfoForAdmin()">
