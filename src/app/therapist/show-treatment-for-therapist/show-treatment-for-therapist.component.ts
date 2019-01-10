@@ -8,23 +8,44 @@ import { ShareDataService } from '../../services/share-data.service';
   styleUrls: ['./show-treatment-for-therapist.component.css']
 })
 export class ShowTreatmentForTherapistComponent implements OnInit {
-
-  constructor(public db: DbService, public sd: ShareDataService) { }
   @Input() Tid: string;
   Pid: string;
   treatDate: Date;
   kind: string;
   treatments: TreatmentInfo[];
   treatmentsRef: any;
-  ngOnInit() {
-    // guard
-    if ((!this.db.isLogin()) || (!this.db.userNow)) {
-      // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
-      this.sd.routeTo('login');
-    }
-    this.getTreatByTherapistId();
-  }
+  constructor(public db: DbService, public sd: ShareDataService) { }
 
+    ngOnInit() {
+      // guard
+      if ((!this.db.isLogin()) || (!this.db.userNow)) {
+        // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
+        this.sd.routeTo('login');
+      }
+      this.getTreatByTherapistId();
+    }
+  
+  
+   
+  
+  
+  
+    
+    getTreatmentsArea() {
+      return this.treatments.filter((item, pos) => {
+          return this.treatments.findIndex(T => item.area === T.area) == pos;
+      });
+    }
+    getTreatmentsDate() {
+      return this.treatments.filter((item, pos) => {
+          return this.treatments.findIndex(T => item.treatDate === T.treatDate) == pos;
+      });
+    }
+  
+  
+  
+  
+ 
 
   getTreatByTherapistId() {
     this.treatmentsRef = this.db.afs.collection('treatmentInfo', ref => {

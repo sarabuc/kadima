@@ -46,7 +46,6 @@ export class SettingComponent implements OnInit {
     ];
     this.newUser = {
       name: null,
-      userName: null,
       mail: null,
       password: null,
       resentPass: null,
@@ -81,12 +80,14 @@ export class SettingComponent implements OnInit {
 
   }
   saveNewUser() {
-    this.newUser['mail'] = this.newUser['userName'];
+    //this.newUser['mail'] = this.newUser['userName'];
     for (const key of Object.keys(this.newUser)) {
+
       if (!this.newUser[key]) {
         this.sd.createAlert('error', 'חסרים פרטים, תקן ונסה שוב', '');
         return;
       }
+    }
       if (this.newUser.password !== this.newUser.resentPass) {
         this.sd.createAlert('error', 'סיסמא לא תואמת בשתי ההכנסות', '');
         return;
@@ -104,12 +105,12 @@ export class SettingComponent implements OnInit {
       this.db.addUser(this.newUser);
       this.newUser = {
         name: null,
-        userName: null,
+        id: null,
         mail: null,
         password: null,
         resentPass: null
       };
-    }
+    
   }
   saveNewMsg(date, hour) {
     console.log(date);

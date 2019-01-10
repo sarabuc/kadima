@@ -14,7 +14,7 @@ export class ShowTreatmentForPatientComponent implements OnInit {
 Tid: string;
 treatDate: Date;
 kind: string;
-treatments: TreatmentInfo[];
+treatments: TreatmentInfo[] = [];
 treatmentsRef: any;
   ngOnInit() {
     // guard
@@ -57,6 +57,17 @@ treatmentsRef: any;
       }
     }
     return true;
+  }
+
+  getTreatmentsArea() {
+    return this.treatments.filter((item, pos) => {
+        return this.treatments.findIndex(T => item.area === T.area) == pos;
+    });
+  }
+  getTreatmentsDate() {
+    return this.treatments.filter((item, pos) => {
+        return this.treatments.findIndex(T => item.treatDate === T.treatDate) == pos;
+    });
   }
 
 }

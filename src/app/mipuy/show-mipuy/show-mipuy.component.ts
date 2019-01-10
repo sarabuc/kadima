@@ -18,6 +18,7 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
   @Input() status: string;
   @Input() planedDiffi: any[] = [];
   @Output() updateDiffForPlan = new EventEmitter();
+  mipuyDataKeys;
   planP: any;
 
   planFiles = [];
@@ -46,7 +47,9 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
     this.db.getSecondCategories(false);
   }
   ngOnChanges() {
-    console.log(this.planedDiffi);
+    console.log(this.mipuyData);
+    this.mipuyDataKeys = Object.keys(this.mipuyData);
+    this.mipuyDataKeys.splice(this.mipuyDataKeys.indexOf('mipuyDate'), 1);
     this.mipuyDecideForPlan.mipuy_id_in_db = '' + this.Pid + '_' + this.mipuyDate;
     this.mipuyDecideForPlan.Pid = this.Pid;
     const keys = Object.keys(this.mipuyData);

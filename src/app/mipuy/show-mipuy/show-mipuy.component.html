@@ -8,13 +8,13 @@
     </div>
 
     <div class="list-group px-1 py-1 mb-3">
-        <div class="" *ngFor="let dif of db.secondCategories">
-            <div class="row  list-group-item purple-text" *ngIf="mipuyData[dif.code]">
+        <div class="" *ngFor="let dif of mipuyDataKeys">
+            <div class="row  list-group-item purple-text" *ngIf="mipuyData[dif]">
 
-                <div class="col-md-3 col-sm-12"> <strong>  {{dif.code}} - </strong></div>
+                <div class="col-md-3 col-sm-12"> <strong>  {{dif}} - </strong></div>
                 <div class="col-md-9 col-sm-12">
-                    <div *ngIf="mipuyData[dif.code]!=dif.code && status != 'plan'">
-                        <div *ngFor="let D of mipuyData[dif.code]">
+                    <div *ngIf="mipuyData[dif]!=dif && status != 'plan'">
+                        <div *ngFor="let D of mipuyData[dif]">
                             <i class="fa fa-check ml-3"></i> {{D}}
                          <!--   <i class="fa fa-pencil ml-1  fa-lg link mr-auto" *ngIf="db.isSecond[D] && status != 'plan'" (click)="currectArea = 'area*' + dif.code; addMipuyDetails.show()"></i>
                        --> </div>
@@ -22,8 +22,8 @@
 
 
                     <div class="d-flex w-100 justify-content-end" *ngIf="true">
-                        <i class="fa fa-pencil ml-1  fa-lg link" *ngIf="mipuyData[dif.code]==dif.code && status != 'plan'" (click)="currectArea = 'area*' + dif.code; addMipuyDetails.show()"></i>
-                        <mat-button-toggle-group [value]="mipuyDecideForPlan[dif.code]" #group="matButtonToggleGroup" (change)="onChoosed(group.value, dif.code, picker, basicModal)" class="yellow lighten-2" *ngIf="status == 'plan'">
+                        <i class="fa fa-pencil ml-1  fa-lg link" *ngIf="mipuyData[dif]==dif && status != 'plan'" (click)="currectArea = 'area*' + dif; addMipuyDetails.show()"></i>
+                        <mat-button-toggle-group [value]="mipuyDecideForPlan[dif]" #group="matButtonToggleGroup" (change)="onChoosed(group.value, dif, picker, basicModal)" class="yellow lighten-2" *ngIf="status == 'plan'">
                             <mat-button-toggle value="yes">
                                 התחל טיפול
                             </mat-button-toggle>

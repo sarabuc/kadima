@@ -18,7 +18,7 @@
                     <mat-form-field class=" w-80 mr-auto ml-auto ">
 
                         <mat-select class="form-item form-item-select" name="Tid" placeholder="מטפל" [(ngModel)]="GROUP.Tid">
-                            <mat-option value="thera.id" *ngFor="let thera of db.allTherapistList">{{ thera.firstName }} {{thera.lastName}}</mat-option>
+                            <mat-option [value]="thera.id" *ngFor="let thera of db.allTherapistList">{{ thera.firstName }} {{thera.lastName}}</mat-option>
                         </mat-select>
                          <mat-error *ngIf="!GROUP.Tid">חובה להכניס מספר זהות מטפל</mat-error>
                     </mat-form-field>
@@ -249,10 +249,18 @@
                     <div class="col-4">
                         <label for="year">מקצוע / תחום:</label>
                     </div>
-                    <div class="col-8" dir="ltr">
+                    <div class="col-8">
+                            <mat-form-field class=" w-100">
+                                    <mat-select  class="form-item white-text form-item-select" type="text" name="newTFA.code" placeholder=" תחום" [(ngModel)]="newTFA.code" >
+                    
+                                        <mat-option *ngFor="let dif of db.secondCategories" [value]="dif.code">
+                                            {{ dif.code}}
+                                        </mat-option>
+                                    </mat-select>
+                    
+                                </mat-form-field>
 
-
-                    <p-autoComplete [(ngModel)]="newTFA.code" [ngModelOptions]="{standalone: true}" [suggestions]="mainDiffi" field="code" (completeMethod)="searchAr($event)" [dropdown]="true" [style]="{'text-align':'right'}"></p-autoComplete>
+                   <!-- <p-autoComplete [(ngModel)]="newTFA.code" [ngModelOptions]="{standalone: true}" [suggestions]="mainDiffi" field="code" (completeMethod)="searchAr($event)" [dropdown]="true" [style]="{'text-align':'right'}"></p-autoComplete>-->
 
                     </div>
                 </div>
@@ -260,8 +268,17 @@
                     <div class="col-4 ">
                         <label for="brand">מטפל</label>
                     </div>
-                    <div class="col-8" dir="ltr">
-                    <p-autoComplete [(ngModel)]="newTFA.id" [ngModelOptions]="{standalone: true}" [suggestions]="thForSearch" field="id" (completeMethod)="searchTh($event)" [dropdown]="true" [style]="{'text-align':'right'}"></p-autoComplete>
+                    <div class="col-8">
+                            <mat-form-field class=" w-100">
+                                    <mat-select  class="form-item white-text form-item-select" type="text" name="newTFA.id" placeholder=" מטפל" [(ngModel)]="newTFA.id" >
+                    
+                                        <mat-option *ngFor="let T of db.allTherapistList" [value]="T.id">
+                                            {{ T.firstName}} {{T.lastName}}
+                                        </mat-option>
+                                    </mat-select>
+                    
+                                </mat-form-field>
+                   <!-- <p-autoComplete [(ngModel)]="newTFA.id" [ngModelOptions]="{standalone: true}" [suggestions]="thForSearch" field="id" (completeMethod)="searchTh($event)" [dropdown]="true" [style]="{'text-align':'right'}"></p-autoComplete>-->
 
                     </div>
                 </div>

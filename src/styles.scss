@@ -1,4 +1,8 @@
              @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+             .ui-widget.ui-widget-content {
+                width: 250px !important;
+                margin: 0.3rem !important;
+            }
              .purple-border-top {
                  border-top: 10px solid purple !important;
                  border-radius: 10px !important;
@@ -28,9 +32,7 @@
                  color: white !important;
              }
              
-             .ui-widget.ui-widget-content {
-                 width: 300px !important;
-             }
+             
              
              .ui-datepicker .ui-datepicker-title select {
                  display: inline !important;

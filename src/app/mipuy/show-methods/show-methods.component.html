@@ -2,19 +2,9 @@
     <div class="col-sm-12 coll-md-1 px-3 mb-3 d-flex justify-content-around">
         <i class="fa fa-search fa-2x white-text ml-3"></i>
         <input type="text" class="form-item white-text w-60" id="myInput" ng-model="test" placeholder="סינון וחיפוש" name="searchMethod" [(ngModel)]="searchMethod">
-        <button class="purple" mat-fab (click)="opNewMethod.show($event)"><i class="fa fa-plus"></i></button>
+        <button class="purple" mat-fab (click)="opNewMethod.show()"><i class="fa fa-plus"></i></button>
     </div>
-    <p-overlayPanel #opNewMethod class="top-0">
-        <form class="form-inline md-form mt-2 ml-2 mr-2">
-            <div class="w-100 md-form">
-                <input class="form-control my-0" type="text" name="newM" placeholder="תיאור שיטה" [(ngModel)]="newM" required>
-                <button class="btn btn-sm purple ml-2 px-1" (click)="saveNewMethod();opNewMethod.hide($event)" [disabled]="!newM">
-      <i class="fa fa-check"></i>
-    </button>
-            </div>
-        </form>
-    </p-overlayPanel>
-
+   
 
 </div>
 <div class="list-group ">
@@ -31,7 +21,7 @@
         </div>
     </div>
 </div>
-<p-overlayPanel #opThera>
+<!--<p-overlayPanel #opThera>
     <p-listbox #Tlist [options]="therapists" (onChange)="onChangeSelectedThera($event.value[0], Tlist)" multiple="multiple" checkbox="checkbox" filter="filter" optionLabel="name">
         <p-header>
             <i class="fa fa-pencil"></i> התאמת מטפל
@@ -51,3 +41,86 @@
     <button class="my-button  w-100" (click)="saveMatchDiffi(Dlist, opDiffi, $event)">שמור</button>
 
 </p-overlayPanel>
+
+<p-overlayPanel #opNewMethod class="top-0">
+        <form class="form-inline md-form mt-2 ml-2 mr-2">
+            <div class="w-100 md-form">
+                <input class="form-control my-0" type="text" name="newM" placeholder="תיאור שיטה" [(ngModel)]="newM" required>
+                <button class="btn btn-sm purple ml-2 px-1" (click)="saveNewMethod();opNewMethod.hide($event)" [disabled]="!newM">
+      <i class="fa fa-check"></i>
+    </button>
+            </div>
+        </form>
+</p-overlayPanel>-->
+
+
+
+
+
+
+
+<div mdbModal #opDiffi="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-info " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead mr-2">התאמת קושי</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="opDiffi.hide()">
+                <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p-listbox #Dlist [options]="treatCategories" (onChange)="onChangeSelectedDiff($event.value[$event.value.length-1], Dlist)" multiple="multiple" checkbox="checkbox" filter="filter" optionLabel="code">
+                </p-listbox>
+                <button class="my-button" (click)="saveMatchDiffi(Dlist, opDiffi, $event)">שמור</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div mdbModal #opThera="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-info " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead mr-2"> <i class="fa fa-pencil"></i> התאמת מטפל</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="opThera.hide()">
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                    <p-listbox #Tlist [options]="therapists" (onChange)="onChangeSelectedThera($event.value[$event.value.length-1], Tlist)" multiple="multiple" checkbox="checkbox" filter="filter" optionLabel="name">
+                    </p-listbox>
+                    <button class="my-button" (click)="saveMatchTherapist(Tlist, opThera, $event)">שמור</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div mdbModal #opNewMethod="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-info " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead mr-2">הכנס קושי</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="opNewMethod.hide()">
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+             <div class="text-center">
+
+                    <form class="form-inline md-form mt-2 ml-2 mr-2">
+                            <div class="md-form">
+                                <input class="form-control my-0" type="text" name="newM" placeholder="תיאור שיטה" [(ngModel)]="newM" required>
+                                <button class="btn btn-sm purple ml-2 px-1" (click)="saveNewMethod();opNewMethod.hide($event)" [disabled]="!newM">
+                                <i class="fa fa-check"></i>
+                                </button>
+                            </div>
+                    </form>
+            </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

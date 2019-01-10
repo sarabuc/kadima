@@ -47,11 +47,7 @@
                                         <b>{{user.id}}</b>
                                     </div>
 
-                                    <div class="ui-g-6 ui-sm-6">שם משתמש</div>
-                                    <div class="ui-g-6 ui-sm-6">
-                                        <b>{{user.userName}}</b>
-                                    </div>
-
+                                    
                                     <div class="ui-g-6 ui-sm-6">כתובת מייל </div>
                                     <div class="ui-g-6 ui-sm-6">
                                         <b>{{user.mail}}</b>
@@ -106,9 +102,9 @@
                 </div>
                 <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
                     <div class="input-group-append">
-                        <span class="input-group-text purple lighten-3 black-text" style="width: 110px">שם משתמש - כתובת מייל</span>
+                        <span class="input-group-text purple lighten-3 black-text" style="width: 110px">כתובת מייל</span>
                     </div>
-                    <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס שם משתמש  " [(ngModel)]="newUser.userName">
+                    <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס שם משתמש  " [(ngModel)]="newUser.mail">
 
                 </div>
                 <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
@@ -118,14 +114,7 @@
                     <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס מ.ז מטפל  " [(ngModel)]="newUser.id">
 
                 </div>
-                <!--<div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
-                                <div class="input-group-append">
-                                    <span class="input-group-text purple lighten-3 black-text" style="width: 110px"> מייל </span>
-                                </div>
-                                <input type="text" class="form-control mt-0 purple-border px-2" placeholder="הכנס מייל  "
-                                [(ngModel)]="newUser.mail" >
-                            
-                            </div>-->
+
                 <div class="input-group md-form form-sm form-5 pl-0 w-80 mx-auto">
                     <div class="input-group-append">
                         <span class="input-group-text purple lighten-3 black-text" style="width: 110px">סיסמא</span>
@@ -137,12 +126,14 @@
                     <div class="input-group-append">
                         <span class="input-group-text purple lighten-3 black-text" style="width: 110px">חזור על סיסמא</span>
                     </div>
-                    <input type="password" class="form-control mt-0 purple-border px-2" placeholder="הכנס שוב סוסמת משתמש  " [(ngModel)]="newUser.resentPass">
+                    <input type="password" class="form-control mt-0 purple-border px-2" placeholder="הכנס שוב סיסמת משתמש  " [(ngModel)]="newUser.resentPass">
 
                 </div>
 
                 <hr class="ui-widget-content" style="border-top:0">
-                <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="saveNewUser()" mdbRippleRadius>שמור </button>
+                <div class="col-12">
+                        <button type="button" class="btn btn-secondary  waves-light w-100" data-dismiss="modal" (click)="saveNewUser()" mdbRippleRadius>שמור </button>
+                </div>
 
 
             </div>
@@ -207,7 +198,9 @@
 
                 </div>
                 <hr class="ui-widget-content" style="border-top:0">
-                <button type="button" class="btn btn-secondary  waves-light" data-dismiss="modal" (click)="saveNewMsg(date, hour)" mdbRippleRadius>שמור </button>
+                <div class="col-12">
+                        <button type="button" class="btn btn-secondary  waves-light w-100" data-dismiss="modal" (click)="saveNewMsg(date, hour)" mdbRippleRadius>שמור </button>
+                </div>
 
             </div>
         </mat-tab>

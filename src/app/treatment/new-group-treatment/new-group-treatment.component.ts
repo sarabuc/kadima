@@ -113,7 +113,7 @@ export class NewGroupTreatmentComponent implements OnInit {
     console.log(this.sd.dictionary);
     const line: { [k: string]: any} = {};
     for (const key of Object.keys(this.newTreat)) {
-      if (key !== 'comment' && !this.newTreat[key]) {
+      if (key !== 'comment' && key!== 'index' && !this.newTreat[key]) {
         console.log(key);
         console.log(this.sd.dictionary[key]);
         // it is underfind
@@ -238,10 +238,11 @@ this.newTreat['insertTime'] = '' + new Date();
       // check if is a pat have progress
       if(this.newTreat[key]['progress'] && this.newTreat[key]['progress'] > 0) {
         if(this.sd.useML) {
+          const tempPat = this.patsForGroup.find(P => P.id === key);
           const data = {
             progress: this.newTreat[key]['progress'], 
             Pid: key, 
-            birth_year: this.patsForGroup.find(P => P.id === key).birthDate, 
+            birth_year: tempPat.birthDate, 
             diffi: this.newTreat.subject, 
             method: this.monthes, 
             insertBy:  this.db.userNow.mail, 

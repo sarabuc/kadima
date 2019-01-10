@@ -41,15 +41,18 @@ exports.getMipuysForPatient = functions.https.onCall((data, context) => __awaite
             // const fathersWasEntered = [];
             // mipuyDetails['sort'] = diffDetailsForPat;
             const filterdArray = yield diffDetailsForPat.filter(diff => diffDetailsForPat.findIndex(D => D.data().Dfather === diff.data().code) < 0);
-            // mipuyDetails['filtered'] = filterdArray;
+            //  mipuyDetails['filtered'] = filterdArray;
             for (const diff of filterdArray) {
-                if (diff.data().allFathers === 'second') {
+                console.log(diff.data());
+                if (diff.data().allFathers === 'second' || diff.data().Dfather === 'null') {
+                    console.log('second or first');
                     if (!mipuyDetails[diff.data().code]) {
                         mipuyDetails[diff.data().code] = [];
                     }
                     mipuyDetails[diff.data().code].push(diff.data().code);
                 }
                 else {
+                    console.log('not second');
                     const fathers = diff.data().allFathers.split('*');
                     if (!fathers[1]) {
                         console.log('error father');

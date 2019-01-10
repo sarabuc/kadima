@@ -23,8 +23,8 @@
             <mat-form-field class=" w-100">
                 <mat-select  class="form-item white-text form-item-select" type="text" name="kind" placeholder=" סנן לפי סוג טיפול" [(ngModel)]="kind" >
 
-                    <mat-option *ngFor="let treat of treatments" [value]="treat.kind">
-                        {{ treat.kind }}
+                    <mat-option *ngFor="let treat of getTreatmentsArea()" [value]="treat.area">
+                        {{ treat.area }}
                     </mat-option>
                 </mat-select>
 
@@ -35,7 +35,7 @@
             <mat-form-field class=" w-100">
                 <mat-select  class="form-item white-text form-item-select" type="text" name="treatDate" placeholder=" סנן לפי תאריך" [(ngModel)]="treatDate" >
 
-                    <mat-option *ngFor="let treat of treatments" [value]="treat.treatDate">
+                    <mat-option *ngFor="let treat of getTreatmentsDate()" [value]="treat.treatDate">
                         {{ treat.treatDate }} <!--.toDate()| date: 'dd/MM/yyyy'-->
                     </mat-option>
                 </mat-select>

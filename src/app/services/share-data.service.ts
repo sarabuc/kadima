@@ -273,7 +273,6 @@ export class ShareDataService {
       // have delete from plans collection
       // const object: any = {};
 
-      // object[fileName] = firebase.firestore.FieldValue.delete();
       const docRef = firebase.firestore().collection('patientDate').doc(Pid).collection('plans').doc(planDocId);
       const tempD = await docRef.get();
       const temp = tempD.data();
@@ -282,20 +281,10 @@ export class ShareDataService {
       docRef.update(temp).then(res2 => {
         this.createAlert('success', 'קובץ נמחק בהצלחה', '');
       });
-      //   const temp = await docRef.get();
-      //   console.log(temp.data());
-      // console.log(temp.data()[fileName]);
-
-      //   delete temp.data()[fileName];
-      //   console.log(temp.data();
-      //   docRef.set(temp.data());
-      //     docRef.update({
-      //     fileName: firebase.firestore.FieldValue.delete()
+     
     });
 
-    // }).catch(err => {
-    //   // Uh-oh, an error occurred!
-    // });
+    
   }
 
   getAndDownloadFile(path, fileName, option) {

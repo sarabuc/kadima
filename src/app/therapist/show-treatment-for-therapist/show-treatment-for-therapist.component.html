@@ -1,5 +1,75 @@
 <div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100">
 
+        <div class="row d-flex justify-content-around">
+            <div class="col-12 mt-3 mb-3">
+                <h2 class="nice-text"> שיעורים שהתקימו </h2>
+            </div>
+    
+    
+            <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
+                <mat-form-field class=" w-100">
+                    <mat-select  class="form-item white-text form-item-select" type="text" name="Pid" placeholder=" סנן לפי תלמיד" [(ngModel)]="Pid" >
+    
+                        <mat-option *ngFor="let treat of treatments" [value]="treat.Pid">
+                            {{ db.findPatientNameById(treat.Pid)}}
+                        </mat-option>
+                    </mat-select>
+    
+                </mat-form-field>
+            </div>
+    
+    
+            <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
+                <mat-form-field class=" w-100">
+                    <mat-select  class="form-item white-text form-item-select" type="text" name="kind" placeholder=" סנן לפי סוג טיפול" [(ngModel)]="kind" >
+    
+                        <mat-option *ngFor="let treat of getTreatmentsArea()" [value]="treat.area">
+                            {{ treat.area }}
+                        </mat-option>
+                    </mat-select>
+    
+                </mat-form-field>
+            </div>
+    
+            <div class="col-md-4 col-sm-6 mb-1 px-auto form-group text-right">
+                <mat-form-field class=" w-100">
+                    <mat-select  class="form-item white-text form-item-select" type="text" name="treatDate" placeholder=" סנן לפי תאריך" [(ngModel)]="treatDate" >
+    
+                        <mat-option *ngFor="let treat of getTreatmentsDate()" [value]="treat.treatDate">
+                            {{ treat.treatDate }} <!--.toDate()| date: 'dd/MM/yyyy'-->
+                        </mat-option>
+                    </mat-select>
+    
+                </mat-form-field>
+            </div>
+    
+    
+    
+        </div>
+    
+    
+        <div *ngFor="let treat of treatments">
+            <app-show-treatment-info [treat]="treat" [date]="treat.treatDate" [status]="'byTherapist'" *ngIf="checkFilter(treat, treat.treatDate)"></app-show-treatment-info>
+    
+        </div>
+    
+    
+    
+    
+    
+    
+    </div>
+
+
+
+
+
+
+
+<!--
+
+<div class="container-fluid dark-card card mx-2 my-2 px-4 py-2 w-100">
+
     <div class="row d-flex justify-content-around">
         <div class="col-12 mt-3 mb-3">
             <h2 class="nice-text"> שיעורים שהתקימו </h2>
@@ -63,4 +133,4 @@
 
 
 
-</div>
+</div>-->

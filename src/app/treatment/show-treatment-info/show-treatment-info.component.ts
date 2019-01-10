@@ -26,6 +26,8 @@ export class ShowTreatmentInfoComponent implements OnInit, OnChanges {
       this.status = '';
     }
     try {
+      this.this_treatDate = this.treat.treatDate;
+      console.log(this.this_treatDate);
       const tempD = this.this_treatDate.split('.');
       this.hebrewDate = this.sd.convertDateToHebrewDate(+tempD[0], +tempD[1], +tempD[2]);
 
@@ -45,6 +47,7 @@ export class ShowTreatmentInfoComponent implements OnInit, OnChanges {
       this.status = '';
     }
     try {
+      this.this_treatDate = this.treat.treatDate;
       const tempD = this.this_treatDate.split('.');
       this.hebrewDate = this.sd.convertDateToHebrewDate(+tempD[0], +tempD[1], +tempD[2]);
 

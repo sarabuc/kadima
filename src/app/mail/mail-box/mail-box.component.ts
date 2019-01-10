@@ -123,12 +123,6 @@ export class MailBoxComponent implements OnInit {
 
   async allMassagesForUser() {
     const f = fb.firestore();
-    // const allM = await f.collection('users').doc(this.db.userNow.mail).collection('massages').get();
-    // for (const item of allM.docs) {
-    //   console.log(item);
-    //   const id = item.id;
-    //   f.collection('users').doc(this.db.userNow.mail).collection('massages').doc(id).delete();
-    // }
     const admin = await f.collection('setting').doc('admin').collection('massages').get();
     console.log(admin);
   }

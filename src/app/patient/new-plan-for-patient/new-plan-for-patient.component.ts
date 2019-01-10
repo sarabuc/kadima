@@ -266,9 +266,9 @@ this.sd.routeTo('/Pcard', this.Pid);
       const M = {
         massage: 'לתלמיד בעל מ.ז : ' + this.Pid + 'מתקרב תאריך פקיעת תוקף טיפול - בתאריך ' + this.PLAN.dueDate,
         time: dateToRemember,
-        userId: this.db.userNow.userName,
+        userId: this.db.userNow.mail,
         status: 'dueDate',
-        insertBy: this.db.userNow.userName,
+        insertBy: this.db.userNow.mail,
         insertTime: new Date()
       };
       console.log(M);

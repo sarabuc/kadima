@@ -74,8 +74,10 @@ onRowSelect(event) {
     this.db.isBusy = false;
   }
   getAreasForTherapist() {
+    console.log('get area' + this.GROUP.Tid);
     this.db.isBusy = true;
     this.db.getAreasByTherapistIDRef(this.GROUP.Tid).valueChanges().subscribe(area => {
+      console.log(area);
       this.areas = area;
       this.showAreaForTherapist = true;
       this.GROUP.area = null;
@@ -217,8 +219,8 @@ try {
      return;
     }
     const newTFA: AreaForTherapist = {
-      id: this.newTFA.id.id,
-      code: this.newTFA.code.code,
+      id: this.newTFA.id,
+      code: this.newTFA.code,
       insertBy: this.db.userNow.mail,
       insertTime: new Date()
     };

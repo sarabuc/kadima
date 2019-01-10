@@ -11,30 +11,29 @@
                 <strong class="white-text mr-2">{{db.findPatientNameById(treat.Pid)}}</strong>
             </h4>
         </div>
-        <div class="col-md-3 col-sm-6 mb-2 px-2">
+        <div class="col-md-6 col-sm-12 mb-2 px-2">
             <small class="yellow-text">תאריך</small>
             <strong class="white-text mr-2">{{this_treatDate}}</strong> |
             <small class="white-text mr-2">{{hebrewDate}}</small>
         </div>
-        <div class="col-md-3 col-sm-6 mb-2 px-2">
+        <div class="col-md-6 col-sm-12 mb-2 px-2">
+                <small class="yellow-text">תחום טיפול</small>
+                <strong class="white-text mr-2">{{treat.area}}</strong>
+        </div>
+        <div class="col-md-4 col-sm-4 mb-2 px-2">
             <small class="yellow-text">מספר שעות</small>
             <strong class="white-text mr-2">{{treat.hours}}</strong>
         </div>
-        <div class="col-md-3 col-sm-6 mb-2 px-2">
+        <div class="col-md-4 col-sm-4 mb-2 px-2">
             <small class="yellow-text">משעה</small>
             <strong class="white-text mr-2">{{treat.startTime}}</strong>
         </div>
 
-        <div class="col-md-3 col-sm-6 mb-2 px-2">
+        <div class="col-md-4 col-sm-4 mb-2 px-2">
             <small class="yellow-text">עד שעה</small>
             <strong class="white-text mr-2">{{treat.endTime}}</strong>
-        </div>
-
-        <div class="col-md-3 col-sm-12 mb-2 px-2">
-            <small class="yellow-text">תחום טיפול</small>
-            <strong class="white-text mr-2">{{treat.area}}</strong>
-        </div>
-        <div class="col-md-9 col-sm-12 mb-2 px-2">
+        </div>        
+        <div class="col-md-12 col-sm-12 mb-2 px-2">
             <small class="yellow-text">נושא טיפול</small>
             <strong class="white-text mr-2">{{treat.description}}</strong>
         </div>

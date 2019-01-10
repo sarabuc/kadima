@@ -454,6 +454,7 @@ this.allTherapistList.push(T);
  * addUser
  */
 public addUser(user) {
+  console.log(user);
   this.allUsersRef.doc(user.mail).set(user);
   this.sd.createAlert('success', 'משתמש הוסף בהצלחה', '');
 }
@@ -473,7 +474,7 @@ public addTreatForML(data) {
     this.allTherapistsRef.doc('' + thera.id).set(thera).then(res => {
       return res;
     });
-    this.sd.createAlert('success', 'מטפל בשם' + thera.firstName + thera.lastName + 'נוסף בהצלחה', '');
+    this.sd.createAlert('success', ' מטפל בשם' + thera.firstName + ' ' + thera.lastName + 'נוסף בהצלחה ', '');
   }
 
   /**
@@ -483,7 +484,7 @@ public addTreatForML(data) {
     pati.insertBy = this.userNow.mail;
     pati.insertTime = new Date();
    this.allPatientsRef.doc('' + pati.id).set(pati).then(res => {
-     this.sd.createAlert('success', 'תלמיד בשם' + pati.firstName + pati.lastName + 'נוסף בהצלחה', '');
+     this.sd.createAlert('success', ' תלמיד בשם' + pati.firstName + ' ' + pati.lastName + 'נוסף בהצלחה ', '');
 return res;
    });
   }

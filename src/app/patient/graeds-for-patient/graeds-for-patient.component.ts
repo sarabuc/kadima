@@ -126,13 +126,7 @@ export class GraedsForPatientComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  // delete() {
-  //   let index = this.cars.indexOf(this.selectedCar);
-  //   this.cars = this.cars.filter((val, i) => i != index);
-  //   this.car = null;
-  //   this.displayDialog = false;
-  // }
-
+  
   onRowSelect(event) {
     console.log(event);
     this.newGrade = false;

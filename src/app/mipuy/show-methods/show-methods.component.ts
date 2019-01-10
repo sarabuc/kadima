@@ -53,11 +53,11 @@ export class ShowMethodsComponent implements OnInit {
     return (M.toUpperCase().indexOf(filter) > -1);
   }
   matchToDiff(oPanel, event, treatCode) {
-    oPanel.toggle(event);
+    oPanel.toggle();
     this.selectedMethod = treatCode;
   }
   matchToTherapist(oPanel, event, treatCode) {
-    oPanel.toggle(event);
+    oPanel.toggle();
     this.selectedMethod = treatCode;
   }
   saveMatchTherapist(list, oPanel, event) {
@@ -107,7 +107,7 @@ export class ShowMethodsComponent implements OnInit {
     console.log(index);
 
     if (index > -1) {
-      this.selectedDiffi.splice(index, 1);
+      //this.selectedDiffi.splice(index, 1);
     } else {
       this.selectedDiffi.push(selected);
     }
@@ -126,7 +126,7 @@ export class ShowMethodsComponent implements OnInit {
     console.log(index);
 
     if (index > -1) {
-      this.selectedTheras.splice(index, 1);
+      //this.selectedTheras.splice(index, 1);
     } else {
       this.selectedTheras.push(selected);
     }
