@@ -147,8 +147,8 @@ export class SettingComponent implements OnInit {
 
 
   deleteMail() {
-    //console.log(this.massageToDelete.status);
-    //console.log(this.massageToDelete);
+    console.log(this.massageToDelete.status);
+    console.log(this.massageToDelete);
     switch (this.massageToDelete.status) {
 
       case 'every_year':

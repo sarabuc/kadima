@@ -1,14 +1,14 @@
 <div class="list-group scrollable-x" #list>
     <div *ngIf="status != 'area'">
         <div class="list-group-item black-text border-top-bottom" *ngFor="let diffi of db.treatmentCategories" style="text-align:right">
-            <app-difficult #diff [status]="status" [code]="diffi.code" [describtion]="diffi.description" [isLeave]="diffi.isLeave" [index]="diffi.index" [allFathers]="diffi.allFathers"></app-difficult>
+            <app-difficult #diff [status]="status" [code]="diffi.code" [describtion]="diffi.description" [isLeave]="diffi.isLeave" [index]="diffi.index" [allFathers]="diffi.allFathers" [Dfather]="diffi.Dfather"></app-difficult>
 
         </div>
 
     </div>
     <div *ngIf="status == 'area'">
         <div class="list-group-item black-text border-top-bottom" style="text-align:right">
-            <app-difficult #areadiff [status]="status" [code]="areaForMipuy" [describtion]="areaForMipuy" [isLeave]="'false'" [index]="'0'" [allFathers]="'null'"></app-difficult>
+            <app-difficult #areadiff [status]="status" [code]="areaForMipuy" [describtion]="areaForMipuy" [isLeave]="'false'" [index]="'0'" [allFathers]="'null'" [Dfather]="child.Dfather"></app-difficult>
 
         </div>
     </div>

@@ -14,6 +14,7 @@ export class DifficultComponent implements OnInit, OnChanges {
   @Input() status: string; // mipuy or show
   @Input() index: string;
   @Input() allFathers: string;
+  @Input() Dfather: string;
  // @Output() choosed = new EventEmitter();
   isLeave = true;
   childrenAreOpen = false;
@@ -95,6 +96,8 @@ export class DifficultComponent implements OnInit, OnChanges {
     if (this.status === 'mipuy' && checked) {
       //console.log('**********************************************');
       this.db.newMipuy[this.code] = 1;
+      delete this.db.newMipuy[this.Dfather];
+
       this.dificlass = 'line-selected';
       //console.log(this.db.newMipuy);
     } else if (this.status === 'mipuy' && !checked) {

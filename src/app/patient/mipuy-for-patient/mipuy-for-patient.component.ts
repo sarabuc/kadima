@@ -67,9 +67,12 @@ getAllMipuysForPat() {
         });
     //console.log(this.allMipuy);
   }).catch(err => {
-    this.allMipuy = 'no internet';
-    //console.log(err);
-  });
+    console.log(this.allMipuy);
+if(this.allMipuy !== 'no-mipuy') {
+  this.allMipuy = 'no internet';
+}
+  console.log(err);
+});
 }
 
   closeModal(str: string) {

@@ -46,7 +46,7 @@ return null;
     this.diff.isChoozen = false;
   }
 
-  addNewMipuy() {
+  async addNewMipuy() {
     if (status === 'show') {
       return;
     }
@@ -54,36 +54,40 @@ return null;
     let date ;
     this.finishedMipuy.emit('finish');
     if (this.status === 'mipuy') {
-     const t_date = new Date();
-      date = '' + t_date.getDate() + '.' + (t_date.getMonth() + 1) + '.' + t_date.getFullYear();
+      date = this.sd.convertDateToStringDD_MM_YYYY(new Date());
 
     } else if (this.status === 'area') {
       date = this.dateForMipuyByArea;
     } else {
       return;
-    }//
+    }
 
-//console.log('date' + date);
     this.db.isBusy = true;
     const diffiArr = Object.keys(this.diffis);
     if (diffiArr.length > 0 && this.status === 'mipuy') {
-     //console.log('date' + date);
      const docName = '' + this.Pid + '_' + date;
      const mipuy = {
        Pid: '' + this.Pid,
         mipuyDate: date,
-        planForPatient: ''
      };
-      this.db.mipuyForPatientRef.doc(docName).set(mipuy);
+     try{
+      //if exist 
+      await this.db.mipuyForPatientRef.doc(docName).update(mipuy);
+
+     } catch(err) {
+       //if not exist 
+      await this.db.mipuyForPatientRef.doc(docName).set(mipuy);
+
+     }
       const M = {
         massage: 'לתלמיד בעל מ.ז : ' + this.Pid + ' עודכן מיפוי קשיים אך לא תוכנן טיפול',
         time: new Date(),
         userId: this.db.userNow.mail,
         status: 'planForMipuy',
         insertBy: this.db.userNow.name,
-        insertTime: new Date()
+        insertTime: new Date() 
       };
-      this.db.getAdminMassagesRef().doc('PFM' + docName).set(M);
+     await this.db.updateAdminMassage('PFM' + docName, M);
     }
 
     let diffi: PatientsDifficult;
@@ -93,15 +97,15 @@ return null;
         Pid: '' +  this.Pid,
         mipuyDate: date,
         status: 'yes',
-        degree: 1
+        degree: 1, 
+        insertBy: this.db.userNow.mail, 
+        insertTime: new Date()
       };
-
-      diffiArr.forEach(dif => {
-
+      for(const dif of diffiArr) {
         diffi.Dcode = dif;
         diffi.degree = this.diffis[dif];
-        this.db.addPatientDifficult(diffi);
-      });
+       await this.db.difficultForPatientRef.add(diffi)
+      }
       this.sd.createAlert('success', 'מיפוי הוסף בהצלחה', '');
     this.sd.createMessage('warn', 'יש לרענו את הדף כדי לצפות בכל המיפויים  ', 'שים לב');
     this.db.newMipuy = {};

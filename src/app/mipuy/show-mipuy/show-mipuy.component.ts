@@ -111,7 +111,7 @@ async  getPlanForPatient() {
   this.db.mipuyForPatientRef.doc<Mipuy>(this.mipuyDecideForPlan.mipuy_id_in_db).valueChanges().subscribe(mipuy => {
     //console.log('mipuy');
     plan_docName = mipuy.planForPatient;
-    if (plan_docName === '') {
+    if (!plan_docName || plan_docName === '') {
       this.planP = 'empty';
       return;
     }

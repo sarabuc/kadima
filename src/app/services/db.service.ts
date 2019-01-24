@@ -130,7 +130,7 @@ export interface Method {
 export interface Mipuy {
   Pid: string;
   mipuyDate: string;
-  planForPatient: string;
+  planForPatient?: string;
   insertBy?: string;
   insertTime?: Date;
 }
@@ -1045,7 +1045,9 @@ export class DbService {
     });
   }
   getAdminMassagesRef() {
-    return this.afs.collection('setting/admin/massages');
+    return this.afs.collection('setting/admin/massages', ref => {
+      return ref.where('time', '<=', new Date());
+    });
   }
 
   getTreatInfoRef(Pid) {

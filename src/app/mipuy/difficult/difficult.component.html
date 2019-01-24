@@ -37,6 +37,6 @@
     </div>
     <div class="mr-8" *ngIf=" childrenAreOpen">
         <!-- children -->
-        <app-difficult *ngFor="let child of childDifficults" [status]="status" [code]="child.code" [describtion]="child.description" [index]="child.index" [allFathers]="child.allFathers"></app-difficult>
+        <app-difficult *ngFor="let child of childDifficults" [status]="status" [code]="child.code" [describtion]="child.description" [index]="child.index" [allFathers]="child.allFathers" [Dfather]="child.Dfather"></app-difficult>
     </div>
 </div>
