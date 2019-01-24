@@ -12,7 +12,7 @@ This is due, inter alia, to the Insufficient utilization of resources.
 
 #### The system that is opened will try to answer the existing deficiencies. And rationalize the current system.
 
-  ## [live our application](https://kadima-try.firebaseapp.com/login)
+  ## [live our application](https://kadima1-fa119.firebaseapp.com/)
   
   ### Documentation
 - [Project proposal ](https://github.com/sarabuc/kadima/blob/master/documents/%D7%93%D7%95%D7%97%20%D7%A7%D7%93%D7%99%D7%9E%D7%94-%D7%A4%D7%A8%D7%95%D7%99%D7%A7%D7%98.pdf)
@@ -20,4 +20,4 @@ This is due, inter alia, to the Insufficient utilization of resources.
 
  ### Shortcuts
 
-![logo1](https://github.com/sarabuc/kadima/blob/master/%D7%93%D7%A3%20%D7%9B%D7%A0%D7%99%D7%A1%D7%94.avi)
+![logo1](https://github.com/sarabuc/kadima/blob/master/documents/logo.png)
