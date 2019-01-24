@@ -64,6 +64,7 @@ mapedTreatInfo;
            data: tempData.map(G => G.grade)
          };
          this.allGrades.push(this.mapedAllGrades[key]);
+         console.log(this.allGrades);
          this.optionsForGrades.push({
            title: {
              display: true,
@@ -87,23 +88,23 @@ mapedTreatInfo;
 
   getMipuysForPat() {
     // this.allMipuy = undefined;
-    // console.log('get mipuy');
+    // //console.log('get mipuy');
     // const mipuyForPatient = firebase.functions().httpsCallable('getMipuysForPatientBySecondAreas');
     // mipuyForPatient({ text: this.Pid }).then(res => {
-    //   console.log(res);
+    //   //console.log(res);
     //   // for (const mipuy of res.data) {
     //   //   mipuy.mipuyDate = this.sd.converrSecondsToDateTime(mipuy.mipuyDate._seconds);
     //   // }
     //   this.allMipuy = res.data;
-    //   console.log(this.allMipuy);
+    //   //console.log(this.allMipuy);
     // }).catch(err => {
     //   this.allMipuy = 'no internet';
-    //   console.log(err);
+    //   //console.log(err);
     // });
   }
   async getProgressForPat() {
     this.db.getGroupTreatInfoForProgressRef(this.Pid).valueChanges().subscribe(async(info) => {
-            console.log(info);
+            //console.log(info);
 
      // info = info.filter(i => i.progress < 0);
       info = info.sort((a, b) => {
@@ -121,7 +122,7 @@ mapedTreatInfo;
 
 
       });
-      console.log(info);
+      //console.log(info);
    this.groupInfo = info.map(inf => {
      return {
       comment: inf[this.Pid].comment,
@@ -148,7 +149,7 @@ mapedTreatInfo;
          };
 
          this.groupInfo.push(this.mapedGroupInfo[key]);
-            console.log(this.groupInfo);
+            //console.log(this.groupInfo);
 
         this.optionsForGroupInfo.push({
           title: {
@@ -158,7 +159,7 @@ mapedTreatInfo;
           }
         });
        }
-       console.log(this.mapedGroupInfo);
+       //console.log(this.mapedGroupInfo);
  });
 
 
@@ -202,24 +203,24 @@ mapedTreatInfo;
           }
         });
       }
-      console.log(this.mapedTreatInfo);
+      //console.log(this.mapedTreatInfo);
     });
   }
 
 
  async getGroupNameAndAreaByCode( groupCode) {
-   console.log(groupCode);
+   //console.log(groupCode);
   const group =  await this.db.DB.collection('groups').doc(groupCode).get();
-  console.log(this.groupInfo);
+  //console.log(this.groupInfo);
  return group.data().groupName + '- ' + group.data().area;
   
   }
   // async getGroupNameAndAreaByCode(indexG, indexOption, groupCode) {
   // const group =  await this.db.DB.collection('groups').doc(groupCode).get();
-  // console.log(this.groupInfo);
+  // //console.log(this.groupInfo);
   // const name = group.data().groupName + '- ' + group.data().area;
   // this.groupInfo[indexG]['datasets'][0]['label'] = name;
   // this.optionsForGroupInfo[indexOption]['title']['text'] = name;
-  // console.log(this.groupInfo);
+  // //console.log(this.groupInfo);
   // }
 }

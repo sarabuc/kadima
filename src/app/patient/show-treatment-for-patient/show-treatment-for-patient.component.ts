@@ -31,7 +31,7 @@ treatmentsRef: any;
       return ref.where('Pid', '==', this.Pid).orderBy('treatDate', 'desc');
     });
     this.treatmentsRef.valueChanges().subscribe(treat => {
-     // console.log(treat);
+     // //console.log(treat);
       this.treatments = treat;
     });
   }

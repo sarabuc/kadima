@@ -41,7 +41,7 @@ export class NewGradesComponent implements OnInit {
 
 
   onSelectedClass(event) {
-    console.log(event);
+    //console.log(event);
     this.classInMachzor = [];
 
     this.classInMachzor.push({ label: event.value.label + '-1' });
@@ -129,7 +129,7 @@ export class NewGradesComponent implements OnInit {
       flag = flag + ' ' + 'פרטי התלמידים ';
     }
     if (flag) {
-      console.log(flag);
+      //console.log(flag);
       this.sd.createAlert('error', 'שגיאה בקליטת נתונים נא בדוק ' + flag + 'ונסה שוב', '');
       this.db.isBusy = false;
       return;
@@ -138,13 +138,13 @@ export class NewGradesComponent implements OnInit {
     if (!this.showLoazy) {
       // have to convrt to loazy
       this.sd.convertHebrewToNormalDate(this.selectedDay, this.selectedMonth - 1, this.selectedYear - 1).then(result => {
-        console.log(result);
+        //console.log(result);
         result.subscribe(date => {
           const Lday = (date as any).gd;
           const Lmonth = (date as any).gm;
           const Lyear = (date as any).gy;
           this.loazyDate = '' + Lday + '.' + Lmonth + '.' + Lyear;
-          console.log(this.loazyDate);
+          //console.log(this.loazyDate);
           this.saveTest();
 
         });
@@ -155,6 +155,7 @@ export class NewGradesComponent implements OnInit {
       });
 
     } else {
+      this.loazyDate = this.sd.convertDateToStringDD_MM_YYYY(this.loazyDate);
       this.saveTest();
     }
   }
@@ -173,7 +174,7 @@ export class NewGradesComponent implements OnInit {
       insertBy: userMail,
       insertTime: timestmp
     };
-    console.log(test);
+    //console.log(test);
     this.db.addTest(test).then(async (result) => {
       for (const grade of this.grades) {
         const temp = {
@@ -205,7 +206,7 @@ this.db.addGradeMassageForTherapists(massage);
 
         } catch (err) {
           this.sd.createAlert('error', 'ארעה שגיאה- נסה שוב', '');
-          console.log(err);
+          //console.log(err);
 
         }
       }
@@ -214,7 +215,7 @@ this.db.addGradeMassageForTherapists(massage);
 
     }).catch((err) => {
       this.sd.createAlert('error', 'ארעה שגיאה- נסה שוב', '');
-      console.log(err);
+      //console.log(err);
       this.db.isBusy = false;
     });
   }

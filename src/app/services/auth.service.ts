@@ -24,7 +24,7 @@ export class AuthService {
   //     .then(res => {
   //       resolve(res);
   //     }, err => {
-  //       console.log(err);
+  //       //console.log(err);
   //       reject(err);
   //     });
   //   });
@@ -38,7 +38,7 @@ export class AuthService {
   //     .then(res => {
   //       resolve(res);
   //     }, err => {
-  //       console.log(err);
+  //       //console.log(err);
   //       reject(err);
   //     });
   //   });
@@ -55,7 +55,7 @@ export class AuthService {
         this.sd.createAlert('success', 'נכנסת לחשבונך בהצלחה', '');
         resolve(res);
       }, err => {
-        console.log(err);
+        //console.log(err);
         this.sd.createAlert('error', 'לא הצלחנו להכנס לחשבונך', '');
         reject(err);
       });

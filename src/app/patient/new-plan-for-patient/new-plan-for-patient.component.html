@@ -23,13 +23,13 @@
                     </mat-form-field>
                 </div>
                 <div class="row col-md-12 col-sm-12  ml-2  text-right">
-                    <mat-form-field class=" w-80 mr-auto ml-auto ">
+                    <mat-form-field class=" w-80 ">
 
                         <mat-select class="form-item form-item-select" name="parentsConfirm" placeholder="האם יש אישור הורים" [(ngModel)]="PLAN.parentsApproved">
                             <mat-option value="{{o}}" *ngFor="let o of optionsForParentConfirm">{{o}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <a class="mt-auto mb-auto mr-1 yellow-text" (click)="showParentsDetails.show()" >פרטי התקשרות</a>
+                    <a class="mt-auto mb-auto mr-1 yellow-text" (click)="showParentsDetails.show()">פרטי התקשרות</a>
 
                 </div>
                 <div class="col-md-12 col-sm-12  ml-2  text-right">
@@ -45,7 +45,7 @@
                         <input matInput class="form-item" type="number" name="amountConfirmLessons" placeholder="מספר שעות מאושר " [(ngModel)]="PLAN.approvedAmountLesson">
                         <mat-error *ngIf="!amountConfirmLessons">חובה להכניס מספר שעות </mat-error>
                     </mat-form-field>
-                 <a class="mt-auto mb-2 mr-1 yellow-text"  >מספר שעות שנותרו : {{PLAN.hoursLeft}} </a>
+                    <a class="mt-auto mb-2 mr-1 yellow-text">מספר שעות שנותרו : {{PLAN.hoursLeft}} </a>
 
                 </div>
                 <div class="col-md-12 col-sm-12  ml-2  text-right">
@@ -54,7 +54,8 @@
                         יש תאריך תפוגת תוקף
                     </mat-slide-toggle>
                     <br>
-                    <p-calendar [(ngModel)]="PLAN.dueDate" *ngIf="PLAN.haveDueDate" [locale]="sd.hebrew" dateFormat="dd.mm.yy"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"    [inline]="true"></p-calendar>
+                    <p-calendar [(ngModel)]="PLAN.dueDate" *ngIf="PLAN.haveDueDate" [locale]="sd.hebrew" dateFormat="dd.mm.yy" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="2000:2030" [inline]="true"></p-calendar>
 
                     <!--<mat-form-field *ngIf="PLAN.haveDueDate" class=" w-80">
 
@@ -91,7 +92,7 @@
                 <div *ngFor="let d of mipuyDates ">
                     <a class="list-group-item link-botton " style="text-align:right" (click)="showOneMipuy(d)">
                         <i class="fa fa-check mx-5"></i>{{d.mipuyDate }}</a>
-                        <!--| date: 'dd/MM/yyyy'-->
+                    <!--| date: 'dd/MM/yyyy'-->
                 </div>
             </div>
             <div class="gray lighten-2 my-3 purple-text" *ngIf="showMipuy_V">
@@ -104,12 +105,13 @@
                 <div *ngIf="chooesedMipuy == 'no-mipuy'">לא קימים מיפוים עבור תלמיד זה</div>
                 <div *ngIf="chooesedMipuy == 'no internet'">שגיאה בקליטת נתונים. נא בדוק את חיבור האינטרנט שלך</div>
                 <div *ngIf="chooesedMipuy && chooesedMipuy.mipuyDate">
-                    <app-show-mipuy [status]="'plan'" [Pid]="Pid" [mipuyDate]="chooesedMipuy.mipuyDate" [mipuyData]="chooesedMipuy" [planedDiffi]="diffiForPlan" (updateDiffForPlan)="updatediffiForPlan($event)"></app-show-mipuy>
+                    <app-show-mipuy [status]="'plan'" [Pid]="Pid" [mipuyDate]="chooesedMipuy.mipuyDate" [mipuyData]="chooesedMipuy" [planedDiffi]="diffiForPlan"
+                        (updateDiffForPlan)="updatediffiForPlan($event)"></app-show-mipuy>
                 </div>
 
             </div>
 
-           <!-- <div class="row d-flex mt-5 mb-4 justify-content-end ">
+            <!-- <div class="row d-flex mt-5 mb-4 justify-content-end ">
                 <div class="col-md-4 col-sm-12">
                     <button class="my-primary my-button my-btn-lg w-100" *ngIf="thereIsDiffs" (click)="saveMethodsAndTherapist()">
                     שמור
@@ -131,7 +133,8 @@
             </ng-template>
             <div *ngIf="diffiForPlan.length == 0" class="mb-3 mt-3">לא נבחרו קשיים לטיפול עבור תלמיד זה</div>
             <div class="row d-flex mt-5 mb-4 justify-content-start " *ngIf="diffiForPlan.length != 0">
-                <p-toggleButton [(ngModel)]="dontHelpPlanning" offLabel="עזור לי להחליט" onLabel="תן לי רשימות מלאות לבחירה" onIcon="pi pi-times" offIcon="pi pi-check" [style]="{'width':'250px'}"></p-toggleButton>
+                <p-toggleButton [(ngModel)]="dontHelpPlanning" offLabel="עזור לי להחליט" onLabel="תן לי רשימות מלאות לבחירה" onIcon="pi pi-times"
+                    offIcon="pi pi-check" [style]="{'width':'250px'}"></p-toggleButton>
             </div>
 
             <div class="list-group px-1 py-1 mb-3">
@@ -143,44 +146,52 @@
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <div *ngIf="dontHelpPlanning">
-                             <input matInput class="form-item form-item-select" name="method" placeholder="שיטת טיפול" [(ngModel)]="dif.method">
-                              <!--  <mat-option *ngFor="let method of filterMethodForDiff(dif.Dcode)" [value]="method.Mcode">
+                                <mat-select  #method1 matInput class="form-item form-item-select" name="method" placeholder="שיטת טיפול" [(ngModel)]="dif.method" >
+                                    <mat-option *ngFor="let method of filterMethodForDiff(dif.Dcode)" [value]="method.Mcode">
                                         {{ method.Mcode }}
-                                </mat-option>                       
-                             </mat-select>-->
-                              
+                                    </mat-option>
+                                </mat-select>
+
                             </div>
                             <div *ngIf="!dontHelpPlanning">
-                            <input matInput class="form-item form-item-select" name="method" placeholder="שיטת טיפול" [(ngModel)]="dif.method">
-                            <!--    <mat-option *ngFor="let method of allMethods" [value]="method.code">
+                                <mat-select #method2 matInput class="form-item form-item-select" name="method" placeholder="שיטת טיפול" [(ngModel)]="dif.method">
+                                    <mat-option *ngFor="let method of allMethods" [value]="method.code">
                                         {{ method.code }}
-                                    </mat-option>                  
-                             </mat-select>-->
+                                    </mat-option>
+                                </mat-select>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-10">
                             <div *ngIf="dontHelpPlanning">
-                            <mat-select class="form-item form-item-select" name="therapist" placeholder="מטפל" [(ngModel)]="dif.therapist">
-                               <mat-option *ngFor="let thera of filterMethodForTherapist(diffiForPlan[i].method)" [value]="thera.Tid">
+                                <mat-select class="form-item form-item-select" name="therapist" placeholder="מטפל" [(ngModel)]="dif.therapist">
+                                    <mat-option *ngFor="let thera of filterMethodForTherapist(diffiForPlan[i].method)" [value]="thera.Tid">
                                         {{ thera.Tid }} {{thera.lastName}}
-                                    </mat-option>                 
-                             </mat-select>
-                              
+                                    </mat-option>
+                                </mat-select>
+
                             </div>
                             <div *ngIf="!dontHelpPlanning">
-                            <mat-select class="form-item form-item-select" name="therapist" placeholder="מטפל" [(ngModel)]="dif.therapist">
-                               <mat-option *ngFor="let thera of db.allTherapistList" [value]="thera.id">
+                                <mat-select class="form-item form-item-select" name="therapist" placeholder="מטפל" [(ngModel)]="dif.therapist">
+                                    <mat-option *ngFor="let thera of db.allTherapistList" [value]="thera.id">
                                         {{ thera.firstName }} {{thera.lastName}}
-                                    </mat-option>                 
-                             </mat-select>
-                               
+                                    </mat-option>
+                                </mat-select>
+
                             </div>
                         </div>
+
+                        <div class="col-md-1 col-sm-2">
+                            <a #comment (click)="findBestMethod(i, method1, method2)" class=" btn-rounded " mdbTooltip="מצא שיטת טיפול" placement="bottom">
+                                <i class="fa fa-question fa-lg"></i>
+                            </a>
+
+                        </div>
+
                     </div>
-                    
+
                 </div>
             </div>
-           <!-- <div class="row d-flex mt-5 mb-4 justify-content-end ">
+            <!-- <div class="row d-flex mt-5 mb-4 justify-content-end ">
                 <div class="col-md-4 col-sm-12">
                     <button class="my-primary my-button my-btn-lg w-100" *ngIf="helpPlanning&&thereIsDiffs" (click)="saveMethodsAndTherapist()"> שמור
                         <i class="fa fa-save mr-1 "></i>
@@ -201,7 +212,8 @@
         <mat-step>
             <ng-template matStepLabel>סיום ושמירה </ng-template>
             <h5 class="first mt-3">העלאת נתונים ודוחות חיצוניים</h5>
-            <p-fileUpload #files customUpload="true" (uploadHandler)="uploadFilesForPlan($event, files)" multiple="multiple" class="purple" chooseLabel="בחר קבצים" uploadLabel="טען קבצים" cancelLabel="חזור">
+            <p-fileUpload #files customUpload="true" (uploadHandler)="uploadFilesForPlan($event, files)" multiple="multiple" class="purple"
+                chooseLabel="בחר קבצים" uploadLabel="טען קבצים" cancelLabel="חזור">
                 <ng-template pTemplate="content">
                     <ul *ngIf="uploadedFiles.length">
                         <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
@@ -218,7 +230,7 @@
                 <div class="list-group-item  mx-1 row d-flex justify-content-between" *ngFor="let file of planFiles">
                     <p class="black-text">{{file.fileName}}</p>
                     <div>
-                     <a (click)="deleteFile(file.file)" class="purple-text mx-2">מחק קובץ</a>
+                        <a (click)="deleteFile(file.file)" class="purple-text mx-2">מחק קובץ</a>
 
                         <!-- <a (click)="showFileInBrouser(file.file)" class="purple-text mx-2">הצג קובץ</a>
                             <a (click)="dawnloadFile(file.file, file.fileName)" class="purple-text mx-2">הורד קובץ</a> -->
@@ -231,17 +243,20 @@
                 <h3 class="purple-text pt-4">האם אתה בטוח שסימת את תכנון הטיפול?</h3>
 
                 <mat-divider></mat-divider>
-               <!-- <button type="button" #btnn class="btn purple" (click)="finishPlan()" [disabled]="!chooesedMipuy">שמור וסיים</button>
-             -->  <div class="row d-flex mt-5 mb-4 justify-content-end ">
-                <div class="col-md-4 col-sm-12">
-                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="helpPlanning&&thereIsDiffs" (click)="finishPlan()" [disabled]="!chooesedMipuy"> שמור וסיים
-                        <i class="fa fa-save mr-1 "></i>
-                    </button>
-                    <button class="my-primary my-button my-btn-lg w-100" *ngIf="!helpPlanning&&thereIsDiffs" (click)="beforeSave.show()"  [disabled]="!chooesedMipuy"> שמור וסיים
-                        <i class="fa fa-save mr-1 "></i>
-                    </button>
+                <!-- <button type="button" #btnn class="btn purple" (click)="finishPlan()" [disabled]="!chooesedMipuy">שמור וסיים</button>
+             -->
+                <div class="row d-flex mt-5 mb-4 justify-content-end ">
+                    <div class="col-md-4 col-sm-12">
+                        <button class="my-primary my-button my-btn-lg w-100" *ngIf="helpPlanning&&thereIsDiffs" (click)="finishPlan()" [disabled]="!chooesedMipuy">
+                            שמור וסיים
+                            <i class="fa fa-save mr-1 "></i>
+                        </button>
+                        <button class="my-primary my-button my-btn-lg w-100" *ngIf="!helpPlanning&&thereIsDiffs" (click)="beforeSave.show()" [disabled]="!chooesedMipuy">
+                            שמור וסיים
+                            <i class="fa fa-save mr-1 "></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
                 <br>
                 <br>
                 <br>
@@ -256,7 +271,8 @@
 
 
 
-<div mdbModal #beforeSave="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+<div mdbModal #beforeSave="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -277,10 +293,11 @@
 </div>
 
 
-<div mdbModal #showParentsDetails="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+<div mdbModal #showParentsDetails="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-             <app-patient-profile [pat]="pat" [Pid]="Pid" [status]="'show'" *ngIf="pat"></app-patient-profile>
+            <app-patient-profile [pat]="pat" [Pid]="Pid" [status]="'show'" *ngIf="pat"></app-patient-profile>
 
         </div>
     </div>

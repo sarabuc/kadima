@@ -48,12 +48,12 @@ this.init();
   }
 
 onRowSelect(event) {
- // console.log(event);
- // console.log(this.selectedPatForGroup);
+ // //console.log(event);
+ // //console.log(this.selectedPatForGroup);
 }
   onSelectedStartWith(event) {
     this.patsTable = null;
-  //  console.log(event);
+  //  //console.log(event);
     this.selectedStartWith = event.value.value;
     this.showAreaForTherapist = false;
     this.showTherapistForArea = false;
@@ -74,10 +74,10 @@ onRowSelect(event) {
     this.db.isBusy = false;
   }
   getAreasForTherapist() {
-    console.log('get area' + this.GROUP.Tid);
+    //console.log('get area' + this.GROUP.Tid);
     this.db.isBusy = true;
     this.db.getAreasByTherapistIDRef(this.GROUP.Tid).valueChanges().subscribe(area => {
-      console.log(area);
+      //console.log(area);
       this.areas = area;
       this.showAreaForTherapist = true;
       this.GROUP.area = null;
@@ -127,7 +127,7 @@ onRowSelect(event) {
           addToGroup: true
         };
         patTable.push(ob);
-       console.log(patTable);
+       //console.log(patTable);
 
       
     }
@@ -150,20 +150,20 @@ addTherapistForArea() {
 
 
   async searchTh(event) {
-    console.log(event);
-    console.log(this.thForSearch);
+    //console.log(event);
+    //console.log(this.thForSearch);
     this.thForSearch = await this.db.allTherapistList.filter(item => 
       (item.firstName + ' ' + item.lastName).toLowerCase().includes(event.query.toLowerCase()));
   }
 
   async searchAr(event) {
-    console.log(event);
+    //console.log(event);
 
     this.mainDiffi = await this.db.secondCategories.filter(item => item.code.toLowerCase().includes(event.query.toLowerCase()));
   }
   async saveNewGroup(option) {
     this.db.isBusy = true;
-    console.log(this.selectedPatForGroup);
+    //console.log(this.selectedPatForGroup);
     // check if have all needed props
     for (const key of Object.keys(this.GROUP)) {
       if (!this.GROUP[key]) {
@@ -192,7 +192,7 @@ try {
         insertTime: time
       };
      await this.db.addPatToGroup(ob);
-      console.log('GET HERE 3');
+      //console.log('GET HERE 3');
       this.db.addAprovedGroupPatForTherapist(pat.Pid, this.GROUP.groupCode, this.GROUP.Tid);
     }
     this.db.isBusy = false;
@@ -205,7 +205,7 @@ try {
 
   } catch (err) {
   this.db.isBusy = false;
-  console.error(err);
+  //console.error(err);
       this.sd.createAlert('error', 'ארעה שגיאה- בדוק את הנתונים ונסה שוב', '');
    }
   }
@@ -213,7 +213,7 @@ try {
 
 
   saveNewTFA(option, dialog) {
-    console.log(this.newTFA);
+    //console.log(this.newTFA);
     if ((!this.newTFA.id) || (!this.newTFA.code)) {
      this.sd.createAlert('error', 'חסרים פרטים הכרחיים', '');
      return;
@@ -224,7 +224,7 @@ try {
       insertBy: this.db.userNow.mail,
       insertTime: new Date()
     };
-    console.log(newTFA);
+    //console.log(newTFA);
     this.db.addTherapistForArea(newTFA);
     this.newTFA.id = null;
     this.newTFA.code = null;

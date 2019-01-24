@@ -47,7 +47,7 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
     this.db.getSecondCategories(false);
   }
   ngOnChanges() {
-    console.log(this.mipuyData);
+    //console.log(this.mipuyData);
     this.mipuyDataKeys = Object.keys(this.mipuyData);
     this.mipuyDataKeys.splice(this.mipuyDataKeys.indexOf('mipuyDate'), 1);
     this.mipuyDecideForPlan.mipuy_id_in_db = '' + this.Pid + '_' + this.mipuyDate;
@@ -63,10 +63,10 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
       this.mipuyDecideForPlan[k] = 'no';
       }
     }
-    console.log(this.mipuyDecideForPlan);
+    //console.log(this.mipuyDecideForPlan);
     this.getPlanForPatient();
     const tempD = this.mipuyDate.split('.');
-    console.log(tempD);
+    //console.log(tempD);
     this.hebrewDate = this.sd.convertDateToHebrewDate(+tempD[0], +tempD[1], +tempD[2]);
   }
 
@@ -74,7 +74,7 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
 
 
   closeModal(str: string) {
-    // console.log('*********************************************' + str + this.mipuyModeClass);
+    // //console.log('*********************************************' + str + this.mipuyModeClass);
     if (str === 'finish') {
       this.mipuyModeClass = 'modal fade';
       // this.initDiffiForNewMipuy();
@@ -94,7 +94,7 @@ export class ShowMipuyComponent implements OnInit, OnChanges{
     this.mipuyDecideForPlan[D] = decide;
    // this.db.updateMipuyDecideForPlanOfPatient(this.mipuyDecideForPlan, this.Pid);
     this.updateDiffForPlan.emit(this.mipuyDecideForPlan);
-    console.log(this.mipuyDecideForPlan);
+    //console.log(this.mipuyDecideForPlan);
   }
   saveDateToRemainPlan() {
 this.db.addMassageForUser(this.remainDate,
@@ -109,7 +109,7 @@ async  getPlanForPatient() {
   }
   let plan_docName;
   this.db.mipuyForPatientRef.doc<Mipuy>(this.mipuyDecideForPlan.mipuy_id_in_db).valueChanges().subscribe(mipuy => {
-    console.log('mipuy');
+    //console.log('mipuy');
     plan_docName = mipuy.planForPatient;
     if (plan_docName === '') {
       this.planP = 'empty';
@@ -117,7 +117,7 @@ async  getPlanForPatient() {
     }
     this.db.getPlanForPatientRef(this.Pid).doc<PlanForPatient>(plan_docName).valueChanges().subscribe(plan => {
       this.planP = plan;
-      console.log(this.planP);
+      //console.log(this.planP);
       this.planedDiffi = [];
       Object.keys(this.planP).forEach(key => {
         if (this.planP[key] === 'yes') { // this is a diffi was planed
@@ -127,10 +127,10 @@ async  getPlanForPatient() {
         }
         if (this.planP[key] === 'file') { // this is a file
             this.planFiles.push({file: key, fileName: this.getFileName(key)});
-            console.log(this.planFiles);
+            //console.log(this.planFiles);
         }
       });
-      console.log(this.planedDiffi);
+      //console.log(this.planedDiffi);
     });
   });
  

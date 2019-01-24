@@ -63,11 +63,11 @@ return null;
       return;
     }//
 
-console.log('date' + date);
+//console.log('date' + date);
     this.db.isBusy = true;
     const diffiArr = Object.keys(this.diffis);
     if (diffiArr.length > 0 && this.status === 'mipuy') {
-     console.log('date' + date);
+     //console.log('date' + date);
      const docName = '' + this.Pid + '_' + date;
      const mipuy = {
        Pid: '' + this.Pid,

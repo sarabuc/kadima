@@ -59,7 +59,7 @@ selectedPat;
     if (this.db.userNow.isAdmin) {
       this.db.getAllTherapistsRef().valueChanges().subscribe(T => {
         this.allTherapistList = T;
-        console.log(this.allTherapistList);
+        //console.log(this.allTherapistList);
       });
     } else {
       this.db.isBusy = true;
@@ -72,7 +72,7 @@ selectedPat;
     }
   }
   getGroupsForTherapist() {
-    console.log('get here' + this.getAllTherapist);
+    //console.log('get here' + this.getAllTherapist);
     if ( this.getAllTherapist) {
       return;
     }
@@ -80,12 +80,12 @@ selectedPat;
       this.sd.createAlert('error', 'שגיאה. בדוק את הנתונים ונסה שוב', '');
       return;
     }
-    console.log('get here');
+    //console.log('get here');
 
     this.db.isBusy = true;
     this.db.getGroupByTidRef(this.Tid).valueChanges().subscribe(G => {
       this.groupsForTherapist = G;
-      console.log(G);
+      //console.log(G);
       this.db.isBusy = false;
     });
   }
@@ -100,13 +100,13 @@ selectedPat;
     this.db.isBusy = true;
     this.db.getPatByTidRef(this.Tid).valueChanges().subscribe(P => {
       this.patForTherapist = P;
-      console.log(P);
+      //console.log(P);
       this.db.isBusy = false;
     });
   }
   onSelectedGroupOrPat(event) {
     this.selectedGroupOrPat = event.value.value;
-    console.log('this.getAllTherapist' + this.getAllTherapist);
+    //console.log('this.getAllTherapist' + this.getAllTherapist);
     if (this.selectedGroupOrPat === 'group' && !this.getAllTherapist) {
       this.getGroupsForTherapist();
     } else if (this.selectedGroupOrPat === 'pat' && !this.getAllTherapist) {
@@ -114,7 +114,7 @@ selectedPat;
     }
   }
   onChangeByMachzor(event) {
-    console.log(event);
+    //console.log(event);
     this.initClasses();
   }
 
@@ -124,12 +124,12 @@ selectedPat;
 
 
   onSelectedClass(event) {
-    console.log(event);
+    //console.log(event);
     this.selectedClasses = event.value;
     
   }
   onSelectedArea(event) {
-    console.log(event);
+    //console.log(event);
     this.areas = event.value;
 
   }
@@ -152,8 +152,8 @@ selectedPat;
 
 
   createReportForClassOrArea() {
-   // console.log(classes);
-   // console.log(areas);
+   // //console.log(classes);
+   // //console.log(areas);
    // check validation
     if (this.selectedClasses.length < 1 && !this.getAllClasses) {
       this.sd.createAlert('error', 'לא נבחרו כיתות לדוח', '');
@@ -179,7 +179,7 @@ selectedPat;
         this.sd.classesForReport.push(cl.label);
       }
     }
-    console.log(this.sd.classesForReport);
+    //console.log(this.sd.classesForReport);
     this.sd.allAreaFForReport = this.getAllAreas;
     this.sd.allClassesFForReport = this.getAllClasses;
     this.sd.areasForReport = this.areas;

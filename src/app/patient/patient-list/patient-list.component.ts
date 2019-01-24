@@ -69,7 +69,7 @@ export class PatientListComponent implements OnInit {
 
 
 checkAndRoute(pat) {
-  console.log(this.status);
+  //console.log(this.status);
   this.db.filteredPatientList = this.patientList.filter(P => this.isGradePrefix(P.grade) &&
                                                                   this.isFnPrefix(P.firstName) &&
                                                                    this.isLnPrefix(P.lastName) &&
@@ -88,14 +88,14 @@ checkAndRoute(pat) {
 //  public findPatientsForDiffi2() {
 //    if (this.db.findByCategory && this.db.findByCategory !== 'empty') {
 //      this.findedPatientForDiff = undefined;
-//      console.log('cate' + this.db.findByCategory);
+//      //console.log('cate' + this.db.findByCategory);
 //      const findPat = firebase.functions().httpsCallable('getPatByDiffi');
 //      findPat({ text: this.db.findByCategory }).then(res => {
-//        console.log(res);
+//        //console.log(res);
 //        this.findedPatientForDiff = res.data;
 
 //      }).catch(err => {
-//        console.log(err);
+//        //console.log(err);
 //      });
 //    }
    

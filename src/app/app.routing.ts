@@ -23,7 +23,6 @@ import { PatientCardComponent } from './patient/patient-card/patient-card.compon
 import { PatientListComponent } from './patient/patient-list/patient-list.component';
 import { AddDiffiFromExelComponent } from './mipuy/add-diffi-from-exel/add-diffi-from-exel.component';
 import { DiffiAndMethodsComponent } from './mipuy/diffi-and-methods/diffi-and-methods.component';
-import { RegisterComponent } from './pages/login/register/register.component';
 import { NewGradesComponent } from './pages/new-grades/new-grades.component';
 import { NewGroupComponent } from './teams/new-group/new-group.component';
 import { NewGroupTreatmentComponent } from './treatment/new-group-treatment/new-group-treatment.component';
@@ -48,7 +47,6 @@ const appRoutes: Routes = [
   { path: 'addPPatientsFromExel', component: AddPatientsFromExelComponent },
   { path: 'addTherapistFromExel', component: AddPatientsFromExelComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
   { path: 'newMipuy', component: NewMipuyComponent },
   { path: 'reports', component: ReportsComponent },
   { path: 'newGrades', component: NewGradesComponent },

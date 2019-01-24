@@ -41,8 +41,8 @@ lessons: string[]; /* = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
     } else {
 
     }
-    // console.log(this.status);
-   //  console.log(this.id);
+    // //console.log(this.status);
+   //  //console.log(this.id);
   }
 
   /*createTime() {
@@ -59,7 +59,7 @@ lessons: string[]; /* = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
     // get from db
 
     if (this.status === 'updateT') {
-      //  console.log(this.therapist);
+      //  //console.log(this.therapist);
         this.freeTime = this.sd.parseTimeFromStr(this.therapist.strFreeTime);
         this.dbs.isBusy = false;
 
@@ -105,7 +105,7 @@ lessons: string[]; /* = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
 
   updateFreeTime() {
     this.sd.activeTabIndex = 0;
-    // console.log(this.status);
+    // //console.log(this.status);
     this.dbs.isBusy = true;
     const str = this.sd.parseTimeToStr(this.freeTime);
     if (this.status === 'updateT') {

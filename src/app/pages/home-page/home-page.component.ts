@@ -33,7 +33,7 @@ export class HomePageComponent implements OnInit {
     { route: 'Tcards', class: 'fa fa-id-card-o fa-4x yellow-text', text: 'כרטיס מטפל',
     class2: 'wow fadeInUp col-lg-2 col-md-2 col-sm-4 col-xs-6 mb-4 pt-1' },
     {
-      route: 'addPatient', class: 'fa fa-plus-circle fa-4x yellow-text', text: 'הוספת תלמידים',
+      route: 'newGrades', class: 'fa fa-plus-circle fa-4x yellow-text', text: 'הוספת ציוני כתה',
     class2: 'wow fadeInUp col-lg-2 col-md-2 col-sm-4 col-xs-6 mb-4 pt-1'},
     {
       route: 'teams', class: 'fa fa-group fa-4x yellow-text', text: 'ניהול קבוצות ',
@@ -54,7 +54,7 @@ export class HomePageComponent implements OnInit {
       route: 'newTreatmentInfo', class: 'fa fa-calendar-check-o fa-4x accent-3 amber-text',
      text: 'דווח  טיפול', sub: 'דוח על טיפול שהתקים'},
   
-    { route: 'temp', class: 'fa fa-id-calender fa-4x accent-3 amber-text', text: 'שיבוץ שעות ',
+    { route: 'temp', class: 'fa fa-calendar fa-4x accent-3 amber-text', text: 'שיבוץ שעות ',
      sub: 'מערכת ולוח זמנים '
     },
    {
@@ -69,7 +69,7 @@ export class HomePageComponent implements OnInit {
   }
 
   onSelect(route) {
-   // console.log(route);
+   // //console.log(route);
 
    this.sd.routeTo(route);
 

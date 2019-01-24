@@ -63,8 +63,8 @@ export class DifficultComponent implements OnInit, OnChanges {
    * getChildren
    */
   public getChildren() {
-   // console.log('get children!!!!!!!!!!!!!!!!!!!!!!');
-   // console.log(this.code);
+   // //console.log('get children!!!!!!!!!!!!!!!!!!!!!!');
+   // //console.log(this.code);
     this.childDifficults = [];
   this.db.difficultRef = this.afs.collection('difficults', ref => {
       return ref.where('Dfather', '==', this.code);
@@ -73,7 +73,7 @@ export class DifficultComponent implements OnInit, OnChanges {
       this.db.difficultRef.valueChanges().subscribe(diffis => {
     this.childDifficults = diffis;
     this.isLeave = !(this.childDifficults.length > 0);
-    // console.log(this.childDifficults);
+    // //console.log(this.childDifficults);
     });
   }
 
@@ -85,7 +85,7 @@ export class DifficultComponent implements OnInit, OnChanges {
   }
 
   updateDiffiStatus(checked: boolean) {
-console.log(this);
+//console.log(this);
     if (checked) {
       this.isChoozen = true;
       this.childrenAreOpen = true;
@@ -93,10 +93,10 @@ console.log(this);
       this.isChoozen = false;
     }
     if (this.status === 'mipuy' && checked) {
-      console.log('**********************************************');
+      //console.log('**********************************************');
       this.db.newMipuy[this.code] = 1;
       this.dificlass = 'line-selected';
-      console.log(this.db.newMipuy);
+      //console.log(this.db.newMipuy);
     } else if (this.status === 'mipuy' && !checked) {
      delete this.db.newMipuy[this.code];
       this.dificlass = '';
@@ -130,7 +130,7 @@ console.log(this);
 
 
   onSelectedDegree(event) {
-    //  console.log(event);
+    //  //console.log(event);
     this.db.newMipuy[this.code] = event.value.value;
   }
 }

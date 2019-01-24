@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
   //       this.db.isLoginV = true;
   //       this.router.navigate(['/home']);
   //     }, err => {
-  //       console.log(err);
+  //       //console.log(err);
   //       this.errorMessage = err.message;
   //     });
   // }
@@ -101,14 +101,14 @@ if (doc.password === value.password) {
      email: value.email,
      password: value.password
    };
-   console.log(data);
+   //console.log(data);
    const login = firebase.functions().httpsCallable('login');
    login(data).then(res => {
-     console.log(res);
+     //console.log(res);
     
 
    }).catch(err => {
-     console.log(err);
+     //console.log(err);
    });
    
   }*/

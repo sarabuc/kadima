@@ -37,6 +37,7 @@ export class NewGroupTreatmentComponent implements OnInit {
   days = [];
   monthes = [];
   years = [];
+  allMethods = [];
 
 
   constructor(public sd: ShareDataService, public db: DbService,  private route: ActivatedRoute) { 
@@ -50,14 +51,14 @@ export class NewGroupTreatmentComponent implements OnInit {
       this.sd.routeTo('login');
     }
     this.groupCode = this.route.snapshot.params['id'];
-    console.log(this.groupCode);
+    //console.log(this.groupCode);
     if (this.groupCode) {
      this.getGroupByGroupCode();
     }
     if (this.db.userNow.isAdmin) {
      this.db.getAllTherapistsRef().valueChanges().subscribe(T => {
         this.allTherapistList = T;
-       console.log(this.allTherapistList);
+       //console.log(this.allTherapistList);
      });
     } else {
       this.db.isBusy = true;
@@ -77,7 +78,12 @@ export class NewGroupTreatmentComponent implements OnInit {
     for (let i = 1; i <= this.sd.hebrewYear.length; i++) {
       this.years.push({ label: this.sd.hebrewYear[i - 1], value: i });
     }
-    this.clearNewTreat();
+    this.db.getAllMethodsRef().valueChanges().subscribe(methods => {
+      this.allMethods = methods
+      //console.log(this.allMethods);
+
+    });
+
 
   }
 
@@ -110,12 +116,12 @@ export class NewGroupTreatmentComponent implements OnInit {
 
 
   addTreatLine() {
-    console.log(this.sd.dictionary);
+    //console.log(this.sd.dictionary);
     const line: { [k: string]: any} = {};
     for (const key of Object.keys(this.newTreat)) {
       if (key !== 'comment' && key!== 'index' && !this.newTreat[key]) {
-        console.log(key);
-        console.log(this.sd.dictionary[key]);
+        //console.log(key);
+        //console.log(this.sd.dictionary[key]);
         // it is underfind
         const keyInHebrew = this.sd.dictionary[key];
         this.sd.createAlert('error', ' חסרים פרטים הכרחיים: ' + keyInHebrew + ' . מלא את הדרוש ונסה שוב.', '');
@@ -127,7 +133,7 @@ export class NewGroupTreatmentComponent implements OnInit {
     line['index'] = this.patTable.length;
     
     this.patTable.push(line);
-    console.log(this.patTable);
+    //console.log(this.patTable);
   }
 
 
@@ -135,7 +141,7 @@ export class NewGroupTreatmentComponent implements OnInit {
 
 
   clearNewTreat() {
-    console.log(this.GROUP);
+    //console.log(this.GROUP);
     this.newTreat = {
       groupCode: this.groupCode,
       Tid: this.Tid,
@@ -175,7 +181,7 @@ export class NewGroupTreatmentComponent implements OnInit {
 
   saveNewTreat(option, modal) {
   
-    console.log('savenew');
+    //console.log('savenew');
 
     // date
     if (!this.showLoazy) {
@@ -183,16 +189,16 @@ export class NewGroupTreatmentComponent implements OnInit {
         this.sd.createAlert('error', 'שגיאה בתאריך טיפול - בדוק פרטים ונסה שנית', '');
       } else {
         this.db.isBusy = true;
-        console.log('hebrewdate');
+        //console.log('hebrewdate');
 
           this.sd.convertHebrewToNormalDate(this.selectedDay, this.selectedMonth - 1, this.selectedYear - 1).then(result => {
-          console.log(result);
+          //console.log(result);
           result.subscribe(date => {
             const Lday = (date as any).gd;
             const Lmonth = (date as any).gm;
             const Lyear = (date as any).gy;
             this.newTreat['date'] = '' + Lday + '.' + Lmonth + '.' + Lyear;
-            console.log(this.loazyDate);
+            //console.log(this.loazyDate);
             if (this.checkTraetInfo(this.newTreat)) {
               this.saveAfterCheck(option, modal);
             } else {
@@ -222,7 +228,7 @@ export class NewGroupTreatmentComponent implements OnInit {
 
 
   saveAfterCheck(option, modal) {
-    console.log(this.newTreat);
+    //console.log(this.newTreat);
   this.addTreatLine();
 
 
@@ -244,7 +250,7 @@ this.newTreat['insertTime'] = '' + new Date();
             Pid: key, 
             birth_year: tempPat.birthDate, 
             diffi: this.newTreat.subject, 
-            method: this.monthes, 
+            method: this.newTreat.method, 
             insertBy:  this.db.userNow.mail, 
             insertTime: new Date()
           }
@@ -288,8 +294,8 @@ this.db.updateGroup(this.GROUP);
     }
 
     getLastMonth() {
-      console.log('01/02/03'.localeCompare('03/02/03'));
-       console.log('03/02/03'.localeCompare('01/02/03'));
+      //console.log('01/02/03'.localeCompare('03/02/03'));
+       //console.log('03/02/03'.localeCompare('01/02/03'));
 
       const date = new Date();
      const month = '' + (date.getMonth() + 1);
@@ -298,7 +304,7 @@ this.db.updateGroup(this.GROUP);
       this.db.getGroupTreatmentInfoRefByGroupCode(this.groupCode).valueChanges().subscribe(info => {
         this.patTable = info.filter(treat => this.checkIfIsOneMonth(month, year, treat.date));
        for (const pat of this.patTable) {
-         console.log(pat.date);
+         //console.log(pat.date);
        }
       this.db.isBusy = false;
       });
@@ -311,16 +317,16 @@ this.db.updateGroup(this.GROUP);
         this.sd.createAlert('error', 'שגיאה בתאריך טיפול - בדוק פרטים ונסה שנית', '');
       } else {
         this.db.isBusy = true;
-        console.log('hebrewdate');
+        //console.log('hebrewdate');
 
           this.sd.convertHebrewToNormalDate(this.selectedDay, this.selectedMonth - 1, this.selectedYear - 1).then(result => {
-          console.log(result);
+          //console.log(result);
           result.subscribe(date => {
             const Lday = (date as any).gd;
             const Lmonth = (date as any).gm;
             const Lyear = (date as any).gy;
             this.treatToUpdate['date'] = '' + Lday + '.' + Lmonth + '.' + Lyear;
-            console.log(this.loazyDate);
+            //console.log(this.loazyDate);
             if(this.checkTraetInfo(this.treatToUpdate)) {
               this.db.updateGroupTreatmentInfo(this.treatToUpdate);
               this.db.isBusy = false;
@@ -368,7 +374,7 @@ this.db.updateGroup(this.GROUP);
 
     deleteTreat() {
       try {
-        console.log(this.treatToDelete);
+        //console.log(this.treatToDelete);
  this.db.deleteGroupTreatmentInfo(this.treatToDelete);
       } catch(err) {
         this.sd.createAlert('error', 'ארעה שגיאה- נסה שוב', '')
@@ -377,9 +383,9 @@ this.db.updateGroup(this.GROUP);
     }
 
     checkIfIsOneMonth(month, year, dateToCheck) {
-      console.log(month);
-      console.log(year);
-      console.log(dateToCheck);
+      //console.log(month);
+      //console.log(year);
+      //console.log(dateToCheck);
 
       try {
 const temp = dateToCheck.split('.');
@@ -396,15 +402,16 @@ return false;
 
 
     getGroupByGroupCode() {
-      console.log('getgroupcode');
-      console.log(this.groupCode);
+      //console.log('getgroupcode');
+      //console.log(this.groupCode);
       this.db.isBusy = true;
       this.db.getGroupByGroupCodeRef(this.groupCode).valueChanges().subscribe(groups => {
-        console.log(groups);
+        //console.log(groups);
         this.Tid = groups[0].Tid;
         this.groupsForTherapist = groups;
         this.GROUP = groups[0];
         this.getGroupPats();
+        this.clearNewTreat();
         this.db.isBusy = false;
       });
     }

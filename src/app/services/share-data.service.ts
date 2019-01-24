@@ -199,7 +199,7 @@ export class ShareDataService {
    */
   public routeTo(path: string, param?: string) {
     if (param) {
-      console.log(param);
+      //console.log(param);
       this.router.navigate([path, param]);
     } else {
       this.router.navigate([path]);
@@ -249,21 +249,21 @@ export class ShareDataService {
   }
 
   public getCsvFile() {
-    const mipuyForPatient = firebase.functions().httpsCallable('im_ex');
-    mipuyForPatient({ text: '' }).then(res => {
-      console.log(res);
+    const exportdata = firebase.functions().httpsCallable('im_ex');
+    exportdata({ text: '' }).then(res => {
+      //console.log(res);
       if (res.data === 'success') {
         this.getAndDownloadFile('exe/patientData.json', 'data.json', 'dawn');
       }
 
     }).catch(err => {
-      console.log(err);
+      //console.log(err);
     });
   }
 
 
   async deleteFile(filePath: string, fileName, planDocId, Pid) {
-    console.log(fileName);
+    //console.log(fileName);
     // Create a reference to the file to delete
     const desertRef = firebase.storage().ref(filePath);
 
@@ -277,7 +277,7 @@ export class ShareDataService {
       const tempD = await docRef.get();
       const temp = tempD.data();
       temp['' + fileName] = 'deleted';
-      console.log(temp);
+      //console.log(temp);
       docRef.update(temp).then(res2 => {
         this.createAlert('success', 'קובץ נמחק בהצלחה', '');
       });
@@ -294,9 +294,9 @@ export class ShareDataService {
     const starsRef = storageRef.ref(path);
     // Get the download URL
     starsRef.getDownloadURL().then(url => {
-      console.log(url);
+      //console.log(url);
       if (option === 'open') {
-        console.log('open');
+        //console.log('open');
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
@@ -310,7 +310,7 @@ export class ShareDataService {
         xhr.responseType = 'blob';
         xhr.onload = function (event) {
           const blob = xhr.response;
-          console.log(blob);
+          //console.log(blob);
           saveAs(blob, fileName);
         };
         xhr.open('GET', url);
@@ -318,7 +318,7 @@ export class ShareDataService {
       }
 
     }).catch(error => {
-      console.log(error);
+      //console.log(error);
       switch (error.code) {
         case 'storage/object_not_found':
           // File doesn't exist
@@ -352,18 +352,18 @@ export class ShareDataService {
   //   const starsRef = storageRef.ref('files/IMG_4612.jpg');
   //     // Get the download URL
   //     starsRef.getDownloadURL().then(url =>  {
-  //       console.log(url);
+  //       //console.log(url);
   //       const xhr = new XMLHttpRequest();
   //       xhr.responseType = 'blob';
   //       xhr.onload = function (event) {
   //         const blob = xhr.response;
-  //         console.log(blob);
+  //         //console.log(blob);
   //         saveAs(blob, '123.pdf');
   //       };
   //       xhr.open('GET', url);
   //       xhr.send();
   //     }).catch(error => {
-  //       console.log(error.code);
+  //       //console.log(error.code);
   //       switch (error.code) {
   //         case 'storage/object_not_found':
   //           // File doesn't exist
@@ -387,6 +387,16 @@ export class ShareDataService {
 
 
 
+  public async getBestMethod(details: any): Promise<any> {
+   // const url = 'https://predict-with-model.herokuapp.com/predict/?cfg=json&data=' + JSON.stringify(details);
+   const url = 'https://predict-with-model.herokuapp.com/predict';
+    const method = await this.http.post(url, details);
+    //console.log('method!!!!!!!!!!!!!!!');
+    console.log(method);
+    return method;
+  }
+
+
   public async convertHebrewToNormalDate(day: number, month: number, year: number): Promise<any> {
     // https://www.hebcal.com/converter/?cfg=json&hy=5749&hm=Kislev&hd=25&h2g=1
 
@@ -395,15 +405,16 @@ export class ShareDataService {
     const url = 'https://www.hebcal.com/converter/?cfg=json&hy=' + Tyear + '&hm=' + Tmonth + '&hd=' + day + '&h2g=1';
 
     const Dres = await this.http.get(url);
+    //console.log(Dres);
     return Dres; /*
   Dres.subscribe(res => {
-      console.log(res);
+      //console.log(res);
       const Lday = (res as any).gd;
       const Lmonth = (res as any).gm;
       const Lyear = (res as any).gy;
       return Promise.resolve('' + Lday + '.' + Lmonth + '.' + Lyear);
     });*/
-    /* console.log(res);
+    /* //console.log(res);
      const Lday = (res as any).gd;
      const Lmonth = (res as any).gm;
      const Lyear = (res as any).gy;
@@ -443,5 +454,18 @@ export class ShareDataService {
       this.allClasses.push('' + cl + '-1');
       this.allClasses.push('' + cl + '-2');
     }
+  }
+  getBirthYear(date: string) {
+    let array= date.split(' ');
+    if(!array[1]) {
+      array = date.split('/');
+    }
+    if(!array[1]) {
+      array = date.split('.');
+    }
+    if(!array[1]) {
+      return date;
+    }
+    return array.find(A => +A > 1000);
   }
 }

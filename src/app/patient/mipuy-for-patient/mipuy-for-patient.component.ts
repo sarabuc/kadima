@@ -24,7 +24,7 @@ mipuyForPatientRef: any;
       this.sd.routeTo('login');
     }
     
-     // console.log(this.status);
+     // //console.log(this.status);
     if (!this.status) {
      this.sd.routeTo('/home');
     }
@@ -38,30 +38,42 @@ mipuyForPatientRef: any;
 //     });
 // this.mipuyForPatientRef.valueChanges().subscribe(mipuys => {
 //   this.mipuyDates = mipuys;
-//   // console.log(this.Pid);
-//  // console.log(this.mipuyDates);
+//   // //console.log(this.Pid);
+//  // //console.log(this.mipuyDates);
 // });
 //   }
 
 getAllMipuysForPat() {
   this.allMipuy = undefined;
-  console.log('get mipuy');
+  //console.log('get mipuy');
   const mipuyForPatient = firebase.functions().httpsCallable('getMipuysForPatientBySecondAreas');
   mipuyForPatient({ text: this.Pid }).then(res => {
-     console.log(res);
     // for (const mipuy of res.data) {
     //   mipuy.mipuyDate = this.sd.converrSecondsToDateTime(mipuy.mipuyDate._seconds);
     // }
     this.allMipuy = res.data;
-    console.log(this.allMipuy);
+    this.allMipuy = this.allMipuy.sort((a, b) => {
+     
+      const d1 = a.mipuyDate.split('.');
+      const d2 = b.mipuyDate.split('.');
+   
+         if(d1[2] !== d2[2]) {
+           return +d2[2] - +d1[2];
+         }
+         if(d1[1] !== d2[1]) {
+           return +d2[1] - +d1[1];
+         }
+         return +d2[0] - +d1[0];
+        });
+    //console.log(this.allMipuy);
   }).catch(err => {
     this.allMipuy = 'no internet';
-    console.log(err);
+    //console.log(err);
   });
 }
 
   closeModal(str: string) {
-  // console.log('*********************************************' + str + this.mipuyModeClass);
+  // //console.log('*********************************************' + str + this.mipuyModeClass);
   if (str === 'finish') {
  this.mipuyModeClass = 'modal fade top';
   }

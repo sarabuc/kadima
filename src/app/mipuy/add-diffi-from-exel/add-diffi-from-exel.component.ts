@@ -33,7 +33,7 @@ export class AddDiffiFromExelComponent implements OnInit {
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
       this.DfromExel = (XLSX.utils.sheet_to_json(worksheet, { raw: true }));
-     // console.log(this.DfromExel);
+     // //console.log(this.DfromExel);
     };
     fileReader.readAsArrayBuffer(this.file);
   }
@@ -66,9 +66,9 @@ export class AddDiffiFromExelComponent implements OnInit {
       };
       this.db.addDifficult(dif);
      // this.PfromExel.splice(this.PfromExel.indexOf(p) , 1);
-     // console.log(pati);
+     // //console.log(pati);
       countSuccess++;
-     // console.log(this.PfromExel);
+     // //console.log(this.PfromExel);
     });
     this.sd.createAlert ('info', countSuccess + 'תלמידים נוספו בהצלחה ' + '\n', '');
     if (countExist > 0) {

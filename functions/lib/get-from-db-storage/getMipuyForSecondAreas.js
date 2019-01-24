@@ -85,7 +85,7 @@ exports.getOneMipuysForPatient = functions.https.onCall((data, context) => __awa
         const diffDetailsForPat = yield allDiffi.docs.filter(D => diffiForPatient.docs.findIndex(D_P => D_P.data().Dcode === D.data().code) > -1);
         const filterdArray = yield diffDetailsForPat.filter(diff => diffDetailsForPat.findIndex(D => D.data().Dfather === diff.data().code) < 0);
         for (const diff of filterdArray) {
-            if (diff.data().allFathers === 'second') {
+            if (diff.data().allFathers === 'second' || diff.data().Dfather === 'null') {
                 if (!mipuyDetails[diff.data().code]) {
                     mipuyDetails[diff.data().code] = [];
                 }

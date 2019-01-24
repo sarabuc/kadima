@@ -80,8 +80,8 @@ getTeams() {
     if (this.db.userNow.isAdmin) {
       this.teams = teams;
     } else {
-      console.log(teams);
-      console.log(this.db.userNow.id);
+      //console.log(teams);
+      //console.log(this.db.userNow.id);
       this.teams = teams.filter(T => T.Tid === '' + this.db.userNow.id);
 
     }

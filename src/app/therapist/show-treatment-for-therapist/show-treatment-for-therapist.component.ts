@@ -12,7 +12,7 @@ export class ShowTreatmentForTherapistComponent implements OnInit {
   Pid: string;
   treatDate: Date;
   kind: string;
-  treatments: TreatmentInfo[];
+  treatments: TreatmentInfo[]  = [];
   treatmentsRef: any;
   constructor(public db: DbService, public sd: ShareDataService) { }
 
@@ -52,7 +52,7 @@ export class ShowTreatmentForTherapistComponent implements OnInit {
       return ref.where('Tid', '==', this.Tid).orderBy('treatDate', 'desc');
     });
     this.treatmentsRef.valueChanges().subscribe(treat => {
-     // console.log(treat);
+     // //console.log(treat);
       this.treatments = treat;
     });
   }

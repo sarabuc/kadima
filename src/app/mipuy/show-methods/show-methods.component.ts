@@ -32,7 +32,7 @@ export class ShowMethodsComponent implements OnInit {
       C.forEach(c => {
         this.treatCategories.push({ code: c.code });
       });
-      console.log(this.treatCategories);
+      //console.log(this.treatCategories);
     });
     this.db.getAllMethodsRef().valueChanges().subscribe(M => {
       this.allMethodsList = M;
@@ -76,11 +76,13 @@ export class ShowMethodsComponent implements OnInit {
 
   }
   saveMatchDiffi(list, oPanel, event) {
+    //console.log(list);
+    //console.log(this.selectedMethod);
     const M_D = {
       Mcode: this.selectedMethod,
       Dcode: ''
     };
-    this.selectedTheras.forEach(dif => {
+    this.selectedDiffi.forEach(dif => {
       M_D.Dcode = dif.code;
       this.db.addMethodForDifficult(M_D);
     });
@@ -100,11 +102,11 @@ export class ShowMethodsComponent implements OnInit {
   }
 
   onChangeSelectedDiff(event, list) {
-    console.log(list);
-    console.log(event);
+    //console.log(list);
+    //console.log(event);
     const selected = event;
     const index = this.selectedDiffi.indexOf(selected);
-    console.log(index);
+    //console.log(index);
 
     if (index > -1) {
       //this.selectedDiffi.splice(index, 1);
@@ -114,16 +116,16 @@ export class ShowMethodsComponent implements OnInit {
 
 
     list.value = this.selectedDiffi;
-    console.log(list);
-    console.log(this.selectedDiffi);
+    //console.log(list);
+    //console.log(this.selectedDiffi);
   }
 
   onChangeSelectedThera(event, list) {
-    console.log(list);
-    console.log(event);
+    //console.log(list);
+    //console.log(event);
     const selected = event;
     const index = this.selectedTheras.indexOf(selected);
-    console.log(index);
+    //console.log(index);
 
     if (index > -1) {
       //this.selectedTheras.splice(index, 1);
@@ -133,8 +135,8 @@ export class ShowMethodsComponent implements OnInit {
 
 
     list.value = this.selectedTheras;
-    console.log(list);
-    console.log(this.selectedTheras);
+    //console.log(list);
+    //console.log(this.selectedTheras);
   }
 
 }

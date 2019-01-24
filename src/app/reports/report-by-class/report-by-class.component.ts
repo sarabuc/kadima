@@ -50,7 +50,7 @@ export class ReportByClassComponent implements OnInit {
     }
     if (this.allClassesF) {
       this.classes = this.sd.allClasses;
-      console.log(this.classes);
+      //console.log(this.classes);
     }
     if (this.allDates) {
       this.dateFrom = '01/01/1990';
@@ -69,27 +69,27 @@ export class ReportByClassComponent implements OnInit {
        /* .where('mipuyDate', '>=', this.dateFrom)
         .where('mipuyDate', '<=', this.dateTo)
         .get();*/
-      console.log(this.areas);
+      //console.log(this.areas);
 
-      console.log(allPatsDiffi.docs);
+      //console.log(allPatsDiffi.docs);
       const filterdPatDif = await allPatsDiffi.docs.filter(D => this.areas.findIndex(second => second.code === D.data().Dcode) > -1);
       this.areas = await this.areas.filter(second => filterdPatDif.findIndex(D => second.code === D.data().Dcode) > -1);
 
       // all classes was choosed
-      console.log(filterdPatDif);
-      console.log(this.classes);
+      //console.log(filterdPatDif);
+      //console.log(this.classes);
       for (const className of this.classes) {
-        console.log('in class');
+        //console.log('in class');
         const classInfo = {};
         classInfo['patsInfo'] = [];
         const tempInfo = await db.collection('classes').doc(className).get();
         classInfo['className'] = className;
         classInfo['teacherName'] = tempInfo.data() ? tempInfo.data().teacherName : 'לא קים במערכת';
-        console.log(classInfo);
+        //console.log(classInfo);
         // have insert main details of class
         const allPatientInClass = await db.collection('patients').where('grade', '==', className).get();
         allPatientInClass.docs.sort((a, b) => a.data().lastName.localeCompare(b.data().lastName));
-        console.log(allPatientInClass);
+        //console.log(allPatientInClass);
 
         // all pats in class
         for (const pat of allPatientInClass.docs) {
@@ -101,25 +101,25 @@ export class ReportByClassComponent implements OnInit {
           patInfo['haveDifficult'] = pat.data().haveDificult;
           if (pat.data().haveDificult === 'yes') {
             const filterdForPat = filterdPatDif.filter(D => D.data().Pid = pat.data().id);
-            console.log(patInfo);
+            //console.log(patInfo);
 
             // all dif for patient
             for (const dif of filterdForPat) {
               patInfo[dif.data().Dcode] = dif.data().degree ? dif.data().degree : 1;
             }
-            console.log(patInfo);
+            //console.log(patInfo);
 
           }
           classInfo['patsInfo'].push(patInfo);
         }
         this.classesReport.push(classInfo);
-        console.log(this.classesReport);
+        //console.log(this.classesReport);
 
             }
 
       this.db.isBusy = false;
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       this.sd.createAlert('error', 'שגיאה - נסה שוב או פנה למנהל המערכת', '');
       this.db.isBusy = false;
     }
@@ -130,12 +130,12 @@ export class ReportByClassComponent implements OnInit {
 
 
 //  private exportAs(type) {
-//    console.log(type);
+//    //console.log(type);
 //     // download the file using old school javascript method
 //     this.exportAsService.save(this.exportAsConfig, 'report.pdf');
 //     // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
 //   //  this.exportAsService.get(this.exportAsConfig).subscribe(content => {
-//   //     console.log(content);
+//   //     //console.log(content);
 //   //   });
 //   }
 

@@ -40,7 +40,7 @@ export class ReportByAreaComponent implements OnInit {
     }
     if (this.allClassesF) {
       this.classes = this.sd.allClasses;
-      console.log(this.classes);
+      //console.log(this.classes);
     }
     if (this.allDates) {
       this.dateFrom = '01/01/1990';
@@ -56,34 +56,34 @@ export class ReportByAreaComponent implements OnInit {
     try {
       const db = firebase.firestore();
       const allPatsDiffi = await db.collection('patientDifficults').get();
-  console.log(this.areas);
-      // console.log(allPatsDiffi.docs);
+  //console.log(this.areas);
+      // //console.log(allPatsDiffi.docs);
       let filterdPatDif = await allPatsDiffi.docs.filter(D => this.areas.findIndex(second => second.code === D.data().Dcode) > -1);
       this.areas = await this.areas.filter(second => filterdPatDif.findIndex(D => second.code === D.data().Dcode) > -1);
       const allPats = await db.collection('patients').get();
       const filteredPatList = await allPats.docs.filter(P => this.classes.indexOf(P.data().grade) > -1 ); // filtered by classses
-      // console.log(filteredPatList[0].data());
+      // //console.log(filteredPatList[0].data());
       // filtered all dif list by pat list-
       filterdPatDif = filterdPatDif.filter(P_D => filteredPatList.findIndex(P => P.data().id === P_D.data().PID)); 
-      console.log(filterdPatDif);
+      //console.log(filterdPatDif);
       for (const area of this.areas) {
         const areaInfo = {};
         areaInfo['code'] = area.code;
         areaInfo['father'] = area.Dfather;
         const filteredPatDifForArea = filterdPatDif.filter(P_D => P_D.data().Dcode === area.code);
-        // console.log(filteredPatDifForArea[0].data());
-        // console.log(filteredPatList[0].data());
+        // //console.log(filteredPatDifForArea[0].data());
+        // //console.log(filteredPatList[0].data());
         const filteredPatDetailsForArea = filteredPatList.filter(P =>
                                           filteredPatDifForArea.findIndex(P_D => P_D.data().Pid === P.data().id) > -1);
-         console.log(filteredPatDetailsForArea.map(D => D.data()));
+         //console.log(filteredPatDetailsForArea.map(D => D.data()));
         areaInfo['patsInfo'] = filteredPatDetailsForArea;
         this.areasReport.push(areaInfo);
-        // console.log(this.areasReport);
+        // //console.log(this.areasReport);
       }
 
       this.db.isBusy = false;
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       this.sd.createAlert('error', 'שגיאה - נסה שוב או פנה למנהל המערכת', '');
       this.db.isBusy = false;
     }
@@ -94,12 +94,12 @@ export class ReportByAreaComponent implements OnInit {
 
 
   //  private exportAs(type) {
-  //    console.log(type);
+  //    //console.log(type);
   //     // download the file using old school javascript method
   //     this.exportAsService.save(this.exportAsConfig, 'report.pdf');
   //     // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
   //   //  this.exportAsService.get(this.exportAsConfig).subscribe(content => {
-  //   //     console.log(content);
+  //   //     //console.log(content);
   //   //   });
   //   }
 

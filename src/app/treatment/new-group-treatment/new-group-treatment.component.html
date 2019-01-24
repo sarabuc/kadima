@@ -288,7 +288,11 @@
                                     <h5 class="purple-text mt-2" style="margin-bottom: -1.5rem;text-align: right"> שיטת טיפול
                                     </h5>
                                     <mat-form-field class="w-100">
-                                    <input matInput class="form-item white-text" type="text" name="newTreat.method"[(ngModel)]="newTreat.method" required>
+                                            <mat-select matInput class="form-item form-item-select" name="method" placeholder="שיטת טיפול" [(ngModel)]="newTreat.method" required>
+                                                    <mat-option *ngFor="let method of allMethods" [value]="method.code">
+                                                        {{ method.code }}
+                                                    </mat-option>
+                                            </mat-select>
                                     <mat-error *ngIf="!newTreat.method">חובה להכניס שיטת טיפול </mat-error>
                                 </mat-form-field>
 

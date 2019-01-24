@@ -1,43 +1,103 @@
-<!--Navbar-->
-<div class="container-fluid ">
-    <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar" [containerInside]="false">
-        <!--logo>
 
-            <a class="logo navbar-brand" routerLink="/"><strong>...קדימה</strong></a>
-        </logo-->
-        <links>
 
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="!isLogin()" (click)="login()">
-                    <a class="nav-link ml-auto">כניסה לחשבונך <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="isLogin()" (click)="logout()">
-                    <a class="nav-link ml-auto">התנתק</a>
-                </li>
-                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="!isLogin()" routerLink="/about">
-                    <a class="nav-link ml-auto">אודות <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item waves-light ml-1 mr-1" mdbRippleRadius *ngIf="!isLogin()" routerLink="/about">
-                    <li class="nav-item waves-light " mdbRippleRadius *ngIf="!isLogin()" routerLink="/contact">
-                        <a class="nav-link ml-auto">צור קשר <span class="sr-only">(current)</span></a>
-                    </li>
-            </ul>
-        </links>
+<!--Section: Contact v.1-->
+<section class="section pb-5 cenrer" dir="rtl">
 
-    </mdb-navbar>
-</div>
-
-<!--/.Navbar-->
-<!--Mask-->
-<div class="view hm-black-strong">
-    <div class="full-bg-img flex-center">
-        <div class="animated fadeInUp black">
-            <div class="card view hm-zoom">
-
-                <!--Card image-->
-                <img class="img-fluid" src="assets\\images\\logo.png" alt="image">
+        <!--Section heading-->
+        <h2 class="section-heading h1 pt-1">צור קשר</h2>
+        <!--Section description-->
+        <p class="section-description pb-1">אנחנו פה, לכל בעיה או הצעה.....</p>
+    
+        <div class="row">
+    
+            <!--Form with header-->
+            <div class="card w-80 center">
+    
+                <div class="card-body">
+                    <!--Header-->
+                    <div class="form-header blue accent-1">
+                        <h3>
+                            <i class="fa fa-envelope"></i>כתבו לנו:</h3>
+                    </div>
+    
+                    <br>
+    
+                    <!--Body-->
+                    <div class="md-form">
+                        <i class="fa fa-user prefix grey-text"></i>
+                        <input mdbActive type="text" id="form3" class="form-control">
+                        <label for="form3">שם:</label>
+                    </div>
+    
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix grey-text"></i>
+                        <input mdbActive type="text" id="form2" class="form-control">
+                        <label for="form2">כתובת מייל:</label>
+                    </div>
+    
+                    <div class="md-form">
+                        <i class="fa fa-tag prefix grey-text"></i>
+                        <input mdbActive type="text" id="form32" class="form-control">
+                        <label for="form34">נושא:</label>
+                    </div>
+    
+                    <div class="md-form">
+                        <i class="fa fa-pencil prefix grey-text"></i>
+                        <textarea mdbActive type="text" id="form8" class="form-control"></textarea>
+                        <label for="form8">ההודעה:</label>
+                    </div>
+    
+                    <div class="text-center">
+                        <button class="btn btn-light-blue waves-light" mdbRippleRadius>אישור ושליחה</button>
+                    </div>
+    
+                </div>
+    
             </div>
+            <!--Form with header-->
+    
+    
+    
+        </div>
+    
+    </section>
+    <!--Section: Contact v.1-->
+    
+    
+    
+    <!--Modal: Login with Avatar Form-->
+    <div mdbModal #form="mdb-modal" class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <!-- -->
+        <!-- -->
+    
+        <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+            <!--Content-->
+            <div class="modal-content">
+    
+                <!--Header-->
+                <div class="modal-header">
+                    <img src='assets\\homeImg\\logo1.png' class="rounded-circle img-responsive">
+                </div>
+                <!--Body-->
+                <div class="modal-body text-center mb-1">
+    
+                    <h5 class="mt-1 mb-2">Say Cook Book</h5>
+    
+                    <div class="md-form ml-0 mr-0">
+                        <input mdbActive type="text" id="form29" class="form-control ml-0">
+                        <label for="form29" class="ml-0">Enter UserName</label>
+                    </div>
+    
+                    <div class="text-center">
+                        <button class="btn btn-cyan mt-1 waves-light" mdbRippleRadius>Login
+                            <i class="fa fa-sign-in ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+    
+            </div>
+            <!--/.Content-->
         </div>
     </div>
-</div>
-<!--/.Mask-->
+    <!--Modal: Login with Avatar Form-->

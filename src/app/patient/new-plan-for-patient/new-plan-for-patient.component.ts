@@ -26,7 +26,7 @@ export class NewPlanForPatientComponent implements OnInit, OnChanges {
   chooesedMipuy: any;
 
   // third step
-  dontHelpPlanning = true;
+  dontHelpPlanning = false;
   helpPlanning_F = false;
   diffiForPlan = [];
   methodsForDiffi = [];
@@ -34,6 +34,7 @@ export class NewPlanForPatientComponent implements OnInit, OnChanges {
   thereIsDiffs = false;
   allTherapists = [];
   allMethods = [];
+
 
   // last step
   uploadedFiles: any[] = [];
@@ -135,7 +136,10 @@ this.sd.routeTo('/Pcard', this.Pid);
     });
 
     // this.db.getAllTherapistsRef().valueChanges().subscribe(thera => this.allTherapists = thera);
-    this.db.getAllMethodsRef().valueChanges().subscribe(methods => this.allMethods = methods);
+    this.db.getAllMethodsRef().valueChanges().subscribe(methods => {
+      this.allMethods = methods;
+       //console.log(this.allMethods);
+    });
   }
   initDiffiForPlan() {
     this.diffiForPlan = [];
@@ -150,7 +154,7 @@ this.sd.routeTo('/Pcard', this.Pid);
         this.diffiForPlan.push(ob);
       }
     });
-    console.log(this.diffiForPlan);
+    //console.log(this.diffiForPlan);
   }
   showListOfMipuy() {
     this.showListMipuy_V = true;
@@ -168,13 +172,13 @@ this.sd.routeTo('/Pcard', this.Pid);
   getOneMipuyForPat(selectedDate) {
     this.showMipuy_V = true;
 
-    console.log(selectedDate);
+    //console.log(selectedDate);
     this.showListMipuy_V = false;
     this.chooesedMipuy = undefined;
-    console.log('get mipuy');
+    //console.log('get mipuy');
     const mipuyForPatient = firebase.functions().httpsCallable('getOneMipuyByDateAndId');
     mipuyForPatient({ text: '' + this.Pid, date: selectedDate }).then(res => {
-      console.log(res);
+      //console.log(res);
       this.chooesedMipuy = res.data;
         this.initDiffiForPlan();
      // this.showMipuy_V = false;
@@ -183,7 +187,7 @@ this.sd.routeTo('/Pcard', this.Pid);
       this.chooesedMipuy = 'no internet';
       this.showMipuy_V = false;
 
-      console.log(err);
+      //console.log(err);
     });
   }
 
@@ -204,9 +208,9 @@ this.sd.routeTo('/Pcard', this.Pid);
       const path = `/${this.Pid}/${fileName}`;
       const iRef = storegRef.child(path);
       this.PLAN['' + fileName] = 'file';
-        console.log(this.PLAN);
+        //console.log(this.PLAN);
       iRef.put(file).then((snapshot) => {
-        console.log(snapshot);
+        //console.log(snapshot);
         // const Pfile = {
         //   Pid: this.Pid,
         //   fileName: file.name,
@@ -216,7 +220,7 @@ this.sd.routeTo('/Pcard', this.Pid);
         
         this.sd.createAlert('success', 'קובץ התוסף בהצלחה', '');
       }).catch(error => {
-        console.log(error);
+        //console.log(error);
       });
     }
     element.files = [];
@@ -230,7 +234,7 @@ this.sd.routeTo('/Pcard', this.Pid);
         this.thereIsDiffs = true;
       }
     });
-    console.log(this.diffiForPlan);
+    //console.log(this.diffiForPlan);
   }
 
   saveMethodsAndTherapist() {
@@ -271,7 +275,7 @@ this.sd.routeTo('/Pcard', this.Pid);
         insertBy: this.db.userNow.mail,
         insertTime: new Date()
       };
-      console.log(M);
+      //console.log(M);
       this.db.getAdminMassagesRef().doc(M.insertBy + M.insertTime).set(M);
     }
   }
@@ -299,11 +303,11 @@ this.sd.routeTo('/Pcard', this.Pid);
     if (!this.helpPlanning_F) {
       this.db.getTherapistForMethodRef().valueChanges().subscribe(T => {
         this.therapistsForMethod = T;
-        console.log(this.therapistsForMethod);
+        //console.log(this.therapistsForMethod);
       });
       this.db.getMethodForDiffiRef().valueChanges().subscribe(M => {
         this.methodsForDiffi = M;
-        console.log(this.methodsForDiffi);
+        //console.log(this.methodsForDiffi);
       });
       this.helpPlanning_F = true;
     }
@@ -317,11 +321,39 @@ this.sd.routeTo('/Pcard', this.Pid);
   }
 
   deleteFile(file) {
-    console.log(file);
-    console.log(this.planFiles);
+    //console.log(file);
+    //console.log(this.planFiles);
     this.planFiles.splice(this.planFiles.findIndex(p => p.file === file), 1);
     this.sd.deleteFile('' + this.PLAN.Pid + '/' + file, file, this.PLAN.mipuy_id_in_db + '_P_' + this.PLAN.date, this.Pid);
   }
 
 
+
+  findBestMethod(index, select1, select2) {
+   console.log(this.diffiForPlan[index]);
+console.log(select1);
+console.log(select2);
+
+const details = {};
+    details['diffi'] =  this.diffiForPlan[index]['Dcode'];
+    details['birth_year'] = this.sd.getBirthYear(this.pat.birthDate);
+    details['progress'] = 100;
+    details['gender']= 'male';
+    this.db.isBusy = true;
+  
+    this.sd.getBestMethod(details).then(M => {
+      M.subscribe(method => {
+      console.log(method);
+      this.diffiForPlan[index]['method'] = method['ans'];
+      this.db.isBusy = false;
+   })
+  
+ })
+
+ }
+ compareMethods(o1: any, o2: any): boolean {
+   console.log(o1);
+   console.log(o2);
+  return o1 === o2.Mcode;
+}
 }

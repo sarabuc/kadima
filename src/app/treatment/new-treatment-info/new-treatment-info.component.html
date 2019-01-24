@@ -206,17 +206,23 @@ have choose
             <div class="col-md-3 col-sm-12 mb-1  form-group text-right">
                 <mat-form-field class=" w-100">
 
-                    <mat-select class="form-item form-item-select" name="area" placeholder=" תחום שיעור" [(ngModel)]="area">
+                    <mat-select class="form-item form-item-select" (selectionChange)="getMethodForDiffiInThisPlan($event)" name="area" placeholder=" תחום שיעור" [(ngModel)]="area">
                         <mat-option [value]="area" *ngFor="let area of diffiListInPlan">{{area}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
             </div>
-
             <div class="col-md-8 col-sm-12 mb-1 px-auto form-group text-right">
                 <mat-form-field class=" w-100">
-                    <input matInput class="form-item" type="text" name="discrib" placeholder="נושא שיעור " [(ngModel)]="discrib" required>
-                    <mat-error *ngIf="!discrib">חובה להכניס נושא שיעור</mat-error>
+                    <!--<input matInput class="form-item" type="text" name="discrib" placeholder="נושא שיעור " [(ngModel)]="discrib" required>
+                    -->
+                    <mat-select matInput class="form-item form-item-select" name="discrib" placeholder="שיטת טיפול" [(ngModel)]="discrib" required>
+                            <mat-option *ngFor="let method of allMethods" [value]="method.code">
+                                {{ method.code }}
+                            </mat-option>
+                    </mat-select>
+      
+                     <mat-error *ngIf="!discrib">חובה להכניס נושא שיעור</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-12 col-sm-12 mb-1 px-auto form-group text-right">

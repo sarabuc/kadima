@@ -31,6 +31,8 @@ export class UpdateTherapistComponent implements OnInit {
   strFreeTime: string;*/
   showMoreOptions = false;
   Tstatus = 'update';
+  srcMethods = [];
+  dstMethods = [];
 
   constructor(public sd: ShareDataService, public db: DbService, private router: Router) {
 
@@ -44,8 +46,16 @@ export class UpdateTherapistComponent implements OnInit {
     }
 
     // init
-    console.log(this.th);
+    //console.log(this.th);
     this.Tid = this.th.id;
+    
+    this.db.getAllMethodsRef().valueChanges().subscribe(M => {
+      
+      this.db.getTherapistForMethodRefByTid(this.Tid).valueChanges().subscribe(M2 => {
+        this.dstMethods = M.filter(meth => M2.findIndex(method => method.Mcode ===meth.code) > -1);
+        this.srcMethods = M.filter(meth => M2.findIndex(method => method.Mcode ===meth.code)< 0);
+      });
+    });
     // this.getTherapistByID(this.Tid);
   }
 
@@ -70,7 +80,7 @@ export class UpdateTherapistComponent implements OnInit {
     this.db.allTherapistsRef.doc<Therapist>('' + id).valueChanges().subscribe(therapist => {
       this.th = therapist;
       this.db.isBusy = false;
-      console.log(this.th);
+      //console.log(this.th);
     });
   }
 

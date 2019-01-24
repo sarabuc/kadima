@@ -119,12 +119,19 @@
 
     <mat-expansion-panel>
         <mat-expansion-panel-header class="my-primary my-button text-center btn-lg btn btn-secondary mb-1 waves-light" mdbRippleRadius>
-            עדכן התמחות
+            עדכן שיטות טיפול
         </mat-expansion-panel-header>
-        <!--    עדכון התמחויות-->
-
-
-        <app-methods-for-therapist></app-methods-for-therapist>
+        <div class="card">
+            <p-pickList [source]="srcMethods" [target]="dstMethods" sourceHeader="שיטות טיפול אפשריות" targetHeader="שיטות טיפול שהותאמו"
+                [responsive]="true" filterBy="code" dragdrop="true" sourceFilterPlaceholder="חיפוש שיטה" targetFilterPlaceholder="חיפוש שיטה"
+                [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
+                <ng-template let-method pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{method.code}} </div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel>

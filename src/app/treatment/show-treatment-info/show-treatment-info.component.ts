@@ -21,13 +21,11 @@ export class ShowTreatmentInfoComponent implements OnInit, OnChanges {
       // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
       this.sd.routeTo('login');
     }
-    // console.log(this.status);
     if (!this.status) {
       this.status = '';
     }
     try {
       this.this_treatDate = this.treat.treatDate;
-      console.log(this.this_treatDate);
       const tempD = this.this_treatDate.split('.');
       this.hebrewDate = this.sd.convertDateToHebrewDate(+tempD[0], +tempD[1], +tempD[2]);
 
@@ -42,7 +40,6 @@ export class ShowTreatmentInfoComponent implements OnInit, OnChanges {
       // this.sd.createAlert('info', 'עליך לבצע התחברות', '');
       this.sd.routeTo('login');
     }
-    // console.log(this.status);
     if (!this.status) {
       this.status = '';
     }

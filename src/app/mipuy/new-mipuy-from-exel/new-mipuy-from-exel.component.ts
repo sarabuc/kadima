@@ -38,7 +38,7 @@ export class NewMipuyFromExelComponent implements OnInit {
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
       this.fromExel = (XLSX.utils.sheet_to_json(worksheet, { raw: true }));
-      console.log(this.fromExel);
+      //console.log(this.fromExel);
       // this.fromExel.splice(0, 1);
       this.successed = [];
     };
@@ -127,12 +127,12 @@ this.sd.createAlert('success', 'added ' + count + 'times', '');
   //       };
   //       this.dbs.addPatient(pati);
   //       // this.PfromExel.splice(this.PfromExel.indexOf(p) , 1);
-  //       // console.log(pati);
+  //       // //console.log(pati);
   //       countSuccess++;
   //       this.successed[i] = 1;
   //     }
 
-  //     // console.log(this.PfromExel);
+  //     // //console.log(this.PfromExel);
   //   }
 
   //   this.sd.createAlert('info', countSuccess + ' ' + 'תלמידים נוספו בהצלחה ' + '\n', '');
@@ -196,11 +196,11 @@ this.sd.createAlert('success', 'added ' + count + 'times', '');
   //         this.successed[i] = 1;
   //       });
   //       // this.PfromExel.splice(this.PfromExel.indexOf(p) , 1);
-  //       // console.log(pati);
+  //       // //console.log(pati);
 
   //     }
 
-  //     // console.log(this.PfromExel);
+  //     // //console.log(this.PfromExel);
   //   }
 
   //   this.sd.createAlert('info', countSuccess + ' ' + 'תלמידים עודכנו בהצלחה ' + '\n', '');

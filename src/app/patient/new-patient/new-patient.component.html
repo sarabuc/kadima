@@ -44,13 +44,14 @@
             </div>
 
             <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
-                <mat-form-field class=" w-100">
+                <div class=" w-100 mt-5" style="overflow: hidden">
+                    <p-calendar [(ngModel)]="birthDate" placeholder="תאריך לידה"[locale]="sd.hebrew" dateFormat="dd.mm.yy"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputStyleClass="form-item"></p-calendar>
 
-                    <input type="text" class="form-item form-item-date " matInput [matDatepicker]="birthdate" placeholder="תאריך לידה" name="birthDate" [(ngModel)]="birthDate">
+                   <!-- <input type="text" class="form-item form-item-date " matInput [matDatepicker]="birthdate" placeholder="תאריך לידה" name="birthDate" [(ngModel)]="birthDate">
                     <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
-                    <mat-datepicker #birthdate></mat-datepicker>
+                    <mat-datepicker #birthdate></mat-datepicker>-->
 
-                </mat-form-field>
+                   </div>
             </div>
             <div class="col-md-3 col-sm-12 mb-1 ml-2 form-group text-right">
                 <mat-form-field class=" w-100">

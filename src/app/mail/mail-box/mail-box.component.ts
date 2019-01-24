@@ -59,7 +59,7 @@ export class MailBoxComponent implements OnInit {
       this.userList = M;
       this.allList = this.adminList.concat(this.userList);
 
-      console.log(this.userList);
+      //console.log(this.userList);
       this.allList.sort((a, b) =>  b.time.toDate().getTime() - a.time.toDate().getTime());
 
     });
@@ -84,8 +84,8 @@ export class MailBoxComponent implements OnInit {
 
   }
   deleteMail() {
-    console.log(this.massageToDelete.status);
-    console.log(this.massageToDelete);
+    //console.log(this.massageToDelete.status);
+    //console.log(this.massageToDelete);
     switch (this.massageToDelete.status) {
       case 'users':
         this.db.deleteUserMassage(this.massageToDelete.insertBy + this.massageToDelete.insertTime);
@@ -94,13 +94,13 @@ export class MailBoxComponent implements OnInit {
         {
           // update next year
           const date = new Date(this.massageToDelete.time);
-          console.log(date);
+          //console.log(date);
           date.setFullYear(date.getFullYear() + 1);
-          console.log(date);
+          //console.log(date);
 
           this.massageToDelete.year = date.getFullYear();
           this.massageToDelete.time = date;
-          console.log(this.massageToDelete);
+          //console.log(this.massageToDelete);
 
           this.db.updateAdminMassage(this.massageToDelete.insertBy + this.massageToDelete.insertTime, this.massageToDelete);
           break;
@@ -124,10 +124,10 @@ export class MailBoxComponent implements OnInit {
   async allMassagesForUser() {
     const f = fb.firestore();
     const admin = await f.collection('setting').doc('admin').collection('massages').get();
-    console.log(admin);
+    //console.log(admin);
   }
   routeToPatCard(msg) {
-    console.log(msg);
+    //console.log(msg);
     if(msg.status == 'planForMipuy') {
       const msgParts = msg.massage.split('לתלמיד בעל מ.ז : ')[1];
       const Pid = msgParts.split(' עודכן')[0];

@@ -71,7 +71,7 @@ selectedOptions: string[] = [];
 }
 
 closeModal(str: string) {
-  // console.log('*********************************************' + str + this.mipuyModeClass);
+  // //console.log('*********************************************' + str + this.mipuyModeClass);
   if (str === 'finish') {
     this.mipuyModeClass = 'modal fade top';
  // this.initDiffiForNewMipuy();
@@ -98,7 +98,7 @@ closeModal(str: string) {
     return (this.findedPatientForDiff.indexOf(Pid) > -1) || (!this.findByCategory) || (this.findByCategory === 'empty');
   }
   initDiffiForNewMipuy() {
-   // console.log('inittttttttttttttttt');
+   // //console.log('inittttttttttttttttt');
     this.showDif = new ShowDifficultiesComponent(this.sd, this.db);
   }
 
@@ -125,7 +125,7 @@ closeModal(str: string) {
             status: 'yes'
           };
           this.db.addPatientDifficult(newDiff);
-          console.log(newDiff);
+          //console.log(newDiff);
         }
         if (pat[diff.code] === 'maybe') {
           flag = true;
@@ -136,10 +136,10 @@ closeModal(str: string) {
             status: 'maybe'
           };
           this.db.addPatientDifficult(newDiff);
-          console.log(newDiff);
+          //console.log(newDiff);
         }
       });
-      console.log('flag' + flag);
+      //console.log('flag' + flag);
       if (flag) {
         this.db.mipuyForPatientRef.doc('' + pat.Pid + '_' + date).set({ Pid: '' + pat.Pid, mipuyDate: date, planForPatient: '' });
         const M = {
@@ -191,21 +191,21 @@ closeModal(str: string) {
         this.categoriesForFastMipuy.push(allCat[i]);
       }
     }
-    console.log(this.categoriesForFastMipuy);
+    //console.log(this.categoriesForFastMipuy);
     this.initFastMipuyData();
   }
 
   public findPatientsForDiffi() {
     if (this.findByCategory && this.findByCategory !== 'empty') {
       this.findedPatientForDiff = undefined;
-      console.log('cate' + this.findByCategory);
+      //console.log('cate' + this.findByCategory);
       const findPat = firebase.functions().httpsCallable('getPatByDiffi');
       findPat({ text: this.findByCategory }).then(res => {
-        console.log(res);
+        //console.log(res);
         this.findedPatientForDiff = res.data;
 
       }).catch(err => {
-        console.log(err);
+        //console.log(err);
       });
     }
 

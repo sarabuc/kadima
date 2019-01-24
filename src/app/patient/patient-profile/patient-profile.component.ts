@@ -29,18 +29,18 @@ editPatient() {
 //   const starsRef = storageRef.ref('files/IMG_4612.jpg');
 //     // Get the download URL
 //     starsRef.getDownloadURL().then(url =>  {
-//       console.log(url);
+//       //console.log(url);
 //       const xhr = new XMLHttpRequest();
 //       xhr.responseType = 'blob';
 //       xhr.onload = function (event) {
 //         const blob = xhr.response;
-//         console.log(blob);
+//         //console.log(blob);
 //         saveAs(blob, '123.pdf');
 //       };
 //       xhr.open('GET', url);
 //       xhr.send();
 //     }).catch(error => {
-//       console.log(error.code);
+//       //console.log(error.code);
 //       switch (error.code) {
 //         case 'storage/object_not_found':
 //           // File doesn't exist
@@ -79,17 +79,17 @@ deletePatient() {
 //      const path = `/${this.Pid}/${fileName}`;
 //       const iRef = storegRef.child(path);
 //       iRef.put(file).then((snapshot) => {
-//         console.log(snapshot);
+//         //console.log(snapshot);
 //       const Pfile = {
 //         Pid: this.Pid,
 //         fileName: file.name,
 //         date: date
 //       };
 //       this.db.patientsFileRef.add(Pfile);
-//       console.log(file);
+//       //console.log(file);
 //       this.sd.createAlert('success', 'קובץ התוסף בהצלחה', '');
 //       }).catch(error => {
-//         console.log(error);
+//         //console.log(error);
 //       });
 //     }
 // }

@@ -100,7 +100,6 @@ export class AppComponent implements OnInit  {
   //       this.db.isLoginV = false;
   //       this.sd.createAlert('success', 'יצאת בהצלחה מחשבונך', '');
   //     }, (error) => {
-  //       console.log('Logout error', error);
   //       this.sd.createAlert('error', 'יציאה מהחשבון נכשלה', '');
   //     });
   // }

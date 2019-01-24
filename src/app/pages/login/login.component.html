@@ -75,21 +75,21 @@
 
 </header>
 <div (mouseleave)="showOptions=false" style="position: fixed; bottom: 0; right:0.2rem" class="mb-3 mr-5">
-    <button *ngIf="showOptions" mat-mini-fab class="gradient-3 my-3">
-  <i class="fa fa-envelope fa-lg"></i>
-</button>
+   <!-- <button *ngIf="showOptions" mat-mini-fab class="gradient-3 my-3">
+        <i class="fa fa-envelope fa-lg"></i>
+    </button>-->
     <br>
-    <button *ngIf="showOptions" mat-mini-fab class="gradient-3 my-3">
-  <i class="fa fa-home fa-lg"></i>
-</button>
+    <button *ngIf="showOptions" mat-mini-fab class="gradient-3 my-3" [routerLink]="'/about'">
+        <i class="fa fa-home fa-lg"></i>
+    </button>
     <br>
-    <button *ngIf="showOptions" mat-mini-fab class="gradient-3 my-3">
-  <i class="fa fa-phone fa-lg"></i>
-</button>
+    <button *ngIf="showOptions" mat-mini-fab class="gradient-3 my-3" [routerLink]="'/contact'">
+        <i class="fa fa-phone fa-lg"></i>
+    </button>
     <br>
 
     <button mat-fab class="gradient-3 my-3" (click)="showOptions=!showOptions">
-<i class="fa fa-arrow-circle-up fa-2x" aria-hidden="true"></i>
-</button>
+        <i class="fa fa-arrow-circle-up fa-2x" aria-hidden="true"></i>
+    </button>
 </div>
 <!--Main Navigation-->

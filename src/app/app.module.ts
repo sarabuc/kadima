@@ -86,16 +86,12 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 /*components*/
 import { AppComponent } from './app.component';
-import { MenuComponent } from './parts/menu/menu.component';
-import { SignupComponent } from './parts/signup/signup.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { AboutComponent } from './pages/about/about.component';
-import { BeforeLoginComponent } from './pages/before-login/before-login.component';
 import { ContactComponent } from './pages/contact/contact.component';
 
 import { NewTherapistComponent } from './therapist/new-therapist/new-therapist.component';
 import { NewPatientComponent } from './patient/new-patient/new-patient.component';
-import { NewTreatmentProgressComponent } from './treatment/new-treatment-progress/new-treatment-progress.component';
 import { NewTreatmentInfoComponent } from './treatment/new-treatment-info/new-treatment-info.component';
 import { FreeTimeComponent } from './parts/free-time/free-time.component';
 import { DifficultComponent } from './mipuy/difficult/difficult.component';
@@ -103,25 +99,19 @@ import { ShowDifficultiesComponent } from './mipuy/show-difficulties/show-diffic
 import { TherapistCardComponent } from './therapist/therapist-card/therapist-card.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
-import { MethodsForTherapistComponent } from './therapist/methods-for-therapist/methods-for-therapist.component';
 import { TherapistProfileComponent } from './therapist/therapist-profile/therapist-profile.component';
 import { UpdateTherapistComponent } from './therapist/update-therapist/update-therapist.component';
 import { TempComponent } from './parts/temp/temp.component';
 import { AddPatientsFromExelComponent } from './patient/add-patients-from-exel/add-patients-from-exel.component';
-import { ScheduleComponent } from './parts/schedule/schedule.component';
-import { AddTherapistFromExelComponent } from './therapist/add-therapist-from-exel/add-therapist-from-exel.component';
 import { TherapistListComponent } from './therapist/therapist-list/therapist-list.component';
 import { TimeTableToShowComponent } from './parts/time-table-to-show/time-table-to-show.component';
 import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/login/register/register.component';
 import { NewMipuyComponent } from './mipuy/new-mipuy/new-mipuy.component';
-import { DifficutForMipuyComponent } from './mipuy/difficut-for-mipuy/difficut-for-mipuy.component';
 import { PatientCardComponent } from './patient/patient-card/patient-card.component';
 import { PatientListComponent } from './patient/patient-list/patient-list.component';
 import { PatientProfileComponent } from './patient/patient-profile/patient-profile.component';
 import { UpdatePatientComponent } from './patient/update-patient/update-patient.component';
 import { MipuyForPatientComponent } from './patient/mipuy-for-patient/mipuy-for-patient.component';
-import { ChipsInteractionComponent } from './parts/chips-interaction/chips-interaction.component';
 import { AddDiffiFromExelComponent } from './mipuy/add-diffi-from-exel/add-diffi-from-exel.component';
 import { DiffiAndMethodsComponent } from './mipuy/diffi-and-methods/diffi-and-methods.component';
 import { ShowMipuyComponent } from './mipuy/show-mipuy/show-mipuy.component';
@@ -130,13 +120,13 @@ import { ShowTreatmentForPatientComponent } from './patient/show-treatment-for-p
 import { ShowTreatmentForTherapistComponent } from './therapist/show-treatment-for-therapist/show-treatment-for-therapist.component';
 // import { SampleModule } from 'angular-pdf-generator';
 import { ExportAsModule } from 'ngx-export-as';
+import {PickListModule} from 'primeng/picklist';
 
 
 
 
 /*services*/
 import { DbService } from './services/db.service';
-import { ProgressService } from './services/progress.service';
 import { ShareDataService } from './services/share-data.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
@@ -151,11 +141,9 @@ import { NewPlanForPatientComponent } from './patient/new-plan-for-patient/new-p
 import { ShowMethodsComponent } from './mipuy/show-methods/show-methods.component';
 import { NewMipuyFromExelComponent } from './mipuy/new-mipuy-from-exel/new-mipuy-from-exel.component';
 import { CreateMassageForUserComponent } from './pages/create-massage-for-user/create-massage-for-user.component';
-import { NewMipuyGradesComponent } from './mipuy/new-mipuy-grades/new-mipuy-grades.component';
 import { GraedsForPatientComponent } from './patient/graeds-for-patient/graeds-for-patient.component';
 import { ReportsComponent } from './reports/reports.component';
 import { SettingComponent } from './pages/setting/setting.component';
-import { LoaderComponent } from './pages/loader/loader.component';
 import { NewGradesComponent } from './pages/new-grades/new-grades.component';
 import { NewGroupComponent } from './teams/new-group/new-group.component';
 import { TeamsComponent } from './teams/teams/teams.component';
@@ -165,10 +153,7 @@ import { MailBoxComponent } from './mail/mail-box/mail-box.component';
 import { ReportByClassComponent } from './reports/report-by-class/report-by-class.component';
 import { ReportByAreaComponent } from './reports/report-by-area/report-by-area.component';
 import { ReportByTherapistComponent } from './reports/report-by-therapist/report-by-therapist.component';
-import { GradesForClassComponent } from './pages/grades-for-class/grades-for-class.component';
-/*
-import { FileUploadModule } from 'primeng/fileupload';
-import { ButtonModule } from 'primeng/button';*/
+
 
 const firebase = {
     apiKey: 'AIzaSyC39tgVZlnrGvyirclUb92ZiyCNOqcGubA',
@@ -185,38 +170,29 @@ keyboardEventKeyPolyfill();
   declarations: [
    // XlsxFileUploadComponent,
     AppComponent,
-    SignupComponent,
     HomePageComponent,
     AboutComponent,
-    MenuComponent,
-    BeforeLoginComponent,
     ContactComponent,
     NewTherapistComponent,
     NewPatientComponent,
-    NewTreatmentProgressComponent,
     NewTreatmentInfoComponent,
     FreeTimeComponent,
     DifficultComponent,
     ShowDifficultiesComponent,
     TherapistCardComponent,
-    MethodsForTherapistComponent,
     TherapistProfileComponent,
     UpdateTherapistComponent,
     TempComponent,
     AddPatientsFromExelComponent,
-    ScheduleComponent,
-    AddTherapistFromExelComponent,
     TherapistListComponent,
     TimeTableToShowComponent,
     LoginComponent,
     NewMipuyComponent,
-    DifficutForMipuyComponent,
     PatientCardComponent,
     PatientListComponent,
     PatientProfileComponent,
     UpdatePatientComponent,
     MipuyForPatientComponent,
-    ChipsInteractionComponent,
     AddDiffiFromExelComponent,
     DiffiAndMethodsComponent,
     ShowMipuyComponent,
@@ -224,15 +200,12 @@ keyboardEventKeyPolyfill();
     ShowTreatmentForPatientComponent,
     ShowTreatmentForTherapistComponent,
     NewPlanForPatientComponent,
-    RegisterComponent,
     ShowMethodsComponent,
     NewMipuyFromExelComponent,
     CreateMassageForUserComponent,
-    NewMipuyGradesComponent,
     GraedsForPatientComponent,
     ReportsComponent,
     SettingComponent,
-    LoaderComponent,
     NewGradesComponent,
     NewGroupComponent,
     TeamsComponent,
@@ -242,11 +215,11 @@ keyboardEventKeyPolyfill();
     ReportByClassComponent,
     ReportByAreaComponent,
     ReportByTherapistComponent,
-    GradesForClassComponent
-   //  UpdatePlanForPatientComponent
   ],
   imports: [
     ChartModule,
+    PickListModule,
+
     ExportAsModule,
     // SampleModule,
    // MailModule,
@@ -340,7 +313,6 @@ TreeTableModule,
     AuthGuard,
     AuthService,
     MessageService,
-    ProgressService,
     DatePipe],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]

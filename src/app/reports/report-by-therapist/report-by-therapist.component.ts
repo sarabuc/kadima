@@ -128,12 +128,12 @@ this.sd.createAlert('error', 'שגיאה, נסה שוב', '');
          this.getTreatForGroup(G.groupCode, index, groupIndex)
         return {name: G.groupName, grade1: G.grade1, grade2: G.grade2, area: G.area};
         });
-         console.log(this.reportData);
+         //console.log(this.reportData);
          
         this.db.isBusy = false;
 
          } else {
-          console.error('index dont work');
+          //console.error('index dont work');
           this.db.isBusy = false;
         }
 
@@ -141,29 +141,29 @@ this.sd.createAlert('error', 'שגיאה, נסה שוב', '');
   }
  async getTreatForGroup(groupCode, index, groupIndex) {
     const tempList = await this.DB.collection('groupTreatmentInfo').where('groupCode', '==', groupCode).get();
-    console.log(tempList.docs.map(T => T.data()));
+    //console.log(tempList.docs.map(T => T.data()));
     const list =  tempList.docs.map(T => ({date: T.data().date,
                                 time: '' + T.data().startTime + '-' + T.data().endTime, 
                                 hours: T.data().hours, 
                                 subject: T.data().subject,
                                 method: T.data().method,
                                 comment: T.data().comment}));
-    console.log(list);
+    //console.log(list);
     this.reportData[index]['groups'][groupIndex]['treats'] = list;
   }
   async getPatsForT(Tid, index) {
-    console.log('in get pat');
+    //console.log('in get pat');
     let patsArr = [];
     if ( this.getAllTherapist) {
       const patsArrTemp = await this.DB.collection('therapist').doc(Tid).collection('patient').get();
       patsArr = patsArrTemp.docs.map(P => P.data());
     } else if (this.getAllPats && !this.getAllTherapist) {
       patsArr = this.patForTherapist;
-          console.log(patsArr);
+          //console.log(patsArr);
 
     } else if (!this.getAllTherapist && !this.getAllPats) {
       patsArr.push(this.selectedPat);
-                console.log(patsArr);
+                //console.log(patsArr);
 
     } else {
       throw new Error('pats for T');
@@ -176,11 +176,11 @@ this.sd.createAlert('error', 'שגיאה, נסה שוב', '');
         }
           
        
-      console.log('get here')
-      console.log(this.reportData);
+      //console.log('get here')
+      //console.log(this.reportData);
           this.db.isBusy = false;
     } else {
-      console.error('index dont work');
+      //console.error('index dont work');
           this.db.isBusy = false;
     }
 

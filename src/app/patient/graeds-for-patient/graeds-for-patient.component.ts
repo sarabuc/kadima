@@ -32,7 +32,7 @@ export class GraedsForPatientComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
    this.db.getGradesForPidRef(this.Pid).valueChanges().subscribe(grades => {
       this.allGrades = grades;
-      console.log(this.allGrades);
+      //console.log(this.allGrades);
       
     // this.sortByTestDate();
     });
@@ -128,7 +128,7 @@ export class GraedsForPatientComponent implements OnInit, OnChanges, OnDestroy {
 
   
   onRowSelect(event) {
-    console.log(event);
+    //console.log(event);
     this.newGrade = false;
     this.selectedGrade = event;
     this.displayDialog = true;
@@ -142,8 +142,8 @@ this.selectedGrade = {
     };
   }
  async search(event) {
-   console.log(event);
-   this.mainDiffi = await this.db.treatmentCategories.filter(item => item.code.toLowerCase().includes(event.query.toLowerCase()));
+   //console.log(event);
+   this.mainDiffi = await this.db.limudyAreas.filter(item => item.code.toLowerCase().includes(event.query.toLowerCase()));
     }
   
   onGradeChange(event, dt) {
@@ -160,7 +160,7 @@ this.selectedGrade = {
 
 
   ngOnDestroy() {
-    console.log('on destroy');
+    //console.log('on destroy');
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }

@@ -31,7 +31,7 @@ export class SettingComponent implements OnInit {
     });
     this.db.getAdminMassagesEveryYearRef().valueChanges().subscribe(M => {
       // this.db.deleteAdminMassage((M[0] as any).insertBy + (M[0] as any).insertTime.toDate());
-      console.log(M);
+      //console.log(M);
       this.db.getAdminMassagesRef().valueChanges().subscribe(M2 => {
         this.allMsgs = M.concat(M2)
         this.allMsgs.sort((a, b) =>  b.time.toDate().getTime() - a.time.toDate().getTime());
@@ -58,7 +58,7 @@ export class SettingComponent implements OnInit {
       comment: null
     };
   }
-  //   console.log('setting');
+  //   //console.log('setting');
   //   const navItems = $('.admin-menu li > a');
   //   const navListItems = $('.admin-menu li');
   //   const allWells = $('.admin-content');
@@ -101,7 +101,7 @@ export class SettingComponent implements OnInit {
       this.newUser['insertBy'] = this.db.userNow.mail;
       this.newUser['insertTime'] = '' + new Date();
       delete this.newUser.resentPass;
-      console.log(this.newUser);
+      //console.log(this.newUser);
       this.db.addUser(this.newUser);
       this.newUser = {
         name: null,
@@ -113,8 +113,8 @@ export class SettingComponent implements OnInit {
     
   }
   saveNewMsg(date, hour) {
-    console.log(date);
-    console.log(hour);
+    //console.log(date);
+    //console.log(hour);
     if (!this.newMsg.massage || !this.newMsg.date || !this.newMsg.hour) {
       this.sd.createAlert('error', 'שגיאה, בדוק את כל השדות ונסה שוב', '');
       return;
@@ -147,8 +147,8 @@ export class SettingComponent implements OnInit {
 
 
   deleteMail() {
-    console.log(this.massageToDelete.status);
-    console.log(this.massageToDelete);
+    //console.log(this.massageToDelete.status);
+    //console.log(this.massageToDelete);
     switch (this.massageToDelete.status) {
 
       case 'every_year':
@@ -164,7 +164,7 @@ export class SettingComponent implements OnInit {
 
   }
   routeToPatCard(msg) {
-    console.log(msg);
+    //console.log(msg);
     if(msg.status == 'planForMipuy') {
       const msgParts = msg.massage.split('לתלמיד בעל מ.ז : ')[1];
       const Pid = msgParts.split(' עודכן')[0];

@@ -38,7 +38,7 @@ export class AddPatientsFromExelComponent implements OnInit {
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
       this.PfromExel = (XLSX.utils.sheet_to_json(worksheet, { raw: true }));
-       console.log(this.PfromExel);
+       //console.log(this.PfromExel);
        this.PfromExel.splice(0, 1);
        this.successed = [];
     };
@@ -85,12 +85,12 @@ export class AddPatientsFromExelComponent implements OnInit {
       };
       this.db.addPatient(pati);
      // this.PfromExel.splice(this.PfromExel.indexOf(p) , 1);
-     // console.log(pati);
+     // //console.log(pati);
       countSuccess++;
       this.successed[i] = 1;
     }
 
-     // console.log(this.PfromExel);
+     // //console.log(this.PfromExel);
     }
 
     this.sd.createAlert('info', countSuccess + ' ' + 'תלמידים נוספו בהצלחה ' + '\n', '');
@@ -163,11 +163,11 @@ export class AddPatientsFromExelComponent implements OnInit {
             this.successed[i] = 1;
         });
         // this.PfromExel.splice(this.PfromExel.indexOf(p) , 1);
-        // console.log(pati);
+        // //console.log(pati);
 
       }
 
-      // console.log(this.PfromExel);
+      // //console.log(this.PfromExel);
     }
 
     this.sd.createAlert('info', countSuccess + ' ' + 'תלמידים עודכנו בהצלחה ' + '\n', '');
@@ -197,7 +197,7 @@ export class AddPatientsFromExelComponent implements OnInit {
 
   getEmptyPatientsFile() {
     const spaceRef = firebase.storage().ref().child('files/patient_tavnit.xlsx').getDownloadURL().then((url) => {
-     console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+     //console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       // const xhr = new XMLHttpRequest();
       // xhr.responseType = 'blob';
       // xhr.onload = (event) => {
@@ -228,7 +228,7 @@ export class AddPatientsFromExelComponent implements OnInit {
 
     }).catch((error) => {
 
-      console.log(error.code);
+      //console.log(error.code);
     });
   }
 

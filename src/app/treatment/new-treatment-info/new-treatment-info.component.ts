@@ -27,6 +27,7 @@ export class NewTreatmentInfoComponent implements OnInit {
   Tname = '';
   Pname = '';
   isFirstTreat = true;
+  allMethods = [];
 
   val;
   startTime = ''; endTime = ''; hours = ''; tDate: Date; discrib = ''; comment = ''; area = ''; progress;
@@ -45,13 +46,14 @@ export class NewTreatmentInfoComponent implements OnInit {
       this.getPatientListForThera();
     }
     this.patientList = this.db.allPatientList.filter(P => P.haveDificult === 'yes');
-    
+    this.db.getAllMethodsRef().valueChanges().subscribe(methods => this.allMethods = methods);
+
     if (this.Pid) {
       this.canGetPlan = true;
     }
   }
   saveNewtreatment(option) {
-    console.log('info' + this.canGetInfo + this.canGetTherapist);
+    //console.log('info' + this.canGetInfo + this.canGetTherapist);
     const progressCode = this.getPlanDocId();
     const treat = {
       Pid: '' + this.Pid,
@@ -81,6 +83,7 @@ export class NewTreatmentInfoComponent implements OnInit {
           insertBy:  this.db.userNow.mail, 
           insertTime: new Date()
         }
+        //console.log(data);
         this.db.addTreatForML(data);
       }
     }
@@ -97,7 +100,7 @@ export class NewTreatmentInfoComponent implements OnInit {
     if (option == 'out') {
       this.sd.routeTo('/home');
     }
-    console.log('info' + this.canGetInfo + this.canGetTherapist);
+    //console.log('info' + this.canGetInfo + this.canGetTherapist);
 
 
   }
@@ -153,7 +156,7 @@ export class NewTreatmentInfoComponent implements OnInit {
           plan['hebrewDate'] = this.sd.convertDateToHebrewDate(tempD[0], tempD[1], tempD[2]);
         });
         this.canGetPlan = true;
-        console.log('choosePlanForAdmin');
+        //console.log('choosePlanForAdmin');
         if(!this.isFirstTreat) {
           return;
         }
@@ -178,15 +181,15 @@ export class NewTreatmentInfoComponent implements OnInit {
           this.sd.createAlert('info', 'לא הוגדר תכנון טיפול לתלמיד זה', '');
           return;
         }
-        console.log(plans);
+        //console.log(plans);
         this.planToChoose = plans.filter(P => Object.keys(P).findIndex(key => P[key] === '' + this.Tid) > -1);
-        console.log(this.planToChoose);
+        //console.log(this.planToChoose);
         this.planToChoose.forEach(plan => {
           const tempD = plan.date.split('.');
           plan['hebrewDate'] = this.sd.convertDateToHebrewDate(tempD[0], tempD[1], tempD[2]);
         });
         this.canGetPlan = true;
-        console.log('choosePlanForAdmin');
+        //console.log('choosePlanForAdmin');
         if(!this.isFirstTreat) {
           return;
         }
@@ -201,7 +204,7 @@ export class NewTreatmentInfoComponent implements OnInit {
 
 
   getPlanForAdmin(plan) {
-    console.log(plan);
+    //console.log(plan);
     if (plan.hoursLeft < 1) {
       this.sd.createAlert('info', 'מספר שעות מאושרות אזל- אין אפשרות להוסיף דיווח על טיפול', '');
       return;
@@ -235,7 +238,7 @@ export class NewTreatmentInfoComponent implements OnInit {
   }*/
 
   rechoosePlan() {
-    console.log('inrechoose');
+    //console.log('inrechoose');
     this.canGetInfo = false;
     this.canGetPlan = true;
     this.canGetTherapist = false;
@@ -253,10 +256,15 @@ export class NewTreatmentInfoComponent implements OnInit {
       } else if (key.split('_')[1] && key.split('_')[1] === 'THERAPIST') {
         // check if this is a therapist
         this.therapistListForPlan.push(this.choosedPlan[key]);
-        console.log(this.therapistListForPlan);
+        //console.log(this.therapistListForPlan);
 
       }
     });
+  }
+
+  getMethodForDiffiInThisPlan(event){
+  const key = this.area + '_METHOD';
+  this.discrib = this.choosedPlan[key];
   }
 
 
