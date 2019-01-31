@@ -13,7 +13,6 @@ const functions = require("firebase-functions");
 //import * as  nodemailer from 'nodemailer';
 const nodemailer = require("nodemailer");
 const ejs = require('ejs');
-const fs = require('fs');
 const template = require("./template");
 exports.sendMail = function send_mail(mailOptions) {
     const gmailEmail = functions.config().gmail.email;
@@ -36,7 +35,6 @@ exports.sendMail = function send_mail(mailOptions) {
     return true;
 };
 exports.sendWelcomeEmailFunc2 = functions.https.onRequest((req, res) => __awaiter(this, void 0, void 0, function* () {
-    //const html = fs.readFileSync('../../assest/template.html');
     const pats = [{ name: 'jhh',
             grade: 'hh',
             area: 'hgv',

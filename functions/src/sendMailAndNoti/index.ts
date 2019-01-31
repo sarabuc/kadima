@@ -3,7 +3,6 @@ import * as  functions from 'firebase-functions';
 //import * as  nodemailer from 'nodemailer';
 const nodemailer = require("nodemailer");
 const ejs = require('ejs');
-const fs = require('fs');
 import * as template from './template';
 
 export const sendMail = function send_mail(mailOptions: any) {
@@ -28,7 +27,7 @@ export const sendMail = function send_mail(mailOptions: any) {
 }
 
 export const sendWelcomeEmailFunc2 = functions.https.onRequest(async (req, res) => {
-    //const html = fs.readFileSync('../../assest/template.html');
+    
     const pats = [{name: 'jhh', 
              grade:'hh', 
              area:'hgv', 

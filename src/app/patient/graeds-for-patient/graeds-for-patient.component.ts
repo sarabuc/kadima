@@ -111,6 +111,23 @@ export class GraedsForPatientComponent implements OnInit, OnChanges, OnDestroy {
       this.selectedGrade['Dcode'] = this.selectedGrade['Dcode'].code;
       this.selectedGrade['Pid'] = this.Pid;
      this.db.addTestGrade(this.selectedGrade, 'single');
+console.log(this.pat);
+     if (this.pat.haveDificult === 'yes') {
+      // have to leave massage for therapists
+    
+      const massage = {
+        date: this.selectedGrade.testDate, 
+        Pid: this.Pid,
+        patName: this.pat.firstName + ' ' + this.pat.lastName,
+        area: this.selectedGrade['Dcode'],
+        grade: this.selectedGrade.grade ,
+        comment: this.selectedGrade.comment ? this.selectedGrade.comment : '',
+        insertBy: this.db.userNow.mail,
+        insertTime: new Date()
+      };
+      console.log(massage);
+this.db.addGradeMassageForTherapists(massage);
+    }
     } else {
      // update
     }
