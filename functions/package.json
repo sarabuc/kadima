@@ -27,7 +27,7 @@
         "save": "^2.3.2",
         "typescript": "^3.0.1",
         "write-json-file": "^3.0.2",
-        "xlsx": "^0.14.0"
+        "xlsx": "^0.17.0"
     },
     "devDependencies": {
         "commander": "^2.15.1",
